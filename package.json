@@ -10,6 +10,7 @@
   "author": "Minoru Okuyama <okuyama@analogic.jp> (https://github.com/minop1205/)",
   "homepage": "https://github.com/minop1205/react-dnd-treeview",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],

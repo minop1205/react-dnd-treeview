@@ -11,5 +11,7 @@
     "lib": ["ES2020", "DOM"],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-  }
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*"]
 }
