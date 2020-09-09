@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es5",
+    "module": "es2015",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": true,
+    "newLine": "lf",
+    "lib": ["ES2020", "DOM"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+  }
+}
