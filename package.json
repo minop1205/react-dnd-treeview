@@ -1,5 +1,5 @@
 {
-  "name": "react-dnd-treeview",
+  "name": "@minoru-okuyama/react-dnd-treeview",
   "description": "",
   "version": "0.0.1",
   "license": "MIT",
@@ -42,6 +42,10 @@
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
+  },
+  "peerDependencies": {
+  "react": "^16.13.1",
+  "react-dom": "^16.13.1"
   },
   "scripts": {
     "build": "npx webpack",
