@@ -14,6 +14,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "restricted"
+  },
   "dependencies": {
     "@material-ui/styles": "^4.10.0",
     "react-dnd": "^11.1.3",
@@ -44,15 +47,16 @@
     "webpack-cli": "^3.3.12"
   },
   "peerDependencies": {
-  "react": "^16.13.1",
-  "react-dom": "^16.13.1"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "scripts": {
     "build": "npx webpack",
     "watch": "npx webpack -w",
     "build:prod": "npx webpack --env.production",
     "watch:prod": "npx webpack --env.production -w",
-    "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/"
+    "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
+    "prepublish": "rm -rf ./dist && npm run build:prod"
   },
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",

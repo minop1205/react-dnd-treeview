@@ -1,4 +1,5 @@
 const path = require("path");
+const pkg = require("./package.json");
 
 module.exports = (env) => {
   const mode = env && env.production ? "production" : "development";
@@ -13,11 +14,33 @@ module.exports = (env) => {
         ".js",
         ".jsx",
       ],
+      alias: {
+        react: path.resolve(__dirname, "./node_modules/react"),
+        "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
+      },
+    },
+    externals: {
+      react: {
+        commonjs: "react",
+        commonjs2: "react",
+        amd: "React",
+        root: "React",
+      },
+      "react-dom": {
+        commonjs: "react-dom",
+        commonjs2: "react-dom",
+        amd: "ReactDOM",
+        root: "ReactDOM",
+      },
     },
     entry: "./src/Tree.tsx",
     output: {
       path: `${__dirname}/dist`,
       filename: "index.js",
+      library: pkg.name,
+      libraryTarget: "umd",
+      publicPath: "/dist/",
+      umdNamedDefine: true,
     },
     module: {
       rules: [
