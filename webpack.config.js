@@ -33,7 +33,7 @@ module.exports = (env) => {
         root: "ReactDOM",
       },
     },
-    entry: "./src/Tree.tsx",
+    entry: "./src/index.ts",
     output: {
       path: `${__dirname}/dist`,
       filename: "index.js",
