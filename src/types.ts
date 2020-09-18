@@ -29,9 +29,16 @@ export type DropHandler = (
 
 export type ToggleHandler = (id: NodeModel["id"]) => void;
 
+export type Classes = {
+  root?: string;
+  container?: string;
+  dragOver?: string;
+};
+
 export type TreeContext = {
   tree: NodeModel[];
   openIds: NodeModel["id"][];
+  classes?: Classes;
   render: NodeRender;
   dragPreviewRender: DragPreviewRender;
   onClick: ClickHandler;

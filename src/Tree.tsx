@@ -10,12 +10,14 @@ import {
   DragPreviewRender,
   ClickHandler,
   TreeContext,
+  Classes,
 } from "./types";
 
 type Props = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
   openIds: NodeModel["id"][];
+  classes?: Classes;
   render: NodeRender;
   dragPreviewRender: DragPreviewRender;
   onChange: (tree: NodeModel[]) => void;
@@ -29,6 +31,7 @@ export const Tree: React.FC<Props> = (props) => (
     value={{
       tree: props.tree,
       openIds: props.openIds,
+      classes: props.classes,
       render: props.render,
       dragPreviewRender: props.dragPreviewRender,
       onClick: props.onClick,
