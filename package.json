@@ -51,12 +51,10 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "build": "npx webpack",
-    "watch": "npx webpack -w",
-    "build:prod": "npx webpack --env.production",
-    "watch:prod": "npx webpack --env.production -w",
+    "build": "npx tsc",
+    "watch": "npx tsc -w",
     "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
-    "prepublish": "rm -rf ./dist && npm run build:prod"
+    "prepublish": "rm -rf ./dist && npm run build"
   },
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
