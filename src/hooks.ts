@@ -19,7 +19,7 @@ import {
 export const useDropContainer = (
   tree: NodeModel[],
   onDrop: DropHandler
-): [boolean, DragElementWrapper<HTMLUListElement>] => {
+): [boolean, DragElementWrapper<HTMLElement>] => {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem, monitor) => {

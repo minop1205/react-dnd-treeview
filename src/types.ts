@@ -1,3 +1,4 @@
+import { ElementType } from "react";
 import { XYCoord } from "react-dnd";
 
 export type NodeModel<T = unknown> = {
@@ -39,6 +40,8 @@ export type TreeContext = {
   tree: NodeModel[];
   openIds: NodeModel["id"][];
   classes?: Classes;
+  listComponent?: ElementType;
+  listItemComponent?: ElementType;
   render: NodeRender;
   dragPreviewRender: DragPreviewRender;
   onClick: ClickHandler;

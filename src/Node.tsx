@@ -40,8 +40,10 @@ export const Node: React.FC<Props> = (props) => {
     preview(getEmptyImage(), { captureDraggingState: true });
   }, []);
 
+  const Component = context.listItemComponent || "li";
+
   return (
-    <li
+    <Component
       ref={ref}
       style={{
         background: isOver ? "#fee" : "none",
@@ -53,6 +55,6 @@ export const Node: React.FC<Props> = (props) => {
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
       )}
-    </li>
+    </Component>
   );
 };

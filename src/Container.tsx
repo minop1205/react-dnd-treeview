@@ -35,11 +35,16 @@ export const Container: React.FC<Props> = (props) => {
     className = `${className} ${classes.root}`;
   }
 
+  const Component = context.listComponent || "ul";
+
   return (
-    <ul ref={props.parentId === 0 ? drop : undefined} className={className}>
+    <Component
+      ref={props.parentId === 0 ? drop : undefined}
+      className={className}
+    >
       {view.map((node) => (
         <Node key={node.id} id={node.id} depth={props.depth} />
       ))}
-    </ul>
+    </Component>
   );
 };

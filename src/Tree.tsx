@@ -10,14 +10,15 @@ import {
   DragPreviewRender,
   ClickHandler,
   TreeContext,
-  Classes,
 } from "./types";
 
 type Props = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
   openIds: NodeModel["id"][];
-  classes?: Classes;
+  classes?: TreeContext["classes"];
+  listComponent?: TreeContext["listComponent"];
+  listItemComponent?: TreeContext["listItemComponent"];
   render: NodeRender;
   dragPreviewRender: DragPreviewRender;
   onChange: (tree: NodeModel[]) => void;
@@ -29,12 +30,7 @@ export const Context = createContext<TreeContext>({} as TreeContext);
 export const Tree: React.FC<Props> = (props) => (
   <Context.Provider
     value={{
-      tree: props.tree,
-      openIds: props.openIds,
-      classes: props.classes,
-      render: props.render,
-      dragPreviewRender: props.dragPreviewRender,
-      onClick: props.onClick,
+      ...props,
       onDrop: (id, parentId) =>
         props.onChange(mutateTree(props.tree, id, parentId)),
     }}
