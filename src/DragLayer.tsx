@@ -42,7 +42,7 @@ export const DragLayer: React.FC = () => {
   return (
     <div style={rootStyle}>
       <div style={getItemStyles(monitorProps)}>
-        {context.dragPreviewRender(monitorProps)}
+        {context.dragPreviewRender && context.dragPreviewRender(monitorProps)}
       </div>
     </div>
   );

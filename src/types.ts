@@ -43,7 +43,7 @@ export type TreeContext = {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   render: NodeRender;
-  dragPreviewRender: DragPreviewRender;
+  dragPreviewRender?: DragPreviewRender;
   onClick: ClickHandler;
   onDrop: DropHandler;
 };

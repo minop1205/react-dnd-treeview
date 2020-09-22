@@ -20,7 +20,7 @@ type Props = {
   listComponent?: TreeContext["listComponent"];
   listItemComponent?: TreeContext["listItemComponent"];
   render: NodeRender;
-  dragPreviewRender: DragPreviewRender;
+  dragPreviewRender?: DragPreviewRender;
   onChange: (tree: NodeModel[]) => void;
   onClick: ClickHandler;
 };
@@ -36,7 +36,7 @@ export const Tree: React.FC<Props> = (props) => (
     }}
   >
     <DndProvider backend={HTML5Backend}>
-      <DragLayer />
+      {props.dragPreviewRender && <DragLayer />}
       <Container parentId={props.rootId} depth={0} />
     </DndProvider>
   </Context.Provider>

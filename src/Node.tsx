@@ -37,7 +37,9 @@ export const Node: React.FC<Props> = (props) => {
   const hasChild = !!context.tree.find((node) => node.parent === props.id);
 
   useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
+    if (context.dragPreviewRender) {
+      preview(getEmptyImage(), { captureDraggingState: true });
+    }
   }, []);
 
   const Component = context.listItemComponent || "li";
