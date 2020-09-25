@@ -17,9 +17,9 @@ export const mutateTree = (
   });
 
 export const compareItems = (a: NodeModel, b: NodeModel): number => {
-  if (a.name > b.name) {
+  if (a.text > b.text) {
     return 1;
-  } else if (a.name < b.name) {
+  } else if (a.text < b.text) {
     return -1;
   }
 

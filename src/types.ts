@@ -5,7 +5,7 @@ export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
   nodeType: "node" | "leaf";
-  name: string;
+  text: string;
   data?: T;
 };
 
