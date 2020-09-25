@@ -198,9 +198,7 @@ export const useOpenIdsHelper = (
 
   const handleOpenAll = useCallback(
     () =>
-      setOpenIds(
-        tree.filter((node) => node.nodeType === "node").map((node) => node.id)
-      ),
+      setOpenIds(tree.filter((node) => node.droppable).map((node) => node.id)),
     [tree]
   );
 

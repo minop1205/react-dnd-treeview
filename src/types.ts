@@ -4,7 +4,7 @@ import { XYCoord } from "react-dnd";
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
-  nodeType: "node" | "leaf";
+  droppable: boolean;
   text: string;
   data?: T;
 };
