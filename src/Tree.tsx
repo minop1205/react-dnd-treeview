@@ -4,13 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree } from "./utils";
-import {
-  NodeModel,
-  NodeRender,
-  DragPreviewRender,
-  ClickHandler,
-  TreeContext,
-} from "./types";
+import { NodeModel, NodeRender, DragPreviewRender, TreeContext } from "./types";
 
 type Props = {
   tree: NodeModel[];
@@ -22,7 +16,6 @@ type Props = {
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
   onChange: (tree: NodeModel[]) => void;
-  onClick: ClickHandler;
 };
 
 export const Context = createContext<TreeContext>({} as TreeContext);

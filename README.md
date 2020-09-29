@@ -73,7 +73,6 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 |render|function|yes||各ノードのレンダー関数です。|
 |dragPreviewRender|function|no|undefined|ドラッグ中ノードのレンダリングをカスタマイズするための関数です。|
 |onChange|function|yes||ツリーの状態が変更された時のコールバック関数|
-|onClick|array|yes||各ノードがクリックされた時のコールバック関数|
 
 ### Component Styling
 
