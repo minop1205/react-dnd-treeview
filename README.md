@@ -66,7 +66,6 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 |--|--|--|--|--|
 |tree|array|yes||????|
 |rootId|number &#124; string |yes||ルートノードのIDです。ツリービュー内で表示される最も階層の浅いノードの親IDとなります。|
-|openIds|array|no|[]|各ノードの開閉状態を表すノードIDの配列です。|
 |classes|object|no|CSSクラス名です。レンダープロップスの外側のデザインを整える時にに使用できます。|
 |listComponent|string|no|ul|リスト用のHTMLタグです。|
 |listItemComponent|string|no|li|リストアイテム用のHTMLタグです。|
