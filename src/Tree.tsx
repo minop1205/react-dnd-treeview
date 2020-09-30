@@ -15,7 +15,7 @@ type Props = {
   listItemComponent?: TreeContext["listItemComponent"];
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
-  onChange: (tree: NodeModel[]) => void;
+  onDrop: (tree: NodeModel[]) => void;
 };
 
 export const Context = createContext<TreeContext>({} as TreeContext);
@@ -25,7 +25,7 @@ export const Tree: React.FC<Props> = (props) => (
     value={{
       ...props,
       onDrop: (id, parentId) =>
-        props.onChange(mutateTree(props.tree, id, parentId)),
+        props.onDrop(mutateTree(props.tree, id, parentId)),
     }}
   >
     <DndProvider backend={HTML5Backend}>
