@@ -47,7 +47,7 @@ export const Node: React.FC<Props> = (props) => {
         opacity: isDragging ? 0.5 : 1,
       }}
     >
-      {context.render(item, props.depth, open)}
+      {context.render(item, props.depth, open, context.onToggle)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
       )}

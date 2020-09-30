@@ -4,12 +4,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree } from "./utils";
+import { useOpenIdsHelper } from "./hooks";
 import { NodeModel, NodeRender, DragPreviewRender, TreeContext } from "./types";
 
 type Props = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
-  openIds: NodeModel["id"][];
   classes?: TreeContext["classes"];
   listComponent?: TreeContext["listComponent"];
   listItemComponent?: TreeContext["listItemComponent"];
@@ -20,17 +20,23 @@ type Props = {
 
 export const Context = createContext<TreeContext>({} as TreeContext);
 
-export const Tree: React.FC<Props> = (props) => (
-  <Context.Provider
-    value={{
-      ...props,
-      onDrop: (id, parentId) =>
-        props.onDrop(mutateTree(props.tree, id, parentId)),
-    }}
-  >
-    <DndProvider backend={HTML5Backend}>
-      {props.dragPreviewRender && <DragLayer />}
-      <Container parentId={props.rootId} depth={0} />
-    </DndProvider>
-  </Context.Provider>
-);
+export const Tree: React.FC<Props> = (props) => {
+  const [openIds, { handleToggle }] = useOpenIdsHelper(props.tree);
+
+  return (
+    <Context.Provider
+      value={{
+        ...props,
+        openIds,
+        onDrop: (id, parentId) =>
+          props.onDrop(mutateTree(props.tree, id, parentId)),
+        onToggle: handleToggle,
+      }}
+    >
+      <DndProvider backend={HTML5Backend}>
+        {props.dragPreviewRender && <DragLayer />}
+        <Container parentId={props.rootId} depth={0} />
+      </DndProvider>
+    </Context.Provider>
+  );
+};
