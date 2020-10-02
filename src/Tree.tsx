@@ -1,11 +1,17 @@
-import React, { createContext } from "react";
+import React, { createContext, forwardRef, useImperativeHandle } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
-import { NodeModel, NodeRender, DragPreviewRender, TreeContext } from "./types";
+import {
+  NodeModel,
+  NodeRender,
+  DragPreviewRender,
+  TreeContext,
+  OpenIdsHandlers,
+} from "./types";
 
 type Props = {
   tree: NodeModel[];
@@ -18,10 +24,18 @@ type Props = {
   onDrop: (tree: NodeModel[]) => void;
 };
 
-export const Context = createContext<TreeContext>({} as TreeContext);
+const Context = createContext<TreeContext>({} as TreeContext);
 
-export const Tree: React.FC<Props> = (props) => {
-  const [openIds, { handleToggle }] = useOpenIdsHelper(props.tree);
+const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
+  const [
+    openIds,
+    { handleToggle, handleCloseAll, handleOpenAll },
+  ] = useOpenIdsHelper(props.tree);
+
+  useImperativeHandle(ref, () => ({
+    openAll: () => handleOpenAll(),
+    closeAll: () => handleCloseAll(),
+  }));
 
   return (
     <Context.Provider
@@ -39,4 +53,8 @@ export const Tree: React.FC<Props> = (props) => {
       </DndProvider>
     </Context.Provider>
   );
-};
+});
+
+Tree.displayName = "Tree";
+
+export { Context, Tree };

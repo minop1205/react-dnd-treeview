@@ -64,3 +64,8 @@ export type DragOverProps = {
   onDragLeave: () => void;
   onDrop: () => void;
 };
+
+export type OpenIdsHandlers = {
+  openAll(): void;
+  closeAll(): void;
+};
