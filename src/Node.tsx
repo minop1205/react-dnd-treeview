@@ -20,15 +20,10 @@ export const Node: React.FC<Props> = (props) => {
     return null;
   }
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    context.onClick(item);
-  };
-
   const [isDragging, drag, preview] = useDragNode(item, ref);
   const [isOver, drop] = useDropNode(props.id, context.tree, context.onDrop);
 
-  if (item.nodeType === "node") {
+  if (item.droppable) {
     drop(drag(ref));
   } else {
     drag(ref);
@@ -37,7 +32,9 @@ export const Node: React.FC<Props> = (props) => {
   const hasChild = !!context.tree.find((node) => node.parent === props.id);
 
   useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true });
+    if (context.dragPreviewRender) {
+      preview(getEmptyImage(), { captureDraggingState: true });
+    }
   }, []);
 
   const Component = context.listItemComponent || "li";
@@ -49,9 +46,8 @@ export const Node: React.FC<Props> = (props) => {
         background: isOver ? "#fee" : "none",
         opacity: isDragging ? 0.5 : 1,
       }}
-      onClick={handleClick}
     >
-      {context.render(item, props.depth, open)}
+      {context.render(item, props.depth, open, context.onToggle)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
       )}

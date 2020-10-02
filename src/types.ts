@@ -4,8 +4,8 @@ import { XYCoord } from "react-dnd";
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
-  nodeType: "node" | "leaf";
-  name: string;
+  droppable: boolean;
+  text: string;
   data?: T;
 };
 
@@ -18,7 +18,8 @@ export type DragItem<T = unknown> = NodeModel<T> & {
 export type NodeRender = (
   data: NodeModel,
   depth: number,
-  isOpen: boolean
+  isOpen: boolean,
+  onToggle: ToggleHandler
 ) => React.ReactElement;
 
 export type ClickHandler = (data: NodeModel) => void;
@@ -43,9 +44,9 @@ export type TreeContext = {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   render: NodeRender;
-  dragPreviewRender: DragPreviewRender;
-  onClick: ClickHandler;
+  dragPreviewRender?: DragPreviewRender;
   onDrop: DropHandler;
+  onToggle: ToggleHandler;
 };
 
 export type DragLayerMonitorProps<T = unknown> = {
@@ -62,4 +63,9 @@ export type DragOverProps = {
   onDragEnter: () => void;
   onDragLeave: () => void;
   onDrop: () => void;
+};
+
+export type OpenIdsHandlers = {
+  openAll(): void;
+  closeAll(): void;
 };

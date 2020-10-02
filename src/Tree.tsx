@@ -1,43 +1,60 @@
-import React, { createContext } from "react";
+import React, { createContext, forwardRef, useImperativeHandle } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree } from "./utils";
+import { useOpenIdsHelper } from "./hooks";
 import {
   NodeModel,
   NodeRender,
   DragPreviewRender,
-  ClickHandler,
   TreeContext,
+  OpenIdsHandlers,
 } from "./types";
 
 type Props = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
-  openIds: NodeModel["id"][];
   classes?: TreeContext["classes"];
   listComponent?: TreeContext["listComponent"];
   listItemComponent?: TreeContext["listItemComponent"];
   render: NodeRender;
-  dragPreviewRender: DragPreviewRender;
-  onChange: (tree: NodeModel[]) => void;
-  onClick: ClickHandler;
+  dragPreviewRender?: DragPreviewRender;
+  onDrop: (tree: NodeModel[]) => void;
 };
 
-export const Context = createContext<TreeContext>({} as TreeContext);
+const Context = createContext<TreeContext>({} as TreeContext);
 
-export const Tree: React.FC<Props> = (props) => (
-  <Context.Provider
-    value={{
-      ...props,
-      onDrop: (id, parentId) =>
-        props.onChange(mutateTree(props.tree, id, parentId)),
-    }}
-  >
-    <DndProvider backend={HTML5Backend}>
-      <DragLayer />
-      <Container parentId={props.rootId} depth={0} />
-    </DndProvider>
-  </Context.Provider>
-);
+const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
+  const [
+    openIds,
+    { handleToggle, handleCloseAll, handleOpenAll },
+  ] = useOpenIdsHelper(props.tree);
+
+  useImperativeHandle(ref, () => ({
+    openAll: () => handleOpenAll(),
+    closeAll: () => handleCloseAll(),
+  }));
+
+  return (
+    <Context.Provider
+      value={{
+        ...props,
+        openIds,
+        onDrop: (id, parentId) =>
+          props.onDrop(mutateTree(props.tree, id, parentId)),
+        onToggle: handleToggle,
+      }}
+    >
+      <DndProvider backend={HTML5Backend}>
+        {props.dragPreviewRender && <DragLayer />}
+        <Container parentId={props.rootId} depth={0} />
+      </DndProvider>
+    </Context.Provider>
+  );
+});
+
+Tree.displayName = "Tree";
+
+export { Context, Tree };
