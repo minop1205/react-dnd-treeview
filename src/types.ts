@@ -18,7 +18,8 @@ export type DragItem<T = unknown> = NodeModel<T> & {
 export type NodeRender = (
   data: NodeModel,
   depth: number,
-  isOpen: boolean
+  isOpen: boolean,
+  onToggle: ToggleHandler
 ) => React.ReactElement;
 
 export type ClickHandler = (data: NodeModel) => void;
@@ -44,8 +45,8 @@ export type TreeContext = {
   listItemComponent?: ElementType;
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
-  onClick: ClickHandler;
   onDrop: DropHandler;
+  onToggle: ToggleHandler;
 };
 
 export type DragLayerMonitorProps<T = unknown> = {
@@ -62,4 +63,9 @@ export type DragOverProps = {
   onDragEnter: () => void;
   onDragLeave: () => void;
   onDrop: () => void;
+};
+
+export type OpenIdsHandlers = {
+  openAll(): void;
+  closeAll(): void;
 };

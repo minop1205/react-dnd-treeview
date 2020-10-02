@@ -14,6 +14,7 @@ import {
   DropHandler,
   DragLayerMonitorProps,
   DragOverProps,
+  ToggleHandler,
 } from "./types";
 
 export const useDropContainer = (
@@ -175,7 +176,7 @@ export const useOpenIdsHelper = (
 ): [
   NodeModel["id"][],
   {
-    handleToggle: (targetId: NodeModel["id"]) => void;
+    handleToggle: ToggleHandler;
     handleCloseAll: () => void;
     handleOpenAll: () => void;
   }

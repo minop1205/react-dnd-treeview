@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { NodeModel } from "./types";
 
 export const mutateTree = (
@@ -5,15 +6,12 @@ export const mutateTree = (
   id: NodeModel["id"],
   parentId: NodeModel["id"]
 ): NodeModel[] =>
-  tree.map((node) => {
-    if (node.id === id) {
-      return {
-        ...node,
-        parent: parentId,
-      };
-    }
-
-    return node;
+  produce(tree, (draft) => {
+    draft.forEach((node) => {
+      if (node.id === id) {
+        node.parent = parentId;
+      }
+    });
   });
 
 export const compareItems = (a: NodeModel, b: NodeModel): number => {
