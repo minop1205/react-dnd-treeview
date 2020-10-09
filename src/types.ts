@@ -15,13 +15,16 @@ export type DragItem<T = unknown> = NodeModel<T> & {
   ref: React.MutableRefObject<HTMLElement>;
 };
 
-export type NodeRender = (
-  data: NodeModel,
-  depth: number,
-  isOpen: boolean,
-  onToggle: () => void
-) => React.ReactElement;
+export type RenderParams = {
+  depth: number;
+  isOpen: boolean;
+  onToggle(): void;
+};
 
+export type NodeRender = (
+  node: NodeModel,
+  params: RenderParams
+) => React.ReactElement;
 export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler = (

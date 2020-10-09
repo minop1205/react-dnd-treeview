@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
 import { useDragNode, useDropNode } from "./hooks";
-import { NodeModel } from "./types";
+import { NodeModel, RenderParams } from "./types";
 import { Context } from "./Tree";
 
 type Props = {
@@ -54,9 +54,15 @@ export const Node: React.FC<Props> = (props) => {
     className = `${className} ${classes.draggingSource}`;
   }
 
+  const params: RenderParams = {
+    depth: props.depth,
+    isOpen: open,
+    onToggle: handleToggle,
+  };
+
   return (
     <Component ref={ref} className={className}>
-      {context.render(item, props.depth, open, handleToggle)}
+      {context.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
       )}
