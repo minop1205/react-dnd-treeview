@@ -14,7 +14,7 @@ export const Node: React.FC<Props> = (props) => {
   const context = useContext(Context);
   const ref = useRef<HTMLLIElement>(null);
   const item = context.tree.find((node) => node.id === props.id);
-  const openIds = context.openIds;
+  const { openIds, classes } = context;
   const open = openIds.includes(props.id);
 
   if (!item) {
@@ -44,14 +44,18 @@ export const Node: React.FC<Props> = (props) => {
 
   const Component = context.listItemComponent || "li";
 
+  let className = "";
+
+  if (isOver && classes?.dragOver) {
+    className = classes.dragOver;
+  }
+
+  if (isDragging && classes?.draggingSource) {
+    className = `${className} ${classes.draggingSource}`;
+  }
+
   return (
-    <Component
-      ref={ref}
-      style={{
-        background: isOver ? "#fee" : "none",
-        opacity: isDragging ? 0.5 : 1,
-      }}
-    >
+    <Component ref={ref} className={className}>
       {context.render(item, props.depth, open, handleToggle)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />

@@ -33,6 +33,7 @@ export type Classes = {
   root?: string;
   container?: string;
   dragOver?: string;
+  draggingSource?: string;
 };
 
 export type ToggleHandler = (id: NodeModel["id"]) => void;
