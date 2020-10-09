@@ -19,7 +19,7 @@ export type NodeRender = (
   data: NodeModel,
   depth: number,
   isOpen: boolean,
-  onToggle: ToggleHandler
+  onToggle: () => void
 ) => React.ReactElement;
 
 export type ClickHandler = (data: NodeModel) => void;
@@ -29,13 +29,13 @@ export type DropHandler = (
   parent: NodeModel["id"]
 ) => void;
 
-export type ToggleHandler = (id: NodeModel["id"]) => void;
-
 export type Classes = {
   root?: string;
   container?: string;
   dragOver?: string;
 };
+
+export type ToggleHandler = (id: NodeModel["id"]) => void;
 
 export type TreeContext = {
   tree: NodeModel[];
