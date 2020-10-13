@@ -100,7 +100,8 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
     "droppable": false,
     "text": "File 1-1",
     "data": {
-      "fileType": "csv"
+      "fileType": "csv",
+      "fileSize": "0.5MB"
     }
   },
   {
@@ -109,7 +110,8 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
     "droppable": false,
     "text": "File 1-2",
     "data": {
-      "fileType": "pdf"
+      "fileType": "pdf",
+      "fileSize": "4.8MB"
     }
   },
   {
@@ -130,7 +132,8 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
     "droppable": false,
     "text": "File 2-1-1",
     "data": {
-      "fileType": "image"
+      "fileType": "image",
+      "fileSize": "2.1MB"
     }
   }
 ]
