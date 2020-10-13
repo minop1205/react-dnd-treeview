@@ -21,15 +21,35 @@ You can use render props to create each node freely.
 
 ### Installation
 
-```
+```shell
 $ npm install --save @minoru-okuyama/react-dnd-treeview
 ```
 
 ### Usage
 
-```
-(minimum code here)
+```jsx
+import { Tree } from "@minoru-okuyama/react-dnd-treeview";
 
+...
+
+const [treeData, setTreeData] = useState(initialData);
+const handleDrop = (newTreeData) => setTreeData(newTreeData);
+
+<Tree
+  tree={treeData}
+  rootId={0}
+  onDrop={handleDrop}
+  render={(node, {depth, isOpen, onToggle}) => (
+    <div style={{marginLeft: depth * 10}}>
+      {node.droppable && (
+        <span onClick={onToggle}>
+          {isOpen ? "[-]" : "[+]"}
+        </span>
+      )}
+      {node.text}
+    </div>
+  )}
+/>
 ```
 
 ## Data Structure
