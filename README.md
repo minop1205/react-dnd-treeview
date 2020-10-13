@@ -40,7 +40,7 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 
 ツリーを表現するための最小限のデータ構造は次の例の通りです。
 
-```
+```json
 [
   {
     "id": 1,
@@ -86,8 +86,54 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 
 各ノードのレンダリングにカスタムプロパティを与えたい場合は、`data` プロパティを使うことができます。
 
-```
-(optional data model)
+```json
+[
+  {
+    "id": 1,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 1"
+  },
+  {
+    "id": 2,
+    "parent": 1,
+    "droppable": false,
+    "text": "File 1-1",
+    "data": {
+      "fileType": "csv"
+    }
+  },
+  {
+    "id": 3,
+    "parent": 1,
+    "droppable": false,
+    "text": "File 1-2",
+    "data": {
+      "fileType": "pdf"
+    }
+  },
+  {
+    "id": 4,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 2"
+  },
+  {
+    "id": 5,
+    "parent": 4,
+    "droppable": true,
+    "text": "Folder 2-1"
+  },
+  {
+    "id": 6,
+    "parent": 5,
+    "droppable": false,
+    "text": "File 2-1-1",
+    "data": {
+      "fileType": "image"
+    }
+  }
+]
 ```
 
 ### Node Properties
