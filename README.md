@@ -34,16 +34,57 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 
 ## Data Structure
 
-このモジュールを利用するためには、次のようなデータが必要です。
-
+ツリーを表示するためには、次のようなデータを `Tree` コンポーネントに渡す必要があります。
 
 ### Basic example
 
+ツリーを表現するための最小限のデータ構造は次の例の通りです。
+
 ```
-(minimum data model)
+[
+  {
+    "id": 1,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 1"
+  },
+  {
+    "id": 2,
+    "parent": 1,
+    "droppable": false,
+    "text": "File 1-1"
+  },
+  {
+    "id": 3,
+    "parent": 1,
+    "droppable": false,
+    "text": "File 1-2"
+  },
+  {
+    "id": 4,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 2"
+  },
+  {
+    "id": 5,
+    "parent": 4,
+    "droppable": true,
+    "text": "Folder 2-1"
+  },
+  {
+    "id": 6,
+    "parent": 5,
+    "droppable": false,
+    "text": "File 2-1-1"
+  }
+]
+
 ```
 
 ### Optional data
+
+各ノードのレンダリングにカスタムプロパティを与えたい場合は、`data` プロパティを使うことができます。
 
 ```
 (optional data model)
@@ -57,31 +98,38 @@ $ npm install --save @minoru-okuyama/react-dnd-treeview
 |parent|number &#124; string|yes|Parent id of each node|
 |droppable|boolean|yes|If `true`, child nodes will be accepted and other nodes can be dropped|
 |text|string|yes|Node label|
-|data|any|no|各ノード注入する追加のデータ<br>これらのデータはレンダープロップスで利用することができます。|
+|data|any|no|各ノード注入する追加のデータ<br>これらのデータはレンダープロップスの中で利用することができます。|
 
 
 ### Component API
 
 |Props|Type|Required|Default|Description|
 |--|--|--|--|--|
-|tree|array|yes||????|
+|tree|array|yes||ツリー構造を表現したデータです。ノードデータの配列です。|
 |rootId|number &#124; string |yes||ルートノードのIDです。ツリービュー内で表示される最も階層の浅いノードの親IDとなります。|
-|classes|object|no|CSSクラス名です。レンダープロップスの外側のデザインを整える時にに使用できます。|
+|classes|object|no|undefined|CSSクラス名です。レンダープロップスの外側のデザインを整える時にに使用できます。|
 |listComponent|string|no|ul|リスト用のHTMLタグです。|
 |listItemComponent|string|no|li|リストアイテム用のHTMLタグです。|
 |render|function|yes||各ノードのレンダー関数です。|
 |dragPreviewRender|function|no|undefined|ドラッグ中ノードのレンダリングをカスタマイズするための関数です。|
-|onChange|function|yes||ツリーの状態が変更された時のコールバック関数|
+|onDrop|function|yes||ツリーの状態が変更された時のコールバック関数です。引数に新しいデータが渡されます。|
+
+### Render params
+
+|Name|Type|Description|
+|--|--|--|
+|data|object|ノードデータ|
+|options|object||
+
+(Usage of Render here)
 
 ### Component Styling
 
 （classesの説明）
 
-### State Management
+### Usage to openAll, closeAll methods
 
-ツリービューのデータや開閉状態は、コンポーネントの利用側で管理する必要があります。  
-ヘルパ関数を用意しています。
-
+(openAll, closeAll の使い方説明)
 
 ## License
 MIT.
