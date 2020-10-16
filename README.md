@@ -183,14 +183,39 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 |dragPreviewRender|function|no|undefined|ドラッグ中ノードのレンダリングをカスタマイズするための関数です。|
 |onDrop|function|yes||ツリーの状態が変更された時のコールバック関数です。引数に新しいデータが渡されます。|
 
-### Render params
+### Render prop
+
+各ツリーノードのレンダリングには `render` プロパティにレンダー関数を渡します。
+
+```jsx
+<Tree
+  {...props}
+  render={(node, {depth, isOpen, onToggle}) => (
+    <div style={{marginLeft: depth * 10}}>
+      {node.droppable && (
+        <span onClick={onToggle}>
+          {isOpen ? "[-]" : "[+]"}
+        </span>
+      )}
+      {node.text}
+    </div>
+  )}
+/>
+```
+
+レンダー関数に渡される引数は次の通りです。
 
 |Name|Type|Description|
 |--|--|--|
-|data|object|ノードデータ|
-|options|object||
+|data|object|ノードデータです。<br>tree プロパティに渡された配列の中の１つの要素が渡されます。|
+|options.depth|number|ノードの階層の深さです。|
+|options.isOpen|boolean|ノードの開閉状態です。droppable = false の場合、isOpenは常に false です。|
+|options.onToggle|function|ノードの開閉ボタンのためのイベントハンドラです。|
 
-(Usage of Render here)
+
+### Dragging Preview
+
+
 
 ### Component Styling
 
