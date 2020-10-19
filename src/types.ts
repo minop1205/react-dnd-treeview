@@ -10,7 +10,6 @@ export type NodeModel<T = unknown> = {
 };
 
 export type DragItem<T = unknown> = NodeModel<T> & {
-  id: number | string;
   type: symbol;
   ref: React.MutableRefObject<HTMLElement>;
 };
