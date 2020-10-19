@@ -215,7 +215,30 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ### Dragging Preview
 
+既定ではドラッグプレビューにはDOMノードのスクリーンショットが使われます。  
+`dragPreviewRender` プロパティを使用することでスクリーンショットの代わりにカスタムReactコンポーネントを表示することができます。
 
+```jsx
+<Tree
+  {...props}
+  dragPreviewRender={(monitorProps) => {
+    const item = monitorProps.item;
+
+    return (
+      <div>
+        <p>{item.text}</p>
+      </div>
+    );
+  }}
+/>
+```
+
+`dragPreviewRender` 渡されるデータには次のプロパティが含まれます。
+
+|Name|Type|Description|
+|--|--|--|
+|item|object|ノードデータです。<br>tree プロパティに渡された配列の中の１つの要素が渡されます。<br>また、ドラッグ対象のHTML要素への参照である `ref` プロパティも含まれています。|
+|clientOffset|object|ドラッグ操作中のポインタのクライアントオフセットです。`{x: number, y: number}` の形式で表されます。<br>アイテムがドラッグされていない場合は `null` になります。|
 
 ### Component Styling
 
