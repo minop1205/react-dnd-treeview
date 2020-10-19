@@ -46,8 +46,8 @@ export const Node: React.FC<Props> = (props) => {
 
   let className = "";
 
-  if (isOver && classes?.dragOver) {
-    className = classes.dragOver;
+  if (isOver && classes?.dropTarget) {
+    className = classes.dropTarget;
   }
 
   if (isDragging && classes?.draggingSource) {

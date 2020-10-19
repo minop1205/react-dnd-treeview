@@ -34,7 +34,7 @@ export type DropHandler = (
 export type Classes = {
   root?: string;
   container?: string;
-  dragOver?: string;
+  dropTarget?: string;
   draggingSource?: string;
 };
 

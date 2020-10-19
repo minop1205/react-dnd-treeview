@@ -25,8 +25,8 @@ export const Container: React.FC<Props> = (props) => {
     className = classes.container;
   }
 
-  if (isOver && classes?.dragOver) {
-    className = `${className} ${classes.dragOver}`;
+  if (isOver && classes?.dropTarget) {
+    className = `${className} ${classes.dropTarget}`;
   }
 
   if (props.parentId === 0 && classes?.root) {
