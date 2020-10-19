@@ -242,7 +242,27 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ### Component Styling
 
-（classesの説明）
+ツリー内の個々のノードのスタイリングは Render props 内で自由に定義できますが、それ以外の部分には `classes` プロパティにCSSクラス名を指定することでスタイルを注入することができます。
+
+```
+<Tree
+  {...props}
+  classes={{
+    root: "my-root-classname",
+    dragOver: "my-dragover-classname",
+  }}
+/>
+
+```
+
+`classes` プロパティに渡すオブジェクトには次のキーを使用することができます。いずれのキーも必須ではありません。
+
+|Name|Description|
+|--|--|
+|root|全てのノードをラップする最上位のコンテナ要素（デフォルトでは `ul` タグ）に付与する className|
+|container|同階層のノードリストをラップする要素（デフォルトでは `ul` タグ）に付与する className|
+|dropTarget|ノードのドラッグ操作中にドロップ可能なエリアに付与する className|
+|draggingSource|ドラッグ操作中のノードに付与する className|
 
 ### Usage to openAll, closeAll methods
 
