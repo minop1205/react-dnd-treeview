@@ -244,7 +244,7 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ツリー内の個々のノードのスタイリングは Render props 内で自由に定義できますが、それ以外の部分には `classes` プロパティにCSSクラス名を指定することでスタイルを注入することができます。
 
-```
+```jsx
 <Tree
   {...props}
   classes={{
@@ -252,7 +252,6 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
     dragOver: "my-dragover-classname",
   }}
 />
-
 ```
 
 `classes` プロパティに渡すオブジェクトには次のキーを使用することができます。いずれのキーも必須ではありません。
@@ -266,7 +265,23 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ### Usage to openAll, closeAll methods
 
-(openAll, closeAll の使い方説明)
+ノードの開閉状態は `Tree` コンポーネントの内部で管理されますが、全てのノードを開閉するためのメソッドをコンポーネントの外部から利用することができます。
+
+```jsx
+const ref = useRef<OpenIdsHandlers>(null);
+
+const handleOpenAll = () => ref.current.openAll();
+const handleCloseAll = () => ref.current.closeAll();
+
+<Tree
+  ref={ref}
+  {...props}
+>
+
+<button onClick={handleOpenAll}>Open All Folders</button>
+<button onClick={handleCloseAll}>Close All Folders</button>
+```
+
 
 ## License
 MIT.
