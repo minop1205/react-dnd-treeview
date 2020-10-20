@@ -10,18 +10,20 @@ export type NodeModel<T = unknown> = {
 };
 
 export type DragItem<T = unknown> = NodeModel<T> & {
-  id: number | string;
   type: symbol;
   ref: React.MutableRefObject<HTMLElement>;
 };
 
-export type NodeRender = (
-  data: NodeModel,
-  depth: number,
-  isOpen: boolean,
-  onToggle: ToggleHandler
-) => React.ReactElement;
+export type RenderParams = {
+  depth: number;
+  isOpen: boolean;
+  onToggle(): void;
+};
 
+export type NodeRender = (
+  node: NodeModel,
+  params: RenderParams
+) => React.ReactElement;
 export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler = (
@@ -29,13 +31,14 @@ export type DropHandler = (
   parent: NodeModel["id"]
 ) => void;
 
-export type ToggleHandler = (id: NodeModel["id"]) => void;
-
 export type Classes = {
   root?: string;
   container?: string;
-  dragOver?: string;
+  dropTarget?: string;
+  draggingSource?: string;
 };
+
+export type ToggleHandler = (id: NodeModel["id"]) => void;
 
 export type TreeContext = {
   tree: NodeModel[];
