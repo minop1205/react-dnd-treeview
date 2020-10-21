@@ -187,7 +187,7 @@ you can use the `data` property.
 
 ### Render prop
 
-各ツリーノードのレンダリングには `render` プロパティにレンダー関数を渡します。
+To render each tree node, please pass a render function to the `render` property.
 
 ```jsx
 <Tree
@@ -205,21 +205,20 @@ you can use the `data` property.
 />
 ```
 
-レンダー関数に渡される引数は次の通りです。
+The arguments passed to the render function are as follows
 
 |Name|Type|Description|
 |--|--|--|
-|data|object|ノードデータです。<br>tree プロパティに渡された配列の中の１つの要素が渡されます。|
-|options.depth|number|ノードの階層の深さです。|
-|options.isOpen|boolean|ノードの開閉状態です。droppable = false の場合、isOpenは常に false です。|
-|options.onToggle|function|ノードの開閉ボタンのためのイベントハンドラです。|
+|data|object|Node data. (an element in the tree data array)|
+|options.depth|number|The depth of the node hierarchy.|
+|options.isOpen|boolean|The open and closed state of the node.<br>If droppable = false, isOpen is always false.|
+|options.onToggle|function|An event handler for the open/close button of a node.|
 
 
 ### Dragging Preview
 
-既定ではドラッグプレビューにはDOMノードのスクリーンショットが使われます。  
-`dragPreviewRender` プロパティを使用することでスクリーンショットの代わりにカスタムReactコンポーネントを表示することができます。
-
+By default, the drag preview is a screenshot of a DOM node.  
+The `dragPreviewRender` property allows you to display a custom React component instead of a screenshot.
 ```jsx
 <Tree
   {...props}
@@ -235,16 +234,16 @@ you can use the `data` property.
 />
 ```
 
-`dragPreviewRender` 渡されるデータには次のプロパティが含まれます。
+The data passed to `dragPreviewRender` contains the following properties
 
 |Name|Type|Description|
 |--|--|--|
-|item|object|ノードデータです。<br>tree プロパティに渡された配列の中の１つの要素が渡されます。<br>また、ドラッグ対象のHTML要素への参照である `ref` プロパティも含まれています。|
-|clientOffset|object|ドラッグ操作中のポインタのクライアントオフセットです。`{x: number, y: number}` の形式で表されます。<br>アイテムがドラッグされていない場合は `null` になります。|
+|item|object|Node data. (an element in the tree data array)<br>It also includes the `ref` property, which is a reference to the HTML element to be dragged.|
+|clientOffset|object|The client offset of the pointer during the dragging operation.<br>It is in the format of `{x: number, y: number}`.<br>If the item is not being dragged, it is set to `null`.|
 
 ### Component Styling
 
-ツリー内の個々のノードのスタイリングは Render props 内で自由に定義できますが、それ以外の部分には `classes` プロパティにCSSクラス名を指定することでスタイルを注入することができます。
+You are free to define the styling of individual nodes in the tree in your Render props, but the rest of the tree can be styled by specifying the CSS class name for the `classes` property.
 
 ```jsx
 <Tree
@@ -256,18 +255,18 @@ you can use the `data` property.
 />
 ```
 
-`classes` プロパティに渡すオブジェクトには次のキーを使用することができます。いずれのキーも必須ではありません。
+You can use the following keys for the objects you pass to the `classes` property. Neither key is required.
 
 |Name|Description|
 |--|--|
-|root|全てのノードをラップする最上位のコンテナ要素（デフォルトでは `ul` タグ）に付与する className|
-|container|同階層のノードリストをラップする要素（デフォルトでは `ul` タグ）に付与する className|
-|dropTarget|ノードのドラッグ操作中にドロップ可能なエリアに付与する className|
-|draggingSource|ドラッグ操作中のノードに付与する className|
+|root|CSS class name to give to the top-level container element (by default, `ul` tag) that wraps all nodes.|
+|container|CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag).|
+|dropTarget|CSS class name to give to the area that can be dropped during a node dragging operation.|
+|draggingSource|CSS class name to give to the node during the dragging operation.|
 
 ### Usage to openAll, closeAll methods
 
-ノードの開閉状態は `Tree` コンポーネントの内部で管理されますが、全てのノードを開閉するためのメソッドをコンポーネントの外部から利用することができます。
+The open/close state of a node is managed within the Tree component, but methods are available outside the component to open and close all nodes.
 
 ```jsx
 const ref = useRef(null);
