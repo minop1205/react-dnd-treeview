@@ -54,11 +54,12 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ## Data Structure
 
-ツリーを表示するためには、次のようなデータを `Tree` コンポーネントに渡す必要があります。
+In order to display the tree,  
+we need to pass the following data to the `Tree` component
 
 ### Basic example
 
-ツリーを表現するための最小限のデータ構造は次の例の通りです。
+The minimal data structure for representing the tree is shown in the following example
 
 ```json
 [
@@ -104,7 +105,8 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
 ### Optional data
 
-各ノードのレンダリングにカスタムプロパティを与えたい場合は、`data` プロパティを使うことができます。
+If you want to pass custom properties to each node's rendering,  
+you can use the `data` property.
 
 ```json
 [
@@ -167,21 +169,21 @@ const handleDrop = (newTreeData) => setTreeData(newTreeData);
 |parent|number &#124; string|yes|Parent id of each node|
 |droppable|boolean|yes|If `true`, child nodes will be accepted and other nodes can be dropped|
 |text|string|yes|Node label|
-|data|any|no|各ノード注入する追加のデータ<br>これらのデータはレンダープロップスの中で利用することができます。|
+|data|any|no|Additional data to be injected into each node.<br>These data are available in the render props.|
 
 
 ### Component API
 
 |Props|Type|Required|Default|Description|
 |--|--|--|--|--|
-|tree|array|yes||ツリー構造を表現したデータです。ノードデータの配列です。|
-|rootId|number &#124; string |yes||ルートノードのIDです。ツリービュー内で表示される最も階層の浅いノードの親IDとなります。|
-|classes|object|no|undefined|CSSクラス名です。レンダープロップスの外側のデザインを整える時にに使用できます。|
-|listComponent|string|no|ul|リスト用のHTMLタグです。|
-|listItemComponent|string|no|li|リストアイテム用のHTMLタグです。|
-|render|function|yes||各ノードのレンダー関数です。|
-|dragPreviewRender|function|no|undefined|ドラッグ中ノードのレンダリングをカスタマイズするための関数です。|
-|onDrop|function|yes||ツリーの状態が変更された時のコールバック関数です。引数に新しいデータが渡されます。|
+|tree|array|yes||The data representing the tree structure. An array of node data.|
+|rootId|number &#124; string |yes||The id of the root node. It is the parent id of the shallowest node displayed in the tree view.|
+|classes|object|no|undefined|A set of CSS class names to be applied to a specific area in the tree view.<br>See the [Component Styling](#Component-Styling) section for more information.|
+|listComponent|string|no|ul|The HTML tag for the list.|
+|listItemComponent|string|no|li|HTML tag for list items.|
+|render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
+|dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
+|onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.|
 
 ### Render prop
 
