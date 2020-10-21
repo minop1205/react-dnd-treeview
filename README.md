@@ -270,7 +270,7 @@ you can use the `data` property.
 ノードの開閉状態は `Tree` コンポーネントの内部で管理されますが、全てのノードを開閉するためのメソッドをコンポーネントの外部から利用することができます。
 
 ```jsx
-const ref = useRef<OpenIdsHandlers>(null);
+const ref = useRef(null);
 
 const handleOpenAll = () => ref.current.openAll();
 const handleCloseAll = () => ref.current.closeAll();
