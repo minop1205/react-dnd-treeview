@@ -6,16 +6,16 @@ You can use render props to create each node freely.
 ![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/96185033-45680500-0f74-11eb-8f93-d9f605cf5b2d.gif)
 
 ## Demo
-- [Full Features](https://google.com/)
+- [JavaScript](https://google.com/) | [TypeScript](https://google.com/)
 
-## Examples
+## Examples (on CodeSandbox)
 
-- [Minimum Settings](https://google.com/)
-- [Drag & Drop](https://google.com/)
-- [Custom node](https://google.com/)
-- [Custom drag preview](https://google.com)
-- [Select node](https://google.com)
-- [Multi Select node (checkobx)](https://google.com)
+- Minimum configuration ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Custom node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Custom drag ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Select node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Multiple selections(checkobx) ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Opening and closing all nodes ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 
 ## Getting Started
 
