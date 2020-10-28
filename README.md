@@ -12,10 +12,11 @@ You can use render props to create each node freely.
 
 - Minimum configuration ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 - Custom node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Custom drag ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Custom drag preview ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 - Select node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 - Multiple selections(checkobx) ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 - Opening and closing all nodes ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Auto expand with drag over node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
 
 ## Getting Started
 
