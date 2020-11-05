@@ -57,7 +57,8 @@
     "build": "npx tsc",
     "watch": "npx tsc -w",
     "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
-    "prepublish": "rm -rf ./dist && npm run build"
+    "prepublish": "rm -rf ./dist && npm run build",
+    "test": "jest"
   },
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
