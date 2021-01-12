@@ -1,5 +1,5 @@
-import { NodeModel } from "./types";
-import { mutateTree, compareItems } from "./utils";
+import { NodeModel } from "../types";
+import { mutateTree, compareItems } from "../utils";
 
 describe("utilities test", () => {
   test("Mutate tree items", () => {

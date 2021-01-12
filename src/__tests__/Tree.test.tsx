@@ -1,8 +1,8 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { Tree } from "./Tree";
-import { NodeModel } from "./types";
+import { Tree } from "../Tree";
+import { NodeModel } from "../types";
 
 const treeData: NodeModel[] = [
   {
@@ -101,4 +101,19 @@ describe("Tree", () => {
     fireEvent.click(screen.getAllByText("[-]")[0]);
     expect(screen.queryByText("File 1-1")).toBeNull();
   });
+
+  // test("drag and drop `File 3` to `Folder 2-1`", async () => {
+  //   const container = renderTree();
+
+  //   fireEvent.dragStart(container.querySelectorAll("li")[2]);
+
+  //   // fireEvent.dragStart(screen.getByText("File 3"));
+  //   // fireEvent.dragEnter(screen.getByText("Folder 2"));
+
+  //   // await waitFor(() =>
+  //   //   expect(screen.getByText("Folder 2-1")).toBeInTheDocument()
+  //   // );
+
+  //   screen.debug();
+  // });
 });
