@@ -116,7 +116,7 @@ describe("Tree", () => {
     expect(screen.queryByText("File 1-1")).toBeNull();
   });
 
-  test("drag and drop File 3 to Folder 1", () => {
+  test("drag and drop: File 3 into Folder 1", () => {
     renderTree();
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];
@@ -127,5 +127,29 @@ describe("Tree", () => {
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
     expect(screen.queryByText("File 3")).toBeInTheDocument();
+  });
+
+  test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", () => {
+    renderTree();
+
+    let items = screen.getAllByRole("listitem");
+    let src = items[2];
+    let dst = items[1];
+
+    dragAndDrop(src, dst);
+    expect(screen.queryByText("File 3")).toBeNull();
+
+    items = screen.getAllByRole("listitem");
+    src = items[1];
+    dst = items[0];
+
+    dragAndDrop(src, dst);
+    expect(screen.queryByText("Folder 2")).toBeNull();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(screen.getByText("Folder 2")).toBeInTheDocument();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(screen.getByText("File 3")).toBeInTheDocument();
   });
 });
