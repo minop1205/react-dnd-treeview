@@ -1,5 +1,5 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import React, { useState } from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
 import { NodeModel } from "../types";
@@ -65,30 +65,44 @@ const treeData: NodeModel[] = [
   },
 ];
 
+const TestTree: React.FC = () => {
+  const [tree, setTree] = useState<NodeModel[]>(treeData);
+  const handleDrop = (newTree: NodeModel[]) => setTree(newTree);
+
+  return (
+    <Tree
+      tree={tree}
+      rootId={0}
+      render={(node, { depth, isOpen, onToggle }) => (
+        <div style={{ marginInlineStart: depth * 10 }}>
+          {node.droppable && (
+            <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+          )}
+          {node.text}
+        </div>
+      )}
+      onDrop={handleDrop}
+    />
+  );
+};
+
+const dragAndDrop = (src: Element, dst: Element) => {
+  fireEvent.dragStart(src);
+  fireEvent.dragEnter(dst);
+  fireEvent.drop(dst);
+  fireEvent.dragLeave(dst);
+  fireEvent.dragEnd(src);
+};
+
 describe("Tree", () => {
   const renderTree = () => {
-    const { container } = render(
-      <Tree
-        tree={treeData}
-        rootId={0}
-        render={(node, { depth, isOpen, onToggle }) => (
-          <div style={{ marginInlineStart: depth * 10 }}>
-            {node.droppable && (
-              <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
-            )}
-            {node.text}
-          </div>
-        )}
-        onDrop={() => console.log("dropped")}
-      />
-    );
-
+    const { container } = render(<TestTree />);
     return container;
   };
 
   test("count of node items", () => {
-    const container = renderTree();
-    expect(container.querySelectorAll("li").length).toBe(3);
+    renderTree();
+    expect(screen.getAllByRole("listitem").length).toBe(3);
   });
 
   test("open and close first node", () => {
@@ -102,18 +116,16 @@ describe("Tree", () => {
     expect(screen.queryByText("File 1-1")).toBeNull();
   });
 
-  // test("drag and drop `File 3` to `Folder 2-1`", async () => {
-  //   const container = renderTree();
+  test("drag and drop File 3 to Folder 1", () => {
+    renderTree();
+    const items = screen.getAllByRole("listitem");
+    const dragSource = items[2];
+    const dropTarget = items[0];
 
-  //   fireEvent.dragStart(container.querySelectorAll("li")[2]);
+    dragAndDrop(dragSource, dropTarget);
+    expect(screen.queryByText("File 3")).toBeNull();
 
-  //   // fireEvent.dragStart(screen.getByText("File 3"));
-  //   // fireEvent.dragEnter(screen.getByText("Folder 2"));
-
-  //   // await waitFor(() =>
-  //   //   expect(screen.getByText("Folder 2-1")).toBeInTheDocument()
-  //   // );
-
-  //   screen.debug();
-  // });
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(screen.queryByText("File 3")).toBeInTheDocument();
+  });
 });
