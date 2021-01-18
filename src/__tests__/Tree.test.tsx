@@ -152,4 +152,27 @@ describe("Tree", () => {
     fireEvent.click(screen.getAllByText("[+]")[0]);
     expect(screen.getByText("File 3")).toBeInTheDocument();
   });
+
+  test("drag and drop: File 1-2 to root node", () => {
+    renderTree();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    expect(
+      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+    ).toBe(true);
+
+    const src = screen.getAllByRole("listitem")[2];
+    const dst = screen.getAllByRole("list")[0];
+
+    dragAndDrop(src, dst);
+
+    expect(
+      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+    ).toBe(false);
+
+    expect(
+      screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
+    ).toBe(true);
+  });
 });
