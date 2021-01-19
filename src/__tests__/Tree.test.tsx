@@ -81,6 +81,7 @@ const TestTree: React.FC = () => {
           {node.text}
         </div>
       )}
+      dragPreviewRender={(monitorProps) => <div>{monitorProps.item.text}</div>}
       onDrop={handleDrop}
     />
   );
@@ -92,6 +93,7 @@ const dragAndDrop = (src: Element, dst: Element) => {
   fireEvent.drop(dst);
   fireEvent.dragLeave(dst);
   fireEvent.dragEnd(src);
+  fireEvent.dragEnd(window);
 };
 
 describe("Tree", () => {
