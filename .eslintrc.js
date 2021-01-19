@@ -31,8 +31,7 @@ module.exports = {
     node: true
   },
   ignorePatterns: [
-    "webpack.config.js",
-    ".eslintrc.js",
+    "/*.js",
   ],
   settings: {
     react: {
