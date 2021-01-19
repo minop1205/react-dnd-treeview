@@ -81,7 +81,9 @@ const TestTree: React.FC = () => {
           {node.text}
         </div>
       )}
-      dragPreviewRender={(monitorProps) => <div>{monitorProps.item.text}</div>}
+      dragPreviewRender={(monitorProps) => (
+        <div data-testid="preview">{monitorProps.item.text}</div>
+      )}
       onDrop={handleDrop}
     />
   );
@@ -176,5 +178,21 @@ describe("Tree", () => {
     expect(
       screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
     ).toBe(true);
+  });
+
+  test("show drag preview while dragging list item", () => {
+    renderTree();
+
+    const src = screen.getAllByRole("listitem")[2];
+
+    expect(screen.queryByTestId("preview")).toBeNull();
+
+    fireEvent.dragStart(src);
+
+    expect(screen.getByTestId("preview")).toBeInTheDocument();
+
+    fireEvent.dragEnd(window);
+
+    expect(screen.queryByTestId("preview")).toBeNull();
   });
 });
