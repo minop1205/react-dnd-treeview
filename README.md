@@ -23,13 +23,13 @@ You can use render props to create each node freely.
 ### Installation
 
 ```shell
-$ npm install --save @minoru-okuyama/react-dnd-treeview
+$ npm install --save @minoru/react-dnd-treeview
 ```
 
 ### Usage
 
 ```jsx
-import { Tree } from "@minoru-okuyama/react-dnd-treeview";
+import { Tree } from "@minoru/react-dnd-treeview";
 
 ...
 
