@@ -24,6 +24,8 @@ type Props = {
   onDrop: (
     tree: NodeModel[],
     options: {
+      dragSourceId: NodeModel["id"];
+      dropTargetId: NodeModel["id"];
       dragSource: NodeModel | undefined;
       dropTarget: NodeModel | undefined;
     }
@@ -50,6 +52,8 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
         openIds,
         onDrop: (id, parentId) =>
           props.onDrop(mutateTree(props.tree, id, parentId), {
+            dragSourceId: id,
+            dropTargetId: parentId,
             dragSource: getTreeItem(props.tree, id),
             dropTarget: getTreeItem(props.tree, parentId),
           }),
