@@ -1,5 +1,5 @@
 import { NodeModel } from "../types";
-import { mutateTree, compareItems } from "../utils";
+import { mutateTree, compareItems, getTreeItem } from "../utils";
 
 describe("utilities test", () => {
   test("Mutate tree items", () => {
@@ -56,5 +56,19 @@ describe("utilities test", () => {
     expect(compareItems(nodeA, nodeB)).toBe(-1);
     expect(compareItems(nodeB, nodeA)).toBe(1);
     expect(compareItems(nodeA, nodeA)).toBe(0);
+  });
+
+  test("Get tree item by id", () => {
+    const tree: NodeModel[] = [
+      {
+        id: 1,
+        parent: 0,
+        droppable: true,
+        text: "a",
+      },
+    ];
+
+    expect(getTreeItem(tree, 1)?.text).toBe("a");
+    expect(getTreeItem(tree, 2)).toBe(undefined);
   });
 });

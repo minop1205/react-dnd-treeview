@@ -14,6 +14,20 @@ export const mutateTree = (
     });
   });
 
+export const getTreeItem = (
+  tree: NodeModel[],
+  id: NodeModel["id"]
+): NodeModel | undefined => {
+  const node = tree.find((n) => n.id === id);
+
+  if (!node) {
+    return undefined;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  return produce(node, () => {});
+};
+
 export const compareItems = (a: NodeModel, b: NodeModel): number => {
   if (a.text > b.text) {
     return 1;
