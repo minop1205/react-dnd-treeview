@@ -3,7 +3,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
-import { mutateTree } from "./utils";
+import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
 import {
   NodeModel,
@@ -21,7 +21,13 @@ type Props = {
   listItemComponent?: TreeContext["listItemComponent"];
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
-  onDrop: (tree: NodeModel[]) => void;
+  onDrop: (
+    tree: NodeModel[],
+    options: {
+      dragSource: NodeModel | undefined;
+      dropTarget: NodeModel | undefined;
+    }
+  ) => void;
 };
 
 const Context = createContext<TreeContext>({} as TreeContext);
@@ -43,7 +49,10 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
         ...props,
         openIds,
         onDrop: (id, parentId) =>
-          props.onDrop(mutateTree(props.tree, id, parentId)),
+          props.onDrop(mutateTree(props.tree, id, parentId), {
+            dragSource: getTreeItem(props.tree, id),
+            dropTarget: getTreeItem(props.tree, parentId),
+          }),
         onToggle: handleToggle,
       }}
     >
