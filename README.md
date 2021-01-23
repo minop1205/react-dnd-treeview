@@ -6,17 +6,17 @@ You can use render props to create each node freely.
 ![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/98293395-94441000-1ff1-11eb-81db-b84c31b03c6b.gif)
 
 ## Demo
-- [JavaScript](https://google.com/) | [TypeScript](https://google.com/)
+- [JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/full-features-ts-5296j)
 
 ## Examples (on CodeSandbox)
 
-- Minimum configuration ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Custom node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Custom drag preview ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Select node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Multiple selections(checkobx) ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Opening and closing all nodes ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
-- Auto expand with drag over node ([JavaScript](https://google.com/) | [TypeScript](https://google.com))
+- Minimum configuration ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/minimum-configuration-ts-wjigd))
+- Custom node ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/custom-node-ts-buimk))
+- Custom drag preview ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/custom-drag-preview-ts-bdhgj))
+- Select node ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/select-node-ts-7elv2))
+- Multiple selections(checkobx) ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/multiple-selections-ts-eud8c))
+- Opening and closing all nodes ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-43j5l))
+- Auto expand with drag over node ([JavaScript](https://google.com/) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
 
 ## Getting Started
 
