@@ -9,6 +9,7 @@ You can use render props to create each node freely.
 - [JavaScript](https://codesandbox.io/s/full-features-js-itczn) | [TypeScript](https://codesandbox.io/s/full-features-ts-5296j)
 
 ## Examples (on CodeSandbox)
+Some of the examples below use Material-UI components, but TreeView does not depend on Material-UI, so you can use other libraries or your own custom components.
 
 - Minimum configuration ([JavaScript](https://codesandbox.io/s/minimum-configuration-js-d9kem) | [TypeScript](https://codesandbox.io/s/minimum-configuration-ts-wjigd))
 - Custom node ([JavaScript](https://codesandbox.io/s/custom-node-js-lulok) | [TypeScript](https://codesandbox.io/s/custom-node-ts-buimk))
