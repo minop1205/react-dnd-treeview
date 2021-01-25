@@ -174,7 +174,7 @@ you can use the `data` property.
 |data|any|no|Additional data to be injected into each node.<br>These data are available in the render props.|
 
 
-### Component API
+## Component API
 
 |Props|Type|Required|Default|Description|
 |--|--|--|--|--|
@@ -185,7 +185,7 @@ you can use the `data` property.
 |listItemComponent|string|no|li|HTML tag for list items.|
 |render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
 |dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
-|onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.|
+|onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.|
 
 ### Render prop
 
@@ -242,6 +242,40 @@ The data passed to `dragPreviewRender` contains the following properties
 |--|--|--|
 |item|object|Node data. (an element in the tree data array)<br>It also includes the `ref` property, which is a reference to the HTML element to be dragged.|
 |clientOffset|object|The client offset of the pointer during the dragging operation.<br>It is in the format of `{x: number, y: number}`.<br>If the item is not being dragged, it is set to `null`.|
+
+
+### onDrop callback
+
+If the tree is modified by drag-and-drop, the changes can be retrieved by the `onDrop` callback.
+
+```jsx
+const [treeData, setTreeData] = useState(initialTreeData);
+const handleDrop = (newTree, {dragSourceId, dropTargetId, dragSource, dropTarget}) => {
+
+  // Do something
+
+  setTreeData(newTree);
+};
+
+return (
+  <Tree
+    {...props}
+    tree={treeData}
+    onDrop={handleDrop}
+  />
+);
+```
+
+The arguments passed to the onDrop callback function are as follows
+
+|Name|Type|Description|
+|--|--|--|
+|newTree|array|This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property.|
+|options.dragSourceId|number &#124; string|node id of the dragging source|
+|options.dropTargetId|number &#124; string|node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.|
+|options.dragSource|object|node item of the dragging source|
+|options.dropTarget|object &#124; undefined|node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`|
+
 
 ### Component Styling
 
