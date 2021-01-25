@@ -9,6 +9,7 @@
   },
   "author": "Minoru Okuyama <okuyama@analogic.jp> (https://github.com/minop1205/)",
   "homepage": "https://github.com/minop1205/react-dnd-treeview",
+  "keywords": ["drag and drop", "dnd", "react", "treeview", "component", "material-ui"],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
