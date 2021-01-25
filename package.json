@@ -67,11 +67,6 @@
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
     "email": "okuyama@analogic.jp"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
