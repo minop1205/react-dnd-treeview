@@ -11,6 +11,7 @@ import {
   DragPreviewRender,
   TreeContext,
   OpenIdsHandlers,
+  SortCallback,
 } from "./types";
 
 type Props = {
@@ -30,6 +31,7 @@ type Props = {
       dropTarget: NodeModel | undefined;
     }
   ) => void;
+  sort?: SortCallback;
 };
 
 const Context = createContext<TreeContext>({} as TreeContext);
@@ -58,6 +60,7 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
             dropTarget: getTreeItem(props.tree, parentId),
           }),
         onToggle: handleToggle,
+        sort: props.sort,
       }}
     >
       <DndProvider backend={HTML5Backend}>
