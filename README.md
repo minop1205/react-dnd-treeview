@@ -186,6 +186,7 @@ you can use the `data` property.
 |render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
 |dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
 |onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.|
+|sort|function \| boolean|no|true|Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.|
 
 ### Render prop
 
