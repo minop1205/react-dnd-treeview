@@ -40,6 +40,8 @@ export type Classes = {
 
 export type ToggleHandler = (id: NodeModel["id"]) => void;
 
+export type SortCallback = (a: NodeModel, b: NodeModel) => number;
+
 export type TreeContext = {
   tree: NodeModel[];
   openIds: NodeModel["id"][];
@@ -50,6 +52,7 @@ export type TreeContext = {
   dragPreviewRender?: DragPreviewRender;
   onDrop: DropHandler;
   onToggle: ToggleHandler;
+  sort?: SortCallback | boolean;
 };
 
 export type DragLayerMonitorProps<T = unknown> = {

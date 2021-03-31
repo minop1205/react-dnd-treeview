@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import { NodeModel } from "./types";
+import { NodeModel, SortCallback } from "./types";
 
 export const mutateTree = (
   tree: NodeModel[],
@@ -28,7 +28,7 @@ export const getTreeItem = (
   return produce(node, () => {});
 };
 
-export const compareItems = (a: NodeModel, b: NodeModel): number => {
+export const compareItems: SortCallback = (a, b) => {
   if (a.text > b.text) {
     return 1;
   } else if (a.text < b.text) {
