@@ -1,6 +1,10 @@
 import { ElementType } from "react";
 import { XYCoord } from "react-dnd";
 
+export type Partial<T> = {
+  [P in keyof T]?: T[P];
+};
+
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
@@ -74,4 +78,27 @@ export type DragOverProps = {
 export type OpenIdsHandlers = {
   openAll(): void;
   closeAll(): void;
+};
+
+export type InitialOpen = boolean | NodeModel["id"][];
+
+export type TreeProps = {
+  tree: NodeModel[];
+  rootId: NodeModel["id"];
+  classes?: TreeContext["classes"];
+  listComponent?: TreeContext["listComponent"];
+  listItemComponent?: TreeContext["listItemComponent"];
+  render: NodeRender;
+  dragPreviewRender?: DragPreviewRender;
+  onDrop: (
+    tree: NodeModel[],
+    options: {
+      dragSourceId: NodeModel["id"];
+      dropTargetId: NodeModel["id"];
+      dragSource: NodeModel | undefined;
+      dropTarget: NodeModel | undefined;
+    }
+  ) => void;
+  sort?: SortCallback | boolean;
+  initialOpen?: InitialOpen;
 };

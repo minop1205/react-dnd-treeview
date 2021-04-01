@@ -5,42 +5,15 @@ import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
-import {
-  NodeModel,
-  NodeRender,
-  DragPreviewRender,
-  TreeContext,
-  OpenIdsHandlers,
-  SortCallback,
-} from "./types";
-
-type Props = {
-  tree: NodeModel[];
-  rootId: NodeModel["id"];
-  classes?: TreeContext["classes"];
-  listComponent?: TreeContext["listComponent"];
-  listItemComponent?: TreeContext["listItemComponent"];
-  render: NodeRender;
-  dragPreviewRender?: DragPreviewRender;
-  onDrop: (
-    tree: NodeModel[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel | undefined;
-      dropTarget: NodeModel | undefined;
-    }
-  ) => void;
-  sort?: SortCallback | boolean;
-};
+import { TreeContext, OpenIdsHandlers, TreeProps } from "./types";
 
 const Context = createContext<TreeContext>({} as TreeContext);
 
-const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
+const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [
     openIds,
     { handleToggle, handleCloseAll, handleOpenAll },
-  ] = useOpenIdsHelper(props.tree);
+  ] = useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(ref, () => ({
     openAll: () => handleOpenAll(),
