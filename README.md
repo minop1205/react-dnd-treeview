@@ -18,6 +18,8 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Multiple selections(checkobx) ([JavaScript](https://codesandbox.io/s/multiple-selections-js-ve17w) | [TypeScript](https://codesandbox.io/s/multiple-selections-ts-eud8c))
 - Opening and closing all nodes ([JavaScript](https://codesandbox.io/s/opening-and-closing-all-nodes-js-qn00x) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-43j5l))
 - Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
+- Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
+
 
 ## Getting Started
 
