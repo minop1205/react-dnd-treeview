@@ -75,3 +75,5 @@ export type OpenIdsHandlers = {
   openAll(): void;
   closeAll(): void;
 };
+
+export type InitialOpen = boolean | NodeModel["id"][];

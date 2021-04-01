@@ -12,6 +12,7 @@ import {
   TreeContext,
   OpenIdsHandlers,
   SortCallback,
+  InitialOpen,
 } from "./types";
 
 type Props = {
@@ -32,6 +33,7 @@ type Props = {
     }
   ) => void;
   sort?: SortCallback | boolean;
+  initialOpen?: InitialOpen;
 };
 
 const Context = createContext<TreeContext>({} as TreeContext);
@@ -40,7 +42,7 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
   const [
     openIds,
     { handleToggle, handleCloseAll, handleOpenAll },
-  ] = useOpenIdsHelper(props.tree);
+  ] = useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(ref, () => ({
     openAll: () => handleOpenAll(),
