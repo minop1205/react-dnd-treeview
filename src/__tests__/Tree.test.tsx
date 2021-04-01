@@ -244,4 +244,19 @@ describe("Tree", () => {
     expect(nodes[1].contains(screen.getByText("File 3"))).toBe(true);
     expect(nodes[2].contains(screen.getByText("File 2"))).toBe(true);
   });
+
+  test("open all parent nodes on component initializing", () => {
+    render(<TestTree initialOpen={true} />);
+
+    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+    expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(screen.getByText("File 2-1-1")).toBeInTheDocument();
+  });
+
+  test("open specific parent nodes on component initializing", () => {
+    render(<TestTree initialOpen={[1]} />);
+
+    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+  });
 });
