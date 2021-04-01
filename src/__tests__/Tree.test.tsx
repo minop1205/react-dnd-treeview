@@ -222,4 +222,43 @@ describe("Tree", () => {
     expect(nodes[0].contains(screen.getByText("Folder 2"))).toBe(true);
     expect(nodes[1].contains(screen.getByText("Folder 1"))).toBe(true);
   });
+
+  test("disable sorting", () => {
+    const treeItems: NodeModel[] = [
+      {
+        id: 1,
+        parent: 0,
+        droppable: false,
+        text: "File 1",
+      },
+      {
+        id: 3,
+        parent: 0,
+        droppable: false,
+        text: "File 3",
+      },
+      {
+        id: 2,
+        parent: 0,
+        droppable: false,
+        text: "File 2",
+      },
+    ];
+
+    render(
+      <Tree
+        tree={treeItems}
+        rootId={0}
+        render={(node) => <>{node.text}</>}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onDrop={() => {}}
+        sort={false}
+      />
+    );
+
+    const nodes = screen.getAllByRole("listitem");
+    expect(nodes[0].contains(screen.getByText("File 1"))).toBe(true);
+    expect(nodes[1].contains(screen.getByText("File 3"))).toBe(true);
+    expect(nodes[2].contains(screen.getByText("File 2"))).toBe(true);
+  });
 });
