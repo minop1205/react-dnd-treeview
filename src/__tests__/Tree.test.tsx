@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
-import { NodeModel } from "../types";
+import { NodeModel, SortCallback } from "../types";
 
 const treeData: NodeModel[] = [
   {
@@ -194,5 +194,32 @@ describe("Tree", () => {
     fireEvent.dragEnd(window);
 
     expect(screen.queryByTestId("preview")).toBeNull();
+  });
+
+  test("sort items by id descending order", () => {
+    const sortCallback: SortCallback = (a, b) => {
+      if (a.id > b.id) {
+        return -1;
+      } else if (a.id < b.id) {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    render(
+      <Tree
+        tree={treeData}
+        rootId={0}
+        render={(node) => <>{node.text}</>}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onDrop={() => {}}
+        sort={sortCallback}
+      />
+    );
+
+    const nodes = screen.getAllByRole("listitem");
+    expect(nodes[0].contains(screen.getByText("Folder 2"))).toBe(true);
+    expect(nodes[1].contains(screen.getByText("Folder 1"))).toBe(true);
   });
 });
