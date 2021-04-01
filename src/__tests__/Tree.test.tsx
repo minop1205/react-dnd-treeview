@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
-import { NodeModel, SortCallback } from "../types";
+import { NodeModel, SortCallback, Partial, TreeProps } from "../types";
 
 const treeData: NodeModel[] = [
   {
@@ -65,7 +65,7 @@ const treeData: NodeModel[] = [
   },
 ];
 
-const TestTree: React.FC = () => {
+const TestTree: React.FC<Partial<TreeProps>> = (props) => {
   const [tree, setTree] = useState<NodeModel[]>(treeData);
   const handleDrop = (newTree: NodeModel[]) => setTree(newTree);
 
@@ -85,6 +85,7 @@ const TestTree: React.FC = () => {
         <div data-testid="preview">{monitorProps.item.text}</div>
       )}
       onDrop={handleDrop}
+      {...props}
     />
   );
 };
@@ -207,16 +208,7 @@ describe("Tree", () => {
       return 0;
     };
 
-    render(
-      <Tree
-        tree={treeData}
-        rootId={0}
-        render={(node) => <>{node.text}</>}
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onDrop={() => {}}
-        sort={sortCallback}
-      />
-    );
+    render(<TestTree sort={sortCallback} />);
 
     const nodes = screen.getAllByRole("listitem");
     expect(nodes[0].contains(screen.getByText("Folder 2"))).toBe(true);
@@ -245,16 +237,7 @@ describe("Tree", () => {
       },
     ];
 
-    render(
-      <Tree
-        tree={treeItems}
-        rootId={0}
-        render={(node) => <>{node.text}</>}
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        onDrop={() => {}}
-        sort={false}
-      />
-    );
+    render(<TestTree tree={treeItems} sort={false} />);
 
     const nodes = screen.getAllByRole("listitem");
     expect(nodes[0].contains(screen.getByText("File 1"))).toBe(true);
