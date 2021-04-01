@@ -31,7 +31,7 @@ type Props = {
       dropTarget: NodeModel | undefined;
     }
   ) => void;
-  sort?: SortCallback;
+  sort?: SortCallback | boolean;
 };
 
 const Context = createContext<TreeContext>({} as TreeContext);
