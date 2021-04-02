@@ -18,6 +18,8 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Multiple selections(checkobx) ([JavaScript](https://codesandbox.io/s/multiple-selections-js-ve17w) | [TypeScript](https://codesandbox.io/s/multiple-selections-ts-eud8c))
 - Opening and closing all nodes ([JavaScript](https://codesandbox.io/s/opening-and-closing-all-nodes-js-qn00x) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-43j5l))
 - Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
+- Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
+
 
 ## Getting Started
 
@@ -167,8 +169,8 @@ you can use the `data` property.
 
 |Key|Type|Required|Description|
 |--|--|--|--|
-|id|number &#124; string|yes|Identifier of each node|
-|parent|number &#124; string|yes|Parent id of each node|
+|id|number \| string|yes|Identifier of each node|
+|parent|number \| string|yes|Parent id of each node|
 |droppable|boolean|yes|If `true`, child nodes will be accepted and other nodes can be dropped|
 |text|string|yes|Node label|
 |data|any|no|Additional data to be injected into each node.<br>These data are available in the render props.|
@@ -179,13 +181,15 @@ you can use the `data` property.
 |Props|Type|Required|Default|Description|
 |--|--|--|--|--|
 |tree|array|yes||The data representing the tree structure. An array of node data.|
-|rootId|number &#124; string |yes||The id of the root node. It is the parent id of the shallowest node displayed in the tree view.|
+|rootId|number \| string |yes||The id of the root node. It is the parent id of the shallowest node displayed in the tree view.|
 |classes|object|no|undefined|A set of CSS class names to be applied to a specific area in the tree view.<br>See the [Component Styling](#Component-Styling) section for more information.|
 |listComponent|string|no|ul|The HTML tag for the list.|
 |listItemComponent|string|no|li|HTML tag for list items.|
 |render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
 |dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
 |onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.|
+|sort|function \| boolean|no|true|Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.|
+|initialOpen|boolean \| array | no | false | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state. |
 
 ### Render prop
 
@@ -271,10 +275,10 @@ The arguments passed to the onDrop callback function are as follows
 |Name|Type|Description|
 |--|--|--|
 |newTree|array|This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property.|
-|options.dragSourceId|number &#124; string|node id of the dragging source|
-|options.dropTargetId|number &#124; string|node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.|
+|options.dragSourceId|number \| string|node id of the dragging source|
+|options.dropTargetId|number \| string|node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.|
 |options.dragSource|object|node item of the dragging source|
-|options.dropTarget|object &#124; undefined|node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`|
+|options.dropTarget|object \| undefined|node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`|
 
 
 ### Component Styling

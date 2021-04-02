@@ -13,8 +13,17 @@ type Props = {
 export const Container: React.FC<Props> = (props) => {
   const context = useContext(Context);
   const nodes = context.tree.filter((l) => l.parent === props.parentId);
-  const groups = nodes.filter((n) => n.droppable).sort(compareItems);
-  const templates = nodes.filter((n) => !n.droppable).sort(compareItems);
+
+  let groups = nodes.filter((n) => n.droppable);
+  let templates = nodes.filter((n) => !n.droppable);
+
+  if (context.sort !== false) {
+    const sortCallback =
+      typeof context.sort === "function" ? context.sort : compareItems;
+    groups = groups.sort(sortCallback);
+    templates = templates.sort(sortCallback);
+  }
+
   const view = [...groups, ...templates];
   const [isOver, drop] = useDropContainer(context.tree, context.onDrop);
   const classes = context.classes;

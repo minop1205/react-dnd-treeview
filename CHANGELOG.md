@@ -1,0 +1,12 @@
+# Change Log
+
+## 1.1.0
+_Apr 02, 2021_
+
+- Added initialOpen API to control the opening and closing state of the node in the initial state of the component.
+- Added sort API to control the sorting of nodes.
+
+## 1.0.0
+_Jan 25, 2021_
+
+Initial major release.
