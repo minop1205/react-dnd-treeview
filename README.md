@@ -218,6 +218,7 @@ The arguments passed to the render function are as follows
 |data|object|Node data. (an element in the tree data array)|
 |options.depth|number|The depth of the node hierarchy.|
 |options.isOpen|boolean|The open and closed state of the node.<br>If droppable = false, isOpen is always false.|
+|options.hasChild|boolean|Flag indicating whether or not the node has children. It is true if the node has children, false otherwise.|
 |options.onToggle|function|An event handler for the open/close button of a node.|
 
 

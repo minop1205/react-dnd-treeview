@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.2.0
+_Apr 05, 2021_
+
+- Added `hasChild` argument to render function.
+
 ## 1.1.0
 _Apr 02, 2021_
 
