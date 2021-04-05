@@ -259,4 +259,20 @@ describe("Tree", () => {
     expect(screen.getByText("File 1-1")).toBeInTheDocument();
     expect(screen.queryByText("Folder 2-1")).toBeNull();
   });
+
+  test("show text that has child or not to each nodes", () => {
+    render(
+      <TestTree
+        render={(node, { hasChild }) => (
+          <div>{`${node.text} ${hasChild ? "hasChild" : ""}`}</div>
+        )}
+        initialOpen={true}
+      />
+    );
+
+    expect(screen.getByText("Folder 1 hasChild")).toBeInTheDocument();
+    expect(screen.queryByText("File 1-1 hasChild")).toBeNull();
+    expect(screen.getByText("Folder 2-1 hasChild")).toBeInTheDocument();
+    expect(screen.queryByText("File 3 hasChild")).toBeNull();
+  });
 });
