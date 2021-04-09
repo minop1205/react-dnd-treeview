@@ -31,6 +31,11 @@ export type DropHandler = (
   parent: NodeModel["id"]
 ) => void;
 
+export type CanDropHandler = (
+  id: NodeModel["id"],
+  parent: NodeModel["id"]
+) => boolean;
+
 export type Classes = {
   root?: string;
   container?: string;
@@ -51,6 +56,7 @@ export type TreeContext = {
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
   onDrop: DropHandler;
+  canDrop?: CanDropHandler;
   onToggle: ToggleHandler;
   sort?: SortCallback | boolean;
 };
