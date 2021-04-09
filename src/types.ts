@@ -115,6 +115,6 @@ export type TreeProps = {
       dropTarget: NodeModel | undefined;
     }
   ) => boolean;
-  sort?: SortCallback;
+  sort?: SortCallback | boolean;
   initialOpen?: InitialOpen;
 };
