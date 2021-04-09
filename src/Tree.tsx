@@ -31,6 +31,15 @@ type Props = {
       dropTarget: NodeModel | undefined;
     }
   ) => void;
+  canDrop?: (
+    tree: NodeModel[],
+    options: {
+      dragSourceId: NodeModel["id"];
+      dropTargetId: NodeModel["id"];
+      dragSource: NodeModel | undefined;
+      dropTarget: NodeModel | undefined;
+    }
+  ) => boolean;
   sort?: SortCallback;
 };
 
@@ -47,6 +56,8 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
     closeAll: () => handleCloseAll(),
   }));
 
+  const canDropCallback = props.canDrop;
+
   return (
     <Context.Provider
       value={{
@@ -59,6 +70,15 @@ const Tree = forwardRef<OpenIdsHandlers, Props>((props, ref) => {
             dragSource: getTreeItem(props.tree, id),
             dropTarget: getTreeItem(props.tree, parentId),
           }),
+        canDrop: canDropCallback
+          ? (id, parentId) =>
+              canDropCallback(props.tree, {
+                dragSourceId: id,
+                dropTargetId: parentId,
+                dragSource: getTreeItem(props.tree, id),
+                dropTarget: getTreeItem(props.tree, parentId),
+              })
+          : undefined,
         onToggle: handleToggle,
         sort: props.sort,
       }}
