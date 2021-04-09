@@ -16,6 +16,7 @@ import {
   DragOverProps,
   ToggleHandler,
   CanDropHandler,
+  InitialOpen,
 } from "./types";
 
 export const useDropContainer = (
@@ -179,7 +180,8 @@ export const useDragOver = (
 };
 
 export const useOpenIdsHelper = (
-  tree: NodeModel[]
+  tree: NodeModel[],
+  initialOpen?: InitialOpen
 ): [
   NodeModel["id"][],
   {
@@ -188,7 +190,17 @@ export const useOpenIdsHelper = (
     handleOpenAll: () => void;
   }
 ] => {
-  const [openIds, setOpenIds] = useState<NodeModel["id"][]>([]);
+  let initialOpenIds: NodeModel["id"][] = [];
+
+  if (initialOpen === true) {
+    initialOpenIds = tree
+      .filter((node) => node.droppable)
+      .map((node) => node.id);
+  } else if (Array.isArray(initialOpen)) {
+    initialOpenIds = initialOpen;
+  }
+
+  const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
 
   const handleToggle = useCallback(
     (targetId: NodeModel["id"]) => {

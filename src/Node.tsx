@@ -57,6 +57,7 @@ export const Node: React.FC<Props> = (props) => {
   const params: RenderParams = {
     depth: props.depth,
     isOpen: open,
+    hasChild,
     onToggle: handleToggle,
   };
 

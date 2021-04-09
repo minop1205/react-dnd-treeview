@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
-import { NodeModel } from "../types";
+import { NodeModel, SortCallback, Partial, TreeProps } from "../types";
 
 const treeData: NodeModel[] = [
   {
@@ -65,7 +65,7 @@ const treeData: NodeModel[] = [
   },
 ];
 
-const TestTree: React.FC = () => {
+const TestTree: React.FC<Partial<TreeProps>> = (props) => {
   const [tree, setTree] = useState<NodeModel[]>(treeData);
   const handleDrop = (newTree: NodeModel[]) => setTree(newTree);
 
@@ -85,6 +85,7 @@ const TestTree: React.FC = () => {
         <div data-testid="preview">{monitorProps.item.text}</div>
       )}
       onDrop={handleDrop}
+      {...props}
     />
   );
 };
@@ -194,5 +195,84 @@ describe("Tree", () => {
     fireEvent.dragEnd(window);
 
     expect(screen.queryByTestId("preview")).toBeNull();
+  });
+
+  test("sort items by id descending order", () => {
+    const sortCallback: SortCallback = (a, b) => {
+      if (a.id > b.id) {
+        return -1;
+      } else if (a.id < b.id) {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    render(<TestTree sort={sortCallback} />);
+
+    const nodes = screen.getAllByRole("listitem");
+    expect(nodes[0].contains(screen.getByText("Folder 2"))).toBe(true);
+    expect(nodes[1].contains(screen.getByText("Folder 1"))).toBe(true);
+  });
+
+  test("disable sorting", () => {
+    const treeItems: NodeModel[] = [
+      {
+        id: 1,
+        parent: 0,
+        droppable: false,
+        text: "File 1",
+      },
+      {
+        id: 3,
+        parent: 0,
+        droppable: false,
+        text: "File 3",
+      },
+      {
+        id: 2,
+        parent: 0,
+        droppable: false,
+        text: "File 2",
+      },
+    ];
+
+    render(<TestTree tree={treeItems} sort={false} />);
+
+    const nodes = screen.getAllByRole("listitem");
+    expect(nodes[0].contains(screen.getByText("File 1"))).toBe(true);
+    expect(nodes[1].contains(screen.getByText("File 3"))).toBe(true);
+    expect(nodes[2].contains(screen.getByText("File 2"))).toBe(true);
+  });
+
+  test("open all parent nodes on component initializing", () => {
+    render(<TestTree initialOpen={true} />);
+
+    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+    expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(screen.getByText("File 2-1-1")).toBeInTheDocument();
+  });
+
+  test("open specific parent nodes on component initializing", () => {
+    render(<TestTree initialOpen={[1]} />);
+
+    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+  });
+
+  test("show text that has child or not to each nodes", () => {
+    render(
+      <TestTree
+        render={(node, { hasChild }) => (
+          <div>{`${node.text} ${hasChild ? "hasChild" : ""}`}</div>
+        )}
+        initialOpen={true}
+      />
+    );
+
+    expect(screen.getByText("Folder 1 hasChild")).toBeInTheDocument();
+    expect(screen.queryByText("File 1-1 hasChild")).toBeNull();
+    expect(screen.getByText("Folder 2-1 hasChild")).toBeInTheDocument();
+    expect(screen.queryByText("File 3 hasChild")).toBeNull();
   });
 });
