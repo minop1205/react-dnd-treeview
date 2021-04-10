@@ -7,7 +7,6 @@ import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
 import { TreeContext, OpenIdsHandlers, TreeProps } from "./types";
 
-
 const Context = createContext<TreeContext>({} as TreeContext);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
