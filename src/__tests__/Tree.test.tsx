@@ -100,8 +100,8 @@ const dragAndDrop = (src: Element, dst: Element) => {
 };
 
 describe("Tree", () => {
-  const renderTree = () => {
-    const { container } = render(<TestTree />);
+  const renderTree = (props: Partial<TreeProps> = {}) => {
+    const { container } = render(<TestTree {...props} />);
     return container;
   };
 
