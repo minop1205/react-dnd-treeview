@@ -25,7 +25,7 @@ export const Container: React.FC<Props> = (props) => {
   }
 
   const view = [...groups, ...templates];
-  const [isOver, drop] = useDropContainer(context.tree, context.onDrop);
+  const [isOver, drop] = useDropContainer(props.parentId, context.tree, context.onDrop, context.canDrop);
   const classes = context.classes;
 
   let className = "";
