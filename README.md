@@ -306,6 +306,10 @@ return (
 );
 ```
 
+Note that this will replace the default behaviour which will not take any action when a drop would not result in a change to the tree structure or when dropping on a node would result in a malformed tree e.g. dropping a droppable node on itself as shown in the below graphic. Therefore, if you pass this callback, you may need to handle such cases.
+
+![malformed tree](https://user-images.githubusercontent.com/3772820/113640360-3b6ac780-96b6-11eb-83a4-b73971de8878.gif)
+
 ### Component Styling
 
 You are free to define the styling of individual nodes in the tree in your Render props, but the rest of the tree can be styled by specifying the CSS class name for the `classes` property.
