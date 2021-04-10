@@ -20,8 +20,10 @@ import {
 } from "./types";
 
 export const useDropContainer = (
+  parentId: NodeModel["id"],
   tree: NodeModel[],
-  onDrop: DropHandler
+  onDrop: DropHandler,
+  canDrop: CanDropHandler | undefined
 ): [boolean, DragElementWrapper<HTMLElement>] => {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
@@ -31,7 +33,10 @@ export const useDropContainer = (
       }
     },
     canDrop: (item: DragItem) => {
-      const dragItem = tree.find((node) => node.id === item.id);
+      const dragItem = tree.find((node) => node.id === item.id) as NodeModel;
+      if (canDrop) {
+        return canDrop(dragItem.id, parentId)
+      }
       return dragItem === undefined ? false : dragItem.parent !== 0;
     },
     collect: (monitor) => ({
