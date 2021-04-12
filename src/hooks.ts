@@ -35,7 +35,7 @@ export const useDropContainer = (
     canDrop: (item: DragItem) => {
       const dragItem = tree.find((node) => node.id === item.id) as NodeModel;
       if (canDrop) {
-        return canDrop(dragItem.id, parentId)
+        return canDrop(dragItem.id, parentId);
       }
       return dragItem === undefined ? false : dragItem.parent !== 0;
     },

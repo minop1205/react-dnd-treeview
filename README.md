@@ -308,7 +308,7 @@ return (
 
 Note that this will replace the default behaviour which will not take any action when a drop would not result in a change to the tree structure or when dropping on a node would result in a malformed tree e.g. dropping a droppable node on itself as shown in the below graphic. Therefore, if you pass this callback, you may need to handle such cases.
 
-![malformed tree](https://user-images.githubusercontent.com/3772820/113640360-3b6ac780-96b6-11eb-83a4-b73971de8878.gif)
+![malformed tree](https://user-images.githubusercontent.com/3772820/114326837-9d717400-9b71-11eb-91cf-c762c4ab7461.gif)
 
 ### Component Styling
 

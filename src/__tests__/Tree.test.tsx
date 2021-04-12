@@ -187,7 +187,7 @@ describe("Tree", () => {
 
     renderTree({
       onDrop,
-      canDrop
+      canDrop,
     });
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
@@ -210,7 +210,7 @@ describe("Tree", () => {
     const onDrop = jest.fn();
 
     renderTree({
-      onDrop
+      onDrop,
     });
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
@@ -229,7 +229,7 @@ describe("Tree", () => {
 
     renderTree({
       onDrop,
-      canDrop
+      canDrop,
     });
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
