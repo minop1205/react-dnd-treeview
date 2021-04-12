@@ -22,7 +22,12 @@ export const Node: React.FC<Props> = (props) => {
   }
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, drop] = useDropNode(props.id, context.tree, context.onDrop);
+  const [isOver, drop] = useDropNode(
+    item,
+    context.tree,
+    context.onDrop,
+    context.canDrop
+  );
 
   if (item.droppable) {
     drop(drag(ref));

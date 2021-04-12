@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.3.0
+_Apr 12, 2021_
+
+- Added `canDrop` API.
+
 ## 1.2.0
 _Apr 05, 2021_
 

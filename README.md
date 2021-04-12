@@ -188,6 +188,7 @@ you can use the `data` property.
 |render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
 |dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
 |onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.|
+|canDrop|function|no|undefined|Callback function which should return true or false depending on if a give node should be droppable onto another node.<br>The callback will receive the current tree and an options object which is the same as the one which would be passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information.|
 |sort|function \| boolean|no|true|Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.|
 |initialOpen|boolean \| array | no | false | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state. |
 
@@ -281,6 +282,33 @@ The arguments passed to the onDrop callback function are as follows
 |options.dragSource|object|node item of the dragging source|
 |options.dropTarget|object \| undefined|node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`|
 
+### canDrop callback
+
+This callback should return true if the node being dragged can be dropped onto a given node. If it returns false and the user drops the dragged node, no action will be taken and the [onDrop callback](#onDrop-callback) will not be fired.
+
+This callback accepts the same parameters as the onDrop callback except that the first parameter will be the current tree.
+
+```jsx
+const canDrop = (currentTree, {dragSourceId, dropTargetId, dragSource, dropTarget}) => {
+  return true;
+
+  // or 
+
+  return false;
+};
+
+return (
+  <Tree
+    {...props}
+    tree={treeData}
+    canDrop={canDrop}
+  />
+);
+```
+
+Note that this will replace the default behaviour which will not take any action when a drop would not result in a change to the tree structure or when dropping on a node would result in a malformed tree e.g. dropping a droppable node on itself as shown in the below graphic. Therefore, if you pass this callback, you may need to handle such cases.
+
+![malformed tree](https://user-images.githubusercontent.com/3772820/114326837-9d717400-9b71-11eb-91cf-c762c4ab7461.gif)
 
 ### Component Styling
 

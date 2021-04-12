@@ -100,8 +100,8 @@ const dragAndDrop = (src: Element, dst: Element) => {
 };
 
 describe("Tree", () => {
-  const renderTree = () => {
-    const { container } = render(<TestTree />);
+  const renderTree = (props: Partial<TreeProps> = {}) => {
+    const { container } = render(<TestTree {...props} />);
     return container;
   };
 
@@ -179,6 +179,69 @@ describe("Tree", () => {
     expect(
       screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
     ).toBe(true);
+  });
+
+  test("drag and drop: File 1-2 to root node with falsy canDrop should not call onDrop", () => {
+    const onDrop = jest.fn();
+    const canDrop = jest.fn().mockReturnValue(false);
+
+    renderTree({
+      onDrop,
+      canDrop,
+    });
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    expect(
+      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+    ).toBe(true);
+
+    const src = screen.getAllByRole("listitem")[2];
+    const dst = screen.getAllByRole("list")[0];
+
+    dragAndDrop(src, dst);
+
+    expect(canDrop).toHaveBeenCalled();
+
+    expect(onDrop).not.toHaveBeenCalled();
+  });
+
+  test("drag and drop: Folder 2 to Folder 2 should not call onDrop", () => {
+    const onDrop = jest.fn();
+
+    renderTree({
+      onDrop,
+    });
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    const src = screen.getAllByRole("listitem")[3];
+    const dst = src;
+
+    dragAndDrop(src, dst);
+
+    expect(onDrop).not.toHaveBeenCalled();
+  });
+
+  test("drag and drop: Folder 2 to Folder 2 with canDrop callback", () => {
+    const onDrop = jest.fn();
+    const canDrop = jest.fn().mockReturnValue(true);
+
+    renderTree({
+      onDrop,
+      canDrop,
+    });
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    const src = screen.getAllByRole("listitem")[3];
+    const dst = src;
+
+    dragAndDrop(src, dst);
+
+    expect(canDrop).toHaveBeenCalled();
+
+    expect(onDrop).toHaveBeenCalled();
   });
 
   test("show drag preview while dragging list item", () => {
