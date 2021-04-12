@@ -15,12 +15,15 @@ import {
   DragLayerMonitorProps,
   DragOverProps,
   ToggleHandler,
+  CanDropHandler,
   InitialOpen,
 } from "./types";
 
 export const useDropContainer = (
+  parentId: NodeModel["id"],
   tree: NodeModel[],
-  onDrop: DropHandler
+  onDrop: DropHandler,
+  canDrop: CanDropHandler | undefined
 ): [boolean, DragElementWrapper<HTMLElement>] => {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
@@ -30,7 +33,10 @@ export const useDropContainer = (
       }
     },
     canDrop: (item: DragItem) => {
-      const dragItem = tree.find((node) => node.id === item.id);
+      const dragItem = tree.find((node) => node.id === item.id) as NodeModel;
+      if (canDrop) {
+        return canDrop(dragItem.id, parentId)
+      }
       return dragItem === undefined ? false : dragItem.parent !== 0;
     },
     collect: (monitor) => ({
@@ -100,18 +106,24 @@ const isAncestor = (
 };
 
 export const useDropNode = (
-  id: NodeModel["id"],
+  item: NodeModel,
   tree: NodeModel[],
-  onDrop: DropHandler
+  onDrop: DropHandler,
+  canDrop: CanDropHandler | undefined
 ): [boolean, DragElementWrapper<HTMLElement>] => {
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
-    drop: (item: DragItem, monitor) => {
+    drop: (dragItem: DragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        onDrop(item.id, id);
+        onDrop(dragItem.id, item.id);
       }
     },
-    canDrop: (item: DragItem) => isDroppable(tree, item.id, id),
+    canDrop: (dragItem: DragItem) => {
+      if (canDrop) {
+        return canDrop(dragItem.id, item.id);
+      }
+      return isDroppable(tree, dragItem.id, item.id);
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
     }),
