@@ -25,12 +25,7 @@ export const Container: React.FC<Props> = (props) => {
   }
 
   const view = [...groups, ...templates];
-  const [isOver, drop] = useDropContainer(
-    props.parentId,
-    context.tree,
-    context.onDrop,
-    context.canDrop
-  );
+  const [isOver, drop] = useDropContainer(props.parentId, context);
   const classes = context.classes;
 
   let className = "";
@@ -51,7 +46,7 @@ export const Container: React.FC<Props> = (props) => {
 
   return (
     <Component
-      ref={props.parentId === 0 ? drop : undefined}
+      ref={props.parentId === context.rootId ? drop : undefined}
       className={className}
     >
       {view.map((node) => (
