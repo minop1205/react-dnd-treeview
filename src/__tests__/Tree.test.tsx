@@ -66,12 +66,11 @@ const treeData: NodeModel[] = [
 ];
 
 const TestTree: React.FC<Partial<TreeProps>> = (props) => {
-  const [tree, setTree] = useState<NodeModel[]>(treeData);
+  const [tree, setTree] = useState<NodeModel[]>(props.tree || treeData);
   const handleDrop = (newTree: NodeModel[]) => setTree(newTree);
 
   return (
     <Tree
-      tree={tree}
       rootId={0}
       render={(node, { depth, isOpen, onToggle }) => (
         <div style={{ marginInlineStart: depth * 10 }}>
@@ -86,6 +85,7 @@ const TestTree: React.FC<Partial<TreeProps>> = (props) => {
       )}
       onDrop={handleDrop}
       {...props}
+      tree={tree}
     />
   );
 };
