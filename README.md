@@ -76,13 +76,11 @@ The minimal data structure for representing the tree is shown in the following e
   {
     "id": 2,
     "parent": 1,
-    "droppable": false,
     "text": "File 1-1"
   },
   {
     "id": 3,
     "parent": 1,
-    "droppable": false,
     "text": "File 1-2"
   },
   {
@@ -100,7 +98,6 @@ The minimal data structure for representing the tree is shown in the following e
   {
     "id": 6,
     "parent": 5,
-    "droppable": false,
     "text": "File 2-1-1"
   }
 ]
@@ -123,7 +120,6 @@ you can use the `data` property.
   {
     "id": 2,
     "parent": 1,
-    "droppable": false,
     "text": "File 1-1",
     "data": {
       "fileType": "csv",
@@ -133,7 +129,6 @@ you can use the `data` property.
   {
     "id": 3,
     "parent": 1,
-    "droppable": false,
     "text": "File 1-2",
     "data": {
       "fileType": "pdf",
@@ -155,7 +150,6 @@ you can use the `data` property.
   {
     "id": 6,
     "parent": 5,
-    "droppable": false,
     "text": "File 2-1-1",
     "data": {
       "fileType": "image",
@@ -167,13 +161,13 @@ you can use the `data` property.
 
 ### Node Properties
 
-|Key|Type|Required|Description|
-|--|--|--|--|
-|id|number \| string|yes|Identifier of each node|
-|parent|number \| string|yes|Parent id of each node|
-|droppable|boolean|yes|If `true`, child nodes will be accepted and other nodes can be dropped|
-|text|string|yes|Node label|
-|data|any|no|Additional data to be injected into each node.<br>These data are available in the render props.|
+|Key|Type|Required|Default|Description|
+|--|--|--|--|--|
+|id|number \| string|yes|-|Identifier of each node|
+|parent|number \| string|yes|-|Parent id of each node|
+|text|string|yes|-|Node label|
+|droppable|boolean|no|false|If `true`, child nodes will be accepted and it will be able to drop other node|
+|data|any|no|undefined|Additional data to be injected into each node.<br>These data are available in the render props.|
 
 
 ## Component API
@@ -188,7 +182,7 @@ you can use the `data` property.
 |render|function|yes||The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.|
 |dragPreviewRender|function|no|undefined|Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview.|
 |onDrop|function|yes||Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.|
-|canDrop|function|no|undefined|Callback function which should return true or false depending on if a give node should be droppable onto another node.<br>The callback will receive the current tree and an options object which is the same as the one which would be passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information.|
+|canDrop|function|no|undefined|Callback function which should return true or false depending on if a give node should be droppable onto another node.<br>If the canDrop callback is given, the `droppable` property of each node will no longer be referenced.<br>The callback will receive the current tree and an options object which is the same as the one which would be passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information.|
 |sort|function \| boolean|no|true|Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.|
 |initialOpen|boolean \| array | no | false | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state. |
 
@@ -218,7 +212,7 @@ The arguments passed to the render function are as follows
 |--|--|--|
 |data|object|Node data. (an element in the tree data array)|
 |options.depth|number|The depth of the node hierarchy.|
-|options.isOpen|boolean|The open and closed state of the node.<br>If droppable = false, isOpen is always false.|
+|options.isOpen|boolean|The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.|
 |options.hasChild|boolean|Flag indicating whether or not the node has children. It is true if the node has children, false otherwise.|
 |options.onToggle|function|An event handler for the open/close button of a node.|
 
