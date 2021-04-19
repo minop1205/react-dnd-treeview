@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
-import { NodeModel, SortCallback, Partial, TreeProps } from "../types";
+import {
+  NodeModel,
+  SortCallback,
+  Partial,
+  TreeProps,
+  NodeRender,
+} from "../types";
 
 const treeData: NodeModel[] = [
   {
@@ -202,7 +208,6 @@ describe("Tree", () => {
     dragAndDrop(src, dst);
 
     expect(canDrop).toHaveBeenCalled();
-
     expect(onDrop).not.toHaveBeenCalled();
   });
 
@@ -271,7 +276,7 @@ describe("Tree", () => {
       return 0;
     };
 
-    render(<TestTree sort={sortCallback} />);
+    renderTree({ sort: sortCallback });
 
     const nodes = screen.getAllByRole("listitem");
     expect(nodes[0].contains(screen.getByText("Folder 2"))).toBe(true);
@@ -300,7 +305,7 @@ describe("Tree", () => {
       },
     ];
 
-    render(<TestTree tree={treeItems} sort={false} />);
+    renderTree({ tree: treeItems, sort: false });
 
     const nodes = screen.getAllByRole("listitem");
     expect(nodes[0].contains(screen.getByText("File 1"))).toBe(true);
@@ -309,7 +314,7 @@ describe("Tree", () => {
   });
 
   test("open all parent nodes on component initializing", () => {
-    render(<TestTree initialOpen={true} />);
+    renderTree({ initialOpen: true });
 
     expect(screen.getByText("File 1-1")).toBeInTheDocument();
     expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
@@ -317,21 +322,21 @@ describe("Tree", () => {
   });
 
   test("open specific parent nodes on component initializing", () => {
-    render(<TestTree initialOpen={[1]} />);
+    renderTree({ initialOpen: [1] });
 
     expect(screen.getByText("File 1-1")).toBeInTheDocument();
     expect(screen.queryByText("Folder 2-1")).toBeNull();
   });
 
   test("show text that has child or not to each nodes", () => {
-    render(
-      <TestTree
-        render={(node, { hasChild }) => (
-          <div>{`${node.text} ${hasChild ? "hasChild" : ""}`}</div>
-        )}
-        initialOpen={true}
-      />
+    const customRender: NodeRender = (node, { hasChild }) => (
+      <div>{`${node.text} ${hasChild ? "hasChild" : ""}`}</div>
     );
+
+    renderTree({
+      render: customRender,
+      initialOpen: true,
+    });
 
     expect(screen.getByText("Folder 1 hasChild")).toBeInTheDocument();
     expect(screen.queryByText("File 1-1 hasChild")).toBeNull();
