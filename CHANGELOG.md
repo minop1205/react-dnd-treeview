@@ -1,9 +1,11 @@
 # Change Log
 
 ## 1.3.1
-_Apr 18, 2021_
+_Apr 20, 2021_
 ### Fixed
-- fail drop into root container when `rootId` is string
+- fail drop into root container when `rootId` is string.
+- dropTarget in canDrop parameter is incrrect.
+
 ## 1.3.0
 _Apr 12, 2021_
 ### Added
