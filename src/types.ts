@@ -8,8 +8,8 @@ export type Partial<T> = {
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
-  droppable: boolean;
   text: string;
+  droppable?: boolean;
   data?: T;
 };
 
