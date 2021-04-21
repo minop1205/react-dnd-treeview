@@ -50,8 +50,6 @@
     "jest": "^26.6.3",
     "npm-check-updates": "^7.0.1",
     "prettier": "^2.0.5",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "source-map-loader": "^1.0.0",
     "ts-jest": "^26.4.3",
     "ts-loader": "^7.0.5",
