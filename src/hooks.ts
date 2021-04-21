@@ -56,7 +56,8 @@ export const useDragNode = (
   DragElementWrapper<DragPreviewOptions>
 ] => {
   const [{ isDragging }, drag, preview] = useDrag({
-    item: { type: ItemTypes.TREE_ITEM, ref, ...item } as DragItem,
+    type: ItemTypes.TREE_ITEM,
+    item: { ref, ...item },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
