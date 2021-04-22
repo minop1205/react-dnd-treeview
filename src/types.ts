@@ -8,8 +8,8 @@ export type Partial<T> = {
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
-  droppable: boolean;
   text: string;
+  droppable?: boolean;
   data?: T;
 };
 
@@ -52,20 +52,6 @@ export type ToggleHandler = (id: NodeModel["id"]) => void;
 
 export type SortCallback = (a: NodeModel, b: NodeModel) => number;
 
-export type TreeContext = {
-  tree: NodeModel[];
-  openIds: NodeModel["id"][];
-  classes?: Classes;
-  listComponent?: ElementType;
-  listItemComponent?: ElementType;
-  render: NodeRender;
-  dragPreviewRender?: DragPreviewRender;
-  onDrop: DropHandler;
-  canDrop?: CanDropHandler;
-  onToggle: ToggleHandler;
-  sort?: SortCallback | boolean;
-};
-
 export type DragLayerMonitorProps<T = unknown> = {
   item: DragItem<T>;
   clientOffset: XYCoord | null;
@@ -88,6 +74,22 @@ export type OpenIdsHandlers = {
 };
 
 export type InitialOpen = boolean | NodeModel["id"][];
+
+export type TreeContext = {
+  tree: NodeModel[];
+  rootId: NodeModel["id"];
+  openIds: NodeModel["id"][];
+  classes?: Classes;
+  listComponent?: ElementType;
+  listItemComponent?: ElementType;
+  render: NodeRender;
+  dragPreviewRender?: DragPreviewRender;
+  onDrop: DropHandler;
+  canDrop?: CanDropHandler;
+  onToggle: ToggleHandler;
+  sort?: SortCallback | boolean;
+  initialOpen?: InitialOpen;
+};
 
 export type TreeProps = {
   tree: NodeModel[];
