@@ -1,22 +1,27 @@
 ---
 name: Feature request
 about: 新しい機能の追加や既存機能の拡張・改善要望
-title: '機能要望：'
-labels: 'enhancement'
-assignees: 'minop1205'
+title: "機能要望："
+labels: "enhancement"
+assignees: "minop1205"
 ---
+
 # 機能要望
 
 ## 概要
+
 例: テキストが見切れている箇所にはマウスオーバーでツールチップを表示する
 
 ## 目的・理由
+
 例: タイトルの一覧表示などでテキストが見切れていると、詳細画面に遷移しないとタイトル全体が確認できないため
 
 ## 実装案があれば
-例: 
-ツールチップには Material-UI tooltipを使用する。
-文字数だけでなく画面リサイズにも対応すべきなので、ResizeObserverを使用するなどしてテキストの見切れ判定を行う。
+
+例:
+ツールチップには Material-UI tooltip を使用する。
+文字数だけでなく画面リサイズにも対応すべきなので、ResizeObserver を使用するなどしてテキストの見切れ判定を行う。
 
 ## 参考情報
-参考URLなどあれば
+
+参考 URL などあれば
