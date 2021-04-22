@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.3.2
+
+_Apr 22, 2021_
+
+### Security
+
+- update all dependencies.
+
 ## 1.3.1
 
 _Apr 20, 2021_
