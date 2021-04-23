@@ -52,7 +52,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         onToggle: handleToggle,
       }}
     >
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider backend={props.touchSupport ? TouchBackend : HTML5Backend}>
         {props.dragPreviewRender && <DragLayer />}
         <Container parentId={props.rootId} depth={0} />
       </DndProvider>
