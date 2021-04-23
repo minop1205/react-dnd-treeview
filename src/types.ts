@@ -79,15 +79,16 @@ export type TreeContextBase = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
   classes?: Classes;
-  listComponent?: ElementType;
-  listItemComponent?: ElementType;
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
-  sort?: SortCallback | boolean;
-  initialOpen?: InitialOpen;
 };
 
 export type TreeContext = TreeContextBase & {
+  touchSupport: boolean;
+  listComponent: ElementType;
+  listItemComponent: ElementType;
+  sort: SortCallback | boolean;
+  initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
   onDrop: DropHandler;
   canDrop?: CanDropHandler;
@@ -95,6 +96,11 @@ export type TreeContext = TreeContextBase & {
 };
 
 export type TreeProps = TreeContextBase & {
+  touchSupport?: boolean;
+  listComponent?: ElementType;
+  listItemComponent?: ElementType;
+  sort?: SortCallback | boolean;
+  initialOpen?: InitialOpen;
   onDrop: (
     tree: NodeModel[],
     options: {
