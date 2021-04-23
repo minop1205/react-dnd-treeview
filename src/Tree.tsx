@@ -26,6 +26,11 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   return (
     <Context.Provider
       value={{
+        touchSupport: false,
+        listComponent: "ul",
+        listItemComponent: "li",
+        sort: true,
+        initialOpen: false,
         ...props,
         openIds,
         onDrop: (id, parentId) =>
@@ -45,7 +50,6 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
               })
           : undefined,
         onToggle: handleToggle,
-        sort: props.sort,
       }}
     >
       <DndProvider backend={HTML5Backend}>
