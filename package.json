@@ -75,18 +75,5 @@
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
     "email": "okuyama@analogic.jp"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ]
   }
 }
