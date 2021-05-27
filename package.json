@@ -29,6 +29,7 @@
     "immer": "^9.0.1",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
+    "react-dnd-multi-backend": "^6.0.2",
     "react-dnd-touch-backend": "^14.0.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-dnd-multi-backend": "^6.0.0",
     "@types/react-dom": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
