@@ -75,30 +75,32 @@ export type OpenIdsHandlers = {
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
-export type TreeContext = {
+export type TreeContextBase = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
-  openIds: NodeModel["id"][];
   classes?: Classes;
-  listComponent?: ElementType;
-  listItemComponent?: ElementType;
   render: NodeRender;
   dragPreviewRender?: DragPreviewRender;
+};
+
+export type TreeContext = TreeContextBase & {
+  touchSupport: boolean;
+  listComponent: ElementType;
+  listItemComponent: ElementType;
+  sort: SortCallback | boolean;
+  initialOpen: InitialOpen;
+  openIds: NodeModel["id"][];
   onDrop: DropHandler;
   canDrop?: CanDropHandler;
   onToggle: ToggleHandler;
-  sort?: SortCallback | boolean;
-  initialOpen?: InitialOpen;
 };
 
-export type TreeProps = {
-  tree: NodeModel[];
-  rootId: NodeModel["id"];
-  classes?: TreeContext["classes"];
-  listComponent?: TreeContext["listComponent"];
-  listItemComponent?: TreeContext["listItemComponent"];
-  render: NodeRender;
-  dragPreviewRender?: DragPreviewRender;
+export type TreeProps = TreeContextBase & {
+  touchSupport?: boolean;
+  listComponent?: ElementType;
+  listItemComponent?: ElementType;
+  sort?: SortCallback | boolean;
+  initialOpen?: InitialOpen;
   onDrop: (
     tree: NodeModel[],
     options: {
@@ -117,6 +119,4 @@ export type TreeProps = {
       dropTarget: NodeModel | undefined;
     }
   ) => boolean;
-  sort?: SortCallback | boolean;
-  initialOpen?: InitialOpen;
 };

@@ -42,7 +42,7 @@ export const Node: React.FC<Props> = (props) => {
     context.onToggle(item.id);
   }, [openIds]);
 
-  const Component = context.listItemComponent || "li";
+  const Component = context.listItemComponent;
 
   let className = "";
 

@@ -42,7 +42,7 @@ export const Container: React.FC<Props> = (props) => {
     className = `${className} ${classes.root}`;
   }
 
-  const Component = context.listComponent || "ul";
+  const Component = context.listComponent;
 
   return (
     <Component
