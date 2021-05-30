@@ -25,7 +25,6 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   return (
     <Context.Provider
       value={{
-        touchSupport: false,
         listComponent: "ul",
         listItemComponent: "li",
         sort: true,
