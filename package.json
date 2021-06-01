@@ -1,7 +1,7 @@
 {
   "name": "@minoru/react-dnd-treeview",
   "description": "A draggable / droppable React-based treeview component.",
-  "version": "1.3.2",
+  "version": "1.4.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,7 +15,8 @@
     "react",
     "treeview",
     "component",
-    "material-ui"
+    "headless",
+    "touch"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,7 +29,9 @@
   "dependencies": {
     "immer": "^9.0.1",
     "react-dnd": "^14.0.2",
-    "react-dnd-html5-backend": "^14.0.0"
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-dnd-multi-backend": "^6.0.2",
+    "react-dnd-touch-backend": "^14.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
@@ -39,6 +42,7 @@
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-dnd-multi-backend": "^6.0.0",
     "@types/react-dom": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
@@ -51,6 +55,8 @@
     "jest": "^26.6.3",
     "npm-check-updates": "^11.5.1",
     "prettier": "^2.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "source-map-loader": "^2.0.1",
     "ts-jest": "^26.5.5",
     "ts-loader": "^9.0.2",
@@ -72,18 +78,5 @@
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
     "email": "okuyama@analogic.jp"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ]
   }
 }

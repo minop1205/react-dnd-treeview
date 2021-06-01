@@ -1,6 +1,6 @@
 import React, { createContext, forwardRef, useImperativeHandle } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd-multi-backend";
+import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree, getTreeItem } from "./utils";
@@ -25,6 +25,10 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   return (
     <Context.Provider
       value={{
+        listComponent: "ul",
+        listItemComponent: "li",
+        sort: true,
+        initialOpen: false,
         ...props,
         openIds,
         onDrop: (id, parentId) =>
@@ -44,10 +48,9 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
               })
           : undefined,
         onToggle: handleToggle,
-        sort: props.sort,
       }}
     >
-      <DndProvider backend={HTML5Backend}>
+      <DndProvider options={HTML5toTouch}>
         {props.dragPreviewRender && <DragLayer />}
         <Container parentId={props.rootId} depth={0} />
       </DndProvider>

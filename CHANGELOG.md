@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.4.1
+
+_June 02, 2021_
+
+### Added
+
+- support touch device.
+
 ## 1.3.2
 
 _Apr 22, 2021_
