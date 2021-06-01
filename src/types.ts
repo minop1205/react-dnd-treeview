@@ -84,7 +84,6 @@ export type TreeContextBase = {
 };
 
 export type TreeContext = TreeContextBase & {
-  touchSupport: boolean;
   listComponent: ElementType;
   listItemComponent: ElementType;
   sort: SortCallback | boolean;
@@ -96,7 +95,6 @@ export type TreeContext = TreeContextBase & {
 };
 
 export type TreeProps = TreeContextBase & {
-  touchSupport?: boolean;
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   sort?: SortCallback | boolean;
