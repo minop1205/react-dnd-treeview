@@ -15,8 +15,8 @@
     "react",
     "treeview",
     "component",
-    "headless",
-    "touch"
+    "headless component",
+    "touch support"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
