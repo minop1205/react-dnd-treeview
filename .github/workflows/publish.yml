@@ -1,0 +1,45 @@
+name: release package
+on:
+  pull_request:
+    branches:
+      - stable
+    types:
+      - closed
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+          registry-url: "https://registry.npmjs.org"
+
+      - name: install node_modules
+        run: |
+          npm install can-npm-publish
+          npm ci
+
+      - name: test
+        run: npm run test
+
+      - name: publish
+        run: npx can-npm-publish --verbose && npm publish || echo "No need to publish"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: set version to env
+        run: node -p -e '`VERSION=${require("./package.json").version}`' >> $GITHUB_ENV
+
+      - name: add version tag
+        uses: pkgdeps/git-tag-action@v2
+        with:
+          version: ${{env.VERSION}}
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          github_repo: ${{github.repository}}
+          git_commit_sha: ${{github.sha}}
+          git_tag_prefix: "v"
