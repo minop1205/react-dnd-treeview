@@ -41,6 +41,8 @@ export type CanDropHandler = (
   parent: NodeModel["id"]
 ) => boolean;
 
+export type CanDragHandler = (id: NodeModel["id"]) => boolean;
+
 export type Classes = {
   root?: string;
   container?: string;
@@ -91,6 +93,7 @@ export type TreeContext = TreeContextBase & {
   openIds: NodeModel["id"][];
   onDrop: DropHandler;
   canDrop?: CanDropHandler;
+  canDrag?: CanDragHandler;
   onToggle: ToggleHandler;
 };
 
@@ -117,4 +120,5 @@ export type TreeProps = TreeContextBase & {
       dropTarget: NodeModel | undefined;
     }
   ) => boolean;
+  canDrag?: (node: NodeModel | undefined) => boolean;
 };

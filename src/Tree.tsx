@@ -21,6 +21,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   }));
 
   const canDropCallback = props.canDrop;
+  const canDragCallback = props.canDrag;
 
   return (
     <Context.Provider
@@ -46,6 +47,9 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
                 dragSource: getTreeItem(props.tree, id),
                 dropTarget: getTreeItem(props.tree, parentId),
               })
+          : undefined,
+        canDrag: canDragCallback
+          ? (id) => canDragCallback(getTreeItem(props.tree, id))
           : undefined,
         onToggle: handleToggle,
       }}
