@@ -23,11 +23,15 @@ export const Node: React.FC<Props> = (props) => {
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
   const [isOver, drop] = useDropNode(item, context);
+  const enableDrag = !context.canDrag || context.canDrag(item.id);
+  const enableDrop = item.droppable || context.canDrop;
 
-  if (item.droppable || context.canDrop) {
-    drop(drag(ref));
-  } else {
+  if (enableDrag) {
     drag(ref);
+  }
+
+  if (enableDrop) {
+    drop(ref);
   }
 
   const hasChild = !!context.tree.find((node) => node.parent === props.id);
