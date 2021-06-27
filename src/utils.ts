@@ -37,3 +37,43 @@ export const compareItems: SortCallback = (a, b) => {
 
   return 0;
 };
+
+export const isAncestor = (
+  tree: NodeModel[],
+  sourceId: NodeModel["id"],
+  targetId: NodeModel["id"]
+): boolean => {
+  if (targetId === 0) {
+    return false;
+  }
+
+  const targetNode = tree.find((node) => node.id === targetId);
+
+  if (targetNode === undefined) {
+    return false;
+  }
+
+  if (targetNode.parent === sourceId) {
+    return true;
+  }
+
+  return isAncestor(tree, sourceId, targetNode.parent);
+};
+
+export const isDroppable = (
+  tree: NodeModel[],
+  sourceId: NodeModel["id"],
+  targetId: NodeModel["id"]
+): boolean => {
+  if (sourceId === targetId) {
+    return false;
+  }
+
+  const sourceNode = tree.find((node) => node.id === sourceId);
+
+  if (sourceNode === undefined || sourceNode.parent === targetId) {
+    return false;
+  }
+
+  return !isAncestor(tree, sourceId, targetId);
+};

@@ -17,6 +17,7 @@ import {
   ToggleHandler,
   InitialOpen,
 } from "./types";
+import { isDroppable } from "./utils";
 
 export const useDropContainer = (
   parentId: NodeModel["id"]
@@ -74,46 +75,6 @@ export const useDragNode = (
   });
 
   return [isDragging, drag, preview];
-};
-
-const isDroppable = (
-  tree: NodeModel[],
-  sourceId: NodeModel["id"],
-  targetId: NodeModel["id"]
-): boolean => {
-  if (sourceId === targetId) {
-    return false;
-  }
-
-  const sourceNode = tree.find((node) => node.id === sourceId);
-
-  if (sourceNode === undefined || sourceNode.parent === targetId) {
-    return false;
-  }
-
-  return !isAncestor(tree, sourceId, targetId);
-};
-
-const isAncestor = (
-  tree: NodeModel[],
-  sourceId: NodeModel["id"],
-  targetId: NodeModel["id"]
-): boolean => {
-  if (targetId === 0) {
-    return false;
-  }
-
-  const targetNode = tree.find((node) => node.id === targetId);
-
-  if (targetNode === undefined) {
-    return false;
-  }
-
-  if (targetNode.parent === sourceId) {
-    return true;
-  }
-
-  return isAncestor(tree, sourceId, targetNode.parent);
 };
 
 export const useDropNode = (
