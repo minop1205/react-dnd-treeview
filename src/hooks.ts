@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useContext } from "react";
 import {
   useDrag,
   useDrop,
@@ -8,6 +8,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
+import { Context } from "./Tree";
 import {
   NodeModel,
   DragItem,
@@ -15,13 +16,12 @@ import {
   DragOverProps,
   ToggleHandler,
   InitialOpen,
-  TreeContext,
 } from "./types";
 
 export const useDropContainer = (
-  parentId: NodeModel["id"],
-  context: TreeContext
+  parentId: NodeModel["id"]
 ): [boolean, DragElementWrapper<HTMLElement>] => {
+  const context = useContext(Context);
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem, monitor) => {
@@ -55,9 +55,19 @@ export const useDragNode = (
   DragElementWrapper<DragSourceOptions>,
   DragElementWrapper<DragPreviewOptions>
 ] => {
+  const context = useContext(Context);
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
     item: { ref, ...item },
+    canDrag: () => {
+      const { canDrag } = context;
+
+      if (canDrag) {
+        return canDrag(item.id);
+      }
+
+      return true;
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -107,9 +117,9 @@ const isAncestor = (
 };
 
 export const useDropNode = (
-  item: NodeModel,
-  context: TreeContext
+  item: NodeModel
 ): [boolean, DragElementWrapper<HTMLElement>] => {
+  const context = useContext(Context);
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (dragItem: DragItem, monitor) => {
