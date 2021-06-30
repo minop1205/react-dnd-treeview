@@ -79,7 +79,7 @@ export type InitialOpen = boolean | NodeModel["id"][];
 
 export type DragSourceElement = EventTarget | null;
 
-export type DragSourceState = {
+export type DragControlState = {
   dragSourceElement: DragSourceElement;
   registerDragSourceElement: (el: DragSourceElement) => void;
 };

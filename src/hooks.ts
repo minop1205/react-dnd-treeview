@@ -8,7 +8,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
-import { TreeContext, DragSourceContext } from "./Tree";
+import { TreeContext, DragControlContext } from "./Tree";
 import {
   NodeModel,
   DragItem,
@@ -57,7 +57,7 @@ export const useDragNode = (
   DragElementWrapper<DragPreviewOptions>
 ] => {
   const treeContext = useContext(TreeContext);
-  const dragSourceContext = useContext(DragSourceContext);
+  const dragControlContext = useContext(DragControlContext);
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
@@ -65,7 +65,7 @@ export const useDragNode = (
     canDrag: () => {
       const { canDrag } = treeContext;
 
-      if (dragSourceContext.dragSourceElement !== ref.current) {
+      if (dragControlContext.dragSourceElement !== ref.current) {
         return false;
       }
 
@@ -212,7 +212,7 @@ export const useOpenIdsHelper = (
 export const useDragSourceElement = (
   ref: React.RefObject<HTMLElement>
 ): void => {
-  const context = useContext(DragSourceContext);
+  const context = useContext(DragControlContext);
 
   const register = (e: DragEvent | TouchEvent): void => {
     const target = e.target as Element;

@@ -12,14 +12,16 @@ import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
 import {
   TreeState,
-  DragSourceState,
+  DragControlState,
   DragSourceElement,
   OpenIdsHandlers,
   TreeProps,
 } from "./types";
 
 const TreeContext = createContext<TreeState>({} as TreeState);
-const DragSourceContext = createContext<DragSourceState>({} as DragSourceState);
+const DragControlContext = createContext<DragControlState>(
+  {} as DragControlState
+);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [
@@ -67,7 +69,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         onToggle: handleToggle,
       }}
     >
-      <DragSourceContext.Provider
+      <DragControlContext.Provider
         value={{
           dragSourceElement: dragSource,
           registerDragSourceElement: (e) => setDragSource(e),
@@ -77,11 +79,11 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
           {props.dragPreviewRender && <DragLayer />}
           <Container parentId={props.rootId} depth={0} />
         </DndProvider>
-      </DragSourceContext.Provider>
+      </DragControlContext.Provider>
     </TreeContext.Provider>
   );
 });
 
 Tree.displayName = "Tree";
 
-export { TreeContext, DragSourceContext, Tree };
+export { TreeContext, DragControlContext, Tree };
