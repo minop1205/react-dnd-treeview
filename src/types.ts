@@ -77,9 +77,11 @@ export type OpenIdsHandlers = {
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
-export type NativeEventState = {
-  drag: DragEvent | null;
-  registerDragEvent: (e: DragEvent) => void;
+export type DragSourceElement = EventTarget | null;
+
+export type DragSourceState = {
+  dragSourceElement: DragSourceElement;
+  registerDragSourceElement: (el: DragSourceElement) => void;
 };
 
 export type TreeStateBase = {

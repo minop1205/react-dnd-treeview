@@ -48,6 +48,7 @@ export const Container: React.FC<Props> = (props) => {
     <Component
       ref={props.parentId === context.rootId ? drop : undefined}
       className={className}
+      role="list"
     >
       {view.map((node) => (
         <Node key={node.id} id={node.id} depth={props.depth} />

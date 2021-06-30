@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
-import { useDragNode, useDropNode, useDragStartEvent } from "./hooks";
+import { useDragNode, useDropNode, useDragSourceElement } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
 import { TreeContext } from "./Tree";
 
@@ -38,7 +38,7 @@ export const Node: React.FC<Props> = (props) => {
     }
   }, []);
 
-  useDragStartEvent(ref);
+  useDragSourceElement(ref);
 
   const handleToggle = useCallback(() => {
     context.onToggle(item.id);
@@ -64,7 +64,7 @@ export const Node: React.FC<Props> = (props) => {
   };
 
   return (
-    <Component ref={ref} className={className}>
+    <Component ref={ref} className={className} role="listitem">
       {context.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />

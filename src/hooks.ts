@@ -8,7 +8,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
-import { TreeContext, NativeEventContext } from "./Tree";
+import { TreeContext, DragSourceContext } from "./Tree";
 import {
   NodeModel,
   DragItem,
@@ -57,7 +57,7 @@ export const useDragNode = (
   DragElementWrapper<DragPreviewOptions>
 ] => {
   const treeContext = useContext(TreeContext);
-  const nativeEventContext = useContext(NativeEventContext);
+  const dragSourceContext = useContext(DragSourceContext);
 
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
@@ -65,7 +65,7 @@ export const useDragNode = (
     canDrag: () => {
       const { canDrag } = treeContext;
 
-      if (nativeEventContext.drag?.target !== ref.current) {
+      if (dragSourceContext.dragSourceElement !== ref.current) {
         return false;
       }
 
@@ -209,17 +209,30 @@ export const useOpenIdsHelper = (
   return [openIds, { handleToggle, handleCloseAll, handleOpenAll }];
 };
 
-export const useDragStartEvent = (ref: React.RefObject<HTMLElement>): void => {
-  const context = useContext(NativeEventContext);
-  const handleDragStart = (e: DragEvent) => {
-    context.registerDragEvent(e);
+export const useDragSourceElement = (
+  ref: React.RefObject<HTMLElement>
+): void => {
+  const context = useContext(DragSourceContext);
+
+  const register = (e: DragEvent | TouchEvent): void => {
+    const target = e.target as Element;
+    const source = target.closest('[role="listitem"]');
+
+    if (e.currentTarget === source) {
+      context.registerDragSourceElement(source);
+    }
   };
+
+  const handleDragStart = (e: DragEvent) => register(e);
+  const handleTouchStart = (e: TouchEvent) => register(e);
 
   useEffect(() => {
     ref.current?.addEventListener("dragstart", handleDragStart);
+    ref.current?.addEventListener("touchstart", handleTouchStart);
 
     return () => {
       ref.current?.removeEventListener("dragstart", handleDragStart);
+      ref.current?.removeEventListener("touchstart", handleTouchStart);
     };
   }, []);
 };

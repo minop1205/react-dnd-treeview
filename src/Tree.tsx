@@ -12,15 +12,14 @@ import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
 import {
   TreeState,
-  NativeEventState,
+  DragSourceState,
+  DragSourceElement,
   OpenIdsHandlers,
   TreeProps,
 } from "./types";
 
 const TreeContext = createContext<TreeState>({} as TreeState);
-const NativeEventContext = createContext<NativeEventState>(
-  {} as NativeEventState
-);
+const DragSourceContext = createContext<DragSourceState>({} as DragSourceState);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [
@@ -35,7 +34,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
 
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
-  const [dragEvent, setDragEvent] = useState<DragEvent | null>(null);
+  const [dragSource, setDragSource] = useState<DragSourceElement>(null);
 
   return (
     <TreeContext.Provider
@@ -68,21 +67,21 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         onToggle: handleToggle,
       }}
     >
-      <NativeEventContext.Provider
+      <DragSourceContext.Provider
         value={{
-          drag: dragEvent,
-          registerDragEvent: (e) => setDragEvent(e),
+          dragSourceElement: dragSource,
+          registerDragSourceElement: (e) => setDragSource(e),
         }}
       >
         <DndProvider options={HTML5toTouch}>
           {props.dragPreviewRender && <DragLayer />}
           <Container parentId={props.rootId} depth={0} />
         </DndProvider>
-      </NativeEventContext.Provider>
+      </DragSourceContext.Provider>
     </TreeContext.Provider>
   );
 });
 
 Tree.displayName = "Tree";
 
-export { TreeContext, NativeEventContext, Tree };
+export { TreeContext, DragSourceContext, Tree };
