@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useContext } from "react";
+import { useState, useCallback, useRef, useEffect, useContext } from "react";
 import {
   useDrag,
   useDrop,
@@ -8,7 +8,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
-import { TreeContext } from "./Tree";
+import { TreeContext, NativeEventContext } from "./Tree";
 import {
   NodeModel,
   DragItem,
@@ -56,12 +56,18 @@ export const useDragNode = (
   DragElementWrapper<DragSourceOptions>,
   DragElementWrapper<DragPreviewOptions>
 ] => {
-  const context = useContext(TreeContext);
+  const treeContext = useContext(TreeContext);
+  const nativeEventContext = useContext(NativeEventContext);
+
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
     item: { ref, ...item },
     canDrag: () => {
-      const { canDrag } = context;
+      const { canDrag } = treeContext;
+
+      if (nativeEventContext.drag?.target !== ref.current) {
+        return false;
+      }
 
       if (canDrag) {
         return canDrag(item.id);
@@ -201,4 +207,19 @@ export const useOpenIdsHelper = (
   );
 
   return [openIds, { handleToggle, handleCloseAll, handleOpenAll }];
+};
+
+export const useDragStartEvent = (ref: React.RefObject<HTMLElement>): void => {
+  const context = useContext(NativeEventContext);
+  const handleDragStart = (e: DragEvent) => {
+    context.registerDragEvent(e);
+  };
+
+  useEffect(() => {
+    ref.current?.addEventListener("dragstart", handleDragStart);
+
+    return () => {
+      ref.current?.removeEventListener("dragstart", handleDragStart);
+    };
+  }, []);
 };

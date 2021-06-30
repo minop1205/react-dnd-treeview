@@ -1,13 +1,26 @@
-import React, { createContext, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  createContext,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { DndProvider } from "react-dnd-multi-backend";
 import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
-import { TreeState, OpenIdsHandlers, TreeProps } from "./types";
+import {
+  TreeState,
+  NativeEventState,
+  OpenIdsHandlers,
+  TreeProps,
+} from "./types";
 
 const TreeContext = createContext<TreeState>({} as TreeState);
+const NativeEventContext = createContext<NativeEventState>(
+  {} as NativeEventState
+);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [
@@ -22,6 +35,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
 
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
+  const [dragEvent, setDragEvent] = useState<DragEvent | null>(null);
 
   return (
     <TreeContext.Provider
@@ -54,14 +68,21 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         onToggle: handleToggle,
       }}
     >
-      <DndProvider options={HTML5toTouch}>
-        {props.dragPreviewRender && <DragLayer />}
-        <Container parentId={props.rootId} depth={0} />
-      </DndProvider>
+      <NativeEventContext.Provider
+        value={{
+          drag: dragEvent,
+          registerDragEvent: (e) => setDragEvent(e),
+        }}
+      >
+        <DndProvider options={HTML5toTouch}>
+          {props.dragPreviewRender && <DragLayer />}
+          <Container parentId={props.rootId} depth={0} />
+        </DndProvider>
+      </NativeEventContext.Provider>
     </TreeContext.Provider>
   );
 });
 
 Tree.displayName = "Tree";
 
-export { TreeContext, Tree };
+export { TreeContext, NativeEventContext, Tree };

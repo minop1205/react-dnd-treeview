@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
-import { useDragNode, useDropNode } from "./hooks";
+import { useDragNode, useDropNode, useDragStartEvent } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
 import { TreeContext } from "./Tree";
 
@@ -37,6 +37,8 @@ export const Node: React.FC<Props> = (props) => {
       preview(getEmptyImage(), { captureDraggingState: true });
     }
   }, []);
+
+  useDragStartEvent(ref);
 
   const handleToggle = useCallback(() => {
     context.onToggle(item.id);
