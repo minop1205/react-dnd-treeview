@@ -5,9 +5,9 @@ import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
-import { TreeContext, OpenIdsHandlers, TreeProps } from "./types";
+import { TreeState, OpenIdsHandlers, TreeProps } from "./types";
 
-const Context = createContext<TreeContext>({} as TreeContext);
+const TreeContext = createContext<TreeState>({} as TreeState);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [
@@ -24,7 +24,7 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const canDragCallback = props.canDrag;
 
   return (
-    <Context.Provider
+    <TreeContext.Provider
       value={{
         listComponent: "ul",
         listItemComponent: "li",
@@ -58,10 +58,10 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         {props.dragPreviewRender && <DragLayer />}
         <Container parentId={props.rootId} depth={0} />
       </DndProvider>
-    </Context.Provider>
+    </TreeContext.Provider>
   );
 });
 
 Tree.displayName = "Tree";
 
-export { Context, Tree };
+export { TreeContext, Tree };

@@ -3,7 +3,7 @@ import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
 import { useDragNode, useDropNode } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 
 type Props = {
   id: NodeModel["id"];
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Node: React.FC<Props> = (props) => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const ref = useRef<HTMLLIElement>(null);
   const item = context.tree.find((node) => node.id === props.id);
   const { openIds, classes } = context;

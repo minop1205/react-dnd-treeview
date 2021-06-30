@@ -77,7 +77,7 @@ export type OpenIdsHandlers = {
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
-export type TreeContextBase = {
+export type TreeStateBase = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
   classes?: Classes;
@@ -85,7 +85,7 @@ export type TreeContextBase = {
   dragPreviewRender?: DragPreviewRender;
 };
 
-export type TreeContext = TreeContextBase & {
+export type TreeState = TreeStateBase & {
   listComponent: ElementType;
   listItemComponent: ElementType;
   sort: SortCallback | boolean;
@@ -97,7 +97,7 @@ export type TreeContext = TreeContextBase & {
   onToggle: ToggleHandler;
 };
 
-export type TreeProps = TreeContextBase & {
+export type TreeProps = TreeStateBase & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   sort?: SortCallback | boolean;

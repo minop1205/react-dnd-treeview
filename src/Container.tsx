@@ -3,7 +3,7 @@ import { Node } from "./Node";
 import { NodeModel } from "./types";
 import { useDropContainer } from "./hooks";
 import { compareItems } from "./utils";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 
 type Props = {
   parentId: NodeModel["id"];
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Container: React.FC<Props> = (props) => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const nodes = context.tree.filter((l) => l.parent === props.parentId);
 
   let groups = nodes.filter((n) => n.droppable);

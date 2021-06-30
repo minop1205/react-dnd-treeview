@@ -8,7 +8,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "./ItemTypes";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 import {
   NodeModel,
   DragItem,
@@ -22,7 +22,7 @@ import { isDroppable } from "./utils";
 export const useDropContainer = (
   parentId: NodeModel["id"]
 ): [boolean, DragElementWrapper<HTMLElement>] => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem, monitor) => {
@@ -56,7 +56,7 @@ export const useDragNode = (
   DragElementWrapper<DragSourceOptions>,
   DragElementWrapper<DragPreviewOptions>
 ] => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
     item: { ref, ...item },
@@ -80,7 +80,7 @@ export const useDragNode = (
 export const useDropNode = (
   item: NodeModel
 ): [boolean, DragElementWrapper<HTMLElement>] => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (dragItem: DragItem, monitor) => {
