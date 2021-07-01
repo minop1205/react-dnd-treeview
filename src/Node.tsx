@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
-import { useDragNode, useDropNode, useDragSourceElement } from "./hooks";
+import {
+  useDragNode,
+  useDropNode,
+  useDragSourceElement,
+  useDragControl,
+} from "./hooks";
 import { NodeModel, RenderParams } from "./types";
 import { TreeContext } from "./Tree";
 
@@ -39,6 +44,7 @@ export const Node: React.FC<Props> = (props) => {
   }, []);
 
   useDragSourceElement(ref);
+  useDragControl(ref);
 
   const handleToggle = useCallback(() => {
     context.onToggle(item.id);

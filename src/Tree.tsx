@@ -36,7 +36,9 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
 
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
+
   const [dragSource, setDragSource] = useState<DragSourceElement>(null);
+  const [isLock, setIsLock] = useState(false);
 
   return (
     <TreeContext.Provider
@@ -71,8 +73,11 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
     >
       <DragControlContext.Provider
         value={{
+          isLock: isLock,
           dragSourceElement: dragSource,
           registerDragSourceElement: (e) => setDragSource(e),
+          lock: () => setIsLock(true),
+          unlock: () => setIsLock(false),
         }}
       >
         <DndProvider options={HTML5toTouch}>

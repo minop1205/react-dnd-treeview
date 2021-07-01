@@ -212,14 +212,14 @@ export const useOpenIdsHelper = (
 export const useDragSourceElement = (
   ref: React.RefObject<HTMLElement>
 ): void => {
-  const context = useContext(DragControlContext);
+  const dragControlContext = useContext(DragControlContext);
 
   const register = (e: DragEvent | TouchEvent): void => {
     const target = e.target as Element;
     const source = target.closest('[role="listitem"]');
 
     if (e.currentTarget === source) {
-      context.registerDragSourceElement(source);
+      dragControlContext.registerDragSourceElement(source);
     }
   };
 
@@ -228,11 +228,47 @@ export const useDragSourceElement = (
 
   useEffect(() => {
     ref.current?.addEventListener("dragstart", handleDragStart);
-    ref.current?.addEventListener("touchstart", handleTouchStart);
+    ref.current?.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
 
     return () => {
       ref.current?.removeEventListener("dragstart", handleDragStart);
       ref.current?.removeEventListener("touchstart", handleTouchStart);
     };
   }, []);
+};
+
+export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
+  const dragControlContext = useContext(DragControlContext);
+
+  const handleMouseOver = (e: MouseEvent) => {
+    const target = e.target as Element;
+    const tagName = target.tagName.toLowerCase();
+
+    if (tagName === "input" || tagName === "textarea") {
+      dragControlContext.lock();
+    }
+  };
+
+  const handleMouseOut = (e: MouseEvent) => {
+    const target = e.target as Element;
+    const tagName = target.tagName.toLowerCase();
+
+    if (tagName === "input" || tagName === "textarea") {
+      dragControlContext.unlock();
+    }
+  };
+
+  useEffect(() => {
+    ref.current?.addEventListener("mouseover", handleMouseOver);
+    ref.current?.addEventListener("mouseout", handleMouseOut);
+  }, []);
+
+  useEffect(() => {
+    ref.current?.setAttribute(
+      "draggable",
+      dragControlContext.isLock ? "false" : "true"
+    );
+  }, [dragControlContext.isLock]);
 };
