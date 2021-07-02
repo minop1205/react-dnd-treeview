@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
 import {
   useDrag,
   DragElementWrapper,
@@ -6,8 +6,10 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
-import { TreeContext, DragControlContext } from "../Tree";
-import { NodeModel } from "../types";
+import { TreeContext } from "../Tree";
+import { NodeModel, DragSourceElement } from "../types";
+
+let dragSourceElement: DragSourceElement = null;
 
 export const useDragNode = (
   item: NodeModel,
@@ -18,14 +20,38 @@ export const useDragNode = (
   DragElementWrapper<DragPreviewOptions>
 ] => {
   const treeContext = useContext(TreeContext);
-  const dragControlContext = useContext(DragControlContext);
+
+  const register = (e: DragEvent | TouchEvent): void => {
+    const target = e.target as Element;
+    const source = target.closest('[role="listitem"]');
+
+    if (e.currentTarget === source) {
+      dragSourceElement = source;
+    }
+  };
+
+  const handleDragStart = (e: DragEvent) => register(e);
+  const handleTouchStart = (e: TouchEvent) => register(e);
+
+  useEffect(() => {
+    ref.current?.addEventListener("dragstart", handleDragStart);
+    ref.current?.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+
+    return () => {
+      ref.current?.removeEventListener("dragstart", handleDragStart);
+      ref.current?.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, []);
+
   const [{ isDragging }, drag, preview] = useDrag({
     type: ItemTypes.TREE_ITEM,
     item: { ref, ...item },
     canDrag: () => {
       const { canDrag } = treeContext;
 
-      if (dragControlContext.dragSourceElement !== ref.current) {
+      if (dragSourceElement !== ref.current) {
         return false;
       }
 

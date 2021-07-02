@@ -81,8 +81,6 @@ export type DragSourceElement = EventTarget | null;
 
 export type DragControlState = {
   isLock: boolean;
-  dragSourceElement: DragSourceElement;
-  registerDragSourceElement: (el: DragSourceElement) => void;
   lock: () => void;
   unlock: () => void;
 };

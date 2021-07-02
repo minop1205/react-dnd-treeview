@@ -13,7 +13,6 @@ import { useOpenIdsHelper } from "./hooks";
 import {
   TreeState,
   DragControlState,
-  DragSourceElement,
   OpenIdsHandlers,
   TreeProps,
 } from "./types";
@@ -34,8 +33,6 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
 
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
-
-  const [dragSource, setDragSource] = useState<DragSourceElement>(null);
   const [isLock, setIsLock] = useState(false);
 
   return (
@@ -72,8 +69,6 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
       <DragControlContext.Provider
         value={{
           isLock: isLock,
-          dragSourceElement: dragSource,
-          registerDragSourceElement: (e) => setDragSource(e),
           lock: () => setIsLock(true),
           unlock: () => setIsLock(false),
         }}
