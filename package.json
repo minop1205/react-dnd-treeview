@@ -35,8 +35,6 @@
     "react-dnd-touch-backend": "^14.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
     "@rollup/plugin-commonjs": "^19.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@testing-library/jest-dom": "^5.14.1",
