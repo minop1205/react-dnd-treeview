@@ -381,4 +381,15 @@ describe("Tree", () => {
     expect(screen.getByText("Folder 2-1 hasChild")).toBeInTheDocument();
     expect(screen.queryByText("File 3 hasChild")).toBeNull();
   });
+
+  test("disallow dragging of File3", () => {
+    renderTree({
+      canDrag: (node) => node?.text !== "File 3",
+    });
+
+    const items = screen.getAllByRole("listitem");
+    const dragSource = items[2];
+
+    expect(fireEvent.dragStart(dragSource)).toBe(false);
+  });
 });
