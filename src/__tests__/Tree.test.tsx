@@ -392,4 +392,19 @@ describe("Tree", () => {
 
     expect(fireEvent.dragStart(dragSource)).toBe(false);
   });
+
+  test("show draggable property of each node", () => {
+    const customRender: NodeRender = (node, { draggable }) => (
+      <div>{`${node.text} ${draggable ? "draggable" : "not draggable"}`}</div>
+    );
+
+    renderTree({
+      render: customRender,
+      canDrag: (node) => node?.text !== "File 3",
+    });
+
+    expect(screen.getByText("Folder 1 draggable")).toBeInTheDocument();
+    expect(screen.getByText("Folder 2 draggable")).toBeInTheDocument();
+    expect(screen.getByText("File 3 not draggable")).toBeInTheDocument();
+  });
 });
