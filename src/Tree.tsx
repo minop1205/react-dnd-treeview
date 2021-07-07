@@ -23,10 +23,8 @@ const DragControlContext = createContext<DragControlState>(
 );
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
-  const [
-    openIds,
-    { handleToggle, handleCloseAll, handleOpenAll },
-  ] = useOpenIdsHelper(props.tree, props.initialOpen);
+  const [openIds, { handleToggle, handleCloseAll, handleOpenAll }] =
+    useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(ref, () => ({
     openAll: () => handleOpenAll(),

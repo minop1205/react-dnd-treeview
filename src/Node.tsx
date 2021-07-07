@@ -56,9 +56,12 @@ export const Node: React.FC<Props> = (props) => {
     className = `${className} ${classes.draggingSource}`;
   }
 
+  const draggable = context.canDrag ? context.canDrag(props.id) : true;
+
   const params: RenderParams = {
     depth: props.depth,
     isOpen: open,
+    draggable,
     hasChild,
     onToggle: handleToggle,
   };
