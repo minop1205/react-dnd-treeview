@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
-import { useDragNode, useDropNode } from "./hooks";
+import { useDragNode, useDropNode, useDragControl } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 
 type Props = {
   id: NodeModel["id"];
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Node: React.FC<Props> = (props) => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const ref = useRef<HTMLLIElement>(null);
   const item = context.tree.find((node) => node.id === props.id);
   const { openIds, classes } = context;
@@ -22,12 +22,12 @@ export const Node: React.FC<Props> = (props) => {
   }
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, drop] = useDropNode(item, context);
+  const [isOver, drop] = useDropNode(item);
+
+  drag(ref);
 
   if (item.droppable || context.canDrop) {
-    drop(drag(ref));
-  } else {
-    drag(ref);
+    drop(ref);
   }
 
   const hasChild = !!context.tree.find((node) => node.parent === props.id);
@@ -37,6 +37,8 @@ export const Node: React.FC<Props> = (props) => {
       preview(getEmptyImage(), { captureDraggingState: true });
     }
   }, []);
+
+  useDragControl(ref);
 
   const handleToggle = useCallback(() => {
     context.onToggle(item.id);
@@ -54,15 +56,18 @@ export const Node: React.FC<Props> = (props) => {
     className = `${className} ${classes.draggingSource}`;
   }
 
+  const draggable = context.canDrag ? context.canDrag(props.id) : true;
+
   const params: RenderParams = {
     depth: props.depth,
     isOpen: open,
+    draggable,
     hasChild,
     onToggle: handleToggle,
   };
 
   return (
-    <Component ref={ref} className={className}>
+    <Component ref={ref} className={className} role="listitem">
       {context.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />

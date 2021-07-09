@@ -3,7 +3,7 @@ import { Node } from "./Node";
 import { NodeModel } from "./types";
 import { useDropContainer } from "./hooks";
 import { compareItems } from "./utils";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 
 type Props = {
   parentId: NodeModel["id"];
@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const Container: React.FC<Props> = (props) => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const nodes = context.tree.filter((l) => l.parent === props.parentId);
 
   let groups = nodes.filter((n) => n.droppable);
@@ -25,7 +25,7 @@ export const Container: React.FC<Props> = (props) => {
   }
 
   const view = [...groups, ...templates];
-  const [isOver, drop] = useDropContainer(props.parentId, context);
+  const [isOver, drop] = useDropContainer(props.parentId);
   const classes = context.classes;
 
   let className = "";
@@ -48,6 +48,7 @@ export const Container: React.FC<Props> = (props) => {
     <Component
       ref={props.parentId === context.rootId ? drop : undefined}
       className={className}
+      role="list"
     >
       {view.map((node) => (
         <Node key={node.id} id={node.id} depth={props.depth} />

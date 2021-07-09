@@ -381,4 +381,30 @@ describe("Tree", () => {
     expect(screen.getByText("Folder 2-1 hasChild")).toBeInTheDocument();
     expect(screen.queryByText("File 3 hasChild")).toBeNull();
   });
+
+  test("disallow dragging of File3", () => {
+    renderTree({
+      canDrag: (node) => node?.text !== "File 3",
+    });
+
+    const items = screen.getAllByRole("listitem");
+    const dragSource = items[2];
+
+    expect(fireEvent.dragStart(dragSource)).toBe(false);
+  });
+
+  test("show draggable property of each node", () => {
+    const customRender: NodeRender = (node, { draggable }) => (
+      <div>{`${node.text} ${draggable ? "draggable" : "not draggable"}`}</div>
+    );
+
+    renderTree({
+      render: customRender,
+      canDrag: (node) => node?.text !== "File 3",
+    });
+
+    expect(screen.getByText("Folder 1 draggable")).toBeInTheDocument();
+    expect(screen.getByText("Folder 2 draggable")).toBeInTheDocument();
+    expect(screen.getByText("File 3 not draggable")).toBeInTheDocument();
+  });
 });

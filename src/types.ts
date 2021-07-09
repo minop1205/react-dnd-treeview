@@ -21,6 +21,7 @@ export type DragItem<T = unknown> = NodeModel<T> & {
 export type RenderParams = {
   depth: number;
   isOpen: boolean;
+  draggable: boolean;
   hasChild: boolean;
   onToggle(): void;
 };
@@ -40,6 +41,8 @@ export type CanDropHandler = (
   id: NodeModel["id"],
   parent: NodeModel["id"]
 ) => boolean;
+
+export type CanDragHandler = (id: NodeModel["id"]) => boolean;
 
 export type Classes = {
   root?: string;
@@ -75,7 +78,15 @@ export type OpenIdsHandlers = {
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
-export type TreeContextBase = {
+export type DragSourceElement = EventTarget | null;
+
+export type DragControlState = {
+  isLock: boolean;
+  lock: () => void;
+  unlock: () => void;
+};
+
+export type TreeStateBase = {
   tree: NodeModel[];
   rootId: NodeModel["id"];
   classes?: Classes;
@@ -83,7 +94,7 @@ export type TreeContextBase = {
   dragPreviewRender?: DragPreviewRender;
 };
 
-export type TreeContext = TreeContextBase & {
+export type TreeState = TreeStateBase & {
   listComponent: ElementType;
   listItemComponent: ElementType;
   sort: SortCallback | boolean;
@@ -91,10 +102,11 @@ export type TreeContext = TreeContextBase & {
   openIds: NodeModel["id"][];
   onDrop: DropHandler;
   canDrop?: CanDropHandler;
+  canDrag?: CanDragHandler;
   onToggle: ToggleHandler;
 };
 
-export type TreeProps = TreeContextBase & {
+export type TreeProps = TreeStateBase & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   sort?: SortCallback | boolean;
@@ -117,4 +129,5 @@ export type TreeProps = TreeContextBase & {
       dropTarget: NodeModel | undefined;
     }
   ) => boolean;
+  canDrag?: (node: NodeModel | undefined) => boolean;
 };

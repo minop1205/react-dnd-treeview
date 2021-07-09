@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useTreeDragLayer } from "./hooks";
 import { DragLayerMonitorProps } from "./types";
-import { Context } from "./Tree";
+import { TreeContext } from "./Tree";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",
@@ -32,7 +32,7 @@ const getItemStyles = (
 };
 
 export const DragLayer: React.FC = () => {
-  const context = useContext(Context);
+  const context = useContext(TreeContext);
   const monitorProps = useTreeDragLayer();
 
   if (!monitorProps.isDragging) {
