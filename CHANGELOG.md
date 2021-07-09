@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.4.2
+
+_July 08, 2021_
+
+### Added
+
+- add `canDrag` API to control dragging.
+
+### Fixed
+
+- unable to select text in a text field in a node by mouse dragging.
+
 ## 1.4.1
 
 _June 02, 2021_

@@ -1,7 +1,7 @@
 {
   "name": "@minoru/react-dnd-treeview",
   "description": "A draggable / droppable React-based treeview component.",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "touch support"
   ],
   "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -27,50 +28,47 @@
     "access": "public"
   },
   "dependencies": {
-    "immer": "^9.0.1",
+    "immer": "^9.0.3",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
     "react-dnd-multi-backend": "^6.0.2",
     "react-dnd-touch-backend": "^14.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
     "@types/hoist-non-react-statics": "^3.3.1",
-    "@types/jest": "^26.0.22",
-    "@types/react": "^17.0.3",
+    "@types/jest": "^26.0.23",
+    "@types/react": "^17.0.13",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dnd-multi-backend": "^6.0.0",
-    "@types/react-dom": "^17.0.3",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "eslint": "^7.24.0",
-    "eslint-config-prettier": "^8.2.0",
-    "eslint-import-resolver-webpack": "^0.13.0",
+    "@types/react-dom": "^17.0.8",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-webpack": "^0.13.1",
     "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.23.2",
-    "husky": "^6.0.0",
-    "jest": "^26.6.3",
-    "npm-check-updates": "^11.5.1",
-    "prettier": "^2.2.1",
+    "eslint-plugin-react": "^7.24.0",
+    "jest": "^27.0.6",
+    "npm-check-updates": "^11.7.1",
+    "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "source-map-loader": "^2.0.1",
-    "ts-jest": "^26.5.5",
-    "ts-loader": "^9.0.2",
-    "typescript": "^4.2.4",
-    "webpack": "^5.35.0",
-    "webpack-cli": "^4.6.0"
+    "rollup": "^2.52.6",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "ts-jest": "^27.0.3",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "scripts": {
-    "build": "npx tsc",
-    "watch": "npx tsc -w",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
     "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
     "prepublish": "rm -rf ./dist && npm run build",
     "test": "jest"

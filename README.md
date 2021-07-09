@@ -21,6 +21,7 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Opening and closing all nodes ([JavaScript](https://codesandbox.io/s/opening-and-closing-all-nodes-js-qn00x) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-43j5l))
 - Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
 - Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
+- Editable nodes ([JavaScript](https://codesandbox.io/s/editable-js-m25be) | [TypeScript](https://codesandbox.io/s/editable-ts-cl3wi))
 
 ## Getting Started
 
@@ -182,6 +183,7 @@ you can use the `data` property.
 | dragPreviewRender | function            | no       | undefined | Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview<br><br>**NOTE**:<br>The default preview is not displayed on touch devices. Therefore, if you want to support touch devices, please define a custom preview in `dragPreviewRender`.                                                                                                            |
 | onDrop            | function            | yes      |           | Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.                                                                                                                                                                                                                                                                          |
 | canDrop           | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be droppable onto another node.<br>If the canDrop callback is given, the `droppable` property of each node will no longer be referenced.<br>The callback will receive the current tree and an options object which is the same as the one which would be passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information. |
+| canDrag           | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be draggable.<br>By default, all nodes are draggable.                                                                                                                                                                                                                                                                                                                  |
 | sort              | function \| boolean | no       | true      | Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.                                                                                                                                                                                                                                                                                                                                              |
 | initialOpen       | boolean \| array    | no       | false     | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.                                                                                                                                                                                                                                                            |
 
@@ -192,7 +194,7 @@ To render each tree node, please pass a render function to the `render` property
 ```jsx
 <Tree
   {...props}
-  render={(node, { depth, isOpen, onToggle }) => (
+  render={(node, { depth, isOpen, draggable, onToggle }) => (
     <div style={{ marginLeft: depth * 10 }}>
       {node.droppable && (
         <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
@@ -205,13 +207,14 @@ To render each tree node, please pass a render function to the `render` property
 
 The arguments passed to the render function are as follows
 
-| Name             | Type     | Description                                                                                                 |
-| ---------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| data             | object   | Node data. (an element in the tree data array)                                                              |
-| options.depth    | number   | The depth of the node hierarchy.                                                                            |
-| options.isOpen   | boolean  | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
-| options.hasChild | boolean  | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
-| options.onToggle | function | An event handler for the open/close button of a node.                                                       |
+| Name              | Type     | Description                                                                                                 |
+| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| data              | object   | Node data. (an element in the tree data array)                                                              |
+| options.depth     | number   | The depth of the node hierarchy.                                                                            |
+| options.isOpen    | boolean  | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
+| options.draggable | boolean  | Indicates whether this node is draggable or not.                                                            |
+| options.hasChild  | boolean  | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
+| options.onToggle  | function | An event handler for the open/close button of a node.                                                       |
 
 ### Dragging Preview
 

@@ -1,16 +1,25 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
     "target": "ES5",
-    "module": "CommonJS",
-    "jsx": "react",
-    "moduleResolution": "node",
-    "strict": true,
+    "outDir": "dist",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "declaration": true,
-    "newLine": "lf",
-    "lib": ["ES2020", "DOM"],
+    "declarationDir": "dist",
     "esModuleInterop": true,
-    "outDir": "./dist"
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "jsx": "react",
+    "newLine": "lf",
   },
-  "include": ["src/**/*"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
