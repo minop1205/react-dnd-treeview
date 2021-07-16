@@ -1,5 +1,14 @@
 # Change Log
 
+## 1.4.3
+
+_July 17, 2021_
+
+### Fixed
+
+- incorrect parameters passed to the canDrop callback.
+- mouse cursor becomes the default pointer when hovering over an area that cannot be dropped.
+
 ## 1.4.2
 
 _July 08, 2021_

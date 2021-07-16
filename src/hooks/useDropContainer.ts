@@ -15,15 +15,18 @@ export const useDropContainer = (
         context.onDrop(item.id, context.rootId);
       }
     },
-    canDrop: (item: DragItem) => {
-      const { tree, canDrop } = context;
-      const dragItem = tree.find((node) => node.id === item.id);
+    canDrop: (item: DragItem, monitor) => {
+      if (monitor.isOver({ shallow: true })) {
+        const { canDrop } = context;
 
-      if (canDrop && dragItem) {
-        return canDrop(dragItem.id, parentId);
+        if (canDrop) {
+          return canDrop(item.id, parentId);
+        }
+
+        return item === undefined ? false : item.parent !== 0;
       }
 
-      return dragItem === undefined ? false : dragItem.parent !== 0;
+      return false;
     },
     hover: (dragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
