@@ -22,7 +22,7 @@ export const Node: React.FC<Props> = (props) => {
   }
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, drop] = useDropNode(item);
+  const [isOver, drop] = useDropNode(item, ref);
 
   drag(ref);
 

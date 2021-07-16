@@ -25,6 +25,11 @@ export const useDropContainer = (
 
       return dragItem === undefined ? false : dragItem.parent !== 0;
     },
+    hover: (dragItem, monitor) => {
+      if (monitor.isOver({ shallow: true })) {
+        console.log("root hover");
+      }
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
     }),
