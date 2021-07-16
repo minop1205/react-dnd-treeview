@@ -16,14 +16,18 @@ export const useDropNode = (
         context.onDrop(dragItem.id, item.id);
       }
     },
-    canDrop: (dragItem: DragItem) => {
-      const { tree, canDrop } = context;
+    canDrop: (dragItem: DragItem, monitor) => {
+      if (monitor.isOver({ shallow: true })) {
+        const { tree, canDrop } = context;
 
-      if (canDrop) {
-        return canDrop(dragItem.id, item.id);
+        if (canDrop) {
+          return canDrop(dragItem.id, item.id);
+        }
+
+        return isDroppable(tree, dragItem.id, item.id);
       }
 
-      return isDroppable(tree, dragItem.id, item.id);
+      return false;
     },
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
