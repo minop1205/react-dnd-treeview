@@ -150,14 +150,14 @@ export const getHoverIndex: GetHoverIndex = (
       };
     }
 
-    if (isDroppableParent(dragSource.id, dropTarget.id, context)) {
+    if (isDroppableParent(dragSource.id, dropTarget.parent, context)) {
       return getOuterIndex(dropTarget, dropTargetEl, monitor);
     }
 
     return null;
   } else {
     if (hoverPosition === "upper") {
-      if (isDroppableParent(dragSource.id, dropTarget.id, context)) {
+      if (isDroppableParent(dragSource.id, dropTarget.parent, context)) {
         return getOuterIndex(dropTarget, dropTargetEl, monitor);
       } else {
         return {
