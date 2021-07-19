@@ -3,12 +3,14 @@ import { useDrop, DragElementWrapper } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { TreeContext } from "../Tree";
 import { NodeModel, DragItem } from "../types";
+import { getHoverIndex } from "../utils";
 
 export const useDropContainer = (
-  parentId: NodeModel["id"]
-): [boolean, DragElementWrapper<HTMLElement>] => {
+  parentId: NodeModel["id"],
+  ref: React.RefObject<HTMLElement>
+): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
   const context = useContext(TreeContext);
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver, dragSource }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
@@ -34,13 +36,14 @@ export const useDropContainer = (
     },
     hover: (dragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        console.log("root hover");
+        console.log(getHoverIndex(null, ref.current, monitor, context));
       }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
+      dragSource: monitor.getItem<NodeModel>(),
     }),
   });
 
-  return [isOver, drop];
+  return [isOver, dragSource, drop];
 };

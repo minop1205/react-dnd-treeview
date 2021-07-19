@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useRef, useContext } from "react";
 import { Node } from "./Node";
 import { NodeModel } from "./types";
 import { useDropContainer } from "./hooks";
@@ -12,6 +12,7 @@ type Props = {
 
 export const Container: React.FC<Props> = (props) => {
   const context = useContext(TreeContext);
+  const ref = useRef<HTMLLIElement>(null);
   const nodes = context.tree.filter((l) => l.parent === props.parentId);
 
   let groups = nodes.filter((n) => n.droppable);
@@ -25,8 +26,20 @@ export const Container: React.FC<Props> = (props) => {
   }
 
   const view = [...groups, ...templates];
-  const [isOver, drop] = useDropContainer(props.parentId);
+  const [isOver, dragSource, drop] = useDropContainer(props.parentId, ref);
   const classes = context.classes;
+
+  if (props.parentId === context.rootId) {
+    if (context.canDrop && dragSource) {
+      const result = context.canDrop(dragSource.id, context.rootId);
+
+      if (result || result === undefined) {
+        drop(ref);
+      }
+    } else {
+      drop(ref);
+    }
+  }
 
   let className = "";
 
@@ -45,11 +58,7 @@ export const Container: React.FC<Props> = (props) => {
   const Component = context.listComponent;
 
   return (
-    <Component
-      ref={props.parentId === context.rootId ? drop : undefined}
-      className={className}
-      role="list"
-    >
+    <Component ref={ref} className={className} role="list">
       {view.map((node) => (
         <Node key={node.id} id={node.id} depth={props.depth} />
       ))}

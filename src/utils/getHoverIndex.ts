@@ -33,7 +33,7 @@ type IsDroppableParent = (
 ) => boolean;
 
 type GetHoverIndex = (
-  dropTarget: NodeModel,
+  dropTarget: NodeModel | null,
   dropTargetEl: HTMLElement | null,
   monitor: DropTargetMonitor,
   context: TreeState
@@ -130,8 +130,19 @@ export const getHoverIndex: GetHoverIndex = (
 ) => {
   if (!dropTargetEl) {
     return {
-      parentId: 0,
+      parentId: context.rootId,
       index: 0,
+    };
+  }
+
+  if (dropTarget === null) {
+    const listItems = dropTargetEl.querySelectorAll(
+      ':scope > [role="listitem"]'
+    );
+
+    return {
+      parentId: context.rootId,
+      index: getInnerIndex(listItems, monitor),
     };
   }
 
