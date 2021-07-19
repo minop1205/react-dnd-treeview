@@ -40,7 +40,7 @@ export type DropHandler = (
 export type CanDropHandler = (
   id: NodeModel["id"],
   parent: NodeModel["id"]
-) => boolean;
+) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;
 
@@ -128,6 +128,6 @@ export type TreeProps = TreeStateBase & {
       dragSource: NodeModel | undefined;
       dropTarget: NodeModel | undefined;
     }
-  ) => boolean;
+  ) => boolean | void;
   canDrag?: (node: NodeModel | undefined) => boolean;
 };

@@ -20,7 +20,11 @@ export const useDropContainer = (
         const { canDrop } = context;
 
         if (canDrop) {
-          return canDrop(item.id, parentId);
+          const result = canDrop(item.id, parentId);
+
+          if (result !== undefined) {
+            return result;
+          }
         }
 
         return item === undefined ? false : item.parent !== 0;

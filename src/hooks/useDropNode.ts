@@ -8,37 +8,42 @@ import { isDroppable, getHoverIndex } from "../utils";
 export const useDropNode = (
   item: NodeModel,
   ref: React.RefObject<HTMLElement>
-): [boolean, DragElementWrapper<HTMLElement>] => {
+): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
   const context = useContext(TreeContext);
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver, dragSource }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
-    drop: (dragItem: DragItem, monitor) => {
+    drop: (dragSource: DragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        context.onDrop(dragItem.id, item.id);
+        context.onDrop(dragSource.id, item.id);
       }
     },
-    canDrop: (dragItem: DragItem, monitor) => {
+    canDrop: (dragSource: DragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
         const { tree, canDrop } = context;
 
         if (canDrop) {
-          return canDrop(dragItem.id, item.id);
+          const result = canDrop(dragSource.id, item.id);
+
+          if (result !== undefined) {
+            return result;
+          }
         }
 
-        return isDroppable(tree, dragItem.id, item.id);
+        return isDroppable(tree, dragSource.id, item.id);
       }
 
       return false;
     },
-    hover: (dragItem, monitor) => {
+    hover: (dragSource, monitor) => {
       if (monitor.isOver({ shallow: true })) {
         console.log(getHoverIndex(item, ref.current, monitor, context));
       }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
+      dragSource: monitor.getItem<NodeModel>(),
     }),
   });
 
-  return [isOver, drop];
+  return [isOver, dragSource, drop];
 };
