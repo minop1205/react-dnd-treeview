@@ -1,20 +1,39 @@
 import { isAncestor } from "./isAncestor";
-import { NodeModel } from "../types";
+import { NodeModel, TreeState } from "../types";
 
 export const isDroppable = (
-  tree: NodeModel[],
-  sourceId: NodeModel["id"],
-  targetId: NodeModel["id"]
+  dragSourceId: NodeModel["id"],
+  dropTargetId: NodeModel["id"],
+  treeContext: TreeState
 ): boolean => {
-  if (sourceId === targetId) {
+  const { tree, rootId, canDrop } = treeContext;
+
+  if (canDrop) {
+    const result = canDrop(dragSourceId, dropTargetId);
+
+    if (result !== undefined) {
+      return result;
+    }
+  }
+
+  if (dragSourceId === dropTargetId) {
     return false;
   }
 
-  const sourceNode = tree.find((node) => node.id === sourceId);
+  if (dropTargetId === rootId) {
+    return true;
+  }
 
-  if (sourceNode === undefined || sourceNode.parent === targetId) {
+  const dragSourceNode = tree.find((node) => node.id === dropTargetId);
+  const dropTargetNode = tree.find((node) => node.id === dropTargetId);
+
+  if (dropTargetNode === undefined || !dropTargetNode.droppable) {
     return false;
   }
 
-  return !isAncestor(tree, sourceId, targetId);
+  if (dragSourceNode === undefined || dragSourceNode.parent === dropTargetId) {
+    return false;
+  }
+
+  return !isAncestor(tree, dragSourceId, dropTargetId);
 };
