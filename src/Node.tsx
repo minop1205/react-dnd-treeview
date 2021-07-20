@@ -4,6 +4,7 @@ import { Container } from "./Container";
 import { useDragNode, useDropNode, useDragControl } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
 import { TreeContext } from "./Tree";
+import { isDroppable } from "./utils";
 
 type Props = {
   id: NodeModel["id"];
@@ -26,11 +27,7 @@ export const Node: React.FC<Props> = (props) => {
 
   drag(ref);
 
-  if (context.canDrop && dragSource !== null) {
-    if (context.canDrop(dragSource.id, props.id)) {
-      drop(ref);
-    }
-  } else if (item.droppable) {
+  if (isDroppable(dragSource?.id, props.id, context)) {
     drop(ref);
   }
 
