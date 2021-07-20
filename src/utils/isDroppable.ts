@@ -8,32 +8,50 @@ export const isDroppable = (
 ): boolean => {
   const { tree, rootId, canDrop } = treeContext;
 
-  if (canDrop) {
-    const result = canDrop(dragSourceId, dropTargetId);
-
-    if (result !== undefined) {
-      return result;
+  if (dragSourceId === undefined) {
+    if (dropTargetId === rootId) {
+      return true;
     }
-  }
 
-  if (dragSourceId === dropTargetId) {
+    const dropTargetNode = tree.find((node) => node.id === dropTargetId);
+
+    if (dropTargetNode && dropTargetNode.droppable) {
+      return true;
+    }
+
     return false;
+  } else {
+    if (canDrop) {
+      const result = canDrop(dragSourceId, dropTargetId);
+
+      if (result !== undefined) {
+        return result;
+      }
+    }
+
+    if (dragSourceId === dropTargetId) {
+      return false;
+    }
+
+    const dragSourceNode = tree.find((node) => node.id === dragSourceId);
+
+    if (
+      dragSourceNode === undefined ||
+      dragSourceNode.parent === dropTargetId
+    ) {
+      return false;
+    }
+
+    if (dropTargetId === rootId) {
+      return true;
+    }
+
+    const dropTargetNode = tree.find((node) => node.id === dropTargetId);
+
+    if (dropTargetNode === undefined || !dropTargetNode.droppable) {
+      return false;
+    }
+
+    return !isAncestor(tree, dragSourceId, dropTargetId);
   }
-
-  if (dropTargetId === rootId) {
-    return true;
-  }
-
-  const dragSourceNode = tree.find((node) => node.id === dropTargetId);
-  const dropTargetNode = tree.find((node) => node.id === dropTargetId);
-
-  if (dropTargetNode === undefined || !dropTargetNode.droppable) {
-    return false;
-  }
-
-  if (dragSourceNode === undefined || dragSourceNode.parent === dropTargetId) {
-    return false;
-  }
-
-  return !isAncestor(tree, dragSourceId, dropTargetId);
 };
