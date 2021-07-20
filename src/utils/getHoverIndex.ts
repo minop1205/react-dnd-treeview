@@ -115,7 +115,7 @@ const isDroppableParent: IsDroppableParent = (
     return true;
   }
 
-  if (isDroppable(tree, dragSourceId, parentId)) {
+  if (isDroppable(dragSourceId, parentId, context)) {
     return true;
   }
 

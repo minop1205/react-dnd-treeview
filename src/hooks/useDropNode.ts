@@ -29,7 +29,7 @@ export const useDropNode = (
           }
         }
 
-        return isDroppable(tree, dragSource.id, item.id);
+        return isDroppable(dragSource.id, item.id, context);
       }
 
       return false;

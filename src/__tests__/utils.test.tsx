@@ -1,4 +1,5 @@
-import { NodeModel } from "../types";
+import React from "react";
+import { NodeModel, NodeRender, TreeState } from "../types";
 import {
   mutateTree,
   compareItems,
@@ -147,9 +148,26 @@ describe("utilities test", () => {
   });
 
   test("check for drop availability", () => {
-    expect(isDroppable(treeData, 7, 7)).toBe(false);
-    expect(isDroppable(treeData, 7, 1)).toBe(true);
-    expect(isDroppable(treeData, 1, 1)).toBe(false);
-    expect(isDroppable(treeData, 4, 5)).toBe(false);
+    const render: NodeRender = (node) => {
+      return <div>{node.text}</div>;
+    };
+
+    const treeContext: TreeState = {
+      tree: treeData,
+      rootId: 0,
+      render,
+      listComponent: "ul",
+      listItemComponent: "li",
+      sort: false,
+      initialOpen: false,
+      openIds: [],
+      onDrop: () => undefined,
+      onToggle: () => undefined,
+    };
+
+    expect(isDroppable(7, 7, treeContext)).toBe(false);
+    expect(isDroppable(7, 1, treeContext)).toBe(true);
+    expect(isDroppable(1, 1, treeContext)).toBe(false);
+    expect(isDroppable(4, 5, treeContext)).toBe(false);
   });
 });
