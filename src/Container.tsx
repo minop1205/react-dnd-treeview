@@ -1,8 +1,8 @@
 import React, { useRef, useContext } from "react";
 import { Node } from "./Node";
 import { NodeModel } from "./types";
-import { useDropContainer } from "./hooks";
-import { compareItems } from "./utils";
+import { useDropRoot } from "./hooks";
+import { compareItems, isDroppable } from "./utils";
 import { TreeContext } from "./Tree";
 
 type Props = {
@@ -26,19 +26,14 @@ export const Container: React.FC<Props> = (props) => {
   }
 
   const view = [...groups, ...templates];
-  const [isOver, dragSource, drop] = useDropContainer(props.parentId, ref);
+  const [isOver, dragSource, drop] = useDropRoot(ref);
   const classes = context.classes;
 
-  if (props.parentId === context.rootId) {
-    if (context.canDrop && dragSource) {
-      const result = context.canDrop(dragSource.id, context.rootId);
-
-      if (result || result === undefined) {
-        drop(ref);
-      }
-    } else {
-      drop(ref);
-    }
+  if (
+    props.parentId === context.rootId &&
+    isDroppable(dragSource?.id, context.rootId, context)
+  ) {
+    drop(ref);
   }
 
   let className = "";
