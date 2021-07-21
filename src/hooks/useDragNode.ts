@@ -6,7 +6,7 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
-import { TreeContext } from "../Tree";
+import { TreeContext } from "../providers/TreeProvider";
 import { NodeModel, DragSourceElement } from "../types";
 
 let dragSourceElement: DragSourceElement = null;

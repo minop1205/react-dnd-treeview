@@ -3,7 +3,7 @@ import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
 import { useDragNode, useDropNode, useDragControl } from "./hooks";
 import { NodeModel, RenderParams } from "./types";
-import { TreeContext } from "./Tree";
+import { TreeContext } from "./providers/TreeProvider";
 import { isDroppable } from "./utils";
 
 type Props = {
