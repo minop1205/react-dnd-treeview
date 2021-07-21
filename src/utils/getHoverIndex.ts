@@ -26,12 +26,6 @@ type GetOuterIndex = (
 
 type GetHoverPosition = (el: Element, pointerY: number) => VerticalPosition;
 
-type IsDroppableParent = (
-  dragSourceId: NodeModel["id"],
-  parentId: NodeModel["id"],
-  context: TreeState
-) => boolean;
-
 type GetHoverIndex = (
   dropTarget: NodeModel | null,
   dropTargetEl: HTMLElement | null,
@@ -100,28 +94,6 @@ const getHoverPosition: GetHoverPosition = (el, pointerY) => {
   return "middle";
 };
 
-const isDroppableParent: IsDroppableParent = (
-  dragSourceId,
-  parentId,
-  context
-) => {
-  const { tree, rootId, canDrop } = context;
-
-  if (parentId === rootId) {
-    return true;
-  }
-
-  if (canDrop && canDrop(dragSourceId, parentId)) {
-    return true;
-  }
-
-  if (isDroppable(dragSourceId, parentId, context)) {
-    return true;
-  }
-
-  return false;
-};
-
 export const getHoverIndex: GetHoverIndex = (
   dropTarget,
   dropTargetEl,
@@ -161,14 +133,14 @@ export const getHoverIndex: GetHoverIndex = (
       };
     }
 
-    if (isDroppableParent(dragSource.id, dropTarget.parent, context)) {
+    if (isDroppable(dragSource.id, dropTarget.parent, context)) {
       return getOuterIndex(dropTarget, dropTargetEl, monitor);
     }
 
     return null;
   } else {
     if (hoverPosition === "upper") {
-      if (isDroppableParent(dragSource.id, dropTarget.parent, context)) {
+      if (isDroppable(dragSource.id, dropTarget.parent, context)) {
         return getOuterIndex(dropTarget, dropTargetEl, monitor);
       } else {
         return {
