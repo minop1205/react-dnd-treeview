@@ -1,27 +1,15 @@
-import React, {
-  useState,
-  createContext,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
+import React, { createContext, forwardRef, useImperativeHandle } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
+import { DragControlProvider } from "./providers/DragControlProvider";
 import { PlaceholderProvider } from "./providers/PlaceholderProvider";
 import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { mutateTree, getTreeItem } from "./utils";
 import { useOpenIdsHelper } from "./hooks";
-import {
-  TreeState,
-  DragControlState,
-  OpenIdsHandlers,
-  TreeProps,
-} from "./types";
+import { TreeState, OpenIdsHandlers, TreeProps } from "./types";
 
 const TreeContext = createContext<TreeState>({} as TreeState);
-const DragControlContext = createContext<DragControlState>(
-  {} as DragControlState
-);
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
   const [openIds, { handleToggle, handleCloseAll, handleOpenAll }] =
@@ -34,7 +22,6 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
 
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
-  const [isLock, setIsLock] = useState(false);
 
   return (
     <TreeContext.Provider
@@ -67,24 +54,18 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
         onToggle: handleToggle,
       }}
     >
-      <DragControlContext.Provider
-        value={{
-          isLock: isLock,
-          lock: () => setIsLock(true),
-          unlock: () => setIsLock(false),
-        }}
-      >
+      <DragControlProvider>
         <PlaceholderProvider>
           <DndProvider options={HTML5toTouch}>
             {props.dragPreviewRender && <DragLayer />}
             <Container parentId={props.rootId} depth={0} />
           </DndProvider>
         </PlaceholderProvider>
-      </DragControlContext.Provider>
+      </DragControlProvider>
     </TreeContext.Provider>
   );
 });
 
 Tree.displayName = "Tree";
 
-export { TreeContext, DragControlContext, Tree };
+export { TreeContext, Tree };
