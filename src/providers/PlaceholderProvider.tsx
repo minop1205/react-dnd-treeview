@@ -30,12 +30,6 @@ export const PlaceholderProvider: React.FC = (props) => {
     setVisible(initialState.visible);
   };
 
-  console.log({
-    parentId,
-    index,
-    visible,
-  });
-
   return (
     <PlaceholderContext.Provider
       value={{
