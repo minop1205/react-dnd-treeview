@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useDrop, DragElementWrapper } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { TreeContext } from "../Tree";
+import { PlaceholderContext } from "../providers/PlaceholderProvider";
 import { NodeModel, DragItem } from "../types";
 import { isDroppable, getHoverIndex } from "../utils";
 
@@ -10,6 +11,7 @@ export const useDropNode = (
   ref: React.RefObject<HTMLElement>
 ): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
   const treeContext = useContext(TreeContext);
+  const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
     drop: (dragSource: DragItem, monitor) => {
@@ -26,7 +28,29 @@ export const useDropNode = (
     },
     hover: (dragSource, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        console.log(getHoverIndex(item, ref.current, monitor, treeContext));
+        const { parentId, index, showPlaceholder, hidePlaceholder } =
+          placeholderContext;
+
+        if (!isDroppable(dragSource.id, item.id, treeContext)) {
+          hidePlaceholder();
+          return;
+        }
+
+        const hoverIndex = getHoverIndex(
+          item,
+          ref.current,
+          monitor,
+          treeContext
+        );
+
+        if (hoverIndex === null) {
+          hidePlaceholder();
+          return;
+        }
+
+        if (hoverIndex.parentId !== parentId || hoverIndex.index !== index) {
+          showPlaceholder(hoverIndex.parentId, hoverIndex.index);
+        }
       }
     },
     collect: (monitor) => ({

@@ -86,6 +86,14 @@ export type DragControlState = {
   unlock: () => void;
 };
 
+export type PlaceholderState = {
+  parentId: NodeModel["id"];
+  index: number;
+  visible: boolean;
+  showPlaceholder: (parentId: NodeModel["id"], index: number) => void;
+  hidePlaceholder: () => void;
+};
+
 export type TreeStateBase = {
   tree: NodeModel[];
   rootId: NodeModel["id"];

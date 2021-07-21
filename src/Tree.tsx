@@ -5,6 +5,7 @@ import React, {
   useImperativeHandle,
 } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
+import { PlaceholderProvider } from "./providers/PlaceholderProvider";
 import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
@@ -73,10 +74,12 @@ const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
           unlock: () => setIsLock(false),
         }}
       >
-        <DndProvider options={HTML5toTouch}>
-          {props.dragPreviewRender && <DragLayer />}
-          <Container parentId={props.rootId} depth={0} />
-        </DndProvider>
+        <PlaceholderProvider>
+          <DndProvider options={HTML5toTouch}>
+            {props.dragPreviewRender && <DragLayer />}
+            <Container parentId={props.rootId} depth={0} />
+          </DndProvider>
+        </PlaceholderProvider>
       </DragControlContext.Provider>
     </TreeContext.Provider>
   );
