@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useTreeDragLayer } from "./hooks";
 import { DragLayerMonitorProps } from "./types";
-import { TreeContext } from "./providers/TreeProvider";
+import { TreeContext } from "./providers";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",

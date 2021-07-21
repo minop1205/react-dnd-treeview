@@ -3,7 +3,7 @@ import { Node } from "./Node";
 import { NodeModel } from "./types";
 import { useDropRoot } from "./hooks";
 import { compareItems, isDroppable } from "./utils";
-import { TreeContext } from "./providers/TreeProvider";
+import { TreeContext } from "./providers";
 
 type Props = {
   parentId: NodeModel["id"];
