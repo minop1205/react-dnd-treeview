@@ -26,10 +26,11 @@ export type RenderParams = {
   onToggle(): void;
 };
 
-export type NodeRender = (
-  node: NodeModel,
+export type NodeRender<T> = (
+  node: NodeModel<T>,
   params: RenderParams
 ) => React.ReactElement;
+
 export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler = (
@@ -94,15 +95,15 @@ export type PlaceholderState = {
   hidePlaceholder: () => void;
 };
 
-export type TreeStateBase = {
-  tree: NodeModel[];
+export type TreeStateBase<T> = {
+  tree: NodeModel<T>[];
   rootId: NodeModel["id"];
   classes?: Classes;
-  render: NodeRender;
+  render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender;
 };
 
-export type TreeState = TreeStateBase & {
+export type TreeState<T> = TreeStateBase<T> & {
   listComponent: ElementType;
   listItemComponent: ElementType;
   sort: SortCallback | boolean;
@@ -114,7 +115,7 @@ export type TreeState = TreeStateBase & {
   onToggle: ToggleHandler;
 };
 
-export type TreeProps = TreeStateBase & {
+export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   sort?: SortCallback | boolean;
