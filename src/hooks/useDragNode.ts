@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import {
   useDrag,
   DragElementWrapper,
@@ -6,12 +6,12 @@ import {
   DragPreviewOptions,
 } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
-import { TreeContext } from "../providers";
 import { NodeModel, DragSourceElement } from "../types";
+import { useTreeContext } from "../hooks";
 
 let dragSourceElement: DragSourceElement = null;
 
-export const useDragNode = (
+export const useDragNode = <T>(
   item: NodeModel,
   ref: React.RefObject<HTMLElement>
 ): [
@@ -19,7 +19,7 @@ export const useDragNode = (
   DragElementWrapper<DragSourceOptions>,
   DragElementWrapper<DragPreviewOptions>
 ] => {
-  const treeContext = useContext(TreeContext);
+  const treeContext = useTreeContext<T>();
 
   const register = (e: DragEvent | TouchEvent): void => {
     const target = e.target as Element;

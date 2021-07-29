@@ -18,19 +18,12 @@ type GetInnerIndex = (
   monitor: DropTargetMonitor
 ) => number;
 
+type GetHoverPosition = (el: Element, pointerY: number) => VerticalPosition;
+
 type GetOuterIndex = (
   dropTarget: NodeModel,
   dropTargetEl: HTMLElement,
   monitor: DropTargetMonitor
-) => HoverIndex;
-
-type GetHoverPosition = (el: Element, pointerY: number) => VerticalPosition;
-
-type GetHoverIndex = (
-  dropTarget: NodeModel | null,
-  dropTargetEl: HTMLElement | null,
-  monitor: DropTargetMonitor,
-  context: TreeState
 ) => HoverIndex;
 
 const indexChangeOffset = 5;
@@ -94,12 +87,12 @@ const getHoverPosition: GetHoverPosition = (el, pointerY) => {
   return "middle";
 };
 
-export const getHoverIndex: GetHoverIndex = (
-  dropTarget,
-  dropTargetEl,
-  monitor,
-  context
-) => {
+export const getHoverIndex = <T>(
+  dropTarget: NodeModel<T> | null,
+  dropTargetEl: HTMLElement | null,
+  monitor: DropTargetMonitor,
+  context: TreeState<T>
+): HoverIndex => {
   if (!dropTargetEl) {
     return {
       parentId: context.rootId,
@@ -118,7 +111,7 @@ export const getHoverIndex: GetHoverIndex = (
     };
   }
 
-  const dragSource = monitor.getItem<DragItem>();
+  const dragSource = monitor.getItem<DragItem<T>>();
   const list = dropTargetEl.querySelector('[role="list"]');
   const hoverPosition = getHoverPosition(
     dropTargetEl,

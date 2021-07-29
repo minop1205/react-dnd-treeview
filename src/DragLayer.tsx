@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { useTreeDragLayer } from "./hooks";
+import React, { ReactElement } from "react";
+import { useTreeContext, useTreeDragLayer } from "./hooks";
 import { DragLayerMonitorProps } from "./types";
-import { TreeContext } from "./providers";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",
@@ -13,8 +12,8 @@ const rootStyle: React.CSSProperties = {
   zIndex: 100,
 };
 
-const getItemStyles = (
-  monitorProps: DragLayerMonitorProps
+const getItemStyles = <T extends unknown>(
+  monitorProps: DragLayerMonitorProps<T>
 ): React.CSSProperties => {
   const offset = monitorProps.clientOffset;
 
@@ -31,9 +30,9 @@ const getItemStyles = (
   };
 };
 
-export const DragLayer: React.FC = () => {
-  const context = useContext(TreeContext);
-  const monitorProps = useTreeDragLayer();
+export const DragLayer = <T extends unknown>(): ReactElement | null => {
+  const context = useTreeContext<T>();
+  const monitorProps = useTreeDragLayer<T>();
 
   if (!monitorProps.isDragging) {
     return null;
@@ -41,7 +40,7 @@ export const DragLayer: React.FC = () => {
 
   return (
     <div style={rootStyle}>
-      <div style={getItemStyles(monitorProps)}>
+      <div style={getItemStyles<T>(monitorProps)}>
         {context.dragPreviewRender && context.dragPreviewRender(monitorProps)}
       </div>
     </div>

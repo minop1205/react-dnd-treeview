@@ -1,10 +1,10 @@
 import { isAncestor } from "./isAncestor";
 import { NodeModel, TreeState } from "../types";
 
-export const isDroppable = (
+export const isDroppable = <T>(
   dragSourceId: NodeModel["id"],
   dropTargetId: NodeModel["id"],
-  treeContext: TreeState
+  treeContext: TreeState<T>
 ): boolean => {
   const { tree, rootId, canDrop } = treeContext;
 

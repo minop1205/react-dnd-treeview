@@ -148,11 +148,11 @@ describe("utilities test", () => {
   });
 
   test("check for drop availability", () => {
-    const render: NodeRender = (node) => {
+    const render: NodeRender<unknown> = (node) => {
       return <div>{node.text}</div>;
     };
 
-    const treeContext: TreeState = {
+    const treeContext: TreeState<unknown> = {
       tree: treeData,
       rootId: 0,
       render,

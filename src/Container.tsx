@@ -1,17 +1,16 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, PropsWithChildren, ReactElement } from "react";
 import { Node } from "./Node";
 import { NodeModel } from "./types";
-import { useDropRoot } from "./hooks";
+import { useTreeContext, useDropRoot } from "./hooks";
 import { compareItems, isDroppable } from "./utils";
-import { TreeContext } from "./providers";
 
-type Props = {
+type Props = PropsWithChildren<{
   parentId: NodeModel["id"];
   depth: number;
-};
+}>;
 
-export const Container: React.FC<Props> = (props) => {
-  const context = useContext(TreeContext);
+export const Container = <T extends unknown>(props: Props): ReactElement => {
+  const context = useTreeContext<T>();
   const ref = useRef<HTMLLIElement>(null);
   const nodes = context.tree.filter((l) => l.parent === props.parentId);
 

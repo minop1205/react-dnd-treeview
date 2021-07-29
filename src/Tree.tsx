@@ -4,13 +4,20 @@ import { Container } from "./Container";
 import { Providers } from "./providers";
 import { OpenIdsHandlers, TreeProps } from "./types";
 
-const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => (
-  <Providers {...props} treeRef={ref}>
-    {props.dragPreviewRender && <DragLayer />}
-    <Container parentId={props.rootId} depth={0} />
-  </Providers>
-));
+function TreeInner<T>(
+  props: TreeProps<T>,
+  ref: React.ForwardedRef<OpenIdsHandlers>
+) {
+  return (
+    <Providers {...props} treeRef={ref}>
+      {props.dragPreviewRender && <DragLayer />}
+      <Container parentId={props.rootId} depth={0} />
+    </Providers>
+  );
+}
 
-Tree.displayName = "Tree";
+const Tree = forwardRef(TreeInner) as <T = unknown>(
+  props: TreeProps<T> & { ref?: React.ForwardedRef<OpenIdsHandlers> }
+) => ReturnType<typeof TreeInner>;
 
 export { Tree };

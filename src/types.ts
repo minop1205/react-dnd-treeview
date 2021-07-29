@@ -1,4 +1,4 @@
-import { ElementType } from "react";
+import { ElementType, ReactElement } from "react";
 import { XYCoord } from "react-dnd";
 
 export type Partial<T> = {
@@ -13,7 +13,7 @@ export type NodeModel<T = unknown> = {
   data?: T;
 };
 
-export type DragItem<T = unknown> = NodeModel<T> & {
+export type DragItem<T> = NodeModel<T> & {
   type: symbol;
   ref: React.MutableRefObject<HTMLElement>;
 };
@@ -29,7 +29,7 @@ export type RenderParams = {
 export type NodeRender<T> = (
   node: NodeModel<T>,
   params: RenderParams
-) => React.ReactElement;
+) => ReactElement;
 
 export type ClickHandler = (data: NodeModel) => void;
 
@@ -56,15 +56,15 @@ export type ToggleHandler = (id: NodeModel["id"]) => void;
 
 export type SortCallback = (a: NodeModel, b: NodeModel) => number;
 
-export type DragLayerMonitorProps<T = unknown> = {
+export type DragLayerMonitorProps<T> = {
   item: DragItem<T>;
   clientOffset: XYCoord | null;
   isDragging: boolean;
 };
 
-export type DragPreviewRender = (
-  monitorProps: DragLayerMonitorProps
-) => React.ReactElement;
+export type DragPreviewRender<T> = (
+  monitorProps: DragLayerMonitorProps<T>
+) => ReactElement;
 
 export type DragOverProps = {
   onDragEnter: () => void;
@@ -100,7 +100,7 @@ export type TreeStateBase<T> = {
   rootId: NodeModel["id"];
   classes?: Classes;
   render: NodeRender<T>;
-  dragPreviewRender?: DragPreviewRender;
+  dragPreviewRender?: DragPreviewRender<T>;
 };
 
 export type TreeState<T> = TreeStateBase<T> & {
@@ -121,22 +121,22 @@ export type TreeProps<T> = TreeStateBase<T> & {
   sort?: SortCallback | boolean;
   initialOpen?: InitialOpen;
   onDrop: (
-    tree: NodeModel[],
+    tree: NodeModel<T>[],
     options: {
       dragSourceId: NodeModel["id"];
       dropTargetId: NodeModel["id"];
-      dragSource: NodeModel | undefined;
-      dropTarget: NodeModel | undefined;
+      dragSource: NodeModel<T> | undefined;
+      dropTarget: NodeModel<T> | undefined;
     }
   ) => void;
   canDrop?: (
-    tree: NodeModel[],
+    tree: NodeModel<T>[],
     options: {
       dragSourceId: NodeModel["id"];
       dropTargetId: NodeModel["id"];
-      dragSource: NodeModel | undefined;
-      dropTarget: NodeModel | undefined;
+      dragSource: NodeModel<T> | undefined;
+      dropTarget: NodeModel<T> | undefined;
     }
   ) => boolean | void;
-  canDrag?: (node: NodeModel | undefined) => boolean;
+  canDrag?: (node: NodeModel<T> | undefined) => boolean;
 };

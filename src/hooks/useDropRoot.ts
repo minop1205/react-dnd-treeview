@@ -1,25 +1,26 @@
 import { useContext } from "react";
 import { useDrop, DragElementWrapper } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
-import { TreeContext, PlaceholderContext } from "../providers";
+import { PlaceholderContext } from "../providers";
 import { NodeModel, DragItem } from "../types";
 import { getHoverIndex, isDroppable } from "../utils";
+import { useTreeContext } from "../hooks";
 
-export const useDropRoot = (
+export const useDropRoot = <T>(
   ref: React.RefObject<HTMLElement>
 ): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
-  const treeContext = useContext(TreeContext);
+  const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
-    drop: (item: DragItem, monitor) => {
+    drop: (item: DragItem<T>, monitor) => {
       const { rootId, onDrop } = treeContext;
 
       if (monitor.isOver({ shallow: true })) {
         onDrop(item.id, rootId);
       }
     },
-    canDrop: (item: DragItem, monitor) => {
+    canDrop: (item: DragItem<T>, monitor) => {
       const { rootId } = treeContext;
 
       if (monitor.isOver({ shallow: true })) {
@@ -43,7 +44,7 @@ export const useDropRoot = (
           return;
         }
 
-        const hoverIndex = getHoverIndex(
+        const hoverIndex = getHoverIndex<T>(
           null,
           ref.current,
           monitor,
