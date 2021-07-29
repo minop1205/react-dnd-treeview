@@ -9,19 +9,23 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   const dragControlContext = useContext(DragControlContext);
 
   const lock = (e: Event) => {
-    const target = e.target as Element;
-    const tagName = target.tagName.toLowerCase();
+    const { target } = e;
 
-    if (tagName === "input" || tagName === "textarea") {
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
       dragControlContext.lock();
     }
   };
 
   const unlock = (e: Event) => {
-    const target = e.target as Element;
-    const tagName = target.tagName.toLowerCase();
+    const { target } = e;
 
-    if (tagName === "input" || tagName === "textarea") {
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
       dragControlContext.unlock();
     }
   };

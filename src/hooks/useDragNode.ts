@@ -22,11 +22,14 @@ export const useDragNode = <T>(
   const treeContext = useTreeContext<T>();
 
   const register = (e: DragEvent | TouchEvent): void => {
-    const target = e.target as Element;
-    const source = target.closest('[role="listitem"]');
+    const { target } = e;
 
-    if (e.currentTarget === source) {
-      dragSourceElement = source;
+    if (target instanceof HTMLElement) {
+      const source = target.closest('[role="listitem"]');
+
+      if (e.currentTarget === source) {
+        dragSourceElement = source;
+      }
     }
   };
 
