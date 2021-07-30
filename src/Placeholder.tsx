@@ -4,7 +4,7 @@ import { useTreeContext } from "./hooks";
 import { NodeModel } from "./types";
 import { PlaceholderContext } from "./providers";
 
-type Props<T> = {
+type Props = {
   depth: number;
   listCount: number;
   parentId: NodeModel["id"];
@@ -12,7 +12,7 @@ type Props<T> = {
 };
 
 export const Placeholder = <T extends unknown>(
-  props: Props<T>
+  props: Props
 ): ReactElement | null => {
   const { placeholderRender, classes } = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
