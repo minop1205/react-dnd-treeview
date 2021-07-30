@@ -50,6 +50,7 @@ export type Classes = {
   container?: string;
   dropTarget?: string;
   draggingSource?: string;
+  placeholder?: string;
 };
 
 export type ToggleHandler = (id: NodeModel["id"]) => void;
@@ -64,6 +65,15 @@ export type DragLayerMonitorProps<T> = {
 
 export type DragPreviewRender<T> = (
   monitorProps: DragLayerMonitorProps<T>
+) => ReactElement;
+
+export type PlaceholderRenderParams = {
+  depth: number;
+};
+
+export type PlaceholderRender<T> = (
+  node: NodeModel<T>,
+  params: PlaceholderRenderParams
 ) => ReactElement;
 
 export type DragOverProps = {
@@ -101,6 +111,7 @@ export type TreeStateBase<T> = {
   classes?: Classes;
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;
+  placeholderRender?: PlaceholderRender<T>;
 };
 
 export type TreeState<T> = TreeStateBase<T> & {

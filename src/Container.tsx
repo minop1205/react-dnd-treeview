@@ -1,5 +1,6 @@
 import React, { useRef, PropsWithChildren, ReactElement } from "react";
 import { Node } from "./Node";
+import { Placeholder } from "./Placeholder";
 import { NodeModel } from "./types";
 import { useTreeContext, useDropRoot } from "./hooks";
 import { compareItems, isDroppable } from "./utils";
@@ -10,27 +11,27 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Container = <T extends unknown>(props: Props): ReactElement => {
-  const context = useTreeContext<T>();
+  const treeContext = useTreeContext<T>();
   const ref = useRef<HTMLLIElement>(null);
-  const nodes = context.tree.filter((l) => l.parent === props.parentId);
+  const nodes = treeContext.tree.filter((l) => l.parent === props.parentId);
 
   let groups = nodes.filter((n) => n.droppable);
   let templates = nodes.filter((n) => !n.droppable);
 
-  if (context.sort !== false) {
+  if (treeContext.sort !== false) {
     const sortCallback =
-      typeof context.sort === "function" ? context.sort : compareItems;
+      typeof treeContext.sort === "function" ? treeContext.sort : compareItems;
     groups = groups.sort(sortCallback);
     templates = templates.sort(sortCallback);
   }
 
   const view = [...groups, ...templates];
   const [isOver, dragSource, drop] = useDropRoot(ref);
-  const classes = context.classes;
+  const classes = treeContext.classes;
 
   if (
-    props.parentId === context.rootId &&
-    isDroppable(dragSource?.id, context.rootId, context)
+    props.parentId === treeContext.rootId &&
+    isDroppable(dragSource?.id, treeContext.rootId, treeContext)
   ) {
     drop(ref);
   }
@@ -49,13 +50,26 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
     className = `${className} ${classes.root}`;
   }
 
-  const Component = context.listComponent;
+  const Component = treeContext.listComponent;
 
   return (
     <Component ref={ref} className={className} role="list">
-      {view.map((node) => (
-        <Node key={node.id} id={node.id} depth={props.depth} />
+      {view.map((node, index) => (
+        <React.Fragment key={index}>
+          <Placeholder
+            depth={props.depth}
+            listCount={view.length}
+            parentId={props.parentId}
+            index={index}
+          />
+          <Node id={node.id} depth={props.depth} />
+        </React.Fragment>
       ))}
+      <Placeholder
+        depth={props.depth}
+        listCount={view.length}
+        parentId={props.parentId}
+      />
     </Component>
   );
 };
