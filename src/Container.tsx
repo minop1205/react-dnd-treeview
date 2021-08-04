@@ -55,7 +55,7 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
   return (
     <Component ref={ref} className={className} role="list">
       {view.map((node, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={node.id}>
           <Placeholder
             depth={props.depth}
             listCount={view.length}
