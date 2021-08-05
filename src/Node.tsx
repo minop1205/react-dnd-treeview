@@ -23,7 +23,7 @@ type Props = PropsWithChildren<{
 
 export const Node = <T extends unknown>(props: Props): ReactElement | null => {
   const context = useTreeContext<T>();
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const item = context.tree.find((node) => node.id === props.id);
   const { openIds, classes } = context;
   const open = openIds.includes(props.id);
