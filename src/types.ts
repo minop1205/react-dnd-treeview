@@ -118,6 +118,7 @@ export type TreeState<T> = TreeStateBase<T> & {
   listComponent: ElementType;
   listItemComponent: ElementType;
   sort: SortCallback | boolean;
+  insertDroppableFirst: boolean;
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
   onDrop: DropHandler;
@@ -130,6 +131,7 @@ export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   sort?: SortCallback | boolean;
+  insertDroppableFirst?: boolean;
   initialOpen?: InitialOpen;
   onDrop: (
     tree: NodeModel<T>[],

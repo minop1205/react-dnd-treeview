@@ -15,17 +15,27 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
   const ref = useRef<HTMLLIElement>(null);
   const nodes = treeContext.tree.filter((l) => l.parent === props.parentId);
 
-  let groups = nodes.filter((n) => n.droppable);
-  let templates = nodes.filter((n) => !n.droppable);
+  let view = nodes;
+  const sortCallback =
+    typeof treeContext.sort === "function" ? treeContext.sort : compareItems;
 
-  if (treeContext.sort !== false) {
-    const sortCallback =
-      typeof treeContext.sort === "function" ? treeContext.sort : compareItems;
-    groups = groups.sort(sortCallback);
-    templates = templates.sort(sortCallback);
+  if (treeContext.insertDroppableFirst) {
+    let droppableNodes = nodes.filter((n) => n.droppable);
+    let nonDroppableNodes = nodes.filter((n) => !n.droppable);
+
+    if (treeContext.sort === false) {
+      view = [...droppableNodes, ...nonDroppableNodes];
+    } else {
+      droppableNodes = droppableNodes.sort(sortCallback);
+      nonDroppableNodes = nonDroppableNodes.sort(sortCallback);
+      view = [...droppableNodes, ...nonDroppableNodes];
+    }
+  } else {
+    if (treeContext.sort !== false) {
+      view = nodes.sort(sortCallback);
+    }
   }
 
-  const view = [...groups, ...templates];
   const [isOver, dragSource, drop] = useDropRoot(ref);
   const classes = treeContext.classes;
 
