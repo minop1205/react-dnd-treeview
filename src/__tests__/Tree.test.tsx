@@ -108,6 +108,7 @@ const TestTree = <T extends unknown>(props: Props<T>): ReactElement => {
 const dragAndDrop = (src: Element, dst: Element) => {
   fireEvent.dragStart(src);
   fireEvent.dragEnter(dst);
+  fireEvent.dragOver(dst);
   fireEvent.drop(dst);
   fireEvent.dragLeave(dst);
   fireEvent.dragEnd(src);
