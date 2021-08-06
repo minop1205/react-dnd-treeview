@@ -38,8 +38,8 @@ export const TreeProvider = <T extends unknown>(
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (id, parentId) =>
-      props.onDrop(mutateTree<T>(props.tree, id, parentId), {
+    onDrop: (id, parentId, index) =>
+      props.onDrop(mutateTree<T>(props.tree, id, parentId, index), {
         dragSourceId: id,
         dropTargetId: parentId,
         dragSource: getTreeItem(props.tree, id),

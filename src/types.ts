@@ -35,7 +35,8 @@ export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler = (
   id: NodeModel["id"],
-  parent: NodeModel["id"]
+  parent: NodeModel["id"],
+  index: number
 ) => void;
 
 export type CanDropHandler = (

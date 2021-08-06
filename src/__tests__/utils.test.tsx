@@ -86,22 +86,22 @@ describe("utilities test", () => {
       },
     ];
 
-    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1);
+    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1, 0);
 
     treeBefore[1].text = "c";
 
     expect(treeAfter).toEqual([
       {
-        id: 1,
-        parent: 0,
-        droppable: true,
-        text: "a",
-      },
-      {
         id: 2,
         parent: 1,
         droppable: true,
         text: "b",
+      },
+      {
+        id: 1,
+        parent: 0,
+        droppable: true,
+        text: "a",
       },
     ]);
   });
@@ -159,6 +159,8 @@ describe("utilities test", () => {
       listComponent: "ul",
       listItemComponent: "li",
       sort: false,
+      insertDroppableFirst: true,
+      dropTargetOffset: 0,
       initialOpen: false,
       openIds: [],
       onDrop: () => undefined,
