@@ -18,15 +18,11 @@ type GetInnerIndex = (
   monitor: DropTargetMonitor
 ) => number;
 
-type GetHoverPosition = (el: Element, pointerY: number) => VerticalPosition;
-
 type GetOuterIndex = (
   dropTarget: NodeModel,
   dropTargetEl: HTMLElement,
   monitor: DropTargetMonitor
 ) => HoverIndex;
-
-const indexChangeOffset = 5;
 
 const compareYCoord: CompareYCoord = (el, pointerY) => {
   const bbox = el.getBoundingClientRect();
@@ -72,9 +68,13 @@ const getOuterIndex: GetOuterIndex = (dropTarget, dropTargetEl, monitor) => {
   };
 };
 
-const getHoverPosition: GetHoverPosition = (el, pointerY) => {
+const getHoverPosition = <T>(
+  el: Element,
+  pointerY: number,
+  context: TreeState<T>
+): VerticalPosition => {
   const bbox = el.getBoundingClientRect();
-  const offsetY = indexChangeOffset;
+  const offsetY = context.dropTargetOffset;
   const upSideY = bbox.top + offsetY;
   const lowerSideY = bbox.bottom - offsetY;
 
@@ -115,7 +115,8 @@ export const getHoverIndex = <T>(
   const list = dropTargetEl.querySelector('[role="list"]');
   const hoverPosition = getHoverPosition(
     dropTargetEl,
-    monitor.getClientOffset()?.y || 0
+    monitor.getClientOffset()?.y || 0,
+    context
   );
 
   if (!list) {

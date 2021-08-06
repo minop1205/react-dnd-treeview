@@ -33,6 +33,8 @@ export const TreeProvider = <T extends unknown>(
     listComponent: "ul",
     listItemComponent: "li",
     sort: true,
+    insertDroppableFirst: true,
+    dropTargetOffset: 0,
     initialOpen: false,
     ...props,
     openIds,
