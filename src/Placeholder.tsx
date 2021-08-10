@@ -25,7 +25,6 @@ export const Placeholder = <T extends unknown>(
   }
 
   const visible =
-    placeholderContext.visible &&
     props.parentId === placeholderContext.parentId &&
     (props.index === placeholderContext.index ||
       (props.index === undefined &&

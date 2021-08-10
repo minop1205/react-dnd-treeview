@@ -6,28 +6,26 @@ export const PlaceholderContext = React.createContext<PlaceholderState>(
 );
 
 const initialState = {
-  parentId: 0,
-  index: 0,
-  visible: false,
+  parentId: undefined,
+  index: undefined,
 };
 
 export const PlaceholderProvider: React.FC = (props) => {
-  const [parentId, setParentId] = useState<NodeModel["id"]>(
+  const [parentId, setParentId] = useState<PlaceholderState["parentId"]>(
     initialState.parentId
   );
-  const [index, setIndex] = useState(initialState.index);
-  const [visible, setVisible] = useState(initialState.visible);
+  const [index, setIndex] = useState<PlaceholderState["index"]>(
+    initialState.index
+  );
 
   const showPlaceholder = (parentId: NodeModel["id"], index: number): void => {
     setParentId(parentId);
     setIndex(index);
-    setVisible(true);
   };
 
   const hidePlaceholder = () => {
     setParentId(initialState.parentId);
     setIndex(initialState.index);
-    setVisible(initialState.visible);
   };
 
   return (
@@ -35,7 +33,6 @@ export const PlaceholderProvider: React.FC = (props) => {
       value={{
         parentId,
         index,
-        visible,
         showPlaceholder,
         hidePlaceholder,
       }}

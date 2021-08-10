@@ -15,9 +15,14 @@ export const useDropRoot = <T>(
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem<T>, monitor) => {
       const { rootId, onDrop } = treeContext;
+      const { parentId, index } = placeholderContext;
 
-      if (monitor.isOver({ shallow: true })) {
-        onDrop(item.id, rootId, placeholderContext.index);
+      if (
+        monitor.isOver({ shallow: true }) &&
+        parentId !== undefined &&
+        index !== undefined
+      ) {
+        onDrop(item.id, rootId, index);
       }
     },
     canDrop: (item: DragItem<T>, monitor) => {

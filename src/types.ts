@@ -99,9 +99,8 @@ export type DragControlState = {
 };
 
 export type PlaceholderState = {
-  parentId: NodeModel["id"];
-  index: number;
-  visible: boolean;
+  parentId: NodeModel["id"] | undefined;
+  index: number | undefined;
   showPlaceholder: (parentId: NodeModel["id"], index: number) => void;
   hidePlaceholder: () => void;
 };
