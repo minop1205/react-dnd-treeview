@@ -25,7 +25,18 @@ export const useDropNode = <T>(
     },
     canDrop: (dragSource: DragItem<T>, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        return isDroppable(dragSource.id, item.id, treeContext);
+        const hoverIndex = getHoverIndex<T>(
+          item,
+          ref.current,
+          monitor,
+          treeContext
+        );
+
+        if (hoverIndex === null) {
+          return false;
+        }
+
+        return isDroppable(dragSource.id, hoverIndex.parentId, treeContext);
       }
 
       return false;
@@ -35,11 +46,6 @@ export const useDropNode = <T>(
         const { parentId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
-        if (!isDroppable(dragSource.id, item.id, treeContext)) {
-          hidePlaceholder();
-          return;
-        }
-
         const hoverIndex = getHoverIndex<T>(
           item,
           ref.current,
@@ -47,7 +53,10 @@ export const useDropNode = <T>(
           treeContext
         );
 
-        if (hoverIndex === null) {
+        if (
+          hoverIndex === null ||
+          !isDroppable(dragSource.id, hoverIndex.parentId, treeContext)
+        ) {
           hidePlaceholder();
           return;
         }

@@ -39,11 +39,6 @@ export const useDropRoot = <T>(
         const { parentId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
-        if (!isDroppable(dragItem.id, rootId, treeContext)) {
-          hidePlaceholder();
-          return;
-        }
-
         const hoverIndex = getHoverIndex<T>(
           null,
           ref.current,
@@ -51,7 +46,10 @@ export const useDropRoot = <T>(
           treeContext
         );
 
-        if (hoverIndex === null) {
+        if (
+          hoverIndex === null ||
+          !isDroppable(dragItem.id, rootId, treeContext)
+        ) {
           hidePlaceholder();
           return;
         }
