@@ -24,6 +24,8 @@ export const useDropRoot = <T>(
       ) {
         onDrop(item.id, rootId, index);
       }
+
+      placeholderContext.hidePlaceholder();
     },
     canDrop: (item: DragItem<T>, monitor) => {
       const { rootId } = treeContext;

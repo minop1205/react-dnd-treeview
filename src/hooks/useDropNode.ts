@@ -24,6 +24,8 @@ export const useDropNode = <T>(
       ) {
         treeContext.onDrop(dragSource.id, parentId, index);
       }
+
+      placeholderContext.hidePlaceholder();
     },
     canDrop: (dragSource: DragItem<T>, monitor) => {
       if (monitor.isOver({ shallow: true })) {
