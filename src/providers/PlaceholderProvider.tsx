@@ -6,32 +6,35 @@ export const PlaceholderContext = React.createContext<PlaceholderState>(
 );
 
 const initialState = {
-  parentId: undefined,
+  dropTargetId: undefined,
   index: undefined,
 };
 
 export const PlaceholderProvider: React.FC = (props) => {
-  const [parentId, setParentId] = useState<PlaceholderState["parentId"]>(
-    initialState.parentId
-  );
+  const [dropTargetId, setDropTargetId] = useState<
+    PlaceholderState["dropTargetId"]
+  >(initialState.dropTargetId);
   const [index, setIndex] = useState<PlaceholderState["index"]>(
     initialState.index
   );
 
-  const showPlaceholder = (parentId: NodeModel["id"], index: number): void => {
-    setParentId(parentId);
+  const showPlaceholder = (
+    dropTargetId: NodeModel["id"],
+    index: number
+  ): void => {
+    setDropTargetId(dropTargetId);
     setIndex(index);
   };
 
   const hidePlaceholder = () => {
-    setParentId(initialState.parentId);
+    setDropTargetId(initialState.dropTargetId);
     setIndex(initialState.index);
   };
 
   return (
     <PlaceholderContext.Provider
       value={{
-        parentId,
+        dropTargetId,
         index,
         showPlaceholder,
         hidePlaceholder,

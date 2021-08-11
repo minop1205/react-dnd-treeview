@@ -15,11 +15,11 @@ export const useDropRoot = <T>(
     accept: ItemTypes.TREE_ITEM,
     drop: (item: DragItem<T>, monitor) => {
       const { rootId, onDrop } = treeContext;
-      const { parentId, index } = placeholderContext;
+      const { dropTargetId, index } = placeholderContext;
 
       if (
         monitor.isOver({ shallow: true }) &&
-        parentId !== undefined &&
+        dropTargetId !== undefined &&
         index !== undefined
       ) {
         onDrop(item.id, rootId, index);
@@ -43,7 +43,7 @@ export const useDropRoot = <T>(
     hover: (dragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
         const { rootId } = treeContext;
-        const { parentId, index, showPlaceholder, hidePlaceholder } =
+        const { dropTargetId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
         const dropTarget = getDropTarget<T>(
@@ -61,7 +61,7 @@ export const useDropRoot = <T>(
           return;
         }
 
-        if (dropTarget.id !== parentId || dropTarget.index !== index) {
+        if (dropTarget.id !== dropTargetId || dropTarget.index !== index) {
           showPlaceholder(dropTarget.id, dropTarget.index);
         }
       }

@@ -7,7 +7,7 @@ import { PlaceholderContext } from "./providers";
 type Props = {
   depth: number;
   listCount: number;
-  parentId: NodeModel["id"];
+  dropTargetId: NodeModel["id"];
   index?: number;
 };
 
@@ -25,7 +25,7 @@ export const Placeholder = <T extends unknown>(
   }
 
   const visible =
-    props.parentId === placeholderContext.parentId &&
+    props.dropTargetId === placeholderContext.dropTargetId &&
     (props.index === placeholderContext.index ||
       (props.index === undefined &&
         props.listCount === placeholderContext.index));

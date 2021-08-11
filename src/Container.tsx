@@ -69,7 +69,7 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
           <Placeholder
             depth={props.depth}
             listCount={view.length}
-            parentId={props.parentId}
+            dropTargetId={props.parentId}
             index={index}
           />
           <Node id={node.id} depth={props.depth} />
@@ -78,7 +78,7 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
       <Placeholder
         depth={props.depth}
         listCount={view.length}
-        parentId={props.parentId}
+        dropTargetId={props.parentId}
       />
     </Component>
   );
