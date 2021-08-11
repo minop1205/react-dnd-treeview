@@ -87,7 +87,7 @@ const getHoverPosition = <T>(
   return "middle";
 };
 
-export const getHoverIndex = <T>(
+export const getDropTarget = <T>(
   dropTarget: NodeModel<T> | null,
   dropTargetEl: HTMLElement | null,
   monitor: DropTargetMonitor,

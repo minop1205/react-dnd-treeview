@@ -3,7 +3,7 @@ import { useDrop, DragElementWrapper } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { PlaceholderContext } from "../providers";
 import { NodeModel, DragItem } from "../types";
-import { isDroppable, getHoverIndex } from "../utils";
+import { isDroppable, getDropTarget } from "../utils";
 import { useTreeContext } from "../hooks";
 
 export const useDropNode = <T>(
@@ -29,7 +29,7 @@ export const useDropNode = <T>(
     },
     canDrop: (dragSource: DragItem<T>, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        const hoverIndex = getHoverIndex<T>(
+        const hoverIndex = getDropTarget<T>(
           item,
           ref.current,
           monitor,
@@ -50,7 +50,7 @@ export const useDropNode = <T>(
         const { parentId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
-        const hoverIndex = getHoverIndex<T>(
+        const hoverIndex = getDropTarget<T>(
           item,
           ref.current,
           monitor,
