@@ -10,6 +10,7 @@ export const useOpenIdsHelper = (
     handleToggle: ToggleHandler;
     handleCloseAll: () => void;
     handleOpenAll: () => void;
+    handleOpen: (targetIds: NodeModel["id"] | NodeModel["id"][]) => void;
   }
 ] => {
   let initialOpenIds: NodeModel["id"][] = [];
@@ -44,5 +45,24 @@ export const useOpenIdsHelper = (
     [tree]
   );
 
-  return [openIds, { handleToggle, handleCloseAll, handleOpenAll }];
+  const handleOpen = useCallback(
+    (targetIds: NodeModel["id"] | NodeModel["id"][]) =>
+      setOpenIds(
+        [
+          ...openIds,
+          ...tree
+            .filter(
+              (node) =>
+                node.droppable &&
+                (Array.isArray(targetIds)
+                  ? targetIds.includes(node.id)
+                  : node.id === targetIds)
+            )
+            .map((node) => node.id),
+        ].filter((value, index, self) => self.indexOf(value) === index)
+      ),
+    [tree, openIds]
+  );
+
+  return [openIds, { handleToggle, handleCloseAll, handleOpenAll, handleOpen }];
 };

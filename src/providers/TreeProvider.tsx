@@ -5,7 +5,7 @@ import React, {
 } from "react";
 import { mutateTree, getTreeItem } from "../utils";
 import { useOpenIdsHelper } from "../hooks";
-import { TreeState, OpenIdsHandlers, TreeProps } from "../types";
+import { NodeModel, TreeState, OpenIdsHandlers, TreeProps } from "../types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -18,10 +18,12 @@ export const TreeContext = React.createContext({});
 export const TreeProvider = <T extends unknown>(
   props: Props<T>
 ): ReactElement => {
-  const [openIds, { handleToggle, handleCloseAll, handleOpenAll }] =
+  const [openIds, { handleToggle, handleCloseAll, handleOpenAll, handleOpen }] =
     useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(props.treeRef, () => ({
+    open: (targetIds: NodeModel["id"] | NodeModel["id"][]) =>
+      handleOpen(targetIds),
     openAll: () => handleOpenAll(),
     closeAll: () => handleCloseAll(),
   }));
