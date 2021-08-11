@@ -6,8 +6,8 @@ type CompareResult = "up" | "down";
 
 type VerticalPosition = "upper" | "middle" | "lower";
 
-type HoverIndex = {
-  parentId: NodeModel["id"];
+type DropTarget = {
+  id: NodeModel["id"];
   index: number;
 } | null;
 
@@ -19,10 +19,10 @@ type GetInnerIndex = (
 ) => number;
 
 type GetOuterIndex = (
-  dropTarget: NodeModel,
-  dropTargetEl: HTMLElement,
+  node: NodeModel,
+  nodeEl: HTMLElement,
   monitor: DropTargetMonitor
-) => HoverIndex;
+) => number | null;
 
 const compareYCoord: CompareYCoord = (el, pointerY) => {
   const bbox = el.getBoundingClientRect();
@@ -52,8 +52,8 @@ const getInnerIndex: GetInnerIndex = (listItems, monitor) => {
   return index;
 };
 
-const getOuterIndex: GetOuterIndex = (dropTarget, dropTargetEl, monitor) => {
-  const parentList = dropTargetEl.closest('[role="list"]');
+const getOuterIndex: GetOuterIndex = (node, nodeEl, monitor) => {
+  const parentList = nodeEl.closest('[role="list"]');
   const parentListItems = parentList?.querySelectorAll(
     ':scope > [role="listitem"]'
   );
@@ -62,10 +62,7 @@ const getOuterIndex: GetOuterIndex = (dropTarget, dropTargetEl, monitor) => {
     return null;
   }
 
-  return {
-    parentId: dropTarget.parent,
-    index: getInnerIndex(parentListItems, monitor),
-  };
+  return getInnerIndex(parentListItems, monitor);
 };
 
 const getHoverPosition = <T>(
@@ -88,33 +85,28 @@ const getHoverPosition = <T>(
 };
 
 export const getDropTarget = <T>(
-  dropTarget: NodeModel<T> | null,
-  dropTargetEl: HTMLElement | null,
+  node: NodeModel<T> | null,
+  nodeEl: HTMLElement | null,
   monitor: DropTargetMonitor,
   context: TreeState<T>
-): HoverIndex => {
-  if (!dropTargetEl) {
-    return {
-      parentId: context.rootId,
-      index: 0,
-    };
+): DropTarget => {
+  if (!nodeEl) {
+    return null;
   }
 
-  if (dropTarget === null) {
-    const listItems = dropTargetEl.querySelectorAll(
-      ':scope > [role="listitem"]'
-    );
+  if (node === null) {
+    const listItems = nodeEl.querySelectorAll(':scope > [role="listitem"]');
 
     return {
-      parentId: context.rootId,
+      id: context.rootId,
       index: getInnerIndex(listItems, monitor),
     };
   }
 
   const dragSource = monitor.getItem<DragItem<T>>();
-  const list = dropTargetEl.querySelector('[role="list"]');
+  const list = nodeEl.querySelector('[role="list"]');
   const hoverPosition = getHoverPosition(
-    dropTargetEl,
+    nodeEl,
     monitor.getClientOffset()?.y || 0,
     context
   );
@@ -122,23 +114,41 @@ export const getDropTarget = <T>(
   if (!list) {
     if (hoverPosition === "middle") {
       return {
-        parentId: dropTarget.id,
+        id: node.id,
         index: 0,
       };
     }
 
-    if (isDroppable(dragSource.id, dropTarget.parent, context)) {
-      return getOuterIndex(dropTarget, dropTargetEl, monitor);
+    if (isDroppable(dragSource.id, node.parent, context)) {
+      const outerIndex = getOuterIndex(node, nodeEl, monitor);
+
+      if (outerIndex === null) {
+        return null;
+      }
+
+      return {
+        id: node.parent,
+        index: outerIndex,
+      };
     }
 
     return null;
   } else {
     if (hoverPosition === "upper") {
-      if (isDroppable(dragSource.id, dropTarget.parent, context)) {
-        return getOuterIndex(dropTarget, dropTargetEl, monitor);
+      if (isDroppable(dragSource.id, node.parent, context)) {
+        const outerIndex = getOuterIndex(node, nodeEl, monitor);
+
+        if (outerIndex === null) {
+          return null;
+        }
+
+        return {
+          id: node.parent,
+          index: outerIndex,
+        };
       } else {
         return {
-          parentId: dropTarget.id,
+          id: node.id,
           index: 0,
         };
       }
@@ -147,7 +157,7 @@ export const getDropTarget = <T>(
     const listItems = list.querySelectorAll(':scope > [role="listitem"]');
 
     return {
-      parentId: dropTarget.id,
+      id: node.id,
       index: getInnerIndex(listItems, monitor),
     };
   }

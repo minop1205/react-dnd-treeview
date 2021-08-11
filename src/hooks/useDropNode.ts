@@ -29,18 +29,18 @@ export const useDropNode = <T>(
     },
     canDrop: (dragSource: DragItem<T>, monitor) => {
       if (monitor.isOver({ shallow: true })) {
-        const hoverIndex = getDropTarget<T>(
+        const dropTarget = getDropTarget<T>(
           item,
           ref.current,
           monitor,
           treeContext
         );
 
-        if (hoverIndex === null) {
+        if (dropTarget === null) {
           return false;
         }
 
-        return isDroppable(dragSource.id, hoverIndex.parentId, treeContext);
+        return isDroppable(dragSource.id, dropTarget.id, treeContext);
       }
 
       return false;
@@ -50,7 +50,7 @@ export const useDropNode = <T>(
         const { parentId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
-        const hoverIndex = getDropTarget<T>(
+        const dropTarget = getDropTarget<T>(
           item,
           ref.current,
           monitor,
@@ -58,15 +58,15 @@ export const useDropNode = <T>(
         );
 
         if (
-          hoverIndex === null ||
-          !isDroppable(dragSource.id, hoverIndex.parentId, treeContext)
+          dropTarget === null ||
+          !isDroppable(dragSource.id, dropTarget.id, treeContext)
         ) {
           hidePlaceholder();
           return;
         }
 
-        if (hoverIndex.parentId !== parentId || hoverIndex.index !== index) {
-          showPlaceholder(hoverIndex.parentId, hoverIndex.index);
+        if (dropTarget.id !== parentId || dropTarget.index !== index) {
+          showPlaceholder(dropTarget.id, dropTarget.index);
         }
       }
     },
