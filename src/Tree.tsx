@@ -15,6 +15,7 @@ import {
   DragControlState,
   OpenIdsHandlers,
   TreeProps,
+  NodeModel,
 } from "./types";
 
 const TreeContext = createContext<TreeState>({} as TreeState);
@@ -23,10 +24,12 @@ const DragControlContext = createContext<DragControlState>(
 );
 
 const Tree = forwardRef<OpenIdsHandlers, TreeProps>((props, ref) => {
-  const [openIds, { handleToggle, handleCloseAll, handleOpenAll }] =
+  const [openIds, { handleToggle, handleCloseAll, handleOpenAll, handleOpen }] =
     useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(ref, () => ({
+    open: (targetIds: NodeModel["id"] | NodeModel["id"][]) =>
+      handleOpen(targetIds),
     openAll: () => handleOpenAll(),
     closeAll: () => handleCloseAll(),
   }));

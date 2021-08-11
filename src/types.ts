@@ -72,6 +72,7 @@ export type DragOverProps = {
 };
 
 export type OpenIdsHandlers = {
+  open(targetIds: NodeModel["id"] | NodeModel["id"][]): void;
   openAll(): void;
   closeAll(): void;
 };
