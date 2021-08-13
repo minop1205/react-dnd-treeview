@@ -186,8 +186,8 @@ you can use the `data` property.
 | canDrag              | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be draggable.<br>By default, all nodes are draggable.                                                                                                                                                                                                                                                                                                                                                               |
 | sort                 | function \| boolean | no       | true      | This property controls the order of the child nodes.<br> By default (`true`), they are sorted by the `text` property of each node.<br> If `false`, sorting is disabled. In this case, the nodes will follow the order of the array passed to the `tree` property.<br>It is also possible to customize the sorting by passing a callback function.                                                                                                                                                          |
 | insertDroppableFirst | boolean             | no       | true      | Specifies whether droppable nodes should be placed first in the list of child nodes.                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| placeholderRender    | function            | no       | undefined | Render function for the drop destination placeholder. By default, placeholder is not displayed.<br>See the [Placeholder](#Placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                                                                                                  |
-| dropTargetOffset     | number              | no       | 0         | Effective drop range of a dropable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.<br><br>See the [Placeholder](#Placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                                 |
+| placeholderRender    | function            | no       | undefined | Render function for the drop destination placeholder. By default, placeholder is not displayed.<br>See the [Free placement of node and showing placeholder](#Free-placement-of-node-and-showing-placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                            |
+| dropTargetOffset     | number              | no       | 0         | Effective drop range of a dropable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.<br><br>See the [Free placement of node and showing placeholder](#Free-placement-of-node-and-showing-placeholder) section for more information on using placeholder.                                                                                                                                                                           |
 | initialOpen          | boolean \| array    | no       | false     | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.                                                                                                                                                                                                                                                                                                         |
 
 ### Render prop
@@ -318,6 +318,44 @@ For example, if you allow dropping from a parent node to a child node as shown i
 
 ![malformed tree](https://user-images.githubusercontent.com/3772820/114326837-9d717400-9b71-11eb-91cf-c762c4ab7461.gif)
 
+### Free placement of node and showing placeholder
+
+By default, nodes are automatically sorted and cannot be freely arranged, but by using a combination of several APIs, it is possible to freely arrange nodes and display placeholders as shown below.
+
+![placeholder_sample](https://user-images.githubusercontent.com/3772820/129397312-9501e164-d413-4a06-b023-1713d206004e.gif)
+
+The following is an example (excerpt) of the implementation of free placement of nodes and placeholder display.
+
+```jsx
+import { CustomPlaceholder } from "./CustomPlaceholder";
+import styles from "./App.module.css";
+
+function App() {
+  const [treeData, setTreeData] = useState(SampleData);
+  const handleDrop = (newTree) => setTreeData(newTree);
+
+  <Tree
+    {...props}
+    tree={treData}
+    onDrop={handleDrop}
+    classes={{
+      placeholder: styles.placeholder,
+    }}
+    sort={false}
+    insertDroppableFirst={false}
+    canDrop={(tree, { dragSource, dropTargetId }) => {
+      if (dragSource?.parent === dropTargetId) {
+        return true;
+      }
+    }}
+    dropTargetOffset={5}
+    placeholderRender={(node, { depth }) => (
+      <CustomPlaceholder node={node} depth={depth} />
+    )}
+  />;
+}
+```
+
 ### Component Styling
 
 You are free to define the styling of individual nodes in the tree in your Render props, but the rest of the tree can be styled by specifying the CSS class name for the `classes` property.
@@ -340,6 +378,7 @@ You can use the following keys for the objects you pass to the `classes` propert
 | container      | CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag). |
 | dropTarget     | CSS class name to give to the area that can be dropped during a node dragging operation.                       |
 | draggingSource | CSS class name to give to the node during the dragging operation.                                              |
+| placeholder    | CSS class name to give to the element wrapping the placeholder (by default, `li` tag).                         |
 
 ### Usage to openAll, closeAll methods
 
