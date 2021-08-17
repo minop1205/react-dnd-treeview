@@ -158,6 +158,7 @@ describe("utilities test", () => {
       render,
       listComponent: "ul",
       listItemComponent: "li",
+      placeholderComponent: "li",
       sort: false,
       insertDroppableFirst: true,
       dropTargetOffset: 0,
