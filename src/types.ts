@@ -118,6 +118,7 @@ export type TreeStateBase<T> = {
 export type TreeState<T> = TreeStateBase<T> & {
   listComponent: ElementType;
   listItemComponent: ElementType;
+  placeholderComponent: ElementType;
   sort: SortCallback | boolean;
   insertDroppableFirst: boolean;
   dropTargetOffset: number;
@@ -132,6 +133,7 @@ export type TreeState<T> = TreeStateBase<T> & {
 export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
+  placeholderComponent?: ElementType;
   sort?: SortCallback | boolean;
   insertDroppableFirst?: boolean;
   dropTargetOffset?: number;
