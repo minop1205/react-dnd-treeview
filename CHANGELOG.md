@@ -4,6 +4,10 @@
 
 _July 30, 2021_
 
+### Added
+
+- add APIs for manual sort and placeholder
+
 ### Fixed
 
 - type inference for custom data types is not working.
