@@ -1,18 +1,29 @@
-import React, { useEffect, useRef, useContext, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  PropsWithChildren,
+  ReactElement,
+} from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { Container } from "./Container";
-import { useDragNode, useDropNode, useDragControl } from "./hooks";
+import {
+  useTreeContext,
+  useDragNode,
+  useDropNode,
+  useDragControl,
+} from "./hooks";
 import { NodeModel, RenderParams } from "./types";
-import { TreeContext } from "./Tree";
+import { isDroppable } from "./utils";
 
-type Props = {
+type Props = PropsWithChildren<{
   id: NodeModel["id"];
   depth: number;
-};
+}>;
 
-export const Node: React.FC<Props> = (props) => {
-  const context = useContext(TreeContext);
-  const ref = useRef<HTMLLIElement>(null);
+export const Node = <T extends unknown>(props: Props): ReactElement | null => {
+  const context = useTreeContext<T>();
+  const ref = useRef<HTMLElement>(null);
   const item = context.tree.find((node) => node.id === props.id);
   const { openIds, classes } = context;
   const open = openIds.includes(props.id);
@@ -22,11 +33,11 @@ export const Node: React.FC<Props> = (props) => {
   }
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, drop] = useDropNode(item);
+  const [isOver, dragSource, drop] = useDropNode(item, ref);
 
   drag(ref);
 
-  if (item.droppable || context.canDrop) {
+  if (isDroppable(dragSource?.id, props.id, context)) {
     drop(ref);
   }
 

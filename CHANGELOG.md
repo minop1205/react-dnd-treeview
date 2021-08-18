@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.5.0
+
+_July 30, 2021_
+
+### Added
+
+- add APIs for manual sort and placeholder
+
+### Fixed
+
+- type inference for custom data types is not working.
+
 ## 1.4.3
 
 _July 17, 2021_

@@ -1,10 +1,10 @@
 import { produce } from "immer";
 import { NodeModel } from "../types";
 
-export const getTreeItem = (
-  tree: NodeModel[],
+export const getTreeItem = <T>(
+  tree: NodeModel<T>[],
   id: NodeModel["id"]
-): NodeModel | undefined => {
+): NodeModel<T> | undefined => {
   const node = tree.find((n) => n.id === id);
 
   if (!node) {

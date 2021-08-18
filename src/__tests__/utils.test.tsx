@@ -1,4 +1,5 @@
-import { NodeModel } from "../types";
+import React from "react";
+import { NodeModel, NodeRender, TreeState } from "../types";
 import {
   mutateTree,
   compareItems,
@@ -85,22 +86,22 @@ describe("utilities test", () => {
       },
     ];
 
-    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1);
+    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1, 0);
 
     treeBefore[1].text = "c";
 
     expect(treeAfter).toEqual([
       {
-        id: 1,
-        parent: 0,
-        droppable: true,
-        text: "a",
-      },
-      {
         id: 2,
         parent: 1,
         droppable: true,
         text: "b",
+      },
+      {
+        id: 1,
+        parent: 0,
+        droppable: true,
+        text: "a",
       },
     ]);
   });
@@ -147,9 +148,29 @@ describe("utilities test", () => {
   });
 
   test("check for drop availability", () => {
-    expect(isDroppable(treeData, 7, 7)).toBe(false);
-    expect(isDroppable(treeData, 7, 1)).toBe(true);
-    expect(isDroppable(treeData, 1, 1)).toBe(false);
-    expect(isDroppable(treeData, 4, 5)).toBe(false);
+    const render: NodeRender<unknown> = (node) => {
+      return <div>{node.text}</div>;
+    };
+
+    const treeContext: TreeState<unknown> = {
+      tree: treeData,
+      rootId: 0,
+      render,
+      listComponent: "ul",
+      listItemComponent: "li",
+      placeholderComponent: "li",
+      sort: false,
+      insertDroppableFirst: true,
+      dropTargetOffset: 0,
+      initialOpen: false,
+      openIds: [],
+      onDrop: () => undefined,
+      onToggle: () => undefined,
+    };
+
+    expect(isDroppable(7, 7, treeContext)).toBe(false);
+    expect(isDroppable(7, 1, treeContext)).toBe(true);
+    expect(isDroppable(1, 1, treeContext)).toBe(false);
+    expect(isDroppable(4, 5, treeContext)).toBe(false);
   });
 });
