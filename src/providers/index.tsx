@@ -4,11 +4,11 @@ import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
 import { TreeProvider, TreeContext } from "./TreeProvider";
 import { DragControlProvider, DragControlContext } from "./DragControlProvider";
 import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
-import { TreeProps, OpenIdsHandlers } from "../types";
+import { TreeProps, TreeMethods } from "../types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
-    treeRef: React.ForwardedRef<OpenIdsHandlers>;
+    treeRef: React.ForwardedRef<TreeMethods>;
   }
 >;
 

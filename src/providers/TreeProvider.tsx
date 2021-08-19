@@ -5,11 +5,11 @@ import React, {
 } from "react";
 import { mutateTree, getTreeItem } from "../utils";
 import { useOpenIdsHelper } from "../hooks";
-import { NodeModel, TreeState, OpenIdsHandlers, TreeProps } from "../types";
+import { TreeState, TreeProps, TreeMethods } from "../types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
-    treeRef: React.ForwardedRef<OpenIdsHandlers>;
+    treeRef: React.ForwardedRef<TreeMethods>;
   }
 >;
 
@@ -18,12 +18,14 @@ export const TreeContext = React.createContext({});
 export const TreeProvider = <T extends unknown>(
   props: Props<T>
 ): ReactElement => {
-  const [openIds, { handleToggle, handleCloseAll, handleOpenAll, handleOpen }] =
-    useOpenIdsHelper(props.tree, props.initialOpen);
+  const [
+    openIds,
+    { handleToggle, handleCloseAll, handleOpenAll, handleOpen, handleClose },
+  ] = useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(props.treeRef, () => ({
-    open: (targetIds: NodeModel["id"] | NodeModel["id"][]) =>
-      handleOpen(targetIds),
+    open: (targetIds) => handleOpen(targetIds),
+    close: (targetIds) => handleClose(targetIds),
     openAll: () => handleOpenAll(),
     closeAll: () => handleCloseAll(),
   }));
