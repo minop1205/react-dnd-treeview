@@ -1,5 +1,4 @@
 import { produce } from "immer";
-import arrayMove from "array-move";
 import { NodeModel } from "../types";
 
 const getDestinationIndex = (
@@ -20,6 +19,31 @@ const getDestinationIndex = (
   return tree.findIndex((node) => node.id === siblings[index - 1].id) + 1;
 };
 
+const arrayMoveMutable = <T>(
+  array: T[],
+  fromIndex: number,
+  toIndex: number
+) => {
+  const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
+
+  if (startIndex >= 0 && startIndex < array.length) {
+    const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
+
+    const [item] = array.splice(fromIndex, 1);
+    array.splice(endIndex, 0, item);
+  }
+};
+
+const arrayMoveImmutable = <T>(
+  array: T[],
+  fromIndex: number,
+  toIndex: number
+) => {
+  array = [...array];
+  arrayMoveMutable(array, fromIndex, toIndex);
+  return array;
+};
+
 export const mutateTree = <T>(
   tree: NodeModel<T>[],
   dragSourceId: NodeModel["id"],
@@ -31,9 +55,9 @@ export const mutateTree = <T>(
   let newTree;
 
   if (destIndex > srcIndex) {
-    newTree = arrayMove(tree, srcIndex, destIndex - 1);
+    newTree = arrayMoveImmutable(tree, srcIndex, destIndex - 1);
   } else {
-    newTree = arrayMove(tree, srcIndex, destIndex);
+    newTree = arrayMoveImmutable(tree, srcIndex, destIndex);
   }
 
   return produce(newTree, (draft) => {
