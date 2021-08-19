@@ -2,11 +2,12 @@
 
 ## 1.5.0
 
-_July 30, 2021_
+_Aug 19, 2021_
 
 ### Added
 
 - add APIs for manual sort and placeholder
+- add open / close methods for control open state of nodes.
 
 ### Fixed
 

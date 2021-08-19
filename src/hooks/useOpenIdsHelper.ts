@@ -1,5 +1,11 @@
 import { useState, useCallback } from "react";
-import { NodeModel, ToggleHandler, InitialOpen } from "../types";
+import {
+  NodeModel,
+  ToggleHandler,
+  OpenHandler,
+  CloseHandler,
+  InitialOpen,
+} from "../types";
 
 export const useOpenIdsHelper = (
   tree: NodeModel[],
@@ -10,7 +16,8 @@ export const useOpenIdsHelper = (
     handleToggle: ToggleHandler;
     handleCloseAll: () => void;
     handleOpenAll: () => void;
-    handleOpen: (targetIds: NodeModel["id"] | NodeModel["id"][]) => void;
+    handleOpen: OpenHandler;
+    handleClose: CloseHandler;
   }
 ] => {
   let initialOpenIds: NodeModel["id"][] = [];
@@ -45,8 +52,8 @@ export const useOpenIdsHelper = (
     [tree]
   );
 
-  const handleOpen = useCallback(
-    (targetIds: NodeModel["id"] | NodeModel["id"][]) =>
+  const handleOpen = useCallback<OpenHandler>(
+    (targetIds) =>
       setOpenIds(
         [
           ...openIds,
@@ -64,5 +71,18 @@ export const useOpenIdsHelper = (
     [tree, openIds]
   );
 
-  return [openIds, { handleToggle, handleCloseAll, handleOpenAll, handleOpen }];
+  const handleClose = useCallback<CloseHandler>(
+    (targetIds) =>
+      setOpenIds(
+        openIds.filter((id) =>
+          Array.isArray(targetIds) ? !targetIds.includes(id) : id !== targetIds
+        )
+      ),
+    [tree, openIds]
+  );
+
+  return [
+    openIds,
+    { handleToggle, handleCloseAll, handleOpenAll, handleOpen, handleClose },
+  ];
 };

@@ -2,11 +2,11 @@ import React, { forwardRef } from "react";
 import { DragLayer } from "./DragLayer";
 import { Container } from "./Container";
 import { Providers } from "./providers";
-import { OpenIdsHandlers, TreeProps } from "./types";
+import { TreeMethods, TreeProps } from "./types";
 
 function TreeInner<T>(
   props: TreeProps<T>,
-  ref: React.ForwardedRef<OpenIdsHandlers>
+  ref: React.ForwardedRef<TreeMethods>
 ) {
   return (
     <Providers {...props} treeRef={ref}>
@@ -17,7 +17,7 @@ function TreeInner<T>(
 }
 
 const Tree = forwardRef(TreeInner) as <T = unknown>(
-  props: TreeProps<T> & { ref?: React.ForwardedRef<OpenIdsHandlers> }
+  props: TreeProps<T> & { ref?: React.ForwardedRef<TreeMethods> }
 ) => ReturnType<typeof TreeInner>;
 
 export { Tree };

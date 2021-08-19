@@ -83,11 +83,13 @@ export type DragOverProps = {
   onDrop: () => void;
 };
 
-export type OpenIdsHandlers = {
-  open(targetIds: NodeModel["id"] | NodeModel["id"][]): void;
-  openAll(): void;
-  closeAll(): void;
-};
+export type OpenHandler = (
+  targetIds: NodeModel["id"] | NodeModel["id"][]
+) => void;
+
+export type CloseHandler = (
+  targetIds: NodeModel["id"] | NodeModel["id"][]
+) => void;
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
@@ -157,4 +159,11 @@ export type TreeProps<T> = TreeStateBase<T> & {
     }
   ) => boolean | void;
   canDrag?: (node: NodeModel<T> | undefined) => boolean;
+};
+
+export type TreeMethods = {
+  open: OpenHandler;
+  close: CloseHandler;
+  openAll(): void;
+  closeAll(): void;
 };
