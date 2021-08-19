@@ -1,4 +1,9 @@
-import React, { useState, ReactElement, PropsWithChildren } from "react";
+import React, {
+  useState,
+  useRef,
+  ReactElement,
+  PropsWithChildren,
+} from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Tree } from "../Tree";
@@ -8,6 +13,7 @@ import {
   Partial,
   TreeProps,
   NodeRender,
+  TreeMethods,
 } from "../types";
 
 function createSampleData<T>() {
@@ -416,5 +422,117 @@ describe("Tree", () => {
     expect(screen.getByText("Folder 1 draggable")).toBeInTheDocument();
     expect(screen.getByText("Folder 2 draggable")).toBeInTheDocument();
     expect(screen.getByText("File 3 not draggable")).toBeInTheDocument();
+  });
+
+  test("open / close nodes using public methods", () => {
+    const App: React.FC = () => {
+      const ref = useRef<TreeMethods>(null);
+
+      const handleOpenAll = () => {
+        if (ref.current?.openAll) {
+          ref.current.openAll();
+        }
+      };
+
+      const handleCloseAll = () => {
+        if (ref.current?.closeAll) {
+          ref.current.closeAll();
+        }
+      };
+
+      const handleOpenSingle = () => {
+        if (ref.current?.open) {
+          ref.current.open(4);
+        }
+      };
+
+      const handleOpenMultiple = () => {
+        if (ref.current?.open) {
+          ref.current.open([4, 5]);
+        }
+      };
+
+      const handleCloseSingle = () => {
+        if (ref.current?.close) {
+          ref.current.close(4);
+        }
+      };
+
+      const handleCloseMultiple = () => {
+        if (ref.current?.close) {
+          ref.current.close([4, 5]);
+        }
+      };
+
+      return (
+        <div>
+          <Tree
+            ref={ref}
+            rootId={0}
+            tree={createSampleData()}
+            render={(node, { depth, isOpen, onToggle }) => (
+              <div style={{ marginInlineStart: depth * 10 }}>
+                {node.droppable && (
+                  <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+                )}
+                {node.text}
+              </div>
+            )}
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onDrop={() => {}}
+          />
+          <button onClick={handleOpenAll}>Open All</button>
+          <button onClick={handleCloseAll}>Close All</button>
+          <button onClick={handleOpenSingle}>Open Single</button>
+          <button onClick={handleOpenMultiple}>Open Multiple</button>
+          <button onClick={handleCloseSingle}>Close Single</button>
+          <button onClick={handleCloseMultiple}>Close Multiple</button>
+        </div>
+      );
+    };
+
+    render(<App />);
+
+    const btnOpenAll = screen.getByText("Open All");
+    const btnCloseAll = screen.getByText("Close All");
+    const btnOpenSingle = screen.getByText("Open Single");
+    const btnOpenMultiple = screen.getByText("Open Multiple");
+    const btnCloseSingle = screen.getByText("Close Single");
+    const btnCloseMultiple = screen.getByText("Close Multiple");
+
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+    expect(screen.queryByText("File 2-1-1")).toBeNull();
+
+    fireEvent.click(btnOpenAll);
+
+    expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(screen.getByText("File 2-1-1")).toBeInTheDocument();
+
+    fireEvent.click(btnCloseAll);
+
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+    expect(screen.queryByText("File 2-1-1")).toBeNull();
+
+    fireEvent.click(btnOpenSingle);
+
+    expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(screen.queryByText("File 2-1-1")).toBeNull();
+
+    fireEvent.click(btnCloseAll);
+    fireEvent.click(btnOpenMultiple);
+
+    expect(screen.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(screen.getByText("File 2-1-1")).toBeInTheDocument();
+
+    fireEvent.click(btnCloseSingle);
+
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+    expect(screen.queryByText("File 2-1-1")).toBeNull();
+
+    fireEvent.click(btnOpenAll);
+    fireEvent.click(btnCloseMultiple);
+
+    expect(screen.queryByText("Folder 2-1")).toBeNull();
+    expect(screen.queryByText("File 2-1-1")).toBeNull();
   });
 });
