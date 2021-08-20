@@ -1,10 +1,6 @@
 import { ElementType, ReactElement } from "react";
 import { XYCoord } from "react-dnd";
 
-export type Partial<T> = {
-  [P in keyof T]?: T[P];
-};
-
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;

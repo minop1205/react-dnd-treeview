@@ -10,7 +10,6 @@ import { Tree } from "../Tree";
 import {
   NodeModel,
   SortCallback,
-  Partial,
   TreeProps,
   NodeRender,
   TreeMethods,
