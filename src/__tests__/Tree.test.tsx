@@ -423,6 +423,25 @@ describe("Tree", () => {
     expect(screen.getByText("File 3 not draggable")).toBeInTheDocument();
   });
 
+  test("check openIds with onChangeOpen callback", () => {
+    let openIds: NodeModel["id"][] = [];
+
+    renderTree({
+      onChangeOpen: (newOpenIds) => {
+        openIds = newOpenIds;
+      },
+    });
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(openIds.join(",")).toBe("1,4,5");
+
+    fireEvent.click(screen.getAllByText("[-]")[0]);
+    fireEvent.click(screen.getAllByText("[-]")[0]);
+    expect(openIds.join(",")).toBe("5");
+  });
+
   test("open / close nodes using public methods", () => {
     const App: React.FC = () => {
       const ref = useRef<TreeMethods>(null);
