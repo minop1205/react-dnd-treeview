@@ -50,8 +50,6 @@ export type Classes = {
   placeholder?: string;
 };
 
-export type ToggleHandler = (id: NodeModel["id"]) => void;
-
 export type SortCallback = (a: NodeModel, b: NodeModel) => number;
 
 export type DragLayerMonitorProps<T> = {
@@ -80,12 +78,21 @@ export type DragOverProps = {
 };
 
 export type OpenHandler = (
-  targetIds: NodeModel["id"] | NodeModel["id"][]
+  targetIds: NodeModel["id"] | NodeModel["id"][],
+  callback?: ChangeOpenHandler
 ) => void;
 
 export type CloseHandler = (
-  targetIds: NodeModel["id"] | NodeModel["id"][]
+  targetIds: NodeModel["id"] | NodeModel["id"][],
+  callback?: ChangeOpenHandler
 ) => void;
+
+export type ToggleHandler = (
+  id: NodeModel["id"],
+  callback?: ChangeOpenHandler
+) => void;
+
+export type ChangeOpenHandler = (newOpenIds: NodeModel["id"][]) => void;
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
@@ -136,6 +143,7 @@ export type TreeProps<T> = TreeStateBase<T> & {
   insertDroppableFirst?: boolean;
   dropTargetOffset?: number;
   initialOpen?: InitialOpen;
+  onChangeOpen?: ChangeOpenHandler;
   onDrop: (
     tree: NodeModel<T>[],
     options: {
