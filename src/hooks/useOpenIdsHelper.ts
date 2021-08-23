@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import {
   NodeModel,
   ToggleHandler,
   OpenHandler,
   CloseHandler,
+  ChangeOpenHandler,
   InitialOpen,
 } from "../types";
 
@@ -14,8 +15,8 @@ export const useOpenIdsHelper = (
   NodeModel["id"][],
   {
     handleToggle: ToggleHandler;
-    handleCloseAll: () => void;
-    handleOpenAll: () => void;
+    handleCloseAll: (callback?: ChangeOpenHandler) => void;
+    handleOpenAll: (callback?: ChangeOpenHandler) => void;
     handleOpen: OpenHandler;
     handleClose: CloseHandler;
   }
@@ -32,54 +33,69 @@ export const useOpenIdsHelper = (
 
   const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
 
-  const handleToggle = useCallback(
-    (targetId: NodeModel["id"]) => {
-      if (openIds.includes(targetId)) {
-        setOpenIds(openIds.filter((id) => id !== targetId));
-        return;
-      }
+  const handleToggle: ToggleHandler = (targetId: NodeModel["id"], callback) => {
+    const newOpenIds = openIds.includes(targetId)
+      ? openIds.filter((id) => id !== targetId)
+      : [...openIds, targetId];
 
-      setOpenIds([...openIds, targetId]);
-    },
-    [openIds]
-  );
+    setOpenIds(newOpenIds);
 
-  const handleCloseAll = useCallback(() => setOpenIds([]), []);
+    if (callback) {
+      callback(newOpenIds);
+    }
+  };
 
-  const handleOpenAll = useCallback(
-    () =>
-      setOpenIds(tree.filter((node) => node.droppable).map((node) => node.id)),
-    [tree]
-  );
+  const handleCloseAll = (callback: ChangeOpenHandler | undefined) => {
+    setOpenIds([]);
 
-  const handleOpen = useCallback<OpenHandler>(
-    (targetIds) =>
-      setOpenIds(
-        [
-          ...openIds,
-          ...tree
-            .filter(
-              (node) =>
-                node.droppable &&
-                (Array.isArray(targetIds)
-                  ? targetIds.includes(node.id)
-                  : node.id === targetIds)
-            )
-            .map((node) => node.id),
-        ].filter((value, index, self) => self.indexOf(value) === index)
-      ),
-    [tree, openIds]
-  );
+    if (callback) {
+      callback([]);
+    }
+  };
 
-  const handleClose = useCallback<CloseHandler>(
-    (targetIds) =>
-      setOpenIds(
-        openIds.filter((id) =>
-          Array.isArray(targetIds) ? !targetIds.includes(id) : id !== targetIds
+  const handleOpenAll = (callback: ChangeOpenHandler | undefined) => {
+    const newOpenIds = tree
+      .filter((node) => node.droppable)
+      .map((node) => node.id);
+    setOpenIds(newOpenIds);
+
+    if (callback) {
+      callback(newOpenIds);
+    }
+  };
+
+  const handleOpen: OpenHandler = (targetIds, callback) => {
+    const newOpenIds = [
+      ...openIds,
+      ...tree
+        .filter(
+          (node) =>
+            node.droppable &&
+            (Array.isArray(targetIds)
+              ? targetIds.includes(node.id)
+              : node.id === targetIds)
         )
-      ),
-    [tree, openIds]
-  );
+        .map((node) => node.id),
+    ].filter((value, index, self) => self.indexOf(value) === index);
+
+    setOpenIds(newOpenIds);
+
+    if (callback) {
+      callback(newOpenIds);
+    }
+  };
+
+  const handleClose: CloseHandler = (targetIds, callback) => {
+    const newOpenIds = openIds.filter((id) =>
+      Array.isArray(targetIds) ? !targetIds.includes(id) : id !== targetIds
+    );
+
+    setOpenIds(newOpenIds);
+
+    if (callback) {
+      callback(newOpenIds);
+    }
+  };
 
   return [
     openIds,

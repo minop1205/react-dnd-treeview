@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.1
+
+_Aug 22, 2021_
+
+### Added
+
+- add `onChangeOpen` API.
+
 ## 1.5.0
 
 _Aug 19, 2021_

@@ -24,10 +24,10 @@ export const TreeProvider = <T extends unknown>(
   ] = useOpenIdsHelper(props.tree, props.initialOpen);
 
   useImperativeHandle(props.treeRef, () => ({
-    open: (targetIds) => handleOpen(targetIds),
-    close: (targetIds) => handleClose(targetIds),
-    openAll: () => handleOpenAll(),
-    closeAll: () => handleCloseAll(),
+    open: (targetIds) => handleOpen(targetIds, props.onChangeOpen),
+    close: (targetIds) => handleClose(targetIds, props.onChangeOpen),
+    openAll: () => handleOpenAll(props.onChangeOpen),
+    closeAll: () => handleCloseAll(props.onChangeOpen),
   }));
 
   const canDropCallback = props.canDrop;
@@ -62,7 +62,7 @@ export const TreeProvider = <T extends unknown>(
     canDrag: canDragCallback
       ? (id) => canDragCallback(getTreeItem(props.tree, id))
       : undefined,
-    onToggle: handleToggle,
+    onToggle: (id) => handleToggle(id, props.onChangeOpen),
   };
 
   return (
