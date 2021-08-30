@@ -78,7 +78,7 @@
     "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
     "prepublish": "rm -rf ./dist && npm run build",
     "test": "jest",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./src/stories/assets",
     "build-storybook": "build-storybook"
   },
   "bugs": {
