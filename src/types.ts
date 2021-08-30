@@ -35,6 +35,13 @@ export type DropHandler = (
   index: number
 ) => void;
 
+export type DropHandlerOptions<T> = {
+  dragSourceId: NodeModel["id"];
+  dropTargetId: NodeModel["id"];
+  dragSource: NodeModel<T> | undefined;
+  dropTarget: NodeModel<T> | undefined;
+};
+
 export type CanDropHandler = (
   id: NodeModel["id"],
   parent: NodeModel["id"]
@@ -144,23 +151,10 @@ export type TreeProps<T> = TreeStateBase<T> & {
   dropTargetOffset?: number;
   initialOpen?: InitialOpen;
   onChangeOpen?: ChangeOpenHandler;
-  onDrop: (
-    tree: NodeModel<T>[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel<T> | undefined;
-      dropTarget: NodeModel<T> | undefined;
-    }
-  ) => void;
+  onDrop: (tree: NodeModel<T>[], options: DropHandlerOptions<T>) => void;
   canDrop?: (
     tree: NodeModel<T>[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel<T> | undefined;
-      dropTarget: NodeModel<T> | undefined;
-    }
+    options: DropHandlerOptions<T>
   ) => boolean | void;
   canDrag?: (node: NodeModel<T> | undefined) => boolean;
 };
