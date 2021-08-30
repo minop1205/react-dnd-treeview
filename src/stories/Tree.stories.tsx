@@ -2,7 +2,7 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 import { useArgs } from "@storybook/client-api";
 import { Tree } from "../Tree";
-import { NodeModel, TreeProps } from "../types";
+import { NodeModel, TreeProps, DropHandlerOptions } from "../types";
 import sampleData from "./assets/sample-default.json";
 
 export type CustomData = {
@@ -13,12 +13,21 @@ export type CustomData = {
 export default {
   component: Tree,
   title: "Tree",
+  argTypes: {
+    onChangeOpen: {},
+    onDrop: {},
+  },
 } as Meta;
 
 const Template: Story<TreeProps<CustomData>> = (args) => {
   const [, updateArgs] = useArgs();
-  const handleDrop = (newTree: NodeModel<CustomData>[]) =>
+  const handleDrop = (
+    newTree: NodeModel<CustomData>[],
+    options: DropHandlerOptions<CustomData>
+  ) => {
+    args.onDrop(newTree, options);
     updateArgs({ tree: newTree });
+  };
 
   return <Tree {...args} onDrop={handleDrop} />;
 };
