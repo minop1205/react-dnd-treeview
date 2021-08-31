@@ -4,6 +4,7 @@ import { useArgs } from "@storybook/client-api";
 import { Tree } from "../Tree";
 import { NodeModel, TreeProps, DropHandlerOptions } from "../types";
 import sampleData from "./assets/sample-default.json";
+import { CustomNode } from "./CustomNode";
 
 export type CustomData = {
   fileType: string;
@@ -33,9 +34,9 @@ const Template: Story<TreeProps<CustomData>> = (args) => {
 };
 
 // Minimum configuration
-export const MinimumConfiguration = Template.bind({});
+export const MinimumConfigurationStory = Template.bind({});
 
-MinimumConfiguration.args = {
+MinimumConfigurationStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -53,4 +54,22 @@ MinimumConfiguration.args = {
   },
 };
 
-MinimumConfiguration.storyName = "Minimum configuration";
+MinimumConfigurationStory.storyName = "Minimum configuration";
+
+// Custom node
+export const CustomNodeStory = Template.bind({});
+
+CustomNodeStory.args = {
+  rootId: 0,
+  tree: sampleData,
+  classes: {
+    root: "tree-root",
+    draggingSource: "dragging-source",
+    dropTarget: "drop-target",
+  },
+  render: function render(node, options) {
+    return <CustomNode node={node} {...options} />;
+  },
+};
+
+CustomNodeStory.storyName = "Custom node";
