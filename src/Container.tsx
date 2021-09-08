@@ -46,11 +46,7 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
     drop(ref);
   }
 
-  let className = "";
-
-  if (classes?.container) {
-    className = classes.container;
-  }
+  let className = classes?.container || "";
 
   if (isOver && classes?.dropTarget) {
     className = `${className} ${classes.dropTarget}`;

@@ -379,6 +379,7 @@ You can use the following keys for the objects you pass to the `classes` propert
 | -------------- | -------------------------------------------------------------------------------------------------------------- |
 | root           | CSS class name to give to the top-level container element (by default, `ul` tag) that wraps all nodes.         |
 | container      | CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag). |
+| listItem       | CSS class name to give to the element that wraps each node item (by default, `li` tag).                        |
 | dropTarget     | CSS class name to give to the area that can be dropped during a node dragging operation.                       |
 | draggingSource | CSS class name to give to the node during the dragging operation.                                              |
 | placeholder    | CSS class name to give to the element wrapping the placeholder (by default, `li` tag).                         |

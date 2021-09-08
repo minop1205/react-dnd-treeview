@@ -52,6 +52,7 @@ export type CanDragHandler = (id: NodeModel["id"]) => boolean;
 export type Classes = {
   root?: string;
   container?: string;
+  listItem?: string;
   dropTarget?: string;
   draggingSource?: string;
   placeholder?: string;
