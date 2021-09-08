@@ -57,10 +57,10 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
 
   const Component = context.listItemComponent;
 
-  let className = "";
+  let className = classes?.listItem || "";
 
   if (isOver && classes?.dropTarget) {
-    className = classes.dropTarget;
+    className = `${className} ${classes.dropTarget}`;
   }
 
   if (isDragging && classes?.draggingSource) {
