@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.3
+
+_Sept 08, 2021_
+
+### Added
+
+- add `classes.listItem` property for styling node wrapper.
+
 ## 1.5.1
 
 _Aug 22, 2021_

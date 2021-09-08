@@ -22,7 +22,8 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "!**/__tests__"
   ],
   "publishConfig": {
     "access": "public"
