@@ -23,7 +23,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "!**/__tests__"
+    "!**/__tests__",
+    "!**/stories"
   ],
   "publishConfig": {
     "access": "public"
