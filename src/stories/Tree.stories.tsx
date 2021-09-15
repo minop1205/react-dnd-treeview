@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Story, Meta } from "@storybook/react";
 import { Tree } from "../Tree";
-import { NodeModel, TreeProps, DropHandlerOptions } from "../types";
+import { TreeProps } from "../types";
 import sampleData from "./assets/sample-default.json";
 import { CustomNode } from "./CustomNode";
+import { useDropHandler } from "./useDropHandler";
 
 export type CustomData = {
   fileType: string;
@@ -13,9 +14,6 @@ export type CustomData = {
 export default {
   component: Tree,
   title: "Tree",
-  parameters: {
-    controls: { disable: true },
-  },
   argTypes: {
     onDrop: {},
     onChangeOpen: {},
@@ -23,15 +21,7 @@ export default {
 } as Meta;
 
 const Template: Story<TreeProps<CustomData>> = (args) => {
-  const [tree, setTree] = useState<NodeModel<CustomData>[]>(args.tree);
-  const handleDrop = (
-    newTree: NodeModel<CustomData>[],
-    options: DropHandlerOptions<CustomData>
-  ) => {
-    args.onDrop(newTree, options);
-    setTree(newTree);
-  };
-
+  const [tree, handleDrop] = useDropHandler<CustomData>(args);
   return <Tree {...args} tree={tree} onDrop={handleDrop} />;
 };
 
