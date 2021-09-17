@@ -1,5 +1,6 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
+import * as argTypes from "./argTypes";
 import { Tree } from "../Tree";
 import { TreeProps } from "../types";
 import sampleData from "./assets/sample-default.json";
@@ -15,8 +16,12 @@ export default {
   component: Tree,
   title: "Tree",
   argTypes: {
-    onDrop: {},
-    onChangeOpen: {},
+    rootId: argTypes.rootId,
+    onDrop: argTypes.onDrop,
+    onChangeOpen: argTypes.onChangeOpen,
+    tree: argTypes.tree,
+    classes: argTypes.classes,
+    render: argTypes.render,
   },
 } as Meta;
 
