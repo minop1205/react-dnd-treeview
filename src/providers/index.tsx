@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement } from "react";
 import { DndProvider } from "react-dnd-multi-backend";
-import HTML5toTouch from "react-dnd-multi-backend/dist/cjs/HTML5toTouch";
+import { HTML5toTouch } from "rdndmb-html5-to-touch";
 import { TreeProvider, TreeContext } from "./TreeProvider";
 import { DragControlProvider, DragControlContext } from "./DragControlProvider";
 import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
