@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.4
+
+_Sept 24, 2021_
+
+### Fixed
+
+- unable to install in npm version 7.
+
 ## 1.5.3
 
 _Sept 08, 2021_
