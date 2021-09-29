@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.5
+
+_Sept 29, 2021_
+
+### Fixed
+
+- dragging not possible after editing a node without hovering in Firefox or Safari.
+
 ## 1.5.4
 
 _Sept 24, 2021_
