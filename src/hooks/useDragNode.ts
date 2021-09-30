@@ -49,8 +49,11 @@ export const useDragNode = <T>(
   }, []);
 
   const [{ isDragging }, drag, preview] = useDrag({
-    type: ItemTypes.TREE_ITEM,
-    item: { ref, ...item },
+    item: {
+      type: ItemTypes.TREE_ITEM,
+      ref,
+      ...item,
+    },
     canDrag: () => {
       const { canDrag } = treeContext;
 
