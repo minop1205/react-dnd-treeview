@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.7
+
+_Oct 01, 2021_
+
+### Fixed
+
+- react-dnd version is mismatch with dependent packages.
+
 ## 1.5.6
 
 _Sept 29, 2021_
