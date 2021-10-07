@@ -112,10 +112,16 @@ export type PlaceholderState = {
   hidePlaceholder: () => void;
 };
 
+export type RootProps = Omit<
+  React.HtmlHTMLAttributes<HTMLElement>,
+  "ref" | "role"
+>;
+
 export type TreeStateBase<T> = {
   tree: NodeModel<T>[];
   rootId: NodeModel["id"];
   classes?: Classes;
+  rootProps?: RootProps;
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;
   placeholderRender?: PlaceholderRender<T>;

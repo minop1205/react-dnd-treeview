@@ -2,7 +2,7 @@ import React, { useRef, PropsWithChildren, ReactElement } from "react";
 import { Node } from "./Node";
 import { Placeholder } from "./Placeholder";
 import { NodeModel } from "./types";
-import { useTreeContext, useDropRoot } from "./hooks";
+import { useTreeContext, useDropRoot, useContainerClassName } from "./hooks";
 import { compareItems, isDroppable } from "./utils";
 
 type Props = PropsWithChildren<{
@@ -37,7 +37,6 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
   }
 
   const [isOver, dragSource, drop] = useDropRoot(ref);
-  const classes = treeContext.classes;
 
   if (
     props.parentId === treeContext.rootId &&
@@ -46,20 +45,12 @@ export const Container = <T extends unknown>(props: Props): ReactElement => {
     drop(ref);
   }
 
-  let className = classes?.container || "";
-
-  if (isOver && classes?.dropTarget) {
-    className = `${className} ${classes.dropTarget}`;
-  }
-
-  if (props.parentId === 0 && classes?.root) {
-    className = `${className} ${classes.root}`;
-  }
-
+  const className = useContainerClassName(props.parentId, isOver);
+  const rootProps = treeContext.rootProps || {};
   const Component = treeContext.listComponent;
 
   return (
-    <Component ref={ref} className={className} role="list">
+    <Component ref={ref} role="list" {...rootProps} className={className}>
       {view.map((node, index) => (
         <React.Fragment key={node.id}>
           <Placeholder
