@@ -553,4 +553,31 @@ describe("Tree", () => {
     expect(screen.queryByText("Folder 2-1")).toBeNull();
     expect(screen.queryByText("File 2-1-1")).toBeNull();
   });
+
+  test("set className and onClick handler to rootProps", () => {
+    let counter = 0;
+
+    renderTree({
+      rootProps: {
+        className: "foo",
+        onClick: (e) => {
+          if (e.target === e.currentTarget) {
+            counter += 1;
+          }
+        },
+      },
+      classes: {
+        root: "bar",
+      },
+    });
+
+    const root = screen.getByRole("list");
+    const listItem = screen.getByText("File 3");
+
+    expect(root.className).toBe("bar foo");
+    fireEvent.click(listItem);
+    expect(counter).toBe(0);
+    fireEvent.click(root);
+    expect(counter).toBe(1);
+  });
 });
