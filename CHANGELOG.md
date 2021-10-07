@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.8
+
+_Oct 07, 2021_
+
+### Added
+
+- add `rootProps` API.
+
 ## 1.5.7
 
 _Oct 01, 2021_
