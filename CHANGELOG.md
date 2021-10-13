@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.5.10
+
+_Oct 13, 2021_
+
+### Fixed
+
+- generic type cannot be used in sort callback.
+
 ## 1.5.9
 
 _Oct 07, 2021_
