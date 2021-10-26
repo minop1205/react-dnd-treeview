@@ -51,7 +51,10 @@ export type Classes = {
   placeholder?: string;
 };
 
-export type SortCallback = (a: NodeModel, b: NodeModel) => number;
+export type SortCallback<T = unknown> = (
+  a: NodeModel<T>,
+  b: NodeModel<T>
+) => number;
 
 export type DragLayerMonitorProps<T> = {
   item: DragItem<T>;
@@ -131,7 +134,7 @@ export type TreeState<T> = TreeStateBase<T> & {
   listComponent: ElementType;
   listItemComponent: ElementType;
   placeholderComponent: ElementType;
-  sort: SortCallback | boolean;
+  sort: SortCallback<T> | boolean;
   insertDroppableFirst: boolean;
   dropTargetOffset: number;
   initialOpen: InitialOpen;
@@ -146,7 +149,7 @@ export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   placeholderComponent?: ElementType;
-  sort?: SortCallback | boolean;
+  sort?: SortCallback<T> | boolean;
   insertDroppableFirst?: boolean;
   dropTargetOffset?: number;
   initialOpen?: InitialOpen;
