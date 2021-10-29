@@ -3,7 +3,7 @@ import React, {
   PropsWithChildren,
   ReactElement,
 } from "react";
-import { mutateTree, getTreeItem, getModifiedIndex } from "../utils";
+import { mutateTreeWithIndex, getTreeItem, getModifiedIndex } from "../utils";
 import { useOpenIdsHelper } from "../hooks";
 import { TreeState, TreeProps, TreeMethods, DropOptions } from "../types";
 
@@ -56,7 +56,10 @@ export const TreeProvider = <T extends unknown>(
         options.destinationIndex = destIndex;
       }
 
-      props.onDrop(mutateTree<T>(props.tree, id, parentId, index), options);
+      props.onDrop(
+        mutateTreeWithIndex<T>(props.tree, id, parentId, index),
+        options
+      );
     },
     canDrop: canDropCallback
       ? (id, parentId) =>

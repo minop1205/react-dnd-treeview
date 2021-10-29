@@ -27,7 +27,7 @@ const arrayMoveImmutable = <T>(
   return array;
 };
 
-export const mutateTree = <T>(
+export const mutateTreeWithIndex = <T>(
   tree: NodeModel<T>[],
   dragSourceId: NodeModel["id"],
   dropTargetId: NodeModel["id"],

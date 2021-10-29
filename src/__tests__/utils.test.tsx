@@ -1,7 +1,7 @@
 import React from "react";
 import { NodeModel, NodeRender, TreeState } from "../types";
 import {
-  mutateTree,
+  mutateTreeWithIndex,
   compareItems,
   getTreeItem,
   isDroppable,
@@ -87,7 +87,7 @@ describe("utilities test", () => {
       },
     ];
 
-    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1, 0);
+    const treeAfter: NodeModel[] = mutateTreeWithIndex(treeBefore, 2, 1, 0);
 
     treeBefore[1].text = "c";
 
