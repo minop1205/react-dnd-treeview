@@ -4,3 +4,4 @@ export { isAncestor } from "./isAncestor";
 export { isDroppable } from "./isDroppable";
 export { mutateTree } from "./mutateTree";
 export { getDropTarget } from "./getDropTarget";
+export { getModifiedIndex } from "./getModifiedIndex";

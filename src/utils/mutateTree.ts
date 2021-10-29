@@ -1,23 +1,6 @@
 import { produce } from "immer";
 import { NodeModel } from "../types";
-
-const getDestinationIndex = (
-  tree: NodeModel[],
-  dropTargetId: NodeModel["id"],
-  index: number
-) => {
-  if (index === 0) {
-    return 0;
-  }
-
-  const siblings = tree.filter((node) => node.parent === dropTargetId);
-
-  if (siblings[index]) {
-    return tree.findIndex((node) => node.id === siblings[index].id);
-  }
-
-  return tree.findIndex((node) => node.id === siblings[index - 1].id) + 1;
-};
+import { getModifiedIndex } from "./getModifiedIndex";
 
 const arrayMoveMutable = <T>(
   array: T[],
@@ -50,15 +33,13 @@ export const mutateTree = <T>(
   dropTargetId: NodeModel["id"],
   index: number
 ): NodeModel<T>[] => {
-  const srcIndex = tree.findIndex((node) => node.id === dragSourceId);
-  const destIndex = getDestinationIndex(tree, dropTargetId, index);
-  let newTree;
-
-  if (destIndex > srcIndex) {
-    newTree = arrayMoveImmutable(tree, srcIndex, destIndex - 1);
-  } else {
-    newTree = arrayMoveImmutable(tree, srcIndex, destIndex);
-  }
+  const [srcIndex, destIndex] = getModifiedIndex(
+    tree,
+    dragSourceId,
+    dropTargetId,
+    index
+  );
+  const newTree = arrayMoveImmutable(tree, srcIndex, destIndex);
 
   return produce(newTree, (draft) => {
     draft.forEach((node) => {

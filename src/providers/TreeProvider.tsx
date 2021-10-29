@@ -3,9 +3,9 @@ import React, {
   PropsWithChildren,
   ReactElement,
 } from "react";
-import { mutateTree, getTreeItem } from "../utils";
+import { mutateTree, getTreeItem, getModifiedIndex } from "../utils";
 import { useOpenIdsHelper } from "../hooks";
-import { TreeState, TreeProps, TreeMethods } from "../types";
+import { TreeState, TreeProps, TreeMethods, DropOptions } from "../types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -43,13 +43,21 @@ export const TreeProvider = <T extends unknown>(
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (id, parentId, index) =>
-      props.onDrop(mutateTree<T>(props.tree, id, parentId, index), {
+    onDrop: (id, parentId, index) => {
+      const options: DropOptions<T> = {
         dragSourceId: id,
         dropTargetId: parentId,
-        dragSource: getTreeItem(props.tree, id),
-        dropTarget: getTreeItem(props.tree, parentId),
-      }),
+        dragSource: getTreeItem<T>(props.tree, id),
+        dropTarget: getTreeItem<T>(props.tree, parentId),
+      };
+
+      if (props.sort === false) {
+        const [, destIndex] = getModifiedIndex(props.tree, id, parentId, index);
+        options.destinationIndex = destIndex;
+      }
+
+      props.onDrop(mutateTree<T>(props.tree, id, parentId, index), options);
+    },
     canDrop: canDropCallback
       ? (id, parentId) =>
           canDropCallback(props.tree, {
