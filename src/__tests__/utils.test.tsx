@@ -1,11 +1,12 @@
 import React from "react";
 import { NodeModel, NodeRender, TreeState } from "../types";
 import {
-  mutateTree,
+  mutateTreeWithIndex,
   compareItems,
   getTreeItem,
   isDroppable,
   isAncestor,
+  getModifiedIndex,
 } from "../utils";
 
 const treeData: NodeModel[] = [
@@ -86,7 +87,7 @@ describe("utilities test", () => {
       },
     ];
 
-    const treeAfter: NodeModel[] = mutateTree(treeBefore, 2, 1, 0);
+    const treeAfter: NodeModel[] = mutateTreeWithIndex(treeBefore, 2, 1, 0);
 
     treeBefore[1].text = "c";
 
@@ -172,5 +173,42 @@ describe("utilities test", () => {
     expect(isDroppable(7, 1, treeContext)).toBe(true);
     expect(isDroppable(1, 1, treeContext)).toBe(false);
     expect(isDroppable(4, 5, treeContext)).toBe(false);
+  });
+
+  test("check modified indexes", () => {
+    let [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 0);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 1, 0);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 3);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(6);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 0);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 1);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(3);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 5, 1);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(6);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 3, 5, 0);
+
+    expect(srcIndex).toBe(2);
+    expect(destIndex).toBe(0);
   });
 });

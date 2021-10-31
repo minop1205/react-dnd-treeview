@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.5.11
+
+_Oct 31, 2021_
+
+### Added
+
+- If the `sort` property is set to `false`, add an `destinationIndex` property to the options passed to the `onDrop` callback to indicate where to move the node.
+
+### Changed
+
+- If the `sort` property is not `false`, then the order of the tree array passed to the `onDrop` callback will be preserved.
+
 ## 1.5.10
 
 _Oct 27, 2021_

@@ -145,6 +145,14 @@ export type TreeState<T> = TreeStateBase<T> & {
   onToggle: ToggleHandler;
 };
 
+export type DropOptions<T = unknown> = {
+  dragSourceId: NodeModel["id"];
+  dropTargetId: NodeModel["id"];
+  dragSource: NodeModel<T> | undefined;
+  dropTarget: NodeModel<T> | undefined;
+  destinationIndex?: number;
+};
+
 export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
@@ -154,24 +162,8 @@ export type TreeProps<T> = TreeStateBase<T> & {
   dropTargetOffset?: number;
   initialOpen?: InitialOpen;
   onChangeOpen?: ChangeOpenHandler;
-  onDrop: (
-    tree: NodeModel<T>[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel<T> | undefined;
-      dropTarget: NodeModel<T> | undefined;
-    }
-  ) => void;
-  canDrop?: (
-    tree: NodeModel<T>[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel<T> | undefined;
-      dropTarget: NodeModel<T> | undefined;
-    }
-  ) => boolean | void;
+  onDrop: (tree: NodeModel<T>[], options: DropOptions<T>) => void;
+  canDrop?: (tree: NodeModel<T>[], options: DropOptions<T>) => boolean | void;
   canDrag?: (node: NodeModel<T> | undefined) => boolean;
 };
 
