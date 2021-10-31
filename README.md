@@ -274,13 +274,14 @@ return <Tree {...props} tree={treeData} onDrop={handleDrop} />;
 
 The arguments passed to the onDrop callback function are as follows
 
-| Name                 | Type                | Description                                                                                                                      |
-| -------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| newTree              | array               | This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property. |
-| options.dragSourceId | number \| string    | node id of the dragging source                                                                                                   |
-| options.dropTargetId | number \| string    | node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.     |
-| options.dragSource   | object              | node item of the dragging source                                                                                                 |
-| options.dropTarget   | object \| undefined | node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`                           |
+| Name                     | Type                | Description                                                                                                                         |
+| ------------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| newTree                  | array               | This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property.    |
+| options.dragSourceId     | number \| string    | node id of the dragging source                                                                                                      |
+| options.dropTargetId     | number \| string    | node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.        |
+| options.dragSource       | object              | node item of the dragging source                                                                                                    |
+| options.dropTarget       | object \| undefined | node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`                              |
+| options.destinationIndex | number \| undefined | If the `sort` property is `false`, the insertion destination index value of dragSource is given. Otherwise, it will be `undefined`. |
 
 ### canDrop callback
 
