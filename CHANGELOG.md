@@ -7,6 +7,8 @@ _Oct 31, 2021_
 ### Added
 
 - If the `sort` property is set to `false`, add an `destinationIndex` property to the options passed to the `onDrop` callback to indicate where to move the node.
+- A utility function has been added to get descendant nodes.
+- Added demos for adding, removing, and duplicating nodes.
 
 ### Changed
 
