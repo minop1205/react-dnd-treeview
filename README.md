@@ -23,6 +23,7 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
 - Editable nodes ([JavaScript](https://codesandbox.io/s/editable-js-m25be) | [TypeScript](https://codesandbox.io/s/editable-ts-cl3wi))
 - Manual sort with placeholder ([JavaScript](https://codesandbox.io/s/placeholder-js-xhu2j) | [TypeScript](https://codesandbox.io/s/placeholder-ts-w71l5))
+- Add, remove, duplicate nodes ([JavaScript](https://codesandbox.io/s/add-delete-copy-js-4x4l8) | [TypeScript](https://codesandbox.io/s/add-delete-copy-ts-owgqb))
 
 ## Getting Started
 
