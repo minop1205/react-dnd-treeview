@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import { NodeModel } from "../types";
 import { getModifiedIndex } from "./getModifiedIndex";
 
@@ -11,20 +10,9 @@ const arrayMoveMutable = <T>(
 
   if (startIndex >= 0 && startIndex < array.length) {
     const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
-
     const [item] = array.splice(fromIndex, 1);
     array.splice(endIndex, 0, item);
   }
-};
-
-const arrayMoveImmutable = <T>(
-  array: T[],
-  fromIndex: number,
-  toIndex: number
-) => {
-  array = [...array];
-  arrayMoveMutable(array, fromIndex, toIndex);
-  return array;
 };
 
 export const mutateTreeWithIndex = <T>(
@@ -39,13 +27,18 @@ export const mutateTreeWithIndex = <T>(
     dropTargetId,
     index
   );
-  const newTree = arrayMoveImmutable(tree, srcIndex, destIndex);
 
-  return produce(newTree, (draft) => {
-    draft.forEach((node) => {
-      if (node.id === dragSourceId) {
-        node.parent = dropTargetId;
-      }
-    });
+  const newTree = [...tree];
+  arrayMoveMutable(newTree, srcIndex, destIndex);
+
+  return newTree.map((node) => {
+    if (node.id === dragSourceId) {
+      return {
+        ...node,
+        parent: dropTargetId,
+      };
+    }
+
+    return node;
   });
 };

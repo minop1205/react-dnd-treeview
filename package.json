@@ -29,7 +29,6 @@
     "access": "public"
   },
   "dependencies": {
-    "immer": "^9.0.5",
     "rdndmb-html5-to-touch": "^7.0.0-alpha.1",
     "react-dnd": "^13.1.1",
     "react-dnd-html5-backend": "^14.0.1",
