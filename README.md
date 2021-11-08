@@ -36,34 +36,35 @@ $ npm install --save @minoru/react-dnd-treeview
 ### Usage
 
 ```jsx
+import { useState } from "react";
 import { Tree } from "@minoru/react-dnd-treeview";
+import initialData from "./sample.json";
 
-...
+function App() {
+  const [treeData, setTreeData] = useState(initialData);
+  const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
-const [treeData, setTreeData] = useState(initialData);
-const handleDrop = (newTreeData) => setTreeData(newTreeData);
-
-<Tree
-  tree={treeData}
-  rootId={0}
-  onDrop={handleDrop}
-  render={(node, {depth, isOpen, onToggle}) => (
-    <div style={{marginLeft: depth * 10}}>
-      {node.droppable && (
-        <span onClick={onToggle}>
-          {isOpen ? "[-]" : "[+]"}
-        </span>
+  return (
+    <Tree
+      tree={treeData}
+      rootId={0}
+      onDrop={handleDrop}
+      render={(node, { depth, isOpen, onToggle }) => (
+        <div style={{ marginLeft: depth * 10 }}>
+          {node.droppable && (
+            <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+          )}
+          {node.text}
+        </div>
       )}
-      {node.text}
-    </div>
-  )}
-/>
+    />
+  );
+}
 ```
 
 ## Data Structure
 
-In order to display the tree,  
-we need to pass the following data to the `Tree` component
+To display the treeview, pass data with the following structure to the `tree` property of the Tree component.
 
 ### Basic example
 
