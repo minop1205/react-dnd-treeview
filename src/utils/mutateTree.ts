@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import { NodeModel } from "../types";
 
 export const mutateTree = <T>(
@@ -6,10 +5,13 @@ export const mutateTree = <T>(
   dragSourceId: NodeModel["id"],
   dropTargetId: NodeModel["id"]
 ): NodeModel<T>[] =>
-  produce(tree, (draft) => {
-    draft.forEach((node) => {
-      if (node.id === dragSourceId) {
-        node.parent = dropTargetId;
-      }
-    });
+  tree.map((node) => {
+    if (node.id === dragSourceId) {
+      return {
+        ...node,
+        parent: dropTargetId,
+      };
+    }
+
+    return node;
   });

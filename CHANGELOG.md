@@ -2,7 +2,7 @@
 
 ## 1.5.11
 
-_Oct 31, 2021_
+_Nov 08, 2021_
 
 ### Added
 
@@ -12,7 +12,9 @@ _Oct 31, 2021_
 
 ### Changed
 
+- Update sample code of basic usage.
 - If the `sort` property is not `false`, then the order of the tree array passed to the `onDrop` callback will be preserved.
+- The new node array passed to the `onDrop` callback is no longer read-only.
 
 ## 1.5.10
 
