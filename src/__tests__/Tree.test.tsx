@@ -580,4 +580,49 @@ describe("Tree", () => {
     fireEvent.click(root);
     expect(counter).toBe(1);
   });
+
+  test("display drag source and drop target while dragging node", () => {
+    const customRender: NodeRender<unknown> = (
+      node,
+      { depth, isDragging, isDropTarget, isOpen, onToggle }
+    ) => {
+      let text = node.text;
+
+      if (isDragging) {
+        text = `${text}(dragSource)`;
+      }
+
+      if (isDropTarget) {
+        text = `${text}(dropTarget)`;
+      }
+
+      return (
+        <div style={{ marginInlineStart: depth * 10 }}>
+          {node.droppable && (
+            <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+          )}
+          {text}
+        </div>
+      );
+    };
+
+    renderTree({
+      render: customRender,
+    });
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    const items = screen.getAllByRole("listitem");
+    const src = items[4];
+    const dst = items[0];
+
+    fireEvent.dragStart(src);
+
+    expect(src.textContent).toBe("File 3(dragSource)");
+
+    fireEvent.dragEnter(dst);
+    fireEvent.dragOver(dst);
+
+    expect(dst.textContent).toBe("[-]Folder 1(dropTarget)File 1-1File 1-2");
+  });
 });
