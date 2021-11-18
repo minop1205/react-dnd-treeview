@@ -17,6 +17,8 @@ export type DragItem<T> = NodeModel<T> & {
 export type RenderParams = {
   depth: number;
   isOpen: boolean;
+  isDragging: boolean;
+  isDropTarget: boolean;
   draggable: boolean;
   hasChild: boolean;
   onToggle(): void;

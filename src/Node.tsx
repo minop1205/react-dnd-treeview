@@ -2,6 +2,7 @@ import React, {
   useEffect,
   useRef,
   useCallback,
+  useContext,
   PropsWithChildren,
   ReactElement,
 } from "react";
@@ -13,6 +14,7 @@ import {
   useDropNode,
   useDragControl,
 } from "./hooks";
+import { PlaceholderContext } from "./providers";
 import { NodeModel, RenderParams } from "./types";
 import { isDroppable } from "./utils";
 
@@ -22,10 +24,11 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Node = <T extends unknown>(props: Props): ReactElement | null => {
-  const context = useTreeContext<T>();
+  const treeContext = useTreeContext<T>();
+  const placeholderContext = useContext(PlaceholderContext);
   const ref = useRef<HTMLElement>(null);
-  const item = context.tree.find((node) => node.id === props.id);
-  const { openIds, classes } = context;
+  const item = treeContext.tree.find((node) => node.id === props.id);
+  const { openIds, classes } = treeContext;
   const open = openIds.includes(props.id);
 
   if (!item) {
@@ -37,14 +40,14 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
 
   drag(ref);
 
-  if (isDroppable(dragSource?.id, props.id, context)) {
+  if (isDroppable(dragSource?.id, props.id, treeContext)) {
     drop(ref);
   }
 
-  const hasChild = !!context.tree.find((node) => node.parent === props.id);
+  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
 
   useEffect(() => {
-    if (context.dragPreviewRender) {
+    if (treeContext.dragPreviewRender) {
       preview(getEmptyImage(), { captureDraggingState: true });
     }
   }, []);
@@ -52,10 +55,10 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
   useDragControl(ref);
 
   const handleToggle = useCallback(() => {
-    context.onToggle(item.id);
+    treeContext.onToggle(item.id);
   }, [openIds]);
 
-  const Component = context.listItemComponent;
+  const Component = treeContext.listItemComponent;
 
   let className = classes?.listItem || "";
 
@@ -67,11 +70,14 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
     className = `${className} ${classes.draggingSource}`;
   }
 
-  const draggable = context.canDrag ? context.canDrag(props.id) : true;
+  const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
+  const isDropTarget = placeholderContext.dropTargetId === props.id;
 
   const params: RenderParams = {
     depth: props.depth,
     isOpen: open,
+    isDragging,
+    isDropTarget,
     draggable,
     hasChild,
     onToggle: handleToggle,
@@ -79,7 +85,7 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
 
   return (
     <Component ref={ref} className={className} role="listitem">
-      {context.render(item, params)}
+      {treeContext.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
       )}

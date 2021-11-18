@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.6.0
+
+_Nov 18, 2021_
+
+### Added
+
+- Added isDragging and isDropTarget flags to the options passed to the render callback.
+
 ## 1.5.11
 
 _Nov 08, 2021_
