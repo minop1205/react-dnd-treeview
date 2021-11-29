@@ -80,6 +80,7 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
     isDropTarget,
     draggable,
     hasChild,
+    containerRef: ref,
     onToggle: handleToggle,
   };
 

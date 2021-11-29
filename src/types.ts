@@ -1,4 +1,4 @@
-import { ElementType, ReactElement } from "react";
+import { RefObject, ElementType, ReactElement } from "react";
 import { XYCoord } from "react-dnd";
 
 export type NodeModel<T = unknown> = {
@@ -21,6 +21,7 @@ export type RenderParams = {
   isDropTarget: boolean;
   draggable: boolean;
   hasChild: boolean;
+  containerRef: RefObject<HTMLElement>;
   onToggle(): void;
 };
 
