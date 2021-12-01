@@ -6,7 +6,8 @@ _Nov 18, 2021_
 
 ### Added
 
-- Added isDragging and isDropTarget flags to the options passed to the render callback.
+- Added `isDragging` and `isDropTarget` flags to the options passed to the render callback.
+- Added a reference to the wrapper element to the options passed to the render callback. (`options.containerRef`)
 
 ## 1.5.11
 
