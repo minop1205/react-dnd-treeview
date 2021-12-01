@@ -216,16 +216,17 @@ To render each tree node, please pass a render function to the `render` property
 
 The arguments passed to the render function are as follows
 
-| Name                 | Type     | Description                                                                                                 |
-| -------------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| data                 | object   | Node data. (an element in the tree data array)                                                              |
-| options.depth        | number   | The depth of the node hierarchy.                                                                            |
-| options.isOpen       | boolean  | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
-| options.draggable    | boolean  | Indicates whether this node is draggable or not.                                                            |
-| options.hasChild     | boolean  | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
-| options.isDragSource | boolean  | Flag indicating whether this node is being dragged or not.                                                  |
-| options.isDropTarget | boolean  | Flag indicating whether or not this node is a drop target.                                                  |
-| options.onToggle     | function | An event handler for the open/close button of a node.                                                       |
+| Name                 | Type            | Description                                                                                                 |
+| -------------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| data                 | object          | Node data. (an element in the tree data array)                                                              |
+| options.depth        | number          | The depth of the node hierarchy.                                                                            |
+| options.isOpen       | boolean         | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
+| options.draggable    | boolean         | Indicates whether this node is draggable or not.                                                            |
+| options.hasChild     | boolean         | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
+| options.isDragSource | boolean         | Flag indicating whether this node is being dragged or not.                                                  |
+| options.isDropTarget | boolean         | Flag indicating whether or not this node is a drop target.                                                  |
+| options.containerRef | React.RefObject | Reference to the HTML element (default: `li` tag) that wraps the custom node.                               |
+| options.onToggle     | function        | An event handler for the open/close button of a node.                                                       |
 
 ### Dragging Preview
 

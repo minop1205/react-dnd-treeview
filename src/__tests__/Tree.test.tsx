@@ -1,6 +1,7 @@
 import React, {
   useState,
   useRef,
+  useEffect,
   ReactElement,
   PropsWithChildren,
 } from "react";
@@ -13,6 +14,7 @@ import {
   TreeProps,
   NodeRender,
   TreeMethods,
+  RenderParams,
 } from "../types";
 
 function createSampleData<T>() {
@@ -624,5 +626,67 @@ describe("Tree", () => {
     fireEvent.dragOver(dst);
 
     expect(dst.textContent).toBe("[-]Folder 1(dropTarget)File 1-1File 1-2");
+  });
+
+  test("detect dragstart and dragend events", () => {
+    const CustomNode: React.FC<{
+      node: NodeModel;
+      options: RenderParams;
+      onDragStart: (e: DragEvent) => void;
+      onDragEnd: (e: DragEvent) => void;
+    }> = (props) => {
+      const { text } = props.node;
+      const { depth, containerRef } = props.options;
+
+      useEffect(() => {
+        containerRef.current?.addEventListener("dragstart", props.onDragStart);
+        containerRef.current?.addEventListener("dragend", props.onDragEnd);
+
+        return () => {
+          containerRef.current?.removeEventListener(
+            "dragstart",
+            props.onDragStart
+          );
+          containerRef.current?.removeEventListener("dragend", props.onDragEnd);
+        };
+      }, []);
+
+      return <div style={{ marginInlineStart: depth * 10 }}>{text}</div>;
+    };
+
+    let isDragging = false;
+
+    renderTree({
+      // eslint-disable-next-line react/display-name
+      render: (node, params) => (
+        <CustomNode
+          node={node}
+          options={params}
+          onDragStart={() => {
+            isDragging = true;
+          }}
+          onDragEnd={() => {
+            isDragging = false;
+          }}
+        />
+      ),
+    });
+
+    const items = screen.getAllByRole("listitem");
+    const src = items[2];
+    const dst = items[0];
+
+    fireEvent.dragStart(src);
+
+    expect(isDragging).toBe(true);
+
+    fireEvent.dragEnter(dst);
+    fireEvent.dragOver(dst);
+    fireEvent.drop(dst);
+    fireEvent.dragLeave(dst);
+    fireEvent.dragEnd(src);
+    fireEvent.dragEnd(window);
+
+    expect(isDragging).toBe(false);
   });
 });
