@@ -33,8 +33,9 @@ const getItemStyles = <T extends unknown>(
 export const DragLayer = <T extends unknown>(): ReactElement | null => {
   const context = useTreeContext<T>();
   const monitorProps = useTreeDragLayer<T>();
+  const { isDragging, clientOffset } = monitorProps;
 
-  if (!monitorProps.isDragging) {
+  if (!isDragging || !clientOffset) {
     return null;
   }
 
