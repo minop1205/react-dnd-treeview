@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.6.1
+
+_Jan 07, 2022_
+
+### Fixed
+
+- DragPreview component is momentarily displayed in the upper left corner of the screen after the drag operation is completed.
+
 ## 1.6.0
 
 _Nov 18, 2021_
