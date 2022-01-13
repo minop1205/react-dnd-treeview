@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, ReactElement } from "react";
-import { DndProvider } from "react-dnd-multi-backend";
-import { HTML5toTouch } from "rdndmb-html5-to-touch";
+import { DndProvider } from "react-dnd";
+import { MultiBackend } from "dnd-multi-backend";
+import { HTML5toTouch } from "./HTML5toTouch";
 import { TreeProvider, TreeContext } from "./TreeProvider";
 import { DragControlProvider, DragControlContext } from "./DragControlProvider";
 import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
@@ -16,7 +17,9 @@ export const Providers = <T extends unknown>(props: Props<T>): ReactElement => (
   <TreeProvider {...props}>
     <DragControlProvider>
       <PlaceholderProvider>
-        <DndProvider options={HTML5toTouch}>{props.children}</DndProvider>
+        <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+          {props.children}
+        </DndProvider>
       </PlaceholderProvider>
     </DragControlProvider>
   </TreeProvider>

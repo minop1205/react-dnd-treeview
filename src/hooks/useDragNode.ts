@@ -4,6 +4,8 @@ import {
   DragElementWrapper,
   DragSourceOptions,
   DragPreviewOptions,
+  ConnectDragSource,
+  ConnectDragPreview,
 } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { NodeModel, DragSourceElement } from "../types";
@@ -48,12 +50,16 @@ export const useDragNode = <T>(
     };
   }, []);
 
-  const [{ isDragging }, drag, preview] = useDrag({
-    item: {
-      type: ItemTypes.TREE_ITEM,
+  const [{ isDragging }, drag, preview]: [
+    { isDragging: boolean },
+    ConnectDragSource,
+    ConnectDragPreview
+  ] = useDrag({
+    type: ItemTypes.TREE_ITEM,
+    item: () => ({
       ref,
       ...item,
-    },
+    }),
     canDrag: () => {
       const { canDrag } = treeContext;
 

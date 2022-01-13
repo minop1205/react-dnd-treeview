@@ -29,10 +29,9 @@
     "access": "public"
   },
   "dependencies": {
-    "rdndmb-html5-to-touch": "^7.0.0-alpha.1",
-    "react-dnd": "^13.1.1",
-    "react-dnd-html5-backend": "^14.0.1",
-    "react-dnd-multi-backend": "^7.0.0-alpha.4"
+    "dnd-multi-backend": "^7.0.0-alpha.4",
+    "react-dnd-html5-backend": "^14.1.0",
+    "react-dnd-touch-backend": "^14.1.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -40,7 +39,6 @@
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/jest": "^27.0.1",
     "@types/react": "^17.0.18",
-    "@types/react-beautiful-dnd": "^13.1.1",
     "@types/react-dnd-multi-backend": "^6.0.1",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
@@ -54,6 +52,7 @@
     "npm-check-updates": "^11.8.3",
     "prettier": "^2.3.2",
     "react": "^17.0.2",
+    "react-dnd": "^14.0.5",
     "react-dom": "^17.0.2",
     "rollup": "^2.56.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -64,6 +63,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.2",
+    "react-dnd": "^14.0.5",
     "react-dom": "^17.0.2"
   },
   "scripts": {
