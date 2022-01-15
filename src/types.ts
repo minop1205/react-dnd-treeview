@@ -1,9 +1,5 @@
-import { ElementType } from "react";
+import { RefObject, ElementType, ReactElement } from "react";
 import { XYCoord } from "react-dnd";
-
-export type Partial<T> = {
-  [P in keyof T]?: T[P];
-};
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -13,7 +9,7 @@ export type NodeModel<T = unknown> = {
   data?: T;
 };
 
-export type DragItem<T = unknown> = NodeModel<T> & {
+export type DragItem<T> = NodeModel<T> & {
   type: symbol;
   ref: React.MutableRefObject<HTMLElement>;
 };
@@ -21,49 +17,66 @@ export type DragItem<T = unknown> = NodeModel<T> & {
 export type RenderParams = {
   depth: number;
   isOpen: boolean;
+  isDragging: boolean;
+  isDropTarget: boolean;
   draggable: boolean;
   hasChild: boolean;
+  containerRef: RefObject<HTMLElement>;
   onToggle(): void;
 };
 
-export type NodeRender = (
-  node: NodeModel,
+export type NodeRender<T> = (
+  node: NodeModel<T>,
   params: RenderParams
-) => React.ReactElement;
+) => ReactElement;
+
 export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler = (
   id: NodeModel["id"],
-  parent: NodeModel["id"]
+  parent: NodeModel["id"],
+  index: number
 ) => void;
 
 export type CanDropHandler = (
   id: NodeModel["id"],
   parent: NodeModel["id"]
-) => boolean;
+) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;
 
 export type Classes = {
   root?: string;
   container?: string;
+  listItem?: string;
   dropTarget?: string;
   draggingSource?: string;
+  placeholder?: string;
 };
 
-export type ToggleHandler = (id: NodeModel["id"]) => void;
+export type SortCallback<T = unknown> = (
+  a: NodeModel<T>,
+  b: NodeModel<T>
+) => number;
 
-export type SortCallback = (a: NodeModel, b: NodeModel) => number;
-
-export type DragLayerMonitorProps<T = unknown> = {
+export type DragLayerMonitorProps<T> = {
   item: DragItem<T>;
   clientOffset: XYCoord | null;
   isDragging: boolean;
 };
 
-export type DragPreviewRender = (
-  monitorProps: DragLayerMonitorProps
-) => React.ReactElement;
+export type DragPreviewRender<T> = (
+  monitorProps: DragLayerMonitorProps<T>
+) => ReactElement;
+
+export type PlaceholderRenderParams = {
+  depth: number;
+};
+
+export type PlaceholderRender<T> = (
+  node: NodeModel<T>,
+  params: PlaceholderRenderParams
+) => ReactElement;
 
 export type DragOverProps = {
   onDragEnter: () => void;
@@ -71,10 +84,22 @@ export type DragOverProps = {
   onDrop: () => void;
 };
 
-export type OpenIdsHandlers = {
-  openAll(): void;
-  closeAll(): void;
-};
+export type OpenHandler = (
+  targetIds: NodeModel["id"] | NodeModel["id"][],
+  callback?: ChangeOpenHandler
+) => void;
+
+export type CloseHandler = (
+  targetIds: NodeModel["id"] | NodeModel["id"][],
+  callback?: ChangeOpenHandler
+) => void;
+
+export type ToggleHandler = (
+  id: NodeModel["id"],
+  callback?: ChangeOpenHandler
+) => void;
+
+export type ChangeOpenHandler = (newOpenIds: NodeModel["id"][]) => void;
 
 export type InitialOpen = boolean | NodeModel["id"][];
 
@@ -86,18 +111,35 @@ export type DragControlState = {
   unlock: () => void;
 };
 
-export type TreeStateBase = {
-  tree: NodeModel[];
-  rootId: NodeModel["id"];
-  classes?: Classes;
-  render: NodeRender;
-  dragPreviewRender?: DragPreviewRender;
+export type PlaceholderState = {
+  dropTargetId: NodeModel["id"] | undefined;
+  index: number | undefined;
+  showPlaceholder: (parentId: NodeModel["id"], index: number) => void;
+  hidePlaceholder: () => void;
 };
 
-export type TreeState = TreeStateBase & {
+export type RootProps = Omit<
+  React.HtmlHTMLAttributes<HTMLElement>,
+  "ref" | "role"
+>;
+
+export type TreeStateBase<T> = {
+  tree: NodeModel<T>[];
+  rootId: NodeModel["id"];
+  classes?: Classes;
+  rootProps?: RootProps;
+  render: NodeRender<T>;
+  dragPreviewRender?: DragPreviewRender<T>;
+  placeholderRender?: PlaceholderRender<T>;
+};
+
+export type TreeState<T> = TreeStateBase<T> & {
   listComponent: ElementType;
   listItemComponent: ElementType;
-  sort: SortCallback | boolean;
+  placeholderComponent: ElementType;
+  sort: SortCallback<T> | boolean;
+  insertDroppableFirst: boolean;
+  dropTargetOffset: number;
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
   onDrop: DropHandler;
@@ -106,28 +148,31 @@ export type TreeState = TreeStateBase & {
   onToggle: ToggleHandler;
 };
 
-export type TreeProps = TreeStateBase & {
+export type DropOptions<T = unknown> = {
+  dragSourceId: NodeModel["id"];
+  dropTargetId: NodeModel["id"];
+  dragSource: NodeModel<T> | undefined;
+  dropTarget: NodeModel<T> | undefined;
+  destinationIndex?: number;
+};
+
+export type TreeProps<T> = TreeStateBase<T> & {
   listComponent?: ElementType;
   listItemComponent?: ElementType;
-  sort?: SortCallback | boolean;
+  placeholderComponent?: ElementType;
+  sort?: SortCallback<T> | boolean;
+  insertDroppableFirst?: boolean;
+  dropTargetOffset?: number;
   initialOpen?: InitialOpen;
-  onDrop: (
-    tree: NodeModel[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel | undefined;
-      dropTarget: NodeModel | undefined;
-    }
-  ) => void;
-  canDrop?: (
-    tree: NodeModel[],
-    options: {
-      dragSourceId: NodeModel["id"];
-      dropTargetId: NodeModel["id"];
-      dragSource: NodeModel | undefined;
-      dropTarget: NodeModel | undefined;
-    }
-  ) => boolean;
-  canDrag?: (node: NodeModel | undefined) => boolean;
+  onChangeOpen?: ChangeOpenHandler;
+  onDrop: (tree: NodeModel<T>[], options: DropOptions<T>) => void;
+  canDrop?: (tree: NodeModel<T>[], options: DropOptions<T>) => boolean | void;
+  canDrag?: (node: NodeModel<T> | undefined) => boolean;
+};
+
+export type TreeMethods = {
+  open: OpenHandler;
+  close: CloseHandler;
+  openAll(): void;
+  closeAll(): void;
 };

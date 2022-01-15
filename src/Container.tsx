@@ -1,58 +1,72 @@
-import React, { useContext } from "react";
+import React, { useRef, PropsWithChildren, ReactElement } from "react";
 import { Node } from "./Node";
+import { Placeholder } from "./Placeholder";
 import { NodeModel } from "./types";
-import { useDropContainer } from "./hooks";
-import { compareItems } from "./utils";
-import { TreeContext } from "./Tree";
+import { useTreeContext, useDropRoot, useContainerClassName } from "./hooks";
+import { compareItems, isDroppable } from "./utils";
 
-type Props = {
+type Props = PropsWithChildren<{
   parentId: NodeModel["id"];
   depth: number;
-};
+}>;
 
-export const Container: React.FC<Props> = (props) => {
-  const context = useContext(TreeContext);
-  const nodes = context.tree.filter((l) => l.parent === props.parentId);
+export const Container = <T extends unknown>(props: Props): ReactElement => {
+  const treeContext = useTreeContext<T>();
+  const ref = useRef<HTMLLIElement>(null);
+  const nodes = treeContext.tree.filter((l) => l.parent === props.parentId);
 
-  let groups = nodes.filter((n) => n.droppable);
-  let templates = nodes.filter((n) => !n.droppable);
+  let view = nodes;
+  const sortCallback =
+    typeof treeContext.sort === "function" ? treeContext.sort : compareItems;
 
-  if (context.sort !== false) {
-    const sortCallback =
-      typeof context.sort === "function" ? context.sort : compareItems;
-    groups = groups.sort(sortCallback);
-    templates = templates.sort(sortCallback);
+  if (treeContext.insertDroppableFirst) {
+    let droppableNodes = nodes.filter((n) => n.droppable);
+    let nonDroppableNodes = nodes.filter((n) => !n.droppable);
+
+    if (treeContext.sort === false) {
+      view = [...droppableNodes, ...nonDroppableNodes];
+    } else {
+      droppableNodes = droppableNodes.sort(sortCallback);
+      nonDroppableNodes = nonDroppableNodes.sort(sortCallback);
+      view = [...droppableNodes, ...nonDroppableNodes];
+    }
+  } else {
+    if (treeContext.sort !== false) {
+      view = nodes.sort(sortCallback);
+    }
   }
 
-  const view = [...groups, ...templates];
-  const [isOver, drop] = useDropContainer(props.parentId);
-  const classes = context.classes;
+  const [isOver, dragSource, drop] = useDropRoot(ref);
 
-  let className = "";
-
-  if (classes?.container) {
-    className = classes.container;
+  if (
+    props.parentId === treeContext.rootId &&
+    isDroppable(dragSource?.id, treeContext.rootId, treeContext)
+  ) {
+    drop(ref);
   }
 
-  if (isOver && classes?.dropTarget) {
-    className = `${className} ${classes.dropTarget}`;
-  }
-
-  if (props.parentId === 0 && classes?.root) {
-    className = `${className} ${classes.root}`;
-  }
-
-  const Component = context.listComponent;
+  const className = useContainerClassName(props.parentId, isOver);
+  const rootProps = treeContext.rootProps || {};
+  const Component = treeContext.listComponent;
 
   return (
-    <Component
-      ref={props.parentId === context.rootId ? drop : undefined}
-      className={className}
-      role="list"
-    >
-      {view.map((node) => (
-        <Node key={node.id} id={node.id} depth={props.depth} />
+    <Component ref={ref} role="list" {...rootProps} className={className}>
+      {view.map((node, index) => (
+        <React.Fragment key={node.id}>
+          <Placeholder
+            depth={props.depth}
+            listCount={view.length}
+            dropTargetId={props.parentId}
+            index={index}
+          />
+          <Node id={node.id} depth={props.depth} />
+        </React.Fragment>
       ))}
+      <Placeholder
+        depth={props.depth}
+        listCount={view.length}
+        dropTargetId={props.parentId}
+      />
     </Component>
   );
 };

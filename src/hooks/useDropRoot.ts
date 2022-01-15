@@ -3,18 +3,18 @@ import { useDrop, DragElementWrapper } from "react-dnd";
 import { ItemTypes } from "../ItemTypes";
 import { PlaceholderContext } from "../providers";
 import { NodeModel, DragItem } from "../types";
-import { isDroppable, getDropTarget } from "../utils";
+import { getDropTarget, isDroppable } from "../utils";
 import { useTreeContext } from "../hooks";
 
-export const useDropNode = <T>(
-  item: NodeModel<T>,
+export const useDropRoot = <T>(
   ref: React.RefObject<HTMLElement>
 ): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: ItemTypes.TREE_ITEM,
-    drop: (dragSource: DragItem<T>, monitor) => {
+    drop: (item: DragItem<T>, monitor) => {
+      const { rootId, onDrop } = treeContext;
       const { dropTargetId, index } = placeholderContext;
 
       if (
@@ -22,36 +22,32 @@ export const useDropNode = <T>(
         dropTargetId !== undefined &&
         index !== undefined
       ) {
-        treeContext.onDrop(dragSource.id, dropTargetId, index);
+        onDrop(item.id, rootId, index);
       }
 
       placeholderContext.hidePlaceholder();
     },
-    canDrop: (dragSource: DragItem<T>, monitor) => {
-      if (monitor.isOver({ shallow: true })) {
-        const dropTarget = getDropTarget<T>(
-          item,
-          ref.current,
-          monitor,
-          treeContext
-        );
+    canDrop: (item: DragItem<T>, monitor) => {
+      const { rootId } = treeContext;
 
-        if (dropTarget === null) {
+      if (monitor.isOver({ shallow: true })) {
+        if (item === undefined) {
           return false;
         }
 
-        return isDroppable(dragSource.id, dropTarget.id, treeContext);
+        return isDroppable(item.id, rootId, treeContext);
       }
 
       return false;
     },
-    hover: (dragSource, monitor) => {
+    hover: (dragItem, monitor) => {
       if (monitor.isOver({ shallow: true })) {
+        const { rootId } = treeContext;
         const { dropTargetId, index, showPlaceholder, hidePlaceholder } =
           placeholderContext;
 
         const dropTarget = getDropTarget<T>(
-          item,
+          null,
           ref.current,
           monitor,
           treeContext
@@ -59,7 +55,7 @@ export const useDropNode = <T>(
 
         if (
           dropTarget === null ||
-          !isDroppable(dragSource.id, dropTarget.id, treeContext)
+          !isDroppable(dragItem.id, rootId, treeContext)
         ) {
           hidePlaceholder();
           return;

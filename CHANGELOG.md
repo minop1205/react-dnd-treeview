@@ -1,5 +1,107 @@
 # Change Log
 
+## 1.6.1
+
+_Jan 07, 2022_
+
+### Fixed
+
+- DragPreview component is momentarily displayed in the upper left corner of the screen after the drag operation is completed.
+
+## 1.6.0
+
+_Nov 18, 2021_
+
+### Added
+
+- Added `isDragging` and `isDropTarget` flags to the options passed to the render callback.
+- Added a reference to the wrapper element to the options passed to the render callback. (`options.containerRef`)
+
+## 1.5.11
+
+_Nov 08, 2021_
+
+### Added
+
+- If the `sort` property is set to `false`, add an `destinationIndex` property to the options passed to the `onDrop` callback to indicate where to move the node.
+- A utility function has been added to get descendant nodes.
+- Added demos for adding, removing, and duplicating nodes.
+
+### Changed
+
+- Update sample code of basic usage.
+- If the `sort` property is not `false`, then the order of the tree array passed to the `onDrop` callback will be preserved.
+- The new node array passed to the `onDrop` callback is no longer read-only.
+
+## 1.5.10
+
+_Oct 27, 2021_
+
+### Fixed
+
+- generic type cannot be used in sort callback.
+
+## 1.5.9
+
+_Oct 07, 2021_
+
+### Added
+
+- add `rootProps` API.
+
+## 1.5.7
+
+_Oct 01, 2021_
+
+### Fixed
+
+- react-dnd version is mismatch with dependent packages.
+
+## 1.5.6
+
+_Sept 29, 2021_
+
+### Fixed
+
+- dragging not possible after editing a node without hovering in Firefox or Safari.
+
+## 1.5.4
+
+_Sept 24, 2021_
+
+### Fixed
+
+- unable to install in npm version 7.
+
+## 1.5.3
+
+_Sept 08, 2021_
+
+### Added
+
+- add `classes.listItem` property for styling node wrapper.
+
+## 1.5.1
+
+_Aug 22, 2021_
+
+### Added
+
+- add `onChangeOpen` API.
+
+## 1.5.0
+
+_Aug 19, 2021_
+
+### Added
+
+- add APIs for manual sort and placeholder
+- add open / close methods for control open state of nodes.
+
+### Fixed
+
+- type inference for custom data types is not working.
+
 ## 1.4.3
 
 _July 17, 2021_

@@ -22,6 +22,8 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
 - Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
 - Editable nodes ([JavaScript](https://codesandbox.io/s/editable-js-m25be) | [TypeScript](https://codesandbox.io/s/editable-ts-cl3wi))
+- Manual sort with placeholder ([JavaScript](https://codesandbox.io/s/placeholder-js-xhu2j) | [TypeScript](https://codesandbox.io/s/placeholder-ts-w71l5))
+- Add, remove, duplicate nodes ([JavaScript](https://codesandbox.io/s/add-delete-copy-js-4x4l8) | [TypeScript](https://codesandbox.io/s/add-delete-copy-ts-owgqb))
 
 ## Getting Started
 
@@ -34,34 +36,35 @@ $ npm install --save @minoru/react-dnd-treeview
 ### Usage
 
 ```jsx
+import { useState } from "react";
 import { Tree } from "@minoru/react-dnd-treeview";
+import initialData from "./sample.json";
 
-...
+function App() {
+  const [treeData, setTreeData] = useState(initialData);
+  const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
-const [treeData, setTreeData] = useState(initialData);
-const handleDrop = (newTreeData) => setTreeData(newTreeData);
-
-<Tree
-  tree={treeData}
-  rootId={0}
-  onDrop={handleDrop}
-  render={(node, {depth, isOpen, onToggle}) => (
-    <div style={{marginLeft: depth * 10}}>
-      {node.droppable && (
-        <span onClick={onToggle}>
-          {isOpen ? "[-]" : "[+]"}
-        </span>
+  return (
+    <Tree
+      tree={treeData}
+      rootId={0}
+      onDrop={handleDrop}
+      render={(node, { depth, isOpen, onToggle }) => (
+        <div style={{ marginLeft: depth * 10 }}>
+          {node.droppable && (
+            <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+          )}
+          {node.text}
+        </div>
       )}
-      {node.text}
-    </div>
-  )}
-/>
+    />
+  );
+}
 ```
 
 ## Data Structure
 
-In order to display the tree,  
-we need to pass the following data to the `Tree` component
+To display the treeview, pass data with the following structure to the `tree` property of the Tree component.
 
 ### Basic example
 
@@ -172,20 +175,26 @@ you can use the `data` property.
 
 ## Component API
 
-| Props             | Type                | Required | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| ----------------- | ------------------- | -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| tree              | array               | yes      |           | The data representing the tree structure. An array of node data.                                                                                                                                                                                                                                                                                                                                                                                              |
-| rootId            | number \| string    | yes      |           | The id of the root node. It is the parent id of the shallowest node displayed in the tree view.                                                                                                                                                                                                                                                                                                                                                               |
-| classes           | object              | no       | undefined | A set of CSS class names to be applied to a specific area in the tree view.<br>See the [Component Styling](#Component-Styling) section for more information.                                                                                                                                                                                                                                                                                                  |
-| listComponent     | string              | no       | ul        | The HTML tag for the list.                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| listItemComponent | string              | no       | li        | HTML tag for list items.                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| render            | function            | yes      |           | The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.                                                                                                                                                                                                                                                                                                                     |
-| dragPreviewRender | function            | no       | undefined | Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview<br><br>**NOTE**:<br>The default preview is not displayed on touch devices. Therefore, if you want to support touch devices, please define a custom preview in `dragPreviewRender`.                                                                                                            |
-| onDrop            | function            | yes      |           | Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.                                                                                                                                                                                                                                                                          |
-| canDrop           | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be droppable onto another node.<br>If the canDrop callback is given, the `droppable` property of each node will no longer be referenced.<br>The callback will receive the current tree and an options object which is the same as the one which would be passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information. |
-| canDrag           | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be draggable.<br>By default, all nodes are draggable.                                                                                                                                                                                                                                                                                                                  |
-| sort              | function \| boolean | no       | true      | Passing false will disable sorting. Alternatively, pass a callback to use in place of the default sort callback.                                                                                                                                                                                                                                                                                                                                              |
-| initialOpen       | boolean \| array    | no       | false     | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.                                                                                                                                                                                                                                                            |
+| Props                | Type                | Required | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| -------------------- | ------------------- | -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tree                 | array               | yes      |           | The data representing the tree structure. An array of node data.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| rootId               | number \| string    | yes      |           | The id of the root node. It is the parent id of the shallowest node displayed in the tree view.                                                                                                                                                                                                                                                                                                                                                                                                            |
+| classes              | object              | no       | undefined | A set of CSS class names to be applied to a specific area in the tree view.<br>See the [Component Styling](#Component-Styling) section for more information.                                                                                                                                                                                                                                                                                                                                               |
+| listComponent        | string              | no       | ul        | HTML tag for list.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| listItemComponent    | string              | no       | li        | HTML tag for list items.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| render               | function            | yes      |           | The render function of each node.<br>Please refer to the [Render prop](#Render-prop) section for more details about the render functions.                                                                                                                                                                                                                                                                                                                                                                  |
+| dragPreviewRender    | function            | no       | undefined | Render function for customizing the drag preview.<br>See the [Dragging Preview](#Dragging-Preview) section for more information on customizing the drag preview<br><br>**NOTE**:<br>The default preview is not displayed on touch devices. Therefore, if you want to support touch devices, please define a custom preview in `dragPreviewRender`.                                                                                                                                                         |
+| onDrop               | function            | yes      |           | Callback function for when the state of the tree is changed.<br>The new data is passed as the argument.<br>See the [onDrop callback](#onDrop-callback) section for more information.                                                                                                                                                                                                                                                                                                                       |
+| onChangeOpen         | function            | no       | undefined | Callback function to be called after the open/close state of a node is changed.<br>The function is passed an array of node IDs in the open state.                                                                                                                                                                                                                                                                                                                                                          |
+| canDrop              | function            | no       | undefined | A callback function to determine if a given node can be dropped to another node.<br>If nothing is returned (or if undefined is returned), the default rules are followed.<br>If it returns true or false, the default rules will be overridden and the `dropable` properties of each node will not be referenced.<br>This callback takes the current tree and the same option object that is passed to the onDrop callback.<br>See the [canDrop callback](#canDrop-callback) section for more information. |
+| canDrag              | function            | no       | undefined | Callback function which should return true or false depending on if a give node should be draggable.<br>By default, all nodes are draggable.                                                                                                                                                                                                                                                                                                                                                               |
+| sort                 | function \| boolean | no       | true      | This property controls the order of the child nodes.<br> By default (`true`), they are sorted by the `text` property of each node.<br> If `false`, sorting is disabled. In this case, the nodes will follow the order of the array passed to the `tree` property.<br>It is also possible to customize the sorting by passing a callback function.                                                                                                                                                          |
+| insertDroppableFirst | boolean             | no       | true      | Specifies whether droppable nodes should be placed first in the list of child nodes.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| placeholderRender    | function            | no       | undefined | Render function for the drop destination placeholder. By default, placeholder is not displayed.<br>See the [Manual sort with placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                                                                |
+| placeholderComponent | string              | no       | li        | HTML tag for placeholder.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| dropTargetOffset     | number              | no       | 0         | Effective drop range of a dropable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.<br><br>See the [Manual sort with placeholder placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                   |
+| initialOpen          | boolean \| array    | no       | false     | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.                                                                                                                                                                                                                                                                                                         |
+| rootProps            | object              | no       | undefined | Properties to be passed to the root element (by default, `ul` tag), excluding the `ref` and `role` property.                                                                                                                                                                                                                                                                                                                                                                                               |
 
 ### Render prop
 
@@ -207,14 +216,17 @@ To render each tree node, please pass a render function to the `render` property
 
 The arguments passed to the render function are as follows
 
-| Name              | Type     | Description                                                                                                 |
-| ----------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| data              | object   | Node data. (an element in the tree data array)                                                              |
-| options.depth     | number   | The depth of the node hierarchy.                                                                            |
-| options.isOpen    | boolean  | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
-| options.draggable | boolean  | Indicates whether this node is draggable or not.                                                            |
-| options.hasChild  | boolean  | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
-| options.onToggle  | function | An event handler for the open/close button of a node.                                                       |
+| Name                 | Type            | Description                                                                                                 |
+| -------------------- | --------------- | ----------------------------------------------------------------------------------------------------------- |
+| data                 | object          | Node data. (an element in the tree data array)                                                              |
+| options.depth        | number          | The depth of the node hierarchy.                                                                            |
+| options.isOpen       | boolean         | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
+| options.draggable    | boolean         | Indicates whether this node is draggable or not.                                                            |
+| options.hasChild     | boolean         | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
+| options.isDragSource | boolean         | Flag indicating whether this node is being dragged or not.                                                  |
+| options.isDropTarget | boolean         | Flag indicating whether or not this node is a drop target.                                                  |
+| options.containerRef | React.RefObject | Reference to the HTML element (default: `li` tag) that wraps the custom node.                               |
+| options.onToggle     | function        | An event handler for the open/close button of a node.                                                       |
 
 ### Dragging Preview
 
@@ -267,19 +279,25 @@ return <Tree {...props} tree={treeData} onDrop={handleDrop} />;
 
 The arguments passed to the onDrop callback function are as follows
 
-| Name                 | Type                | Description                                                                                                                      |
-| -------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| newTree              | array               | This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property. |
-| options.dragSourceId | number \| string    | node id of the dragging source                                                                                                   |
-| options.dropTargetId | number \| string    | node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.     |
-| options.dragSource   | object              | node item of the dragging source                                                                                                 |
-| options.dropTarget   | object \| undefined | node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`                           |
+| Name                     | Type                | Description                                                                                                                         |
+| ------------------------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| newTree                  | array               | This data represents the updated TreeView.<br>To redraw the modified TreeView, you need to set this data to the `tree` property.    |
+| options.dragSourceId     | number \| string    | node id of the dragging source                                                                                                      |
+| options.dropTargetId     | number \| string    | node id of the drop destination.<br>If the drop destination is the root node, it will be the value of the `rootId` property.        |
+| options.dragSource       | object              | node item of the dragging source                                                                                                    |
+| options.dropTarget       | object \| undefined | node item of the drop destination.<br>If the drop destination is the root node, it will be `undefined`                              |
+| options.destinationIndex | number \| undefined | If the `sort` property is `false`, the insertion destination index value of dragSource is given. Otherwise, it will be `undefined`. |
 
 ### canDrop callback
 
-This callback should return true if the node being dragged can be dropped onto a given node. If it returns false and the user drops the dragged node, no action will be taken and the [onDrop callback](#onDrop-callback) will not be fired.
+By default, it allows dropping to any dropable node (or root node) except its own descendants.
+This callback can override the default rules.
 
-This callback accepts the same parameters as the onDrop callback except that the first parameter will be the current tree.
+If it returns nothing or returns `undefined`, the default rules will be applied. If it returns a boolean value, it will override the default rules and the droppable property of each node will no longer be referenced.
+
+If it returns false and the user drops the dragged node, no action will be taken and the onDrop callback will not be fired.
+
+This callback takes the same parameters as the [onDrop callback](#onDrop-callback), but the first parameter specifies the current tree.
 
 ```jsx
 const canDrop = (
@@ -291,14 +309,62 @@ const canDrop = (
   // or
 
   return false;
+
+  // or
+
+  return;
+
+  // or
+
+  return undefined;
 };
 
 return <Tree {...props} tree={treeData} canDrop={canDrop} />;
 ```
 
-Note that this will replace the default behaviour which will not take any action when a drop would not result in a change to the tree structure or when dropping on a node would result in a malformed tree e.g. dropping a droppable node on itself as shown in the below graphic. Therefore, if you pass this callback, you may need to handle such cases.
+NOTE:  
+When overriding the default rules by returning true or false, be careful of inconsistencies in the tree structure.  
+For example, if you allow dropping from a parent node to a child node as shown in the figure below, inconsistency will occur and the tree will collapse.
 
 ![malformed tree](https://user-images.githubusercontent.com/3772820/114326837-9d717400-9b71-11eb-91cf-c762c4ab7461.gif)
+
+### Manual sort with placeholder
+
+By default, nodes are automatically sorted and cannot be sorted manually, but by combining some APIs, you can sort them manually and display placeholders as follows.
+
+![placeholder_sample](https://user-images.githubusercontent.com/3772820/129397312-9501e164-d413-4a06-b023-1713d206004e.gif)
+
+The following is an example (excerpt) of the implementation of manual sort of nodes and placeholder display.
+
+```jsx
+import { CustomPlaceholder } from "./CustomPlaceholder";
+import styles from "./App.module.css";
+
+function App() {
+  const [treeData, setTreeData] = useState(SampleData);
+  const handleDrop = (newTree) => setTreeData(newTree);
+
+  <Tree
+    {...props}
+    tree={treData}
+    onDrop={handleDrop}
+    classes={{
+      placeholder: styles.placeholder,
+    }}
+    sort={false}
+    insertDroppableFirst={false}
+    canDrop={(tree, { dragSource, dropTargetId }) => {
+      if (dragSource?.parent === dropTargetId) {
+        return true;
+      }
+    }}
+    dropTargetOffset={5}
+    placeholderRender={(node, { depth }) => (
+      <CustomPlaceholder node={node} depth={depth} />
+    )}
+  />;
+}
+```
 
 ### Component Styling
 
@@ -320,18 +386,24 @@ You can use the following keys for the objects you pass to the `classes` propert
 | -------------- | -------------------------------------------------------------------------------------------------------------- |
 | root           | CSS class name to give to the top-level container element (by default, `ul` tag) that wraps all nodes.         |
 | container      | CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag). |
+| listItem       | CSS class name to give to the element that wraps each node item (by default, `li` tag).                        |
 | dropTarget     | CSS class name to give to the area that can be dropped during a node dragging operation.                       |
 | draggingSource | CSS class name to give to the node during the dragging operation.                                              |
+| placeholder    | CSS class name to give to the element wrapping the placeholder (by default, `li` tag).                         |
 
-### Usage to openAll, closeAll methods
+### Usage to open / close methods
 
-The open/close state of a node is managed within the Tree component, but methods are available outside the component to open and close all nodes.
+The open/close status of a node is managed within the Tree component, but the methods for opening and closing nodes are public, so they can be controlled from outside the Tree component.
 
 ```jsx
 const ref = useRef(null);
 
 const handleOpenAll = () => ref.current.openAll();
 const handleCloseAll = () => ref.current.closeAll();
+
+// open /close method can be passed a node ID or an array of node IDs
+const handleOpen = (nodeId) => ref.current.open(nodeId);
+const handleClose = (nodeId) => ref.current.close(nodeId);
 
 <Tree
   ref={ref}
@@ -340,6 +412,9 @@ const handleCloseAll = () => ref.current.closeAll();
 
 <button onClick={handleOpenAll}>Open All Folders</button>
 <button onClick={handleCloseAll}>Close All Folders</button>
+<button onClick={handleOpen}>Open specific folder(s)</button>
+<button onClick={handleClose}>Close specific folder(s)</button>
+
 ```
 
 ## License

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { DragControlContext } from "../Tree";
+import { DragControlContext } from "../providers";
 
 /**
  * This is a hook to allow text selection by mouse in the text input area in a node.
@@ -9,19 +9,23 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   const dragControlContext = useContext(DragControlContext);
 
   const lock = (e: Event) => {
-    const target = e.target as Element;
-    const tagName = target.tagName.toLowerCase();
+    const { target } = e;
 
-    if (tagName === "input" || tagName === "textarea") {
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
       dragControlContext.lock();
     }
   };
 
   const unlock = (e: Event) => {
-    const target = e.target as Element;
-    const tagName = target.tagName.toLowerCase();
+    const { target } = e;
 
-    if (tagName === "input" || tagName === "textarea") {
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
       dragControlContext.unlock();
     }
   };
@@ -32,12 +36,32 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   const handleFocusOut = (e: FocusEvent) => unlock(e);
 
   useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    // In Firefox or Safari,
+    // the focusout event is not fired when the focused element is unmounted.
+    // Therefore, it detects the unmounting of a child element
+    // and unlocks tree if the focus is on the body element after unmounting.
+    const observer = new MutationObserver(() => {
+      if (document.activeElement === document.body) {
+        dragControlContext.unlock();
+      }
+    });
+
+    observer.observe(ref.current, {
+      subtree: true,
+      childList: true,
+    });
+
     ref.current?.addEventListener("mouseover", handleMouseOver);
     ref.current?.addEventListener("mouseout", handleMouseOut);
     ref.current?.addEventListener("focusin", handleFocusIn);
     ref.current?.addEventListener("focusout", handleFocusOut);
 
     return () => {
+      observer.disconnect();
       ref.current?.removeEventListener("mouseover", handleMouseOver);
       ref.current?.removeEventListener("mouseout", handleMouseOut);
       ref.current?.removeEventListener("focusin", handleFocusIn);
