@@ -1,7 +1,4 @@
 import React, { PropsWithChildren, ReactElement } from "react";
-import { DndProvider } from "react-dnd";
-import { MultiBackend } from "dnd-multi-backend";
-import { HTML5toTouch } from "./HTML5toTouch";
 import { TreeProvider, TreeContext } from "./TreeProvider";
 import { DragControlProvider, DragControlContext } from "./DragControlProvider";
 import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
@@ -16,11 +13,7 @@ type Props<T> = PropsWithChildren<
 export const Providers = <T extends unknown>(props: Props<T>): ReactElement => (
   <TreeProvider {...props}>
     <DragControlProvider>
-      <PlaceholderProvider>
-        <DndProvider backend={MultiBackend} options={HTML5toTouch}>
-          {props.children}
-        </DndProvider>
-      </PlaceholderProvider>
+      <PlaceholderProvider>{props.children}</PlaceholderProvider>
     </DragControlProvider>
   </TreeProvider>
 );
