@@ -71,7 +71,7 @@ export const useDropNode = <T>(
       }
     },
     collect: (monitor) => {
-      const dragSource: NodeModel = monitor.getItem() as NodeModel;
+      const dragSource: NodeModel = monitor.getItem();
 
       return {
         isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),
