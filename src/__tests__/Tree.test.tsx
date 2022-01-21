@@ -689,4 +689,68 @@ describe("Tree", () => {
 
     expect(isDragging).toBe(false);
   });
+
+  describe("cancelOnDropOutside prop", () => {
+    const dragAndDropOutside = (draggedElement: Element, lastTargetDraggedOver: Element) => {
+      fireEvent.dragStart(draggedElement);
+      fireEvent.dragEnter(lastTargetDraggedOver);
+      fireEvent.dragOver(lastTargetDraggedOver);
+      // There is no drop event when dragging to outside of the droppable area
+      fireEvent.dragLeave(lastTargetDraggedOver);
+      fireEvent.dragEnd(draggedElement);
+      fireEvent.dragEnd(window);
+    };
+
+    describe("when flag is true (default)", () => {
+      test("drag and drop: File 3 dropped outside of droppable area does not call onDrop callback", () => {
+        const onDrop = jest.fn();
+
+        renderTree({ onDrop });
+
+        const items = screen.getAllByRole("listitem");
+        const src = items[2];
+        const lastTargetDraggedOver = items[0];
+
+        dragAndDropOutside(src, lastTargetDraggedOver);
+
+        expect(onDrop).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("when flag is false", () => {
+      test("drag and drop: File 3 dropped outside of droppable area calls onDrop callback", () => {
+        const onDrop = jest.fn();
+
+        renderTree({
+          onDrop,
+          cancelOnDropOutside: false,
+        });
+
+        const items = screen.getAllByRole("listitem");
+        const src = items[2];
+        const lastTargetDraggedOver = items[0];
+
+        dragAndDropOutside(src, lastTargetDraggedOver);
+
+        expect(onDrop).toHaveBeenCalledTimes(1);
+      });
+
+      test("drag and drop: File 3 dropped inside of droppable area calls onDrop callback", () => {
+        const onDrop = jest.fn();
+
+        renderTree({
+          onDrop,
+          cancelOnDropOutside: false,
+        });
+
+        const items = screen.getAllByRole("listitem");
+        const src = items[2];
+        const lastTargetDraggedOver = items[0];
+
+        dragAndDrop(src, lastTargetDraggedOver);
+
+        expect(onDrop).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
 });

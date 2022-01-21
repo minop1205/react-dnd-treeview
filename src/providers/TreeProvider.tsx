@@ -44,6 +44,7 @@ export const TreeProvider = <T extends unknown>(
     placeholderComponent: "li",
     sort: true,
     insertDroppableFirst: true,
+    cancelOnDropOutside: true,
     dropTargetOffset: 0,
     initialOpen: false,
     ...props,

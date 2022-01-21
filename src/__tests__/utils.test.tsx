@@ -163,6 +163,7 @@ describe("utilities test", () => {
       placeholderComponent: "li",
       sort: false,
       insertDroppableFirst: true,
+      cancelOnDropOutside: true,
       dropTargetOffset: 0,
       initialOpen: false,
       openIds: [],

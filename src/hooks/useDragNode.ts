@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   useDrag,
   DragElementWrapper,
@@ -8,6 +8,7 @@ import {
 import { ItemTypes } from "../ItemTypes";
 import { NodeModel, DragSourceElement } from "../types";
 import { useTreeContext } from "../hooks";
+import { PlaceholderContext } from "../providers";
 
 let dragSourceElement: DragSourceElement = null;
 
@@ -20,6 +21,7 @@ export const useDragNode = <T>(
   DragElementWrapper<DragPreviewOptions>
 ] => {
   const treeContext = useTreeContext<T>();
+  const placeholderContext = useContext(PlaceholderContext);
 
   const register = (e: DragEvent | TouchEvent): void => {
     const { target } = e;
@@ -66,6 +68,20 @@ export const useDragNode = <T>(
       }
 
       return true;
+    },
+    end: (item, monitor) => {
+      const { cancelOnDropOutside } = treeContext;
+      const { dropTargetId, index } = placeholderContext;
+
+      if (cancelOnDropOutside || monitor.didDrop()) return;
+
+      if (
+        item?.id !== undefined &&
+        dropTargetId !== undefined &&
+        index !== undefined
+      ) {
+        treeContext.onDrop(item.id, dropTargetId, index);
+      }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

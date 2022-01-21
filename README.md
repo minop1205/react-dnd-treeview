@@ -1,6 +1,6 @@
 # React DnD TreeView
 
-A draggable / droppable React-based treeview component.  
+A draggable / droppable React-based treeview component.
 You can use render props to create each node freely.
 
 ![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/98293395-94441000-1ff1-11eb-81db-b84c31b03c6b.gif)
@@ -22,7 +22,7 @@ Some of the examples below use Material-UI components, but TreeView does not dep
 - Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
 - Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
 - Editable nodes ([JavaScript](https://codesandbox.io/s/editable-js-m25be) | [TypeScript](https://codesandbox.io/s/editable-ts-cl3wi))
-- Manual sort with placeholder ([JavaScript](https://codesandbox.io/s/placeholder-js-xhu2j) | [TypeScript](https://codesandbox.io/s/placeholder-ts-w71l5))
+- Manual sort with placeholder ([JavaScript](https://codesandbox.io/s/placeholder-js-forked-wtiet) | [TypeScript](https://codesandbox.io/s/placeholder-ts-forked-ebupf))
 - Add, remove, duplicate nodes ([JavaScript](https://codesandbox.io/s/add-delete-copy-js-4x4l8) | [TypeScript](https://codesandbox.io/s/add-delete-copy-ts-owgqb))
 
 ## Getting Started
@@ -110,7 +110,7 @@ The minimal data structure for representing the tree is shown in the following e
 
 ### Optional data
 
-If you want to pass custom properties to each node's rendering,  
+If you want to pass custom properties to each node's rendering,
 you can use the `data` property.
 
 ```json
@@ -192,7 +192,8 @@ you can use the `data` property.
 | insertDroppableFirst | boolean             | no       | true      | Specifies whether droppable nodes should be placed first in the list of child nodes.                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | placeholderRender    | function            | no       | undefined | Render function for the drop destination placeholder. By default, placeholder is not displayed.<br>See the [Manual sort with placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                                                                |
 | placeholderComponent | string              | no       | li        | HTML tag for placeholder.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| dropTargetOffset     | number              | no       | 0         | Effective drop range of a dropable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.<br><br>See the [Manual sort with placeholder placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                   |
+| cancelOnDropOutside | boolean             | no       | true      | Specifies whether a drop outside of the tree is considered valid or not. By default dropping is only valid inside the tree component.<br>This can be used if you want to force the drop to happen at the position where the placeholder currently is, even if the cursor is not hovering the tree anymore.<br>See the [Manual sort with placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                                                                                                                    |
+| dropTargetOffset     | number              | no       | 0         | Effective drop range of a droppable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.<br><br>See the [Manual sort with placeholder](#Manual-sort-with-placeholder) section for more information on using placeholder.                                                                                                                                                                                                   |
 | initialOpen          | boolean \| array    | no       | false     | If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.                                                                                                                                                                                                                                                                                                         |
 | rootProps            | object              | no       | undefined | Properties to be passed to the root element (by default, `ul` tag), excluding the `ref` and `role` property.                                                                                                                                                                                                                                                                                                                                                                                               |
 
@@ -230,11 +231,11 @@ The arguments passed to the render function are as follows
 
 ### Dragging Preview
 
-By default, the drag preview is a screenshot of a DOM node.  
+By default, the drag preview is a screenshot of a DOM node.
 The `dragPreviewRender` property allows you to display a custom React component instead of a screenshot.
 
-NOTE:  
-The default preview is not displayed on touch devices.  
+NOTE:
+The default preview is not displayed on touch devices.
 Therefore, if you want to support touch devices, please define a custom preview in `dragPreviewRender`.
 
 ```jsx
@@ -322,8 +323,8 @@ const canDrop = (
 return <Tree {...props} tree={treeData} canDrop={canDrop} />;
 ```
 
-NOTE:  
-When overriding the default rules by returning true or false, be careful of inconsistencies in the tree structure.  
+NOTE:
+When overriding the default rules by returning true or false, be careful of inconsistencies in the tree structure.
 For example, if you allow dropping from a parent node to a child node as shown in the figure below, inconsistency will occur and the tree will collapse.
 
 ![malformed tree](https://user-images.githubusercontent.com/3772820/114326837-9d717400-9b71-11eb-91cf-c762c4ab7461.gif)
