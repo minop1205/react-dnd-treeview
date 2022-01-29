@@ -23,7 +23,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "!**/__tests__"
+    "!**/__tests__",
+    "!**/stories"
   ],
   "publishConfig": {
     "access": "public"
@@ -34,6 +35,14 @@
     "react-dnd-touch-backend": "^14.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@storybook/addon-actions": "^6.3.7",
+    "@storybook/addon-essentials": "^6.3.7",
+    "@storybook/addon-links": "^6.3.7",
+    "@storybook/react": "^6.3.7",
+    "@storybook/testing-react": "0.0.22",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@types/hoist-non-react-statics": "^3.3.1",
@@ -43,6 +52,7 @@
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "babel-loader": "^8.2.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-webpack": "^0.13.1",
@@ -71,7 +81,9 @@
     "watch": "rollup -c -w",
     "lint": "npx tsc -p . --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
     "prepublish": "rm -rf ./dist && npm run build",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 6006 -s ./src/stories/assets",
+    "build-storybook": "build-storybook"
   },
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
