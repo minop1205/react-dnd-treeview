@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.0.0
+
+_Jan 29, 2022_
+
+### Breaking changes
+
+- Exclude DndProvider component from package
+
+  The DndProvider is no longer included in the package, so users of the package will need to add the DndProvider separately.
+
 ## 1.6.1
 
 _Jan 07, 2022_
