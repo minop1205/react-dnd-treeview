@@ -7,6 +7,9 @@ import React, {
 } from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { DndProvider } from "react-dnd";
+import { MultiBackend } from "dnd-multi-backend";
+import { HTML5toTouch } from "../HTML5toTouch";
 import { Tree } from "../Tree";
 import {
   NodeModel,
@@ -124,7 +127,11 @@ const dragAndDrop = (src: Element, dst: Element) => {
 
 describe("Tree", () => {
   const renderTree = <T extends unknown>(props: Partial<TreeProps<T>> = {}) => {
-    const { container } = render(<TestTree {...props} />);
+    const { container } = render(
+      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+        <TestTree {...props} />
+      </DndProvider>
+    );
     return container;
   };
 
