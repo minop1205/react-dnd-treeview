@@ -5,7 +5,7 @@ import React, {
   ReactElement,
   PropsWithChildren,
 } from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DndProvider } from "react-dnd";
 import { MultiBackend } from "dnd-multi-backend";
@@ -87,7 +87,7 @@ function createSampleData<T>() {
 
 type Props<T> = PropsWithChildren<Partial<TreeProps<T>>>;
 
-const TestTree = <T extends unknown>(props: Props<T>): ReactElement => {
+const TestTree = <T,>(props: Props<T>): ReactElement => {
   const [tree, setTree] = useState<NodeModel<T>[]>(
     props.tree || createSampleData<T>()
   );
@@ -115,10 +115,19 @@ const TestTree = <T extends unknown>(props: Props<T>): ReactElement => {
   );
 };
 
-const dragAndDrop = (src: Element, dst: Element) => {
-  fireEvent.dragStart(src);
-  fireEvent.dragEnter(dst);
-  fireEvent.dragOver(dst);
+const dragAndDrop = async (src: Element, dst: Element) => {
+  // wait for placeholder context is updated.
+  await act(
+    () =>
+      new Promise((r) => {
+        fireEvent.dragStart(src);
+        fireEvent.dragEnter(dst);
+        fireEvent.dragOver(dst);
+
+        setTimeout(r, 20);
+      })
+  );
+
   fireEvent.drop(dst);
   fireEvent.dragLeave(dst);
   fireEvent.dragEnd(src);
@@ -126,7 +135,7 @@ const dragAndDrop = (src: Element, dst: Element) => {
 };
 
 describe("Tree", () => {
-  const renderTree = <T extends unknown>(props: Partial<TreeProps<T>> = {}) => {
+  const renderTree = <T,>(props: Partial<TreeProps<T>> = {}) => {
     const { container } = render(
       <DndProvider backend={MultiBackend} options={HTML5toTouch}>
         <TestTree {...props} />
@@ -151,34 +160,34 @@ describe("Tree", () => {
     expect(screen.queryByText("File 1-1")).toBeNull();
   });
 
-  test("drag and drop: File 3 into Folder 1", () => {
+  test("drag and drop: File 3 into Folder 1", async () => {
     renderTree();
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];
     const dropTarget = items[0];
 
-    dragAndDrop(dragSource, dropTarget);
+    await dragAndDrop(dragSource, dropTarget);
     expect(screen.queryByText("File 3")).toBeNull();
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
     expect(screen.queryByText("File 3")).toBeInTheDocument();
   });
 
-  test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", () => {
+  test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", async () => {
     renderTree();
 
     let items = screen.getAllByRole("listitem");
     let src = items[2];
     let dst = items[1];
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
     expect(screen.queryByText("File 3")).toBeNull();
 
     items = screen.getAllByRole("listitem");
     src = items[1];
     dst = items[0];
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
     expect(screen.queryByText("Folder 2")).toBeNull();
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
@@ -188,7 +197,7 @@ describe("Tree", () => {
     expect(screen.getByText("File 3")).toBeInTheDocument();
   });
 
-  test("drag and drop: File 1-2 into root node", () => {
+  test("drag and drop: File 1-2 into root node", async () => {
     renderTree();
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
@@ -200,7 +209,7 @@ describe("Tree", () => {
     const src = screen.getAllByRole("listitem")[2];
     const dst = screen.getAllByRole("list")[0];
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
 
     expect(
       screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
@@ -211,7 +220,7 @@ describe("Tree", () => {
     ).toBe(true);
   });
 
-  test("drag and drop: File 1-2 into root node (using string rootId)", () => {
+  test("drag and drop: File 1-2 into root node (using string rootId)", async () => {
     const tree = [
       {
         id: 1,
@@ -238,7 +247,7 @@ describe("Tree", () => {
     const src = screen.getAllByRole("listitem")[2];
     const dst = screen.getAllByRole("list")[0];
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
 
     expect(
       screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
@@ -249,7 +258,7 @@ describe("Tree", () => {
     ).toBe(true);
   });
 
-  test("drag and drop: File 1-2 to root node with falsy canDrop should not call onDrop", () => {
+  test("drag and drop: File 1-2 to root node with falsy canDrop should not call onDrop", async () => {
     const onDrop = jest.fn();
     const canDrop = jest.fn().mockReturnValue(false);
 
@@ -267,13 +276,13 @@ describe("Tree", () => {
     const src = screen.getAllByRole("listitem")[2];
     const dst = screen.getAllByRole("list")[0];
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
 
     expect(canDrop).toHaveBeenCalled();
     expect(onDrop).not.toHaveBeenCalled();
   });
 
-  test("drag and drop: Folder 2 to Folder 2 should not call onDrop", () => {
+  test("drag and drop: Folder 2 to Folder 2 should not call onDrop", async () => {
     const onDrop = jest.fn();
 
     renderTree({
@@ -285,12 +294,12 @@ describe("Tree", () => {
     const src = screen.getAllByRole("listitem")[3];
     const dst = src;
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
 
     expect(onDrop).not.toHaveBeenCalled();
   });
 
-  test("drag and drop: Folder 2 to Folder 2 with canDrop callback", () => {
+  test("drag and drop: Folder 2 to Folder 2 with canDrop callback", async () => {
     const onDrop = jest.fn();
     const canDrop = jest.fn().mockReturnValue(true);
 
@@ -304,7 +313,7 @@ describe("Tree", () => {
     const src = screen.getAllByRole("listitem")[3];
     const dst = src;
 
-    dragAndDrop(src, dst);
+    await dragAndDrop(src, dst);
 
     expect(canDrop).toHaveBeenCalled();
 
@@ -492,29 +501,31 @@ describe("Tree", () => {
       };
 
       return (
-        <div>
-          <Tree
-            ref={ref}
-            rootId={0}
-            tree={createSampleData()}
-            render={(node, { depth, isOpen, onToggle }) => (
-              <div style={{ marginInlineStart: depth * 10 }}>
-                {node.droppable && (
-                  <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
-                )}
-                {node.text}
-              </div>
-            )}
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onDrop={() => {}}
-          />
-          <button onClick={handleOpenAll}>Open All</button>
-          <button onClick={handleCloseAll}>Close All</button>
-          <button onClick={handleOpenSingle}>Open Single</button>
-          <button onClick={handleOpenMultiple}>Open Multiple</button>
-          <button onClick={handleCloseSingle}>Close Single</button>
-          <button onClick={handleCloseMultiple}>Close Multiple</button>
-        </div>
+        <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+          <div>
+            <Tree
+              ref={ref}
+              rootId={0}
+              tree={createSampleData()}
+              render={(node, { depth, isOpen, onToggle }) => (
+                <div style={{ marginInlineStart: depth * 10 }}>
+                  {node.droppable && (
+                    <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+                  )}
+                  {node.text}
+                </div>
+              )}
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              onDrop={() => {}}
+            />
+            <button onClick={handleOpenAll}>Open All</button>
+            <button onClick={handleCloseAll}>Close All</button>
+            <button onClick={handleOpenSingle}>Open Single</button>
+            <button onClick={handleOpenMultiple}>Open Multiple</button>
+            <button onClick={handleCloseSingle}>Close Single</button>
+            <button onClick={handleCloseMultiple}>Close Multiple</button>
+          </div>
+        </DndProvider>
       );
     };
 
@@ -590,7 +601,7 @@ describe("Tree", () => {
     expect(counter).toBe(1);
   });
 
-  test("display drag source and drop target while dragging node", () => {
+  test("display drag source and drop target while dragging node", async () => {
     const customRender: NodeRender<unknown> = (
       node,
       { depth, isDragging, isDropTarget, isOpen, onToggle }
@@ -629,8 +640,15 @@ describe("Tree", () => {
 
     expect(src.textContent).toBe("File 3(dragSource)");
 
-    fireEvent.dragEnter(dst);
-    fireEvent.dragOver(dst);
+    await act(
+      () =>
+        new Promise((r) => {
+          fireEvent.dragEnter(dst);
+          fireEvent.dragOver(dst);
+
+          setTimeout(r, 20);
+        })
+    );
 
     expect(dst.textContent).toBe("[-]Folder 1(dropTarget)File 1-1File 1-2");
   });
