@@ -23,7 +23,7 @@ export default {
     classes: argTypes.classes,
     render: argTypes.render,
   },
-} as Meta;
+} as Meta<TreeProps<CustomData>>;
 
 const Template: Story<TreeProps<CustomData>> = (args) => {
   const [tree, handleDrop] = useDropHandler<CustomData>(args);

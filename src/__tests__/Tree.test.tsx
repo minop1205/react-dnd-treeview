@@ -19,6 +19,10 @@ import {
   TreeMethods,
   RenderParams,
 } from "../types";
+import { composeStories } from "@storybook/testing-react";
+import * as Stories from "../stories/Tree.stories";
+
+const { MinimumConfigurationStory } = composeStories(Stories);
 
 function createSampleData<T>() {
   const treeData = [
@@ -133,6 +137,44 @@ const dragAndDrop = async (src: Element, dst: Element) => {
   fireEvent.dragEnd(src);
   fireEvent.dragEnd(window);
 };
+
+describe("Stories test", () => {
+  const renderTree = () =>
+    render(
+      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+        <MinimumConfigurationStory {...MinimumConfigurationStory.args} />
+      </DndProvider>
+    );
+
+  test("count of node items", () => {
+    renderTree();
+    expect(screen.getAllByRole("listitem").length).toBe(3);
+  });
+
+  test("open and close first node", () => {
+    renderTree();
+    expect(screen.queryByText("File 1-1")).toBeNull();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+
+    fireEvent.click(screen.getAllByText("[-]")[0]);
+    expect(screen.queryByText("File 1-1")).toBeNull();
+  });
+
+  test("drag and drop: File 3 into Folder 1", async () => {
+    renderTree();
+    const items = screen.getAllByRole("listitem");
+    const dragSource = items[2];
+    const dropTarget = items[0];
+
+    await dragAndDrop(dragSource, dropTarget);
+    expect(screen.queryByText("File 3")).toBeNull();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+    expect(screen.queryByText("File 3")).toBeInTheDocument();
+  });
+});
 
 describe("Tree", () => {
   const renderTree = <T,>(props: Partial<TreeProps<T>> = {}) => {
