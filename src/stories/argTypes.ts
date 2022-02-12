@@ -1,19 +1,4 @@
-import { ArgType } from "@storybook/api";
-import { ControlType } from "@storybook/components";
-
-type CustomArgType = ArgType & {
-  type?: {
-    required: boolean;
-  };
-  table: {
-    type: { summary: string };
-    defaultValue?: { summary: string };
-  };
-  control?: {
-    type: ControlType;
-  };
-  action?: string;
-};
+import { CustomArgType } from "./types";
 
 export const rootId: CustomArgType = {
   name: "rootId",

@@ -6,11 +6,7 @@ import { TreeProps } from "../types";
 import sampleData from "./assets/sample-default.json";
 import { CustomNode } from "./CustomNode";
 import { useDropHandler } from "./useDropHandler";
-
-export type CustomData = {
-  fileType: string;
-  fileSize: string;
-};
+import { FileProperties } from "./types";
 
 export default {
   component: Tree,
@@ -23,10 +19,10 @@ export default {
     classes: argTypes.classes,
     render: argTypes.render,
   },
-} as Meta<TreeProps<CustomData>>;
+} as Meta<TreeProps<FileProperties>>;
 
-const Template: Story<TreeProps<CustomData>> = (args) => {
-  const [tree, handleDrop] = useDropHandler<CustomData>(args);
+const Template: Story<TreeProps<FileProperties>> = (args) => {
+  const [tree, handleDrop] = useDropHandler<FileProperties>(args);
   return <Tree {...args} tree={tree} onDrop={handleDrop} />;
 };
 

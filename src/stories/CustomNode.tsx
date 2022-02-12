@@ -6,16 +6,16 @@ import ImageIcon from "@material-ui/icons/Image";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
 import { NodeModel } from "../types";
-import { CustomData } from "./Tree.stories";
+import { FileProperties } from "./types";
 
 type Props = {
-  node: NodeModel<CustomData>;
+  node: NodeModel<FileProperties>;
   depth: number;
   isOpen: boolean;
   onToggle: (id: NodeModel["id"]) => void;
 };
 
-const getIcon = (node: NodeModel<CustomData>) => {
+const getIcon = (node: NodeModel<FileProperties>) => {
   if (node.droppable) {
     return <FolderIcon />;
   }
