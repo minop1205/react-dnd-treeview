@@ -10,11 +10,13 @@ module.exports = {
     },
     project: "./tsconfig.json",
   },
-  plugins: ["@typescript-eslint", "react", "prettier"],
+  plugins: ["@typescript-eslint", "import", "react", "prettier"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "prettier",
@@ -31,6 +33,10 @@ module.exports = {
     react: {
       version: "detect",
     },
-    "import/resolver": "webpack",
+    "import/resolver": {
+      typescript: {
+        project: "./tsconfig.json",
+      },
+    },
   },
 };

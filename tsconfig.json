@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES5",
     "outDir": "dist",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -12,6 +13,9 @@
     "moduleResolution": "node",
     "noEmit": true,
     "jsx": "react",
-    "newLine": "lf"
+    "newLine": "lf",
+    "paths": {
+      "~/*": ["src/*"]
+    }
   }
 }
