@@ -20,6 +20,7 @@ export default {
   plugins: [
     peerDepsExternal(),
     typescript({
+      tsconfig: "tsconfig.build.json",
       useTsconfigDeclarationDir: true,
       clean: true,
     }),
