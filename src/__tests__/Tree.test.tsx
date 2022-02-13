@@ -20,9 +20,13 @@ import {
   RenderParams,
 } from "../types";
 import { composeStories } from "@storybook/testing-react";
-import * as Stories from "../stories/Tree.stories";
+import * as MinimumConfigurationStories from "../stories/examples/MinimumConfiguration.stories";
+import * as CustomNodeStories from "../stories/examples/CustomNode.stories";
 
-const { MinimumConfigurationStory } = composeStories(Stories);
+const { MinimumConfigurationStory } = composeStories({
+  ...MinimumConfigurationStories,
+  ...CustomNodeStories,
+});
 
 function createSampleData<T>() {
   const treeData = [
