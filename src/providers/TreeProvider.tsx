@@ -2,6 +2,7 @@ import React, {
   useImperativeHandle,
   PropsWithChildren,
   ReactElement,
+  createContext,
 } from "react";
 import {
   mutateTree,
@@ -18,7 +19,7 @@ type Props<T> = PropsWithChildren<
   }
 >;
 
-export const TreeContext = React.createContext({});
+export const TreeContext = createContext({});
 
 export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
   const [
