@@ -1,18 +1,17 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import * as argTypes from "../argTypes";
-import { Tree } from "../../Tree";
-import { TreeProps } from "../../types";
-import { FileProperties } from "../types";
+import * as argTypes from "~/stories/argTypes";
+import { Tree } from "~/Tree";
+import { TreeProps } from "~/types";
+import { FileProperties } from "~/stories/types";
+import { Template } from "~/stories/Template";
+import sampleData from "~/stories/assets/sample-default.json";
 
 export default {
   component: Tree,
   title: "Examples/Tree/Minimum configuration",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
-
-import { Template } from "../Template";
-import sampleData from "../assets/sample-default.json";
 
 export const MinimumConfigurationStory = Template.bind({});
 

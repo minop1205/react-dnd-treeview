@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { composeStories } from "@storybook/testing-react";
 import { TestProvider } from "./TestProvider";
 import { dragAndDrop } from "./dragAndDrop";
-import * as stories from "../../stories/examples/MinimumConfiguration.stories";
+import * as stories from "~/stories/examples/MinimumConfiguration.stories";
 
 const { MinimumConfigurationStory } = composeStories(stories);
 

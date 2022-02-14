@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useArgs } from "@storybook/client-api";
-import { NodeModel, TreeProps, DropOptions } from "../types";
+import { NodeModel, TreeProps, DropOptions } from "~/types";
 
 // NOTE:
 // `useArgs` can't be called in test environment.

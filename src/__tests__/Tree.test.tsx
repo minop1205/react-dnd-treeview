@@ -9,8 +9,8 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DndProvider } from "react-dnd";
 import { MultiBackend } from "dnd-multi-backend";
-import { HTML5toTouch } from "../HTML5toTouch";
-import { Tree } from "../Tree";
+import { HTML5toTouch } from "~/HTML5toTouch";
+import { Tree } from "~/Tree";
 import {
   NodeModel,
   SortCallback,
@@ -18,10 +18,10 @@ import {
   NodeRender,
   TreeMethods,
   RenderParams,
-} from "../types";
+} from "~/types";
 import { composeStories } from "@storybook/testing-react";
-import * as MinimumConfigurationStories from "../stories/examples/MinimumConfiguration.stories";
-import * as CustomNodeStories from "../stories/examples/CustomNode.stories";
+import * as MinimumConfigurationStories from "~/stories/examples/MinimumConfiguration.stories";
+import * as CustomNodeStories from "~/stories/examples/CustomNode.stories";
 
 const { MinimumConfigurationStory } = composeStories({
   ...MinimumConfigurationStories,

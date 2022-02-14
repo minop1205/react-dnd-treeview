@@ -6,7 +6,7 @@ import {
   CloseHandler,
   ChangeOpenHandler,
   InitialOpen,
-} from "../types";
+} from "~/types";
 
 export const useOpenIdsHelper = (
   tree: NodeModel[],

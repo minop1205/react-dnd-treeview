@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { DragControlState } from "../types";
+import React, { useState, createContext } from "react";
+import { DragControlState } from "~/types";
 
-export const DragControlContext = React.createContext<DragControlState>(
+export const DragControlContext = createContext<DragControlState>(
   {} as DragControlState
 );
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { NodeModel, NodeRender, TreeState } from "../types";
+import { NodeModel, NodeRender, TreeState } from "~/types";
 import {
   mutateTreeWithIndex,
   compareItems,
@@ -8,7 +8,7 @@ import {
   isAncestor,
   getModifiedIndex,
   getDescendants,
-} from "../utils";
+} from "~/utils";
 
 const treeData: NodeModel[] = [
   {

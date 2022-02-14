@@ -5,7 +5,7 @@ import FolderIcon from "@material-ui/icons/Folder";
 import ImageIcon from "@material-ui/icons/Image";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import DescriptionIcon from "@material-ui/icons/Description";
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
 import { FileProperties } from "./types";
 
 type Props = {

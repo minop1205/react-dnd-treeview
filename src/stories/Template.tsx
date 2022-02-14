@@ -1,7 +1,7 @@
 import React from "react";
 import { Story } from "@storybook/react";
-import { Tree } from "../Tree";
-import { TreeProps } from "../types";
+import { Tree } from "~/Tree";
+import { TreeProps } from "~/types";
 import { useDropHandler } from "./useDropHandler";
 import { FileProperties } from "./types";
 

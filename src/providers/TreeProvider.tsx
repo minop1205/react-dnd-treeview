@@ -8,9 +8,9 @@ import {
   mutateTreeWithIndex,
   getTreeItem,
   getModifiedIndex,
-} from "../utils";
-import { useOpenIdsHelper } from "../hooks";
-import { TreeState, TreeProps, TreeMethods, DropOptions } from "../types";
+} from "~/utils";
+import { useOpenIdsHelper } from "~/hooks";
+import { TreeState, TreeProps, TreeMethods, DropOptions } from "~/types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -20,9 +20,7 @@ type Props<T> = PropsWithChildren<
 
 export const TreeContext = React.createContext({});
 
-export const TreeProvider = <T extends unknown>(
-  props: Props<T>
-): ReactElement => {
+export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
   const [
     openIds,
     { handleToggle, handleCloseAll, handleOpenAll, handleOpen, handleClose },

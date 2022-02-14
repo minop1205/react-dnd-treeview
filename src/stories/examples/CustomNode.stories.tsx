@@ -1,19 +1,18 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import * as argTypes from "../argTypes";
-import { Tree } from "../../Tree";
-import { TreeProps } from "../../types";
-import { FileProperties } from "../types";
-import { CustomNode } from "../CustomNode";
+import * as argTypes from "~/stories/argTypes";
+import { Tree } from "~/Tree";
+import { TreeProps } from "~/types";
+import { FileProperties } from "~/stories/types";
+import { CustomNode } from "~/stories/CustomNode";
+import { Template } from "~/stories/Template";
+import sampleData from "~/stories/assets/sample-default.json";
 
 export default {
   component: Tree,
   title: "Examples/Tree/Custom node",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
-
-import { Template } from "../Template";
-import sampleData from "../assets/sample-default.json";
 
 export const CustomNodeStory = Template.bind({});
 

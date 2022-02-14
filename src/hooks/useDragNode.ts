@@ -7,9 +7,9 @@ import {
   ConnectDragSource,
   ConnectDragPreview,
 } from "react-dnd";
-import { ItemTypes } from "../ItemTypes";
-import { NodeModel, DragSourceElement } from "../types";
-import { useTreeContext } from "../hooks";
+import { ItemTypes } from "~/ItemTypes";
+import { NodeModel, DragSourceElement } from "~/types";
+import { useTreeContext } from "~/hooks";
 
 let dragSourceElement: DragSourceElement = null;
 
