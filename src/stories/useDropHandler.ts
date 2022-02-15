@@ -11,27 +11,42 @@ export const useDropHandler = <T>(
   NodeModel<T>[],
   (newTree: NodeModel<T>[], options: DropOptions<T>) => void
 ] => {
-  if (process.env.NODE_ENV === "test") {
-    const [tree, setTree] = useState(args.tree);
-    const handleDrop = (newTree: NodeModel<T>[], options: DropOptions<T>) => {
-      if (args.onDrop !== undefined) {
-        args.onDrop(newTree, options);
-      }
+  // Stop using updateArgs.
+  // Because if you use it in Docs mode,
+  // openIds will be initialized at the time of onDrop.
 
-      setTree(newTree);
-    };
+  // if (process.env.NODE_ENV === "test") {
+  //   const [tree, setTree] = useState(args.tree);
+  //   const handleDrop = (newTree: NodeModel<T>[], options: DropOptions<T>) => {
+  //     if (args.onDrop !== undefined) {
+  //       args.onDrop(newTree, options);
+  //     }
 
-    return [tree, handleDrop];
-  } else {
-    const [, updateArgs] = useArgs();
-    const handleDrop = (newTtree: NodeModel<T>[], options: DropOptions<T>) => {
-      if (args.onDrop !== undefined) {
-        args.onDrop(newTtree, options);
-      }
+  //     setTree(newTree);
+  //   };
 
-      updateArgs({ tree: newTtree });
-    };
+  //   return [tree, handleDrop];
+  // } else {
+  //   const [, updateArgs] = useArgs();
+  //   const handleDrop = (newTtree: NodeModel<T>[], options: DropOptions<T>) => {
+  //     if (args.onDrop !== undefined) {
+  //       args.onDrop(newTtree, options);
+  //     }
 
-    return [args.tree, handleDrop];
-  }
+  //     updateArgs({ tree: newTtree });
+  //   };
+
+  //   return [args.tree, handleDrop];
+  // }
+
+  const [tree, setTree] = useState(args.tree);
+  const handleDrop = (newTree: NodeModel<T>[], options: DropOptions<T>) => {
+    if (args.onDrop !== undefined) {
+      args.onDrop(newTree, options);
+    }
+
+    setTree(newTree);
+  };
+
+  return [tree, handleDrop];
 };
