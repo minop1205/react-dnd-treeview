@@ -1,10 +1,10 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import FolderIcon from "@material-ui/icons/Folder";
-import ImageIcon from "@material-ui/icons/Image";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import DescriptionIcon from "@material-ui/icons/Description";
+import Typography from "@mui/material/Typography";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import FolderIcon from "@mui/icons-material/Folder";
+import ImageIcon from "@mui/icons-material/Image";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import DescriptionIcon from "@mui/icons-material/Description";
 import { NodeModel } from "~/types";
 import { FileProperties } from "./types";
 

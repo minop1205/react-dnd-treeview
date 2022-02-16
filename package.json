@@ -34,8 +34,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.4.2",
+    "@mui/material": "^5.4.2",
     "@rollup/plugin-alias": "^3.1.9",
     "@storybook/addon-actions": "^6.4.18",
     "@storybook/addon-docs": "^6.4.19",
