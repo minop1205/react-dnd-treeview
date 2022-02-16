@@ -1,6 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import * as argTypes from "~/stories/argTypes";
+import { pageFactory } from "~/stories/pageFactory";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
@@ -34,3 +35,9 @@ MinimumConfigurationStory.args = {
 };
 
 MinimumConfigurationStory.storyName = "Minimum configuration";
+
+MinimumConfigurationStory.parameters = {
+  docs: {
+    page: pageFactory({}),
+  },
+};

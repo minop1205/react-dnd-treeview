@@ -1,5 +1,6 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
@@ -30,3 +31,9 @@ CustomNodeStory.args = {
 };
 
 CustomNodeStory.storyName = "Custom node";
+
+CustomNodeStory.parameters = {
+  docs: {
+    page: pageFactory({}),
+  },
+};
