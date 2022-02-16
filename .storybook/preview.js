@@ -10,6 +10,7 @@ export const parameters = {
       order: ["Examples", ["Tree", ["Minimum configuration", "Custom node"]]],
     },
   },
+  viewMode: "docs",
 };
 
 export const decorators = [
