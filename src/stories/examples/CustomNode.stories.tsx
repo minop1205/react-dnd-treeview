@@ -34,6 +34,9 @@ CustomNodeStory.storyName = "Custom node";
 
 CustomNodeStory.parameters = {
   docs: {
-    page: pageFactory({}),
+    page: pageFactory({
+      jsId: "custom-node-js-lulok",
+      tsId: "custom-node-ts-buimk",
+    }),
   },
 };

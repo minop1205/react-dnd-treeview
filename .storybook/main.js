@@ -9,6 +9,10 @@ module.exports = {
       "~": path.resolve(__dirname, "../src"),
     };
 
+    delete config.resolve.alias["emotion-theming"];
+    delete config.resolve.alias["@emotion/styled"];
+    delete config.resolve.alias["@emotion/core"];
+
     return config;
   },
 };

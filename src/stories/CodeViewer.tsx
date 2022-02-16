@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { JavaScript } from "./icons/JavaScript";
+import { TypeScript } from "./icons/TypeScript";
 import { StoryDocumentProps } from "./types";
 
 export const CodeViewer: React.VFC<StoryDocumentProps> = (props) => {
-  const [lang, setLang] = useState<"js" | "ts">("js");
+  const [id, setId] = useState<string>(props.jsId || props.tsId || "");
 
   const styles = {
     width: "100%",
@@ -13,32 +15,41 @@ export const CodeViewer: React.VFC<StoryDocumentProps> = (props) => {
     overflow: "hidden",
   };
 
-  const handleChangeLang = (value) => {
-    setLang(value);
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    value: string
+  ) => {
+    setId(value);
   };
 
   return (
-    <>
-      <ToggleButtonGroup
-        value={lang}
-        exclusive
-        onChange={handleChangeLang}
-        aria-label="language"
-      >
-        <ToggleButton value="js" aria-label="JavaScript">
-          JavaScript
-        </ToggleButton>
-        <ToggleButton value="ts" aria-label="TypeScript">
-          TypeScript
-        </ToggleButton>
-      </ToggleButtonGroup>
-      <iframe
-        src="https://codesandbox.io/embed/iframe-test-1hxxl?fontsize=14&hidenavigation=1&theme=light&view=editor"
-        style={styles}
-        title="iframe test"
-        allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-      ></iframe>
-    </>
+    <div>
+      {props.jsId && props.tsId && (
+        <ToggleButtonGroup
+          value={id}
+          onChange={handleChange}
+          size="small"
+          exclusive
+          aria-label="language"
+        >
+          <ToggleButton value={props.jsId} aria-label="JavaScript">
+            <JavaScript />
+          </ToggleButton>
+          <ToggleButton value={props.tsId} aria-label="TypeScript">
+            <TypeScript />
+          </ToggleButton>
+        </ToggleButtonGroup>
+      )}
+      {id !== "" && (
+        <iframe
+          style={styles}
+          allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+          sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+          src={`https://codesandbox.io/embed/${id}?fontsize=14&hidenavigation=1&theme=light&view=editor&module=%2Fsrc%2FApp.${
+            id === props.jsId ? "jsx" : "tsx"
+          }`}
+        ></iframe>
+      )}
+    </div>
   );
 };

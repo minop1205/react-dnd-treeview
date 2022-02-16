@@ -38,6 +38,9 @@ MinimumConfigurationStory.storyName = "Minimum configuration";
 
 MinimumConfigurationStory.parameters = {
   docs: {
-    page: pageFactory({}),
+    page: pageFactory({
+      jsId: "minimum-configuration-js-d9kem",
+      tsId: "minimum-configuration-ts-wjigd",
+    }),
   },
 };

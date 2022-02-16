@@ -16,8 +16,8 @@ export type CustomArgType = ArgType & {
 };
 
 export type StoryDocumentProps = {
-  tsUrl?: string;
-  jsUrl?: string;
+  tsId?: string;
+  jsId?: string;
 };
 
 export type FileProperties = {
