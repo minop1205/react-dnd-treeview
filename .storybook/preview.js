@@ -7,7 +7,13 @@ export const parameters = {
   controls: { expanded: true },
   options: {
     storySort: {
-      order: ["Examples", ["Tree", ["Minimum configuration", "Custom node"]]],
+      order: [
+        "Examples",
+        [
+          "Tree",
+          ["Minimum configuration", "Custom node", "Custom drag preview"],
+        ],
+      ],
     },
   },
   viewMode: "docs",

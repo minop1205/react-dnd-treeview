@@ -3,7 +3,8 @@ import { Meta } from "@storybook/react";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
-import { TreeProps } from "~/types";
+import { CustomDragPreview } from "~/stories/CustomDragPreview";
+import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/CustomNode";
 import { Template } from "~/stories/Template";
@@ -11,13 +12,13 @@ import sampleData from "~/stories/assets/sample-default.json";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom node",
+  title: "Examples/Tree/Custom drag preview",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const CustomNodeStory = Template.bind({});
+export const CustomDragPreviewStory = Template.bind({});
 
-CustomNodeStory.args = {
+CustomDragPreviewStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -28,15 +29,18 @@ CustomNodeStory.args = {
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
+  dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
+    <CustomDragPreview monitorProps={monitorProps} />
+  ),
 };
 
-CustomNodeStory.storyName = "Custom node";
+CustomDragPreviewStory.storyName = "Custom drag preview";
 
-CustomNodeStory.parameters = {
+CustomDragPreviewStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-node-js-b6bzqc",
-      tsId: "custom-node-ts-6ws8ou",
+      jsId: "custom-drag-preview-js-s53fmx",
+      tsId: "custom-drag-preview-ts-ibvb07",
     }),
   },
 };
