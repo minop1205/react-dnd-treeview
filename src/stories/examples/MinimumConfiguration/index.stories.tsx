@@ -5,8 +5,9 @@ import { pageFactory } from "~/stories/pageFactory";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import { Template } from "~/stories/Template";
+import { Template } from "~/stories/examples/templates/Template";
 import sampleData from "~/stories/assets/sample-default.json";
+import styles from "./index.module.css";
 
 export default {
   component: Tree,
@@ -20,7 +21,7 @@ MinimumConfigurationStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
-    root: "tree-root",
+    root: styles.treeRoot,
   },
   render: function render(node, { depth, isOpen, onToggle }) {
     return (
