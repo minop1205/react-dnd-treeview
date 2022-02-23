@@ -7,9 +7,9 @@ import { CustomDragPreview } from "~/stories/examples/components/Preview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { Template } from "~/stories/examples/templates/Template";
+import { DefaultTemplate } from "~/stories/examples/templates/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./index.module.css";
+import styles from "./CustomDragPreview.module.css";
 
 export default {
   component: Tree,
@@ -17,7 +17,7 @@ export default {
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const CustomDragPreviewStory = Template.bind({});
+export const CustomDragPreviewStory = DefaultTemplate.bind({});
 
 CustomDragPreviewStory.args = {
   rootId: 0,

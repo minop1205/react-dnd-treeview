@@ -5,9 +5,9 @@ import { pageFactory } from "~/stories/pageFactory";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import { Template } from "~/stories/examples/templates/Template";
+import { DefaultTemplate } from "~/stories/examples/templates/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./index.module.css";
+import styles from "./MinimumConfiguration.module.css";
 
 export default {
   component: Tree,
@@ -15,7 +15,7 @@ export default {
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const MinimumConfigurationStory = Template.bind({});
+export const MinimumConfigurationStory = DefaultTemplate.bind({});
 
 MinimumConfigurationStory.args = {
   rootId: 0,

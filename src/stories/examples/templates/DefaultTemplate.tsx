@@ -5,7 +5,7 @@ import { TreeProps } from "~/types";
 import { useDropHandler } from "~/stories/useDropHandler";
 import { FileProperties } from "~/stories/types";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const DefaultTemplate: Story<TreeProps<FileProperties>> = (args) => {
   const [tree, handleDrop] = useDropHandler<FileProperties>(args);
   return <Tree {...args} tree={tree} onDrop={handleDrop} />;
 };

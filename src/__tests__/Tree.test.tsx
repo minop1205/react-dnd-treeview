@@ -20,7 +20,7 @@ import {
   RenderParams,
 } from "~/types";
 import { composeStories } from "@storybook/testing-react";
-import * as MinimumConfigurationStories from "~/stories/examples/MinimumConfiguration/index.stories";
+import * as MinimumConfigurationStories from "~/stories/examples/MinimumConfiguration/MinimumConfiguration.stories";
 import * as CustomNodeStories from "~/stories/examples/CustomNode/index.stories";
 
 const { MinimumConfigurationStory } = composeStories({
