@@ -7,7 +7,7 @@ import { CustomDragPreview } from "~/stories/examples/components/Preview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { DefaultTemplate } from "~/stories/examples/templates/DefaultTemplate";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./CustomDragPreview.module.css";
 

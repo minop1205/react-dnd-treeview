@@ -1,16 +1,18 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { TypeIcon } from "~/stories/examples/components/TypeIcon";
 import { NodeModel } from "~/types";
 import { FileProperties } from "~/stories/types";
+import { TypeIcon } from "~/stories/examples/components/TypeIcon";
 import styles from "./CustomNode.module.css";
 
 type Props = {
   node: NodeModel<FileProperties>;
   depth: number;
   isOpen: boolean;
+  isSelected: boolean;
   onToggle: (id: NodeModel["id"]) => void;
+  onSelect: (node: NodeModel) => void;
 };
 
 export const CustomNode: React.FC<Props> = (props) => {
@@ -22,8 +24,14 @@ export const CustomNode: React.FC<Props> = (props) => {
     props.onToggle(props.node.id);
   };
 
+  const handleSelect = () => props.onSelect(props.node);
+
   return (
-    <div className={styles.root} style={{ paddingInlineStart: indent }}>
+    <div
+      className={`${styles.root} ${props.isSelected ? styles.isSelected : ""}`}
+      style={{ paddingInlineStart: indent }}
+      onClick={handleSelect}
+    >
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
           <div onClick={handleToggle}>

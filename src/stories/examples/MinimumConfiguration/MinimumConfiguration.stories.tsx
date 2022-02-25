@@ -5,7 +5,7 @@ import { pageFactory } from "~/stories/pageFactory";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import { DefaultTemplate } from "~/stories/examples/templates/DefaultTemplate";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./MinimumConfiguration.module.css";
 

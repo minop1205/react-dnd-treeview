@@ -11,7 +11,12 @@ export const parameters = {
         "Examples",
         [
           "Tree",
-          ["Minimum configuration", "Custom node", "Custom drag preview"],
+          [
+            "Minimum configuration",
+            "Custom node",
+            "Custom drag preview",
+            "Select node",
+          ],
         ],
       ],
     },

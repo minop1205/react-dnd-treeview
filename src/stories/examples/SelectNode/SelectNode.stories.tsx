@@ -1,24 +1,22 @@
-import React from "react";
 import { Meta } from "@storybook/react";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { Template } from "./Template";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./CustomNode.module.css";
+import styles from "./SelectNode.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom node",
+  title: "Examples/Tree/Select node",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const CustomNodeStory = DefaultTemplate.bind({});
+export const SelectNodeStory = Template.bind({});
 
-CustomNodeStory.args = {
+SelectNodeStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -26,18 +24,15 @@ CustomNodeStory.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  render: function render(node, options) {
-    return <CustomNode node={node} {...options} />;
-  },
 };
 
-CustomNodeStory.storyName = "Custom node";
+SelectNodeStory.storyName = "Select node";
 
-CustomNodeStory.parameters = {
+SelectNodeStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-node-js-b6bzqc",
-      tsId: "custom-node-ts-6ws8ou",
+      jsId: "select-node-js-diykvq",
+      tsId: "select-node-ts-gocexe",
     }),
   },
 };
