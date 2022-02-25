@@ -21,7 +21,7 @@ import {
 } from "~/types";
 import { composeStories } from "@storybook/testing-react";
 import * as MinimumConfigurationStories from "~/stories/examples/MinimumConfiguration/MinimumConfiguration.stories";
-import * as CustomNodeStories from "~/stories/examples/CustomNode/index.stories";
+import * as CustomNodeStories from "~/stories/examples/CustomNode/CustomNode.stories";
 
 const { MinimumConfigurationStory } = composeStories({
   ...MinimumConfigurationStories,

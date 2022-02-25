@@ -34,8 +34,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.2",
     "@rollup/plugin-alias": "^3.1.9",

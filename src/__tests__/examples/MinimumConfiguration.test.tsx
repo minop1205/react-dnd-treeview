@@ -2,9 +2,9 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { composeStories } from "@storybook/testing-react";
-import { TestProvider } from "~/stories/TestProvider";
-import { dragAndDrop } from "~/stories/dragAndDrop";
 import * as stories from "~/stories/examples/MinimumConfiguration/MinimumConfiguration.stories";
+import { TestProvider } from "./TestProvider";
+import { dragAndDrop } from "./dragAndDrop";
 
 const { MinimumConfigurationStory } = composeStories(stories);
 

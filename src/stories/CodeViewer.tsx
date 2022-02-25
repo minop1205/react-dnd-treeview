@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { css } from "@emotion/react";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { JavaScript } from "./icons/JavaScript";
 import { TypeScript } from "./icons/TypeScript";
@@ -44,9 +43,6 @@ export const CodeViewer: React.VFC<StoryDocumentProps> = (props) => {
       )}
       {id !== "" && (
         <iframe
-          css={css`
-            margin-top: 16px;
-          `}
           style={styles}
           allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
           sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
