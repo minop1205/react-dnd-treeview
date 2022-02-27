@@ -3,23 +3,22 @@ import { Meta } from "@storybook/react";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { Template } from "./Template";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./CustomDragPreview.module.css";
+import styles from "./MultipleSelections.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom drag preview",
+  title: "Examples/Tree/Multiple selections",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const CustomDragPreviewStory = DefaultTemplate.bind({});
+export const MultipleSelectionsStory = Template.bind({});
 
-CustomDragPreviewStory.args = {
+MultipleSelectionsStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -27,21 +26,18 @@ CustomDragPreviewStory.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  render: function render(node, options) {
-    return <CustomNode node={node} {...options} />;
-  },
   dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
     <CustomDragPreview monitorProps={monitorProps} />
   ),
 };
 
-CustomDragPreviewStory.storyName = "Custom drag preview";
+MultipleSelectionsStory.storyName = "Multiple selections";
 
-CustomDragPreviewStory.parameters = {
+MultipleSelectionsStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "multiple-selections-js-48q7qt",
+      tsId: "multiple-selections-ts-zsfvj8",
     }),
   },
 };

@@ -1,0 +1,29 @@
+.current {
+  background-color: #f3f3f3;
+  margin: 24px;
+  padding: 16px 24px;
+}
+
+.current > p {
+  font-size: small;
+  margin: 0;
+}
+
+.currentLabel {
+  font-weight: bold;
+  margin-inline-start: 0.5em;
+}
+
+.treeRoot {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 32px;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
+}
