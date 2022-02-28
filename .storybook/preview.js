@@ -17,6 +17,7 @@ export const parameters = {
             "Custom drag preview",
             "Select node",
             "Multiple selections",
+            "Opening and closing all nodes",
           ],
         ],
       ],
