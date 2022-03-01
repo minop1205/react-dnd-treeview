@@ -19,6 +19,7 @@ export const parameters = {
             "Multiple selections",
             "Opening and closing all nodes",
             "Auto expand with drag over node",
+            "Initialize with open parents",
           ],
         ],
       ],
