@@ -1,7 +1,6 @@
 .root {
   align-items: center;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
+  display: flex;
   height: 32px;
 }
 
@@ -25,10 +24,19 @@
   transform: rotate(90deg);
 }
 
-.filetype {
+.nodeInner {
+  padding-inline-start: 8px;
+}
+
+.inputWrapper {
+  align-items: center;
   display: flex;
 }
 
-.label {
-  padding-inline-start: 4px;
+.textField {
+  width: 200px;
+}
+
+.nodeLabel {
+  padding-right: 15px;
 }
