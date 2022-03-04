@@ -23,6 +23,7 @@ export const parameters = {
             "Auto expand with drag over node",
             "Initialize with open parents",
             "Editable nodes",
+            "Manual sort with placeholder",
           ],
         ],
       ],
