@@ -29,5 +29,10 @@
 }
 
 .label {
-  padding-inline-start: 8px;
+  padding-inline-end: 8px;
+  padding-inline-start: 4px;
+}
+
+.actionButton {
+  padding: 0 4px;
 }

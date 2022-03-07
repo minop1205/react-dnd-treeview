@@ -24,6 +24,7 @@ export const parameters = {
             "Initialize with open parents",
             "Editable nodes",
             "Manual sort with placeholder",
+            "Add, remove, duplicate nodes",
           ],
         ],
       ],
