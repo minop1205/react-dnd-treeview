@@ -44,4 +44,21 @@ describe("Stories test", () => {
     fireEvent.click(screen.getAllByText("[+]")[0]);
     expect(screen.queryByText("File 3")).toBeInTheDocument();
   });
+
+  test("drag and drop: File 1-2 into root node", async () => {
+    renderTree();
+
+    fireEvent.click(screen.getAllByText("[+]")[0]);
+
+    let dragSource = await screen.findByText("File 1-2");
+    const dropTarget = await screen.findAllByRole("list");
+
+    expect(dragSource).toHaveStyle("margin-inline-start: 10px");
+
+    await dragAndDrop(dragSource, dropTarget[0]);
+
+    dragSource = await screen.findByText("File 1-2");
+
+    expect(dragSource).toHaveStyle("margin-inline-start: 0");
+  });
 });
