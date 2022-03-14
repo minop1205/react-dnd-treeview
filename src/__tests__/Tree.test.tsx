@@ -190,119 +190,119 @@ describe("Tree", () => {
     return container;
   };
 
-  test("count of node items", () => {
-    renderTree();
-    expect(screen.getAllByRole("listitem").length).toBe(3);
-  });
+  // test("count of node items", () => {
+  //   renderTree();
+  //   expect(screen.getAllByRole("listitem").length).toBe(3);
+  // });
 
-  test("open and close first node", () => {
-    renderTree();
-    expect(screen.queryByText("File 1-1")).toBeNull();
+  // test("open and close first node", () => {
+  //   renderTree();
+  //   expect(screen.queryByText("File 1-1")).toBeNull();
 
-    fireEvent.click(screen.getAllByText("[+]")[0]);
-    expect(screen.getByText("File 1-1")).toBeInTheDocument();
+  //   fireEvent.click(screen.getAllByText("[+]")[0]);
+  //   expect(screen.getByText("File 1-1")).toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByText("[-]")[0]);
-    expect(screen.queryByText("File 1-1")).toBeNull();
-  });
+  //   fireEvent.click(screen.getAllByText("[-]")[0]);
+  //   expect(screen.queryByText("File 1-1")).toBeNull();
+  // });
 
-  test("drag and drop: File 3 into Folder 1", async () => {
-    renderTree();
-    const items = screen.getAllByRole("listitem");
-    const dragSource = items[2];
-    const dropTarget = items[0];
+  // test("drag and drop: File 3 into Folder 1", async () => {
+  //   renderTree();
+  //   const items = screen.getAllByRole("listitem");
+  //   const dragSource = items[2];
+  //   const dropTarget = items[0];
 
-    await dragAndDrop(dragSource, dropTarget);
-    expect(screen.queryByText("File 3")).toBeNull();
+  //   await dragAndDrop(dragSource, dropTarget);
+  //   expect(screen.queryByText("File 3")).toBeNull();
 
-    fireEvent.click(screen.getAllByText("[+]")[0]);
-    expect(screen.queryByText("File 3")).toBeInTheDocument();
-  });
+  //   fireEvent.click(screen.getAllByText("[+]")[0]);
+  //   expect(screen.queryByText("File 3")).toBeInTheDocument();
+  // });
 
-  test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", async () => {
-    renderTree();
+  // test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", async () => {
+  //   renderTree();
 
-    let items = screen.getAllByRole("listitem");
-    let src = items[2];
-    let dst = items[1];
+  //   let items = screen.getAllByRole("listitem");
+  //   let src = items[2];
+  //   let dst = items[1];
 
-    await dragAndDrop(src, dst);
-    expect(screen.queryByText("File 3")).toBeNull();
+  //   await dragAndDrop(src, dst);
+  //   expect(screen.queryByText("File 3")).toBeNull();
 
-    items = screen.getAllByRole("listitem");
-    src = items[1];
-    dst = items[0];
+  //   items = screen.getAllByRole("listitem");
+  //   src = items[1];
+  //   dst = items[0];
 
-    await dragAndDrop(src, dst);
-    expect(screen.queryByText("Folder 2")).toBeNull();
+  //   await dragAndDrop(src, dst);
+  //   expect(screen.queryByText("Folder 2")).toBeNull();
 
-    fireEvent.click(screen.getAllByText("[+]")[0]);
-    expect(screen.getByText("Folder 2")).toBeInTheDocument();
+  //   fireEvent.click(screen.getAllByText("[+]")[0]);
+  //   expect(screen.getByText("Folder 2")).toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByText("[+]")[0]);
-    expect(screen.getByText("File 3")).toBeInTheDocument();
-  });
+  //   fireEvent.click(screen.getAllByText("[+]")[0]);
+  //   expect(screen.getByText("File 3")).toBeInTheDocument();
+  // });
 
-  test("drag and drop: File 1-2 into root node", async () => {
-    renderTree();
+  // test("drag and drop: File 1-2 into root node", async () => {
+  //   renderTree();
 
-    fireEvent.click(screen.getAllByText("[+]")[0]);
+  //   fireEvent.click(screen.getAllByText("[+]")[0]);
 
-    expect(
-      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
-    ).toBe(true);
+  //   expect(
+  //     screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+  //   ).toBe(true);
 
-    const src = screen.getAllByRole("listitem")[2];
-    const dst = screen.getAllByRole("list")[0];
+  //   const src = screen.getAllByRole("listitem")[2];
+  //   const dst = screen.getAllByRole("list")[0];
 
-    await dragAndDrop(src, dst);
+  //   await dragAndDrop(src, dst);
 
-    expect(
-      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
-    ).toBe(false);
+  //   expect(
+  //     screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+  //   ).toBe(false);
 
-    expect(
-      screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
-    ).toBe(true);
-  });
+  //   expect(
+  //     screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
+  //   ).toBe(true);
+  // });
 
-  test("drag and drop: File 1-2 into root node (using string rootId)", async () => {
-    const tree = [
-      {
-        id: 1,
-        parent: "foo",
-        droppable: true,
-        text: "Folder 1",
-      },
-      {
-        id: 2,
-        parent: 1,
-        droppable: false,
-        text: "File 1-1",
-      },
-      {
-        id: 3,
-        parent: 1,
-        droppable: false,
-        text: "File 1-2",
-      },
-    ];
+  // test("drag and drop: File 1-2 into root node (using string rootId)", async () => {
+  //   const tree = [
+  //     {
+  //       id: 1,
+  //       parent: "foo",
+  //       droppable: true,
+  //       text: "Folder 1",
+  //     },
+  //     {
+  //       id: 2,
+  //       parent: 1,
+  //       droppable: false,
+  //       text: "File 1-1",
+  //     },
+  //     {
+  //       id: 3,
+  //       parent: 1,
+  //       droppable: false,
+  //       text: "File 1-2",
+  //     },
+  //   ];
 
-    renderTree({ tree, rootId: "foo", initialOpen: true });
+  //   renderTree({ tree, rootId: "foo", initialOpen: true });
 
-    const src = screen.getAllByRole("listitem")[2];
-    const dst = screen.getAllByRole("list")[0];
+  //   const src = screen.getAllByRole("listitem")[2];
+  //   const dst = screen.getAllByRole("list")[0];
 
-    await dragAndDrop(src, dst);
+  //   await dragAndDrop(src, dst);
 
-    expect(
-      screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
-    ).toBe(false);
+  //   expect(
+  //     screen.getAllByRole("list")[1].contains(screen.getByText("File 1-2"))
+  //   ).toBe(false);
 
-    expect(
-      screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
-    ).toBe(true);
-  });
+  //   expect(
+  //     screen.getAllByRole("list")[0].contains(screen.getByText("File 1-2"))
+  //   ).toBe(true);
+  // });
 
   test("drag and drop: File 1-2 to root node with falsy canDrop should not call onDrop", async () => {
     const onDrop = jest.fn();
