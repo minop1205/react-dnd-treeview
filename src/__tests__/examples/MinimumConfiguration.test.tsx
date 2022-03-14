@@ -11,7 +11,7 @@ import { dragAndDrop } from "./dragAndDrop";
 
 const { MinimumConfigurationStory } = composeStories(stories);
 
-describe("Stories test", () => {
+describe("Minimum configuration", () => {
   const renderTree = (options: Partial<TreeProps<FileProperties>> = {}) =>
     render(
       <TestProvider>
