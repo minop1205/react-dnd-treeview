@@ -2,11 +2,7 @@ const path = require("path");
 
 module.exports = {
   stories: ["../src/**/*.stories.tsx"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "storybook-css-modules-preset",
-  ],
+  addons: ["@storybook/addon-essentials", "storybook-css-modules-preset"],
   webpackFinal: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
