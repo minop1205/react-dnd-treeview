@@ -12,7 +12,7 @@ export const CustomDragPreview: React.FC<Props> = (props) => {
   const item = props.monitorProps.item;
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-testid="custom-drag-preview">
       <div className={styles.icon}>
         <TypeIcon
           droppable={item.droppable || false}
