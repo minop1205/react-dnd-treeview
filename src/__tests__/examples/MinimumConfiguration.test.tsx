@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { composeStories } from "@storybook/testing-react";
 import * as stories from "~/stories/examples/MinimumConfiguration/MinimumConfiguration.stories";
@@ -130,7 +129,7 @@ describe("Minimum configuration", () => {
     ).toBe(true);
   });
 
-  test("cancel dnd with press esc key", async () => {
+  test("cancel drag", async () => {
     renderTree();
 
     const items = screen.getAllByRole("listitem");
@@ -148,7 +147,7 @@ describe("Minimum configuration", () => {
         })
     );
 
-    userEvent.keyboard("{esc}");
+    fireEvent.dragEnd(window);
     expect(screen.queryByText("File 3")).toBeInTheDocument();
   });
 });

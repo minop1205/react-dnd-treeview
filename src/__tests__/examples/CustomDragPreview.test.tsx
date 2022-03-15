@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { composeStories } from "@storybook/testing-react";
 import * as stories from "~/stories/examples/CustomDragPreview/CustomDragPreview.stories";
@@ -48,32 +47,30 @@ describe("Custom drag preview", () => {
     expect(screen.queryByTestId("custom-drag-preview")).toBeNull();
   });
 
-  // test("hide preview when drag is canceled", async () => {
-  //   renderTree();
+  test("hide preview when drag is canceled", async () => {
+    renderTree();
 
-  //   const items = screen.getAllByRole("listitem");
-  //   const dragSource = items[2];
-  //   const dropTarget = items[0];
+    const items = screen.getAllByRole("listitem");
+    const dragSource = items[2];
+    const dropTarget = items[0];
 
-  //   await act(
-  //     () =>
-  //       new Promise((r) => {
-  //         fireEvent.dragStart(dragSource);
-  //         fireEvent.dragEnter(dropTarget);
-  //         fireEvent.dragOver(dropTarget);
+    await act(
+      () =>
+        new Promise((r) => {
+          fireEvent.dragStart(dragSource);
+          fireEvent.dragEnter(dropTarget);
+          fireEvent.dragOver(dropTarget);
 
-  //         setTimeout(r, 20);
-  //       })
-  //   );
+          setTimeout(r, 20);
+        })
+    );
 
-  //   expect(
-  //     await screen.findByTestId("custom-drag-preview")
-  //   ).toBeInTheDocument();
+    expect(
+      await screen.findByTestId("custom-drag-preview")
+    ).toBeInTheDocument();
 
-  //   userEvent.keyboard("{esc}");
+    fireEvent.dragEnd(window);
 
-  //   // screen.debug();
-
-  //   // expect(await screen.findByTestId("custom-drag-preview")).toBeNull();
-  // });
+    expect(screen.queryByTestId("custom-drag-preview")).toBeNull();
+  });
 });
