@@ -11,7 +11,7 @@ import { dragAndDrop } from "./dragAndDrop";
 const { MinimumConfigurationStory } = composeStories(stories);
 
 describe("Minimum configuration", () => {
-  const renderTree = (options: Partial<TreeProps<FileProperties>> = {}) =>
+  const renderStory = (options: Partial<TreeProps<FileProperties>> = {}) =>
     render(
       <TestProvider>
         <MinimumConfigurationStory
@@ -22,12 +22,12 @@ describe("Minimum configuration", () => {
     );
 
   test("count nodes", () => {
-    renderTree();
+    renderStory();
     expect(screen.getAllByRole("listitem").length).toBe(3);
   });
 
   test("open and close first node", () => {
-    renderTree();
+    renderStory();
     expect(screen.queryByText("File 1-1")).toBeNull();
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
@@ -38,7 +38,7 @@ describe("Minimum configuration", () => {
   });
 
   test("drag and drop: File 3 into Folder 1", async () => {
-    renderTree();
+    renderStory();
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];
     const dropTarget = items[0];
@@ -51,7 +51,7 @@ describe("Minimum configuration", () => {
   });
 
   test("drag and drop: File 3 into Folder 2 and Folder 2 into Folder 1", async () => {
-    renderTree();
+    renderStory();
 
     let items = screen.getAllByRole("listitem");
     let src = items[2];
@@ -75,7 +75,7 @@ describe("Minimum configuration", () => {
   });
 
   test("drag and drop: File 1-2 into root node", async () => {
-    renderTree();
+    renderStory();
 
     fireEvent.click(screen.getAllByText("[+]")[0]);
 
@@ -113,7 +113,7 @@ describe("Minimum configuration", () => {
       },
     ];
 
-    renderTree({ tree, rootId: "foo", initialOpen: true });
+    renderStory({ tree, rootId: "foo", initialOpen: true });
 
     const src = screen.getAllByRole("listitem")[2];
     const dst = screen.getAllByRole("list")[0];
@@ -130,7 +130,7 @@ describe("Minimum configuration", () => {
   });
 
   test("cancel drag", async () => {
-    renderTree();
+    renderStory();
 
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];

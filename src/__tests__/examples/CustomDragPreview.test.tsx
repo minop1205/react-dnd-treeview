@@ -10,7 +10,7 @@ import { TestProvider } from "./TestProvider";
 const { CustomDragPreviewStory } = composeStories(stories);
 
 describe("Custom drag preview", () => {
-  const renderTree = (options: Partial<TreeProps<FileProperties>> = {}) =>
+  const renderStory = (options: Partial<TreeProps<FileProperties>> = {}) =>
     render(
       <TestProvider>
         <CustomDragPreviewStory {...CustomDragPreviewStory.args} {...options} />
@@ -18,7 +18,7 @@ describe("Custom drag preview", () => {
     );
 
   test("show preview during dragging", async () => {
-    renderTree();
+    renderStory();
 
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];
@@ -48,7 +48,7 @@ describe("Custom drag preview", () => {
   });
 
   test("hide preview when drag is canceled", async () => {
-    renderTree();
+    renderStory();
 
     const items = screen.getAllByRole("listitem");
     const dragSource = items[2];

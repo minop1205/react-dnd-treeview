@@ -17,7 +17,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
       <div className={styles.current}>
         <p>
           Current node:{" "}
-          <span className={styles.currentLabel}>
+          <span className={styles.currentLabel} data-testid="selected-node">
             {selectedNode ? selectedNode.text : "none"}
           </span>
         </p>

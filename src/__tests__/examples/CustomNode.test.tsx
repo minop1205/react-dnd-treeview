@@ -10,7 +10,7 @@ import { TestProvider } from "./TestProvider";
 const { CustomNodeStory } = composeStories(stories);
 
 describe("Custom node", () => {
-  const renderTree = (options: Partial<TreeProps<FileProperties>> = {}) =>
+  const renderStory = (options: Partial<TreeProps<FileProperties>> = {}) =>
     render(
       <TestProvider>
         <CustomNodeStory {...CustomNodeStory.args} {...options} />
@@ -18,7 +18,7 @@ describe("Custom node", () => {
     );
 
   test("count icons", () => {
-    renderTree();
+    renderStory();
 
     const arrowIcons = screen.getAllByTestId("ArrowRightIcon");
     const folderIcons = screen.getAllByTestId("FolderIcon");
