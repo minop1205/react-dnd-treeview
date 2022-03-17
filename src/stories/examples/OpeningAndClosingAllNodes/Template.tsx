@@ -18,10 +18,20 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
   return (
     <>
       <div className={styles.actions}>
-        <Button variant="outlined" color="primary" onClick={handleOpenAll}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleOpenAll}
+          data-testid="btn-open-all"
+        >
           Open All
         </Button>
-        <Button variant="outlined" color="primary" onClick={handleCloseAll}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleCloseAll}
+          data-testid="btn-close-all"
+        >
           Close All
         </Button>
       </div>
