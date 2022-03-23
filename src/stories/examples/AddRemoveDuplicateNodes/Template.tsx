@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { Tree } from "~/Tree";
 import { getDescendants } from "~/utils";
-import { TreeProps, NodeModel } from "~/types";
+import { TreeProps, NodeModel, DropOptions } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "./CustomNode";
 import { AddDialog } from "./AddDialog";
@@ -31,7 +31,13 @@ const getLastId = (treeData: NodeModel[]) => {
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [open, setOpen] = useState<boolean>(false);
-  const handleDrop = (newTree: NodeModel<FileProperties>[]) => setTree(newTree);
+  const handleDrop = (
+    newTree: NodeModel<FileProperties>[],
+    options: DropOptions<FileProperties>
+  ) => {
+    args.onDrop(newTree, options);
+    setTree(newTree);
+  };
 
   const handleDelete = (id: NodeModel["id"]) => {
     const deleteIds = [id, ...getDescendants(tree, id).map((node) => node.id)];

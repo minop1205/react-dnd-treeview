@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Story } from "@storybook/react";
 import { Tree } from "~/Tree";
-import { TreeProps, NodeModel } from "~/types";
+import { TreeProps, NodeModel, DropOptions } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "./CustomNode";
 
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
 
-  const handleDrop = (newTree: NodeModel<FileProperties>[]) => {
+  const handleDrop = (
+    newTree: NodeModel<FileProperties>[],
+    options: DropOptions<FileProperties>
+  ) => {
+    args.onDrop(newTree, options);
     setTree(newTree);
   };
 

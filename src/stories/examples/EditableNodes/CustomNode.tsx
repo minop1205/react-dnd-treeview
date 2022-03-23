@@ -7,7 +7,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import { NodeModel } from "~/types";
-import { useDragOver } from "~/hooks";
 import { FileProperties } from "~/stories/types";
 import styles from "./CustomNode.module.css";
 
@@ -48,14 +47,8 @@ export const CustomNode: React.FC<Props> = (props) => {
     props.onTextChange(id, labelText);
   };
 
-  const dragOverProps = useDragOver(id, props.isOpen, props.onToggle);
-
   return (
-    <div
-      className={styles.root}
-      style={{ paddingInlineStart: indent }}
-      {...dragOverProps}
-    >
+    <div className={styles.root} style={{ paddingInlineStart: indent }}>
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
           <div onClick={handleToggle}>
@@ -70,11 +63,18 @@ export const CustomNode: React.FC<Props> = (props) => {
               className={styles.textField}
               value={labelText}
               onChange={handleChangeText}
+              inputProps={{
+                "data-testid": `input-${id}`,
+              }}
             />
-            <IconButton onClick={handleSubmit} disabled={labelText === ""}>
+            <IconButton
+              onClick={handleSubmit}
+              disabled={labelText === ""}
+              data-testid={`btn-submit-${id}`}
+            >
               <CheckIcon />
             </IconButton>
-            <IconButton onClick={handleCancel}>
+            <IconButton onClick={handleCancel} data-testid={`btn-cancel-${id}`}>
               <CloseIcon />
             </IconButton>
           </div>
@@ -83,7 +83,10 @@ export const CustomNode: React.FC<Props> = (props) => {
             <Typography variant="body2" className={styles.nodeLabel}>
               {props.node.text}
             </Typography>
-            <IconButton onClick={handleShowInput}>
+            <IconButton
+              onClick={handleShowInput}
+              data-testid={`btn-edit-${id}`}
+            >
               <EditIcon />
             </IconButton>
           </div>

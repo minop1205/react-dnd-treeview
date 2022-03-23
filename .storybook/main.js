@@ -7,6 +7,9 @@ module.exports = {
     // "@storybook/addon-interactions",
     "storybook-css-modules-preset",
   ],
+  features: {
+    // interactionsDebugger: true,
+  },
   webpackFinal: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,

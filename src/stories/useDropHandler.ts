@@ -18,10 +18,7 @@ export const useDropHandler = <T>(
   // if (process.env.NODE_ENV === "test") {
   //   const [tree, setTree] = useState(args.tree);
   //   const handleDrop = (newTree: NodeModel<T>[], options: DropOptions<T>) => {
-  //     if (args.onDrop !== undefined) {
-  //       args.onDrop(newTree, options);
-  //     }
-
+  //     args.onDrop(newTree, options);
   //     setTree(newTree);
   //   };
 
@@ -29,10 +26,7 @@ export const useDropHandler = <T>(
   // } else {
   //   const [, updateArgs] = useArgs();
   //   const handleDrop = (newTtree: NodeModel<T>[], options: DropOptions<T>) => {
-  //     if (args.onDrop !== undefined) {
-  //       args.onDrop(newTtree, options);
-  //     }
-
+  //     args.onDrop(newTtree, options);
   //     updateArgs({ tree: newTtree });
   //   };
 
@@ -41,10 +35,7 @@ export const useDropHandler = <T>(
 
   const [tree, setTree] = useState(args.tree);
   const handleDrop = (newTree: NodeModel<T>[], options: DropOptions<T>) => {
-    if (args.onDrop !== undefined) {
-      args.onDrop(newTree, options);
-    }
-
+    args.onDrop(newTree, options);
     setTree(newTree);
   };
 
