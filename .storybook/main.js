@@ -1,14 +1,19 @@
 const path = require("path");
 
+const interactionsDisabled =
+  process?.env?.STORYBOOK_DISABLE_INTERACTIONS === "true";
+
+const addons = ["storybook-css-modules-preset", "@storybook/addon-essentials"];
+
+if (!interactionsDisabled) {
+  addons.push("@storybook/addon-interactions");
+}
+
 module.exports = {
   stories: ["../src/**/*.stories.tsx"],
-  addons: [
-    "@storybook/addon-essentials",
-    // "@storybook/addon-interactions",
-    "storybook-css-modules-preset",
-  ],
+  addons,
   features: {
-    // interactionsDebugger: true,
+    interactionsDebugger: !interactionsDisabled,
   },
   webpackFinal: (config) => {
     config.resolve.alias = {

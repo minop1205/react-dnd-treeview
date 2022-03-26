@@ -45,6 +45,7 @@
     "@storybook/addon-interactions": "^6.4.19",
     "@storybook/jest": "^0.0.9",
     "@storybook/react": "^6.4.18",
+    "@storybook/test-runner": "^0.0.4",
     "@storybook/testing-library": "^0.0.9",
     "@storybook/testing-react": "1.2.3",
     "@testing-library/jest-dom": "^5.16.2",
@@ -92,7 +93,8 @@
     "prepublish": "rm -rf ./dist && npm run build",
     "test": "jest",
     "storybook": "start-storybook -p 6006 -s ./src/stories/assets",
-    "build-storybook": "build-storybook"
+    "build-storybook": "STORYBOOK_DISABLE_INTERACTIONS=true build-storybook",
+    "test-storybook": "npx test-storybook"
   },
   "bugs": {
     "url": "https://github.com/minop1205/react-dnd-treeview/issues",
