@@ -48,11 +48,15 @@ export const CustomNode: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={styles.root} style={{ paddingInlineStart: indent }}>
+    <div
+      className={styles.root}
+      style={{ paddingInlineStart: indent }}
+      data-testid={`custom-node-${id}`}
+    >
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
           <div onClick={handleToggle}>
-            <ArrowRightIcon />
+            <ArrowRightIcon data-testid={`arrow-right-icon-${id}`} />
           </div>
         )}
       </div>

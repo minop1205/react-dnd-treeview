@@ -1,13 +1,16 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { expect } from "@storybook/jest";
+import { within, userEvent } from "@storybook/testing-library";
+import { TreeProps, DragLayerMonitorProps } from "~/types";
+import { Tree } from "~/Tree";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { Tree } from "~/Tree";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { FileProperties } from "~/stories/types";
-import { Template } from "./Template";
 import sampleData from "~/stories/assets/sample-default.json";
+import { Template } from "./Template";
 import styles from "./EditableNodes.module.css";
 
 export default {
@@ -41,3 +44,24 @@ EditableNodesStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  EditableNodesStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // open Folder2 and Folder2-1
+    userEvent.click(await canvas.findByTestId("arrow-right-icon-4"));
+    userEvent.click(await canvas.findByTestId("arrow-right-icon-5"));
+
+    // open text field of File2-1-1
+    userEvent.click(await canvas.findByTestId("btn-edit-6"));
+
+    // hover on text field
+    userEvent.hover(await canvas.findByTestId("input-6"));
+
+    // all nodes will be undraggable when hover on text field in the node
+    (await canvas.findAllByRole("listitem")).forEach((node) => {
+      expect(node.draggable).toBe(false);
+    });
+  };
+}
