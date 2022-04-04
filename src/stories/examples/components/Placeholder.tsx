@@ -8,5 +8,9 @@ type Props = {
 };
 
 export const Placeholder: React.FC<Props> = (props) => (
-  <div className={styles.root} style={{ left: props.depth * 24 }}></div>
+  <div
+    className={styles.root}
+    style={{ left: props.depth * 24 }}
+    data-testid="placeholder"
+  ></div>
 );

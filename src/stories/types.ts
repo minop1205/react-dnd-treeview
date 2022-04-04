@@ -24,3 +24,8 @@ export type FileProperties = {
   fileType: string;
   fileSize: string;
 };
+
+export type PointerCoords = {
+  x: number;
+  y: number;
+};

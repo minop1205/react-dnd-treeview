@@ -1,10 +1,17 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { pageFactory } from "~/stories/pageFactory";
-import * as argTypes from "~/stories/argTypes";
+import { expect } from "@storybook/jest";
+import { within, fireEvent } from "@storybook/testing-library";
 import { Tree } from "~/Tree";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
+import { pageFactory } from "~/stories/pageFactory";
+import * as argTypes from "~/stories/argTypes";
+import {
+  dragEnterAndDragOver,
+  dragLeaveAndDragEnd,
+} from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { Placeholder } from "~/stories/examples/components/Placeholder";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
@@ -57,3 +64,148 @@ ManualSortWithPlaceholderStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  ManualSortWithPlaceholderStory.play = async ({ canvasElement }) => {
+    const assertPlaceholderCoords = (x: number, y: number) => {
+      const bbox = canvas.getByTestId("placeholder").getBoundingClientRect();
+      expect(bbox.x).toBe(x);
+      expect(bbox.y).toBe(y);
+    };
+
+    const assertElementCoords = (element: Element, x: number, y: number) => {
+      const bbox = element.getBoundingClientRect();
+      expect(bbox.x).toBe(x);
+      expect(bbox.y).toBe(y);
+    };
+
+    const canvas = within(canvasElement);
+    expect(canvas.queryByTestId("placeholder")).toBeNull();
+
+    // dragover file3 into center of file3
+    {
+      const file3Text = canvas.getByText("File 3");
+      const file3Node = canvas.getByTestId("custom-node-7");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(file3Node, { x: 0, y: 16 });
+      assertPlaceholderCoords(32, 95);
+      dragLeaveAndDragEnd(file3Text, file3Node);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // dragover file3 into top part of file3
+    {
+      const file3Text = canvas.getByText("File 3");
+      const file3Node = canvas.getByTestId("custom-node-7");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(file3Node, { x: 0, y: 5 });
+      assertPlaceholderCoords(32, 95);
+      dragLeaveAndDragEnd(file3Text, file3Node);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // dragover file3 into bottom part of file3
+    {
+      const file3Text = canvas.getByText("File 3");
+      const file3Node = canvas.getByTestId("custom-node-7");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(file3Node, { x: 0, y: 27 });
+      assertPlaceholderCoords(32, 127);
+      dragLeaveAndDragEnd(file3Text, file3Node);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // drag and drop file3 into top part of root
+    {
+      const file3Text = canvas.getByText("File 3");
+      const root = canvas.getByRole("list");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(root, { x: 0, y: 0 });
+      assertPlaceholderCoords(32, 31);
+      fireEvent.drop(root);
+      dragLeaveAndDragEnd(canvas.getByText("File 3"), root);
+      assertElementCoords(canvas.getByTestId("custom-node-7"), 32, 32);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // drag and drop file3 into bottom part of root
+    {
+      const file3Text = canvas.getByText("File 3");
+      const root = canvas.getByRole("list");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(root, { x: 100, y: 200 });
+      assertPlaceholderCoords(32, 127);
+      fireEvent.drop(root);
+      dragLeaveAndDragEnd(file3Text, root);
+      assertElementCoords(canvas.getByTestId("custom-node-7"), 32, 96);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // open folder1
+    fireEvent.click(canvas.getByTestId("arrow-right-icon-1"));
+
+    // drag and drop file3 into center of folder1
+    {
+      const file3Text = canvas.getByText("File 3");
+      const folder1Node = canvas.getByTestId("custom-node-1");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(folder1Node, { x: 0, y: 16 });
+      assertPlaceholderCoords(56, 63);
+      fireEvent.drop(folder1Node);
+      dragLeaveAndDragEnd(file3Text, folder1Node);
+      assertElementCoords(canvas.getByTestId("custom-node-7"), 32, 64);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // drag and drop file3 into top part of folder1
+    {
+      const file3Text = canvas.getByText("File 3");
+      const folder1Node = canvas.getByTestId("custom-node-1");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(folder1Node, { x: 0, y: 5 });
+      assertPlaceholderCoords(32, 31);
+      fireEvent.drop(folder1Node);
+      dragLeaveAndDragEnd(file3Text, folder1Node);
+      assertElementCoords(canvas.getByTestId("custom-node-7"), 32, 32);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+
+    // drag and drop file3 into center of folder1
+    {
+      const file3Text = canvas.getByText("File 3");
+      const folder2Node = canvas.getByTestId("custom-node-4");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(folder2Node, { x: 0, y: 16 });
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+      fireEvent.drop(folder2Node);
+      dragLeaveAndDragEnd(file3Text, folder2Node);
+      expect(canvas.queryByText("File 3")).toBeNull();
+    }
+
+    // open folder2 and folder2-1
+    fireEvent.click(canvas.getByTestId("arrow-right-icon-4"));
+    fireEvent.click(canvas.getByTestId("arrow-right-icon-5"));
+
+    // drag and drop file3 into top part of file2-1-1
+    {
+      const file3Text = canvas.getByText("File 3");
+      const file211Node = canvas.getByTestId("custom-node-6");
+
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(file211Node, { x: 0, y: 5 });
+      assertPlaceholderCoords(80, 223);
+      fireEvent.drop(file211Node);
+      dragLeaveAndDragEnd(file3Text, file211Node);
+      assertElementCoords(canvas.getByTestId("custom-node-7"), 32, 192);
+      expect(canvas.queryByTestId("placeholder")).toBeNull();
+    }
+  };
+}
