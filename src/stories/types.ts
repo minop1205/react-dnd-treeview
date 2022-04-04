@@ -25,7 +25,12 @@ export type FileProperties = {
   fileSize: string;
 };
 
-export type PointerCoords = {
+export type OffsetCoords = {
   x: number;
   y: number;
+};
+
+export type PointerCoords = {
+  clientX: number;
+  clientY: number;
 };
