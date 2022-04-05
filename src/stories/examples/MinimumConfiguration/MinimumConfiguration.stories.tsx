@@ -12,7 +12,6 @@ import {
   dragLeaveAndDragEnd,
   dragAndDrop,
   getPointerCoords,
-  assertElementCoords,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
@@ -66,19 +65,16 @@ if (!interactionsDisabled) {
   MinimumConfigurationStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // assertElementCoords(canvas.getByText("File 3"), 32, 80);
-    // return;
-
     // count nodes
     expect(canvas.getAllByRole("listitem").length).toBe(3);
 
     // open and close first node
     expect(canvas.queryByText("File 1-1")).toBeNull();
 
-    userEvent.click(await canvas.findByTestId("open-icon-1"));
+    userEvent.click(canvas.getByTestId("open-icon-1"));
     expect(await canvas.findByText("File 1-1")).toBeInTheDocument();
 
-    userEvent.click(await canvas.findByTestId("open-icon-1"));
+    userEvent.click(canvas.getByTestId("open-icon-1"));
     expect(canvas.queryByText("File 1-1")).toBeNull();
 
     // drag and drop: File 3 into Folder 1
@@ -90,10 +86,7 @@ if (!interactionsDisabled) {
     expect(await canvas.findByText("File 3")).toBeInTheDocument();
 
     // drag and drop: File 3 into Folder 2
-    await dragAndDrop(
-      await canvas.findByText("File 3"),
-      await canvas.findByTestId("node-4")
-    );
+    await dragAndDrop(canvas.getByText("File 3"), canvas.getByTestId("node-4"));
     expect(canvas.queryByText("File 3")).toBeNull();
 
     // open Folder2
@@ -105,23 +98,33 @@ if (!interactionsDisabled) {
       canvas.getByTestId("node-1")
     );
 
+    expect(await canvas.findByTestId("node-4")).toHaveStyle(
+      "margin-inline-start: 10px"
+    );
+
     // drag and drop: File 1-2 into root node
     await dragAndDrop(
       canvas.getByText("File 1-2"),
       canvas.getAllByRole("list")[0]
     );
-    assertElementCoords(await canvas.findByTestId("node-3"), 32, 152);
+
+    expect(await canvas.findByText("File 1-2")).toHaveStyle(
+      "margin-inline-start: 0px"
+    );
 
     // drag File3 and cancel drag
     {
-      const dragSource = await canvas.findByText("File 3");
+      const dragSource = canvas.getByText("File 3");
       const dropTarget = canvas.getAllByRole("list")[0];
       const coords = getPointerCoords(dropTarget);
 
       fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
       dragLeaveAndDragEnd(dragSource, dropTarget);
-      assertElementCoords(await canvas.findByTestId("node-7"), 52, 104);
+
+      expect(await canvas.findByText("File 3")).toHaveStyle(
+        "margin-inline-start: 20px"
+      );
     }
   };
 }
