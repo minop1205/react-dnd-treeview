@@ -1,10 +1,13 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { expect } from "@storybook/jest";
+import { within, userEvent } from "@storybook/testing-library";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import sampleData from "~/stories/assets/sample-default.json";
@@ -41,3 +44,19 @@ MultipleSelectionsStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  MultipleSelectionsStory.play = ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByTestId("selected-node").textContent).toBe("none");
+    userEvent.click(canvas.getByText("Folder 1"));
+    expect(canvas.getByTestId("selected-node").textContent).toBe("Folder 1");
+    userEvent.click(canvas.getByText("File 3"));
+    expect(canvas.getByTestId("selected-node").textContent).toBe(
+      "Folder 1, File 3"
+    );
+    userEvent.click(canvas.getByRole("list"));
+    expect(canvas.getByTestId("selected-node").textContent).toBe("none");
+  };
+}
