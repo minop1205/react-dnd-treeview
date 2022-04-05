@@ -1,12 +1,21 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { expect } from "@storybook/jest";
+import { within, fireEvent } from "@storybook/testing-library";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import {
+  dragEnterAndDragOver,
+  dragLeaveAndDragEnd,
+  getPointerCoords,
+  assertElementCoords,
+} from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./CustomDragPreview.module.css";
@@ -45,3 +54,30 @@ CustomDragPreviewStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  CustomDragPreviewStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+
+    // show preview during dragging
+    const dragSource = canvas.getByText("File 3");
+    const dropTarget = canvas.getByTestId("custom-node-1");
+
+    fireEvent.dragStart(dragSource);
+
+    const coords = getPointerCoords(dropTarget);
+    await dragEnterAndDragOver(dropTarget, coords);
+
+    expect(
+      await canvas.findByTestId("custom-drag-preview")
+    ).toBeInTheDocument();
+
+    assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
+
+    // hide preview when drag is canceled
+    dragLeaveAndDragEnd(dragSource, dropTarget);
+    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+  };
+}
