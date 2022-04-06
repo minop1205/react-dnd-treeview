@@ -639,17 +639,15 @@ describe("Tree", () => {
       const { depth, containerRef } = props.options;
 
       useEffect(() => {
-        containerRef.current?.addEventListener("dragstart", props.onDragStart);
-        containerRef.current?.addEventListener("dragend", props.onDragEnd);
+        const node = containerRef.current;
+        node?.addEventListener("dragstart", props.onDragStart);
+        node?.addEventListener("dragend", props.onDragEnd);
 
         return () => {
-          containerRef.current?.removeEventListener(
-            "dragstart",
-            props.onDragStart
-          );
-          containerRef.current?.removeEventListener("dragend", props.onDragEnd);
+          node?.removeEventListener("dragstart", props.onDragStart);
+          node?.removeEventListener("dragend", props.onDragEnd);
         };
-      }, []);
+      }, [containerRef, props.onDragStart, props.onDragEnd]);
 
       return <div style={{ marginInlineStart: depth * 10 }}>{text}</div>;
     };

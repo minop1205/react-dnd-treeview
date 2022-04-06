@@ -13,6 +13,21 @@ import { useTreeContext } from "../hooks";
 
 let dragSourceElement: DragSourceElement = null;
 
+const register = (e: DragEvent | TouchEvent): void => {
+  const { target } = e;
+
+  if (target instanceof HTMLElement) {
+    const source = target.closest('[role="listitem"]');
+
+    if (e.currentTarget === source) {
+      dragSourceElement = source;
+    }
+  }
+};
+
+const handleDragStart = (e: DragEvent) => register(e);
+const handleTouchStart = (e: TouchEvent) => register(e);
+
 export const useDragNode = <T>(
   item: NodeModel,
   ref: React.RefObject<HTMLElement>
@@ -23,32 +38,18 @@ export const useDragNode = <T>(
 ] => {
   const treeContext = useTreeContext<T>();
 
-  const register = (e: DragEvent | TouchEvent): void => {
-    const { target } = e;
-
-    if (target instanceof HTMLElement) {
-      const source = target.closest('[role="listitem"]');
-
-      if (e.currentTarget === source) {
-        dragSourceElement = source;
-      }
-    }
-  };
-
-  const handleDragStart = (e: DragEvent) => register(e);
-  const handleTouchStart = (e: TouchEvent) => register(e);
-
   useEffect(() => {
-    ref.current?.addEventListener("dragstart", handleDragStart);
-    ref.current?.addEventListener("touchstart", handleTouchStart, {
+    const node = ref.current;
+    node?.addEventListener("dragstart", handleDragStart);
+    node?.addEventListener("touchstart", handleTouchStart, {
       passive: true,
     });
 
     return () => {
-      ref.current?.removeEventListener("dragstart", handleDragStart);
-      ref.current?.removeEventListener("touchstart", handleTouchStart);
+      node?.removeEventListener("dragstart", handleDragStart);
+      node?.removeEventListener("touchstart", handleTouchStart);
     };
-  }, []);
+  }, [ref]);
 
   const [{ isDragging }, drag, preview]: [
     { isDragging: boolean },
