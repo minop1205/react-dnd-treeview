@@ -30,6 +30,7 @@ export const CustomNode: React.FC<Props> = (props) => {
       className={`tree-node ${styles.root}`}
       style={{ paddingInlineStart: indent }}
       {...dragOverProps}
+      data-testid={`custom-node-${id}`}
     >
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (

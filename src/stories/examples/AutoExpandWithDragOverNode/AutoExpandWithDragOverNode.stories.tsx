@@ -1,12 +1,20 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { expect } from "@storybook/jest";
+import { within, fireEvent, waitFor } from "@storybook/testing-library";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import {
+  dragEnterAndDragOver,
+  dragLeaveAndDragEnd,
+  getPointerCoords,
+} from "~/stories/examples/helpers";
 import { CustomNode } from "./CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./AutoExpandWithDragOverNode.module.css";
@@ -45,3 +53,25 @@ AutoExpandWithDragOverNodeStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  AutoExpandWithDragOverNodeStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // hover File3 into Folder1 during 0.5sec
+    {
+      expect(canvas.queryByText("File 1-2")).toBeNull();
+
+      const dragSource = canvas.getByText("File 3");
+      const dropTarget = canvas.getByTestId("custom-node-1");
+      const coords = getPointerCoords(dropTarget);
+
+      fireEvent.dragStart(dragSource);
+      await dragEnterAndDragOver(dropTarget, coords);
+      await waitFor(() => new Promise((r) => window.setTimeout(r, 500)));
+      dragLeaveAndDragEnd(dragSource, dropTarget);
+
+      expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
+    }
+  };
+}
