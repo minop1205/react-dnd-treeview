@@ -1,5 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
+import { expect } from "@storybook/jest";
+import { within } from "@storybook/testing-library";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { Tree } from "~/Tree";
@@ -8,6 +10,7 @@ import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./InitializeWithOpenParents.module.css";
 
@@ -46,3 +49,14 @@ InitializeWithOpenParentsStory.parameters = {
     }),
   },
 };
+
+if (!interactionsDisabled) {
+  InitializeWithOpenParentsStory.play = ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByText("File 1-1")).toBeInTheDocument();
+    expect(canvas.getByText("File 1-2")).toBeInTheDocument();
+    expect(canvas.getByText("Folder 2-1")).toBeInTheDocument();
+    expect(canvas.getByText("File 2-1-1")).toBeInTheDocument();
+  };
+}
