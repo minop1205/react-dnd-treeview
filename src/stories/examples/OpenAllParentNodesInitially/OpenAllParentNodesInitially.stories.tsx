@@ -12,17 +12,17 @@ import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./InitializeWithOpenParents.module.css";
+import styles from "./OpenAllParentNodesInitially.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Initialize with open parents",
+  title: "Examples/Tree/Open all parent nodes initially",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const InitializeWithOpenParentsStory = DefaultTemplate.bind({});
+export const OpenAllParentNodesInitially = DefaultTemplate.bind({});
 
-InitializeWithOpenParentsStory.args = {
+OpenAllParentNodesInitially.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -39,19 +39,19 @@ InitializeWithOpenParentsStory.args = {
   initialOpen: true,
 };
 
-InitializeWithOpenParentsStory.storyName = "Initialize with open parents";
+OpenAllParentNodesInitially.storyName = "Open all parent nodes initially";
 
-InitializeWithOpenParentsStory.parameters = {
+OpenAllParentNodesInitially.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "initialize-with-open-parents-js-mff8sw",
-      tsId: "initialize-with-open-parents-ts-j8zxuj",
+      jsId: "open-all-parent-nodes-initially-js-xowqs7",
+      tsId: "open-all-parent-nodes-initially-ts-vdm3no",
     }),
   },
 };
 
 if (!interactionsDisabled) {
-  InitializeWithOpenParentsStory.play = ({ canvasElement }) => {
+  OpenAllParentNodesInitially.play = ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     expect(canvas.getByText("File 1-1")).toBeInTheDocument();
