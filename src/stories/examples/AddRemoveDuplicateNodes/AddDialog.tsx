@@ -47,7 +47,12 @@ export const AddDialog: React.FC<Props> = (props) => {
   };
 
   return (
-    <Dialog open={true} onClose={props.onClose}>
+    <Dialog
+      open={true}
+      onClose={props.onClose}
+      disablePortal
+      data-testid="dialog"
+    >
       <DialogTitle>Add New Node</DialogTitle>
       <DialogContent className={styles.content}>
         <div>
@@ -56,6 +61,9 @@ export const AddDialog: React.FC<Props> = (props) => {
             fullWidth
             onChange={handleChangeText}
             value={text}
+            inputProps={{
+              "data-testid": "dialog-input-text",
+            }}
           />
         </div>
         <div>

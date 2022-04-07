@@ -94,7 +94,11 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
   return (
     <div className={styles.app}>
       <div className={styles.buttonWrapper}>
-        <Button onClick={handleOpenDialog} startIcon={<AddIcon />}>
+        <Button
+          onClick={handleOpenDialog}
+          startIcon={<AddIcon />}
+          data-testid="btn-add"
+        >
           Add Node
         </Button>
         {open && (

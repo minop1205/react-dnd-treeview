@@ -36,10 +36,11 @@ export const CustomNode: React.FC<Props> = (props) => {
       {...dragOverProps}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      data-testid={`custom-node-${id}`}
     >
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
-          <div onClick={handleToggle}>
+          <div onClick={handleToggle} data-testid={`arrow-right-icon-${id}`}>
             <ArrowRight />
           </div>
         )}
@@ -53,12 +54,20 @@ export const CustomNode: React.FC<Props> = (props) => {
       {hover && (
         <>
           <div className={styles.actionButton}>
-            <IconButton size="small" onClick={() => props.onDelete(id)}>
+            <IconButton
+              size="small"
+              onClick={() => props.onDelete(id)}
+              data-testid={`btn-delete-${id}`}
+            >
               <Delete fontSize="small" />
             </IconButton>
           </div>
           <div className={styles.actionButton}>
-            <IconButton size="small" onClick={() => props.onCopy(id)}>
+            <IconButton
+              size="small"
+              onClick={() => props.onCopy(id)}
+              data-testid={`btn-copy-${id}`}
+            >
               <FileCopy fontSize="small" />
             </IconButton>
           </div>
