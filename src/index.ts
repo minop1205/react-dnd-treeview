@@ -7,4 +7,3 @@ export * from "./Tree";
 export * from "./types";
 export * from "./utils";
 export { MultiBackend } from "dnd-multi-backend";
-export { getBackendOptions } from "./HTML5toTouch";
