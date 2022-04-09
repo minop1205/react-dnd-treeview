@@ -7,3 +7,4 @@ export { mutateTreeWithIndex } from "./mutateTreeWithIndex";
 export { getDropTarget } from "./getDropTarget";
 export { getModifiedIndex } from "./getModifiedIndex";
 export { getDescendants } from "./getDescendants";
+export { getBackendOptions } from "./getBackendOptions";
