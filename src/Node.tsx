@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useRef,
-  useCallback,
   useContext,
   PropsWithChildren,
   ReactElement,
@@ -52,9 +51,7 @@ export const Node = <T extends unknown>(props: Props): ReactElement | null => {
 
   useDragControl(ref);
 
-  const handleToggle = useCallback(() => {
-    treeContext.onToggle(item.id);
-  }, [item.id, treeContext]);
+  const handleToggle = () => treeContext.onToggle(item.id);
 
   const Component = treeContext.listItemComponent;
 
