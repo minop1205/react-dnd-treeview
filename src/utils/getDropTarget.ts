@@ -103,7 +103,7 @@ export const getDropTarget = <T>(
     };
   }
 
-  const dragSource: DragItem<T> = monitor.getItem() as DragItem<T>;
+  const dragSource: DragItem<T> = monitor.getItem();
   const list = nodeEl.querySelector('[role="list"]');
   const hoverPosition = getHoverPosition(
     nodeEl,
