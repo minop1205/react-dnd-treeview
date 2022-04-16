@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useRef,
-  useCallback,
   useContext,
   PropsWithChildren,
   ReactElement,
@@ -27,13 +26,11 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const ref = useRef<HTMLElement>(null);
-  const item = treeContext.tree.find((node) => node.id === props.id);
+  const item = treeContext.tree.find(
+    (node) => node.id === props.id
+  ) as NodeModel<T>;
   const { openIds, classes } = treeContext;
   const open = openIds.includes(props.id);
-
-  if (!item) {
-    return null;
-  }
 
   const [isDragging, drag, preview] = useDragNode(item, ref);
   const [isOver, dragSource, drop] = useDropNode(item, ref);
@@ -50,13 +47,11 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     if (treeContext.dragPreviewRender) {
       preview(getEmptyImage(), { captureDraggingState: true });
     }
-  }, []);
+  }, [preview, treeContext.dragPreviewRender]);
 
   useDragControl(ref);
 
-  const handleToggle = useCallback(() => {
-    treeContext.onToggle(item.id);
-  }, [openIds]);
+  const handleToggle = () => treeContext.onToggle(item.id);
 
   const Component = treeContext.listItemComponent;
 
