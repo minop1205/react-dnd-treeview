@@ -9,7 +9,7 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DndProvider } from "react-dnd";
 import { MultiBackend } from "dnd-multi-backend";
-import { HTML5toTouch } from "~/HTML5toTouch";
+import { getBackendOptions } from "~/utils/getBackendOptions";
 import { Tree } from "~/Tree";
 import {
   NodeModel,
@@ -145,7 +145,7 @@ const dragAndDrop = async (src: Element, dst: Element) => {
 describe("Stories test", () => {
   const renderTree = () =>
     render(
-      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <MinimumConfigurationStory {...MinimumConfigurationStory.args} />
       </DndProvider>
     );
@@ -183,7 +183,7 @@ describe("Stories test", () => {
 describe("Tree", () => {
   const renderTree = <T,>(props: Partial<TreeProps<T>> = {}) => {
     const { container } = render(
-      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <TestTree {...props} />
       </DndProvider>
     );
@@ -547,7 +547,7 @@ describe("Tree", () => {
       };
 
       return (
-        <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+        <DndProvider backend={MultiBackend} options={getBackendOptions()}>
           <div>
             <Tree
               ref={ref}

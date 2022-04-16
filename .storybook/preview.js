@@ -1,7 +1,7 @@
 import { DndProvider } from "react-dnd";
 import { MultiBackend } from "dnd-multi-backend";
 import { ThemeProvider } from "@mui/material/styles";
-import { HTML5toTouch } from "../src/HTML5toTouch";
+import { getBackendOptions } from "../src/utils/getBackendOptions";
 import { theme } from "../src/stories/examples/theme";
 
 export const parameters = {
@@ -37,7 +37,7 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
-      <DndProvider backend={MultiBackend} options={HTML5toTouch}>
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
         <Story />
       </DndProvider>
     </ThemeProvider>
