@@ -1,20 +1,24 @@
-import { getDescendants } from "./getDescendants";
-import treeData from "../stories/assets/sample-default.json";
+import { NodeModel } from "~/types";
+import { compareItems } from "./compareItems";
 
-describe("getDescendants", () => {
-  test("get descendant nodes by id", () => {
-    let descendantIds = getDescendants(treeData, 1).map((n) => n.id);
+describe("compareItems", () => {
+  test("compare tree item order", () => {
+    const nodeA: NodeModel = {
+      id: 1,
+      parent: 0,
+      droppable: true,
+      text: "a",
+    };
 
-    expect(descendantIds.includes(2)).toBe(true);
-    expect(descendantIds.includes(3)).toBe(true);
+    const nodeB: NodeModel = {
+      id: 2,
+      parent: 0,
+      droppable: true,
+      text: "b",
+    };
 
-    descendantIds = getDescendants(treeData, 4).map((n) => n.id);
-
-    expect(descendantIds.includes(5)).toBe(true);
-    expect(descendantIds.includes(6)).toBe(true);
-
-    descendantIds = getDescendants(treeData, 7).map((n) => n.id);
-
-    expect(descendantIds.length).toBe(0);
+    expect(compareItems(nodeA, nodeB)).toBe(-1);
+    expect(compareItems(nodeB, nodeA)).toBe(1);
+    expect(compareItems(nodeA, nodeA)).toBe(0);
   });
 });

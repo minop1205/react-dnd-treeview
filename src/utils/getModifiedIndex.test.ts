@@ -1,20 +1,41 @@
-import { getDescendants } from "./getDescendants";
+import { getModifiedIndex } from "./getModifiedIndex";
 import treeData from "../stories/assets/sample-default.json";
 
-describe("getDescendants", () => {
-  test("get descendant nodes by id", () => {
-    let descendantIds = getDescendants(treeData, 1).map((n) => n.id);
+describe("getModifiedIndex", () => {
+  test("check modified indexes", () => {
+    let [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 0);
 
-    expect(descendantIds.includes(2)).toBe(true);
-    expect(descendantIds.includes(3)).toBe(true);
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
 
-    descendantIds = getDescendants(treeData, 4).map((n) => n.id);
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 1, 0);
 
-    expect(descendantIds.includes(5)).toBe(true);
-    expect(descendantIds.includes(6)).toBe(true);
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
 
-    descendantIds = getDescendants(treeData, 7).map((n) => n.id);
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 3);
 
-    expect(descendantIds.length).toBe(0);
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(6);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 0);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(0);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 0, 1);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(3);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 7, 5, 1);
+
+    expect(srcIndex).toBe(6);
+    expect(destIndex).toBe(6);
+
+    [srcIndex, destIndex] = getModifiedIndex(treeData, 3, 5, 0);
+
+    expect(srcIndex).toBe(2);
+    expect(destIndex).toBe(0);
   });
 });

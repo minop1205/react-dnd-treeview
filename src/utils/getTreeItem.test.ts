@@ -1,20 +1,18 @@
-import { getDescendants } from "./getDescendants";
-import treeData from "../stories/assets/sample-default.json";
+import { NodeModel } from "~/types";
+import { getTreeItem } from "./getTreeItem";
 
-describe("getDescendants", () => {
-  test("get descendant nodes by id", () => {
-    let descendantIds = getDescendants(treeData, 1).map((n) => n.id);
+describe("getTreeItem", () => {
+  test("get tree item by id", () => {
+    const tree: NodeModel[] = [
+      {
+        id: 1,
+        parent: 0,
+        droppable: true,
+        text: "a",
+      },
+    ];
 
-    expect(descendantIds.includes(2)).toBe(true);
-    expect(descendantIds.includes(3)).toBe(true);
-
-    descendantIds = getDescendants(treeData, 4).map((n) => n.id);
-
-    expect(descendantIds.includes(5)).toBe(true);
-    expect(descendantIds.includes(6)).toBe(true);
-
-    descendantIds = getDescendants(treeData, 7).map((n) => n.id);
-
-    expect(descendantIds.length).toBe(0);
+    expect(getTreeItem(tree, 1)?.text).toBe("a");
+    expect(getTreeItem(tree, 2)).toBeUndefined();
   });
 });
