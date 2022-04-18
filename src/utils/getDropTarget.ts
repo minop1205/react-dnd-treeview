@@ -1,6 +1,6 @@
 import { DropTargetMonitor } from "react-dnd";
 import { isDroppable } from "./isDroppable";
-import { NodeModel, TreeState, DragItem } from "../types";
+import { NodeModel, TreeState, DragItem } from "~/types";
 
 type CompareResult = "up" | "down";
 

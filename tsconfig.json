@@ -1,25 +1,22 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES5",
     "outDir": "dist",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "declaration": true,
     "declarationDir": "dist",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "strict": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmit": true,
     "jsx": "react",
     "newLine": "lf",
-  },
-  "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+    "skipLibCheck": true,
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  }
 }

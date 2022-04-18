@@ -1,4 +1,4 @@
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
 import { useTreeContext } from "./useTreeContext";
 
 export const useContainerClassName = (

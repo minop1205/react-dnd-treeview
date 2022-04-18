@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { DragControlContext } from "../providers";
+import { DragControlContext } from "~/providers";
 
 /**
  * This is a hook to allow text selection by mouse in the text input area in a node.

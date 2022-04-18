@@ -1,4 +1,4 @@
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
 
 const getSrcIndex = (tree: NodeModel[], dragSourceId: NodeModel["id"]) => {
   return tree.findIndex((node) => node.id === dragSourceId);

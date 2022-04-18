@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { useDrop, DragElementWrapper } from "react-dnd";
-import { ItemTypes } from "../ItemTypes";
-import { PlaceholderContext } from "../providers";
-import { NodeModel, DragItem } from "../types";
-import { isDroppable, getDropTarget } from "../utils";
-import { useTreeContext } from "../hooks";
+import { ItemTypes } from "~/ItemTypes";
+import { PlaceholderContext } from "~/providers";
+import { NodeModel, DragItem } from "~/types";
+import { isDroppable, getDropTarget } from "~/utils";
+import { useTreeContext } from "~/hooks";
 
 export const useDropNode = <T>(
   item: NodeModel<T>,

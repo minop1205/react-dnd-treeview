@@ -1,5 +1,5 @@
 import { isAncestor } from "./isAncestor";
-import { NodeModel, TreeState } from "../types";
+import { NodeModel, TreeState } from "~/types";
 
 export const isDroppable = <T>(
   dragSourceId: NodeModel["id"],

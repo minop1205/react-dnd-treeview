@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { NodeModel, DragOverProps } from "../types";
+import { NodeModel, DragOverProps } from "~/types";
 
 export const useDragOver = (
   id: NodeModel["id"],

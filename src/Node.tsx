@@ -22,7 +22,7 @@ type Props = PropsWithChildren<{
   depth: number;
 }>;
 
-export const Node = <T extends unknown>(props: Props): ReactElement | null => {
+export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const ref = useRef<HTMLElement>(null);

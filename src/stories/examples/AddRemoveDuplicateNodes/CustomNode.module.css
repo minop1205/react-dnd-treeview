@@ -1,0 +1,38 @@
+.root {
+  align-items: center;
+  display: flex;
+  height: 32px;
+}
+
+.arrow {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+  transition: transform linear 0.1s;
+  transform: rotate(0deg);
+}
+
+.arrow > div {
+  align-items: center;
+  display: flex;
+}
+
+.arrow.is-open {
+  transform: rotate(90deg);
+}
+
+.filetype {
+  display: flex;
+}
+
+.label {
+  padding-inline-end: 8px;
+  padding-inline-start: 4px;
+}
+
+.actionButton {
+  padding: 0 4px;
+}
