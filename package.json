@@ -68,7 +68,6 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^27.5.1",
-    "jest-transform-stub": "^2.0.0",
     "npm-check-updates": "^12.3.0",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
