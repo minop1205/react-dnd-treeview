@@ -1,0 +1,30 @@
+name: deploy storybook
+on:
+  push:
+    branches:
+      - v2-github-pages
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          registry-url: "https://registry.npmjs.org"
+
+      - name: install deps
+        run: npm install
+
+      - name: build storybook
+        run: npm run build-storybook
+
+      - name: deploy storybook
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_repo: ${{github.repository}}
+          personal_token: ${{secrets.ACTIONS_PAGES_DEPLOY_KEY}}
+          publish_dir: ./storybook-static
