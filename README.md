@@ -5,32 +5,18 @@ You can use render props to create each node freely.
 
 ![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/98293395-94441000-1ff1-11eb-81db-b84c31b03c6b.gif)
 
-## Demo
+## Demo and Examples
 
-- [JavaScript](https://codesandbox.io/s/full-features-js-itczn) | [TypeScript](https://codesandbox.io/s/full-features-ts-5296j)
+Some of the examples below use MUI(Material-UI) components, but TreeView does not depend on MUI, so you can use other libraries or your own custom components.
 
-## Examples (on CodeSandbox)
-
-Some of the examples below use Material-UI components, but TreeView does not depend on Material-UI, so you can use other libraries or your own custom components.
-
-- Minimum configuration ([JavaScript](https://codesandbox.io/s/minimum-configuration-js-d9kem) | [TypeScript](https://codesandbox.io/s/minimum-configuration-ts-wjigd))
-- Custom node ([JavaScript](https://codesandbox.io/s/custom-node-js-lulok) | [TypeScript](https://codesandbox.io/s/custom-node-ts-buimk))
-- Custom drag preview ([JavaScript](https://codesandbox.io/s/custom-drag-previewjs-m8rp2) | [TypeScript](https://codesandbox.io/s/custom-drag-preview-ts-bdhgj))
-- Select node ([JavaScript](https://codesandbox.io/s/select-node-js-hvlzq) | [TypeScript](https://codesandbox.io/s/select-node-ts-7elv2))
-- Multiple selections(checkobx) ([JavaScript](https://codesandbox.io/s/multiple-selections-js-ve17w) | [TypeScript](https://codesandbox.io/s/multiple-selections-ts-eud8c))
-- Opening and closing all nodes ([JavaScript](https://codesandbox.io/s/opening-and-closing-all-nodes-js-qn00x) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-43j5l))
-- Auto expand with drag over node ([JavaScript](https://codesandbox.io/s/auto-expand-with-drag-over-node-js-zksyi) | [TypeScript](https://codesandbox.io/s/opening-and-closing-all-nodes-ts-forked-7rcdk))
-- Initialize with open parents ([JavaScript](https://codesandbox.io/s/initialize-with-open-parents-js-hk45o) | [TypeScript](https://codesandbox.io/s/initialize-with-open-parents-ts-9nkw3))
-- Editable nodes ([JavaScript](https://codesandbox.io/s/editable-js-m25be) | [TypeScript](https://codesandbox.io/s/editable-ts-cl3wi))
-- Manual sort with placeholder ([JavaScript](https://codesandbox.io/s/placeholder-js-xhu2j) | [TypeScript](https://codesandbox.io/s/placeholder-ts-w71l5))
-- Add, remove, duplicate nodes ([JavaScript](https://codesandbox.io/s/add-delete-copy-js-4x4l8) | [TypeScript](https://codesandbox.io/s/add-delete-copy-ts-owgqb))
+[https://minop1205.github.io/react-dnd-treeview/](https://minop1205.github.io/react-dnd-treeview/?path=/docs/examples-tree-minimum-configuration--minimum-configuration-story)
 
 ## Getting Started
 
 ### Installation
 
 ```shell
-$ npm install --save @minoru/react-dnd-treeview
+$ npm i react-dnd @minoru/react-dnd-treeview
 ```
 
 ### Usage
