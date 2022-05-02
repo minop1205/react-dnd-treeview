@@ -23,27 +23,34 @@ $ npm i react-dnd @minoru/react-dnd-treeview
 
 ```jsx
 import { useState } from "react";
-import { Tree } from "@minoru/react-dnd-treeview";
-import initialData from "./sample.json";
+import {
+  Tree,
+  getBackendOptions,
+  MultiBackend,
+} from "@minoru/react-dnd-treeview";
+import { DndProvider } from "react-dnd";
+import initialData from "./sample-default.json";
 
 function App() {
   const [treeData, setTreeData] = useState(initialData);
   const handleDrop = (newTreeData) => setTreeData(newTreeData);
 
   return (
-    <Tree
-      tree={treeData}
-      rootId={0}
-      onDrop={handleDrop}
-      render={(node, { depth, isOpen, onToggle }) => (
-        <div style={{ marginLeft: depth * 10 }}>
-          {node.droppable && (
-            <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
-          )}
-          {node.text}
-        </div>
-      )}
-    />
+    <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+      <Tree
+        tree={treeData}
+        rootId={0}
+        onDrop={handleDrop}
+        render={(node, { depth, isOpen, onToggle }) => (
+          <div style={{ marginLeft: depth * 10 }}>
+            {node.droppable && (
+              <span onClick={onToggle}>{isOpen ? "[-]" : "[+]"}</span>
+            )}
+            {node.text}
+          </div>
+        )}
+      />
+    </DndProvider>
   );
 }
 ```
