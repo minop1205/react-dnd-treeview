@@ -1,15 +1,19 @@
 # React DnD TreeView
 
-A draggable / droppable React-based treeview component.  
+A draggable and droppable React treeview component.  
 You can use render props to create each node freely.
 
 ![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/98293395-94441000-1ff1-11eb-81db-b84c31b03c6b.gif)
 
 ## Demo and Examples
 
-Some of the examples below use MUI(Material-UI) components, but TreeView does not depend on MUI, so you can use other libraries or your own custom components.
+Some of the examples below use [MUI(Material-UI)](https://mui.com) components, but TreeView does not depend on MUI, so you can use other libraries or your own custom components.
 
 [https://minop1205.github.io/react-dnd-treeview/](https://minop1205.github.io/react-dnd-treeview/?path=/docs/examples-tree-minimum-configuration--minimum-configuration-story)
+
+## Breaking changes and migration
+
+See [Migration Guide](MIGRATION.md) for information on breaking changes and migrations between major versions.
 
 ## Getting Started
 
