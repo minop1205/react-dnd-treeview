@@ -6,9 +6,9 @@ _Jan 29, 2022_
 
 ### Breaking changes
 
-- Exclude DndProvider component from package
+- Exclude `react-dnd` from this package
 
-  The DndProvider is no longer included in the package, so users of the package will need to add the DndProvider separately.
+  `react-dnd` is no longer included in this package, so users of this package must separately install the latest version of `react-dnd` and import `DndProvider`.
 
 ## 1.6.1
 
