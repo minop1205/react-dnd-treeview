@@ -34,10 +34,16 @@ export const parameters = {
   viewMode: "docs",
 };
 
+const debugMode = !(process?.env?.STORYBOOK_DISABLE_INTERACTIONS === "true");
+
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
-      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+      <DndProvider
+        backend={MultiBackend}
+        debugMode={debugMode}
+        options={getBackendOptions()}
+      >
         <Story />
       </DndProvider>
     </ThemeProvider>

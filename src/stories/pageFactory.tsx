@@ -12,17 +12,17 @@ import { CodeViewer } from "./CodeViewer";
 import { StoryDocumentProps } from "./types";
 
 export const pageFactory = (props: StoryDocumentProps) => {
-  const components = (
-    <>
-      <Title />
-      <Subtitle />
-      <Description />
-      <Primary />
-      <CodeViewer {...props} />
-      <ArgsTable story={PRIMARY_STORY} />
-      <Stories />
-    </>
-  );
-
-  return () => components;
+  return function getPageComponents() {
+    return (
+      <>
+        <Title />
+        <Subtitle />
+        <Description />
+        <Primary />
+        <CodeViewer {...props} />
+        <ArgsTable story={PRIMARY_STORY} />
+        <Stories />
+      </>
+    );
+  };
 };

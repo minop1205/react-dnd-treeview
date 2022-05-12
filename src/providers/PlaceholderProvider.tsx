@@ -10,7 +10,9 @@ const initialState = {
   index: undefined,
 };
 
-export const PlaceholderProvider: React.FC = (props) => {
+export const PlaceholderProvider: React.FC<{ children: React.ReactNode }> = (
+  props
+) => {
   const [dropTargetId, setDropTargetId] = useState<
     PlaceholderState["dropTargetId"]
   >(initialState.dropTargetId);
