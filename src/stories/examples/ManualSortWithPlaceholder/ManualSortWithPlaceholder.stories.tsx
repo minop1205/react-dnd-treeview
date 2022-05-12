@@ -13,6 +13,7 @@ import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   assertElementCoords,
+  wait,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { Placeholder } from "~/stories/examples/components/Placeholder";
@@ -84,6 +85,7 @@ if (!interactionsDisabled) {
       const file3Node = canvas.getByTestId("custom-node-7");
       const coords = getPointerCoords(file3Node, { x: 0, y: 16 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(file3Node, coords);
       assertPlaceholderCoords(32, 95);
@@ -97,6 +99,7 @@ if (!interactionsDisabled) {
       const file3Node = canvas.getByTestId("custom-node-7");
       const coords = getPointerCoords(file3Node, { x: 0, y: 5 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(file3Node, coords);
       assertPlaceholderCoords(32, 95);
@@ -110,6 +113,7 @@ if (!interactionsDisabled) {
       const file3Node = canvas.getByTestId("custom-node-7");
       const coords = getPointerCoords(file3Node, { x: 0, y: 27 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(file3Node, coords);
       assertPlaceholderCoords(32, 127);
@@ -123,6 +127,7 @@ if (!interactionsDisabled) {
       const root = canvas.getByRole("list");
       const coords = getPointerCoords(root, { x: 0, y: 0 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(root, coords);
       assertPlaceholderCoords(32, 31);
@@ -138,6 +143,7 @@ if (!interactionsDisabled) {
       const root = canvas.getByRole("list");
       const coords = getPointerCoords(root, { x: 100, y: 200 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(root, coords);
       assertPlaceholderCoords(32, 127);
@@ -156,6 +162,7 @@ if (!interactionsDisabled) {
       const folder1Node = canvas.getByTestId("custom-node-1");
       const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(folder1Node, coords);
       assertPlaceholderCoords(56, 63);
@@ -171,6 +178,7 @@ if (!interactionsDisabled) {
       const folder1Node = canvas.getByTestId("custom-node-1");
       const coords = getPointerCoords(folder1Node, { x: 0, y: 5 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(folder1Node, coords);
       assertPlaceholderCoords(32, 31);
@@ -186,6 +194,7 @@ if (!interactionsDisabled) {
       const folder2Node = canvas.getByTestId("custom-node-4");
       const coords = getPointerCoords(folder2Node, { x: 0, y: 16 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(folder2Node, coords);
       expect(canvas.queryByTestId("placeholder")).toBeNull();
@@ -204,6 +213,7 @@ if (!interactionsDisabled) {
       const file211Node = canvas.getByTestId("custom-node-6");
       const coords = getPointerCoords(file211Node, { x: 0, y: 5 });
 
+      await wait();
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(file211Node, coords);
       assertPlaceholderCoords(80, 223);

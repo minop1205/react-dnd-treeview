@@ -13,6 +13,7 @@ import {
   dragLeaveAndDragEnd,
   getPointerCoords,
   assertElementCoords,
+  wait,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
@@ -64,6 +65,8 @@ if (!interactionsDisabled) {
     // show preview during dragging
     const dragSource = canvas.getByText("File 3");
     const dropTarget = canvas.getByTestId("custom-node-1");
+
+    await wait();
 
     fireEvent.dragStart(dragSource);
 
