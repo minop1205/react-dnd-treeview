@@ -2,7 +2,11 @@
 
 ## 2.0.0
 
-_Jan 29, 2022_
+_May 15, 2022_
+
+### Added
+
+- Migrated examples to Storybook.
 
 ### Breaking changes
 
