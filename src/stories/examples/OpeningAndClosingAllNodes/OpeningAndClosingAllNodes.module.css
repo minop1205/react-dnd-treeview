@@ -1,0 +1,21 @@
+.actions {
+  display: inline-grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 16px;
+  margin: 8px;
+  padding: 8px;
+}
+
+.treeRoot {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 32px;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
+}

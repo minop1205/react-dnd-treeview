@@ -1,4 +1,5 @@
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
+
 export const getDescendants = <T = unknown>(
   treeData: NodeModel<T>[],
   id: NodeModel["id"]

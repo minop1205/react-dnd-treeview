@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.0.0
+
+_Jan 29, 2022_
+
+### Breaking changes
+
+- Exclude `react-dnd` from this package
+
+  `react-dnd` is no longer included in this package, so users of this package must separately install the latest version of `react-dnd` and import `DndProvider`.
+
 ## 1.6.1
 
 _Jan 07, 2022_

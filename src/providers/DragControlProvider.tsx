@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { DragControlState } from "../types";
+import React, { useState, createContext } from "react";
+import { DragControlState } from "~/types";
 
-export const DragControlContext = React.createContext<DragControlState>(
+export const DragControlContext = createContext<DragControlState>(
   {} as DragControlState
 );
 
@@ -9,7 +9,9 @@ const initialState = {
   isLock: false,
 };
 
-export const DragControlProvider: React.FC = (props) => {
+export const DragControlProvider: React.FC<{ children: React.ReactNode }> = (
+  props
+) => {
   const [isLock, setIsLock] = useState(initialState.isLock);
 
   return (

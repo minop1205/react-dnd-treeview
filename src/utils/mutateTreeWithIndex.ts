@@ -1,4 +1,4 @@
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
 import { getModifiedIndex } from "./getModifiedIndex";
 
 const arrayMoveMutable = <T>(

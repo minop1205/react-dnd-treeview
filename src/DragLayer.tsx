@@ -12,7 +12,7 @@ const rootStyle: React.CSSProperties = {
   zIndex: 100,
 };
 
-const getItemStyles = <T extends unknown>(
+const getItemStyles = <T,>(
   monitorProps: DragLayerMonitorProps<T>
 ): React.CSSProperties => {
   const offset = monitorProps.clientOffset;
@@ -30,7 +30,7 @@ const getItemStyles = <T extends unknown>(
   };
 };
 
-export const DragLayer = <T extends unknown>(): ReactElement | null => {
+export const DragLayer = <T,>(): ReactElement | null => {
   const context = useTreeContext<T>();
   const monitorProps = useTreeDragLayer<T>();
   const { isDragging, clientOffset } = monitorProps;

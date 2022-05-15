@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { useDrop, DragElementWrapper } from "react-dnd";
-import { ItemTypes } from "../ItemTypes";
-import { PlaceholderContext } from "../providers";
-import { NodeModel, DragItem } from "../types";
-import { getDropTarget, isDroppable } from "../utils";
-import { useTreeContext } from "../hooks";
+import { ItemTypes } from "~/ItemTypes";
+import { PlaceholderContext } from "~/providers";
+import { NodeModel, DragItem } from "~/types";
+import { getDropTarget, isDroppable } from "~/utils";
+import { useTreeContext } from "~/hooks";
 
 export const useDropRoot = <T>(
   ref: React.RefObject<HTMLElement>
@@ -67,7 +67,7 @@ export const useDropRoot = <T>(
       }
     },
     collect: (monitor) => {
-      const dragSource: NodeModel = monitor.getItem() as NodeModel;
+      const dragSource: NodeModel = monitor.getItem();
 
       return {
         isOver: monitor.isOver({ shallow: true }) && monitor.canDrop(),

@@ -1,0 +1,42 @@
+.root {
+  align-items: center;
+  display: flex;
+  height: 32px;
+}
+
+.arrow {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+  transition: transform linear 0.1s;
+  transform: rotate(0deg);
+}
+
+.arrow > div {
+  align-items: center;
+  display: flex;
+}
+
+.arrow.is-open {
+  transform: rotate(90deg);
+}
+
+.nodeInner {
+  padding-inline-start: 4px;
+}
+
+.inputWrapper {
+  align-items: center;
+  display: flex;
+}
+
+.textField {
+  width: 200px;
+}
+
+.nodeLabel {
+  padding-right: 15px;
+}

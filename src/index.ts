@@ -6,3 +6,5 @@ export * from "./Node";
 export * from "./Tree";
 export * from "./types";
 export * from "./utils";
+export { MultiBackend } from "dnd-multi-backend";
+export { DndProvider } from "react-dnd";

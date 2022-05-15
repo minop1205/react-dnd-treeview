@@ -1,0 +1,9 @@
+.content {
+  display: grid;
+  gap: 24px;
+  width: 320px;
+}
+
+.select {
+  width: 100%;
+}

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { NodeModel, PlaceholderState } from "../types";
+import React, { useState, createContext } from "react";
+import { NodeModel, PlaceholderState } from "~/types";
 
-export const PlaceholderContext = React.createContext<PlaceholderState>(
+export const PlaceholderContext = createContext<PlaceholderState>(
   {} as PlaceholderState
 );
 
@@ -10,7 +10,9 @@ const initialState = {
   index: undefined,
 };
 
-export const PlaceholderProvider: React.FC = (props) => {
+export const PlaceholderProvider: React.FC<{ children: React.ReactNode }> = (
+  props
+) => {
   const [dropTargetId, setDropTargetId] = useState<
     PlaceholderState["dropTargetId"]
   >(initialState.dropTargetId);

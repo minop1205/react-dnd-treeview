@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { DragControlContext } from "../providers";
+import { DragControlContext } from "~/providers";
 
 /**
  * This is a hook to allow text selection by mouse in the text input area in a node.
@@ -8,37 +8,36 @@ import { DragControlContext } from "../providers";
 export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   const dragControlContext = useContext(DragControlContext);
 
-  const lock = (e: Event) => {
-    const { target } = e;
-
-    if (
-      target instanceof HTMLInputElement ||
-      target instanceof HTMLTextAreaElement
-    ) {
-      dragControlContext.lock();
-    }
-  };
-
-  const unlock = (e: Event) => {
-    const { target } = e;
-
-    if (
-      target instanceof HTMLInputElement ||
-      target instanceof HTMLTextAreaElement
-    ) {
-      dragControlContext.unlock();
-    }
-  };
-
-  const handleMouseOver = (e: MouseEvent) => lock(e);
-  const handleMouseOut = (e: MouseEvent) => unlock(e);
-  const handleFocusIn = (e: FocusEvent) => lock(e);
-  const handleFocusOut = (e: FocusEvent) => unlock(e);
-
   useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
+    if (!ref.current) return;
+    const node = ref.current;
+
+    const lock = (e: Event) => {
+      const { target } = e;
+
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement
+      ) {
+        dragControlContext.lock();
+      }
+    };
+
+    const unlock = (e: Event) => {
+      const { target } = e;
+
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement
+      ) {
+        dragControlContext.unlock();
+      }
+    };
+
+    const handleMouseOver = (e: MouseEvent) => lock(e);
+    const handleMouseOut = (e: MouseEvent) => unlock(e);
+    const handleFocusIn = (e: FocusEvent) => lock(e);
+    const handleFocusOut = (e: FocusEvent) => unlock(e);
 
     // In Firefox or Safari,
     // the focusout event is not fired when the focused element is unmounted.
@@ -50,29 +49,29 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
       }
     });
 
-    observer.observe(ref.current, {
+    observer.observe(node, {
       subtree: true,
       childList: true,
     });
 
-    ref.current?.addEventListener("mouseover", handleMouseOver);
-    ref.current?.addEventListener("mouseout", handleMouseOut);
-    ref.current?.addEventListener("focusin", handleFocusIn);
-    ref.current?.addEventListener("focusout", handleFocusOut);
+    node.addEventListener("mouseover", handleMouseOver);
+    node.addEventListener("mouseout", handleMouseOut);
+    node.addEventListener("focusin", handleFocusIn);
+    node.addEventListener("focusout", handleFocusOut);
 
     return () => {
       observer.disconnect();
-      ref.current?.removeEventListener("mouseover", handleMouseOver);
-      ref.current?.removeEventListener("mouseout", handleMouseOut);
-      ref.current?.removeEventListener("focusin", handleFocusIn);
-      ref.current?.removeEventListener("focusout", handleFocusOut);
+      node.removeEventListener("mouseover", handleMouseOver);
+      node.removeEventListener("mouseout", handleMouseOut);
+      node.removeEventListener("focusin", handleFocusIn);
+      node.removeEventListener("focusout", handleFocusOut);
     };
-  }, []);
+  }, [ref, dragControlContext]);
 
   useEffect(() => {
     ref.current?.setAttribute(
       "draggable",
       dragControlContext.isLock ? "false" : "true"
     );
-  }, [dragControlContext.isLock]);
+  }, [ref, dragControlContext.isLock]);
 };

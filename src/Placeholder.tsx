@@ -11,9 +11,7 @@ type Props = {
   index?: number;
 };
 
-export const Placeholder = <T extends unknown>(
-  props: Props
-): ReactElement | null => {
+export const Placeholder = <T,>(props: Props): ReactElement | null => {
   const {
     placeholderRender,
     placeholderComponent: Component,

@@ -10,7 +10,7 @@ type Props = PropsWithChildren<{
   depth: number;
 }>;
 
-export const Container = <T extends unknown>(props: Props): ReactElement => {
+export const Container = <T,>(props: Props): ReactElement => {
   const treeContext = useTreeContext<T>();
   const ref = useRef<HTMLLIElement>(null);
   const nodes = treeContext.tree.filter((l) => l.parent === props.parentId);

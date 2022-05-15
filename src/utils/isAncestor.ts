@@ -1,4 +1,4 @@
-import { NodeModel } from "../types";
+import { NodeModel } from "~/types";
 
 export const isAncestor = (
   tree: NodeModel[],
