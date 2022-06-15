@@ -1,5 +1,16 @@
 # Change Log
 
+## 2.0.1
+
+_June 15, 2022_
+
+### Fixed
+
+- Error using require to import from `react-dnd` and `react-dnd-html5-backend`.
+
+  Since `react-dnd` and `react-dnd-html5-backend` are now distributed only in ESM format,
+  this package is also provided only in ESM format and the package type has been changed to module.
+
 ## 2.0.0
 
 _May 15, 2022_
