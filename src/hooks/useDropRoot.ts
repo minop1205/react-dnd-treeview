@@ -12,7 +12,7 @@ export const useDropRoot = <T>(
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
-    accept: ItemTypes.TREE_ITEM,
+    accept: [ItemTypes.TREE_ITEM, ...treeContext.extraAcceptTypes],
     drop: (item: DragItem<T>, monitor) => {
       const { rootId, onDrop } = treeContext;
       const { dropTargetId, index } = placeholderContext;

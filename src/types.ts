@@ -134,6 +134,7 @@ export type TreeStateBase<T> = {
 };
 
 export type TreeState<T> = TreeStateBase<T> & {
+  extraAcceptTypes: string[];
   listComponent: ElementType;
   listItemComponent: ElementType;
   placeholderComponent: ElementType;
@@ -157,6 +158,7 @@ export type DropOptions<T = unknown> = {
 };
 
 export type TreeProps<T> = TreeStateBase<T> & {
+  extraAcceptTypes?: string[];
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   placeholderComponent?: ElementType;

@@ -13,6 +13,7 @@ describe("isDroppable", () => {
       tree: treeData,
       rootId: 0,
       render,
+      extraAcceptTypes: [],
       listComponent: "ul",
       listItemComponent: "li",
       placeholderComponent: "li",

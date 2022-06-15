@@ -38,6 +38,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
   const canDragCallback = props.canDrag;
 
   const value: TreeState<T> = {
+    extraAcceptTypes: [],
     listComponent: "ul",
     listItemComponent: "li",
     placeholderComponent: "li",
