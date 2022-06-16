@@ -19,11 +19,11 @@ import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./CustomDragPreview.module.css";
+import styles from "./DropElementFromOutsideTreeview.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom drag preview",
+  title: "Examples/Tree/Drop element from outside treeview",
   argTypes,
   decorators: [
     (Story) => (
@@ -34,9 +34,9 @@ export default {
   ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const CustomDragPreviewStory = DefaultTemplate.bind({});
+export const DropElementFromOutsideTreeview = DefaultTemplate.bind({});
 
-CustomDragPreviewStory.args = {
+DropElementFromOutsideTreeview.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -52,9 +52,9 @@ CustomDragPreviewStory.args = {
   ),
 };
 
-CustomDragPreviewStory.storyName = "Custom drag preview";
+DropElementFromOutsideTreeview.storyName = "Drop element from outside treeview";
 
-CustomDragPreviewStory.parameters = {
+DropElementFromOutsideTreeview.parameters = {
   docs: {
     page: pageFactory({
       jsId: "custom-drag-preview-js-s53fmx",
@@ -63,31 +63,31 @@ CustomDragPreviewStory.parameters = {
   },
 };
 
-if (!interactionsDisabled) {
-  CustomDragPreviewStory.play = async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+// if (!interactionsDisabled) {
+//   DropElementFromOutsideTreeview.play = async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
-    // show preview during dragging
-    const dragSource = canvas.getByText("File 3");
-    const dropTarget = canvas.getByTestId("custom-node-1");
+//     // show preview during dragging
+//     const dragSource = canvas.getByText("File 3");
+//     const dropTarget = canvas.getByTestId("custom-node-1");
 
-    await wait();
+//     await wait();
 
-    fireEvent.dragStart(dragSource);
+//     fireEvent.dragStart(dragSource);
 
-    const coords = getPointerCoords(dropTarget);
-    await dragEnterAndDragOver(dropTarget, coords);
+//     const coords = getPointerCoords(dropTarget);
+//     await dragEnterAndDragOver(dropTarget, coords);
 
-    expect(
-      await canvas.findByTestId("custom-drag-preview")
-    ).toBeInTheDocument();
+//     expect(
+//       await canvas.findByTestId("custom-drag-preview")
+//     ).toBeInTheDocument();
 
-    assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
+//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
 
-    // hide preview when drag is canceled
-    dragLeaveAndDragEnd(dragSource, dropTarget);
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-  };
-}
+//     // hide preview when drag is canceled
+//     dragLeaveAndDragEnd(dragSource, dropTarget);
+//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+//   };
+// }

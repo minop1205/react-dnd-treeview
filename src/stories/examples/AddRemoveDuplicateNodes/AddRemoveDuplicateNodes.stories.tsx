@@ -2,9 +2,9 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, userEvent } from "@storybook/testing-library";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
@@ -18,6 +18,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Add, remove, duplicate nodes",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const AddRemoveDuplicateNodesStory = Template.bind({});

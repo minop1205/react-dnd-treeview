@@ -2,7 +2,7 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
-import { Tree } from "~/Tree";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
@@ -26,6 +26,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Manual sort with placeholder",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const ManualSortWithPlaceholderStory = DefaultTemplate.bind({});

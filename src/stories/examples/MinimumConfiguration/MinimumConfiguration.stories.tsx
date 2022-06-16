@@ -2,7 +2,7 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, userEvent, fireEvent } from "@storybook/testing-library";
-import { Tree } from "~/Tree";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
 import { pageFactory } from "~/stories/pageFactory";
@@ -22,6 +22,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Minimum configuration",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const MinimumConfigurationStory = DefaultTemplate.bind({});
