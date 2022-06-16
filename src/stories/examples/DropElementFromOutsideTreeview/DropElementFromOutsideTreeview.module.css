@@ -1,7 +1,6 @@
 .treeRoot {
   box-sizing: border-box;
   height: 100%;
-  padding: 32px;
 }
 
 .draggingSource {
@@ -10,4 +9,28 @@
 
 .dropTarget {
   background-color: #e8f0fe;
+}
+
+.rootGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+}
+
+.externalContainer {
+  border-right: solid 1px #eee;
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  padding: 32px;
+  position: relative;
+}
+
+.treeContainer {
+  padding: 96px 32px 32px;
+}
+
+.btnAdd {
+  left: 32px;
+  position: absolute;
+  top: 32px;
 }

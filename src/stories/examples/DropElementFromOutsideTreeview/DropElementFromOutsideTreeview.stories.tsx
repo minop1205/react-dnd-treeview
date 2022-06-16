@@ -17,24 +17,17 @@ import {
 } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import sampleData from "~/stories/assets/sample-default.json";
+import { Template } from "./Template";
 import styles from "./DropElementFromOutsideTreeview.module.css";
 
 export default {
   component: Tree,
   title: "Examples/Tree/Drop element from outside treeview",
   argTypes,
-  decorators: [
-    (Story) => (
-      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-        <Story />
-      </DndProvider>
-    ),
-  ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const DropElementFromOutsideTreeview = DefaultTemplate.bind({});
+export const DropElementFromOutsideTreeview = Template.bind({});
 
 DropElementFromOutsideTreeview.args = {
   rootId: 0,
@@ -44,6 +37,8 @@ DropElementFromOutsideTreeview.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
+  extraAcceptTypes: ["EXTERNAL_NODE"],
+  canDrop: () => true,
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
