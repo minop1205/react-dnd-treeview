@@ -38,7 +38,7 @@ DropElementFromOutsideTreeview.args = {
     dropTarget: styles.dropTarget,
   },
   extraAcceptTypes: ["EXTERNAL_NODE"],
-  canDrop: () => true,
+  //canDrop: () => true,
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },

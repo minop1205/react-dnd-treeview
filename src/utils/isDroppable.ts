@@ -9,6 +9,8 @@ export const isDroppable = <T>(
   const { tree, rootId, canDrop } = treeContext;
 
   if (dragSourceId === undefined) {
+    // Dropability judgment of each node in the undragged state.
+    // Without this process, the newly mounted node will not be able to be dropped unless it is re-rendered
     if (dropTargetId === rootId) {
       return true;
     }
