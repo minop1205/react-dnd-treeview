@@ -1,6 +1,8 @@
 .treeRoot {
   box-sizing: border-box;
   height: 100%;
+  padding: 96px 32px 32px;
+
 }
 
 .draggingSource {
@@ -23,10 +25,6 @@
   grid-template-rows: 64px 1fr;
   padding: 32px;
   position: relative;
-}
-
-.treeContainer {
-  padding: 96px 32px 32px;
 }
 
 .btnAdd {

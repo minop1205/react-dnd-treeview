@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Story } from "@storybook/react";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { TreeProps, NodeModel } from "~/types";
+import { TreeProps, NodeModel, DropOptions } from "~/types";
 import { useDropHandler } from "~/stories/useDropHandler";
 import { FileProperties } from "~/stories/types";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
@@ -12,10 +12,22 @@ import { DragLayer } from "./DragLayer";
 import styles from "./DropElementFromOutsideTreeview.module.css";
 
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
-  const [tree, handleDrop] = useDropHandler<FileProperties>(args);
+  const [tree, updateTree] = useDropHandler<FileProperties>(args);
   const [externalNodes, setExternalNodes] =
     useState<NodeModel<FileProperties>[]>(externalNodesJson);
   const [lastId, setLastId] = useState(105);
+
+  const handleDrop = (
+    newTree: NodeModel<FileProperties>[],
+    options: DropOptions<FileProperties>
+  ) => {
+    const { dragSourceId } = options;
+
+    updateTree(newTree, options);
+    setExternalNodes(
+      externalNodes.filter((exnode) => exnode.id !== dragSourceId)
+    );
+  };
 
   const handleAddExternalNode = () => {
     const node: NodeModel<FileProperties> = {
@@ -52,11 +64,11 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           </div>
           <div>
             {externalNodes.map((node) => (
-              <ExternalNode node={node} />
+              <ExternalNode key={node.id} node={node} />
             ))}
           </div>
         </div>
-        <div className={styles.treeContainer}>
+        <div>
           <Tree {...args} tree={tree} onDrop={handleDrop} />
         </div>
       </div>
