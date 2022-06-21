@@ -48,26 +48,39 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (id, parentId, index) => {
+    onDrop: (dragSource, dropTargetId, index) => {
       const options: DropOptions<T> = {
-        dragSourceId: id,
-        dropTargetId: parentId,
-        dragSource: getTreeItem<T>(props.tree, id),
-        dropTarget: getTreeItem<T>(props.tree, parentId),
+        dragSourceId: dragSource.id,
+        dropTargetId,
+        dragSource,
+        dropTarget: getTreeItem<T>(props.tree, dropTargetId),
       };
 
+      let tree = props.tree;
+
+      // If the dragSource does not exist in the tree,
+      // it is an external node, so add it to the tree
+      if (!getTreeItem(tree, dragSource.id)) {
+        tree = [...tree, dragSource];
+      }
+
       if (props.sort === false) {
-        const [, destIndex] = getModifiedIndex(props.tree, id, parentId, index);
+        const [, destIndex] = getModifiedIndex(
+          tree,
+          dragSource.id,
+          dropTargetId,
+          index
+        );
         options.destinationIndex = destIndex;
         props.onDrop(
-          mutateTreeWithIndex<T>(props.tree, id, parentId, index),
+          mutateTreeWithIndex<T>(tree, dragSource.id, dropTargetId, index),
           options
         );
 
         return;
       }
 
-      props.onDrop(mutateTree<T>(props.tree, id, parentId), options);
+      props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
     },
     canDrop: canDropCallback
       ? (id, parentId) =>

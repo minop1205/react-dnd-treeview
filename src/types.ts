@@ -32,9 +32,9 @@ export type NodeRender<T> = (
 
 export type ClickHandler = (data: NodeModel) => void;
 
-export type DropHandler = (
-  id: NodeModel["id"],
-  parent: NodeModel["id"],
+export type DropHandler<T> = (
+  dragSource: NodeModel<T>,
+  dropTargetId: NodeModel["id"],
   index: number
 ) => void;
 
@@ -143,7 +143,7 @@ export type TreeState<T> = TreeStateBase<T> & {
   dropTargetOffset: number;
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
-  onDrop: DropHandler;
+  onDrop: DropHandler<T>;
   canDrop?: CanDropHandler;
   canDrag?: CanDragHandler;
   onToggle: ToggleHandler;

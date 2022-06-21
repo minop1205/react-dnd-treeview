@@ -14,7 +14,7 @@ export const useDropNode = <T>(
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: [ItemTypes.TREE_ITEM, ...treeContext.extraAcceptTypes],
-    drop: (dragSource: DragItem<T>, monitor) => {
+    drop: (dragItem: DragItem<T>, monitor) => {
       const { dropTargetId, index } = placeholderContext;
 
       if (
@@ -22,7 +22,7 @@ export const useDropNode = <T>(
         dropTargetId !== undefined &&
         index !== undefined
       ) {
-        treeContext.onDrop(dragSource.id, dropTargetId, index);
+        treeContext.onDrop(dragItem, dropTargetId, index);
       }
 
       placeholderContext.hidePlaceholder();
