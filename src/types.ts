@@ -39,8 +39,8 @@ export type DropHandler<T> = (
 ) => void;
 
 export type CanDropHandler = (
-  id: NodeModel["id"],
-  parent: NodeModel["id"]
+  dragSourceId: NodeModel["id"],
+  dropTargetId: NodeModel["id"]
 ) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;

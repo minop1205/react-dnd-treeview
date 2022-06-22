@@ -4,6 +4,7 @@ import React, {
   ReactElement,
   createContext,
 } from "react";
+import { useDragDropManager } from "react-dnd";
 import {
   mutateTree,
   mutateTreeWithIndex,
@@ -34,6 +35,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     closeAll: () => handleCloseAll(props.onChangeOpen),
   }));
 
+  const monitor = useDragDropManager().getMonitor();
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
 
@@ -83,12 +85,12 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
       props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
     },
     canDrop: canDropCallback
-      ? (id, parentId) =>
+      ? (dragSourceId, dropTargetId) =>
           canDropCallback(props.tree, {
-            dragSourceId: id,
-            dropTargetId: parentId,
-            dragSource: getTreeItem(props.tree, id),
-            dropTarget: getTreeItem(props.tree, parentId),
+            dragSourceId,
+            dropTargetId,
+            dragSource: monitor.getItem(),
+            dropTarget: getTreeItem(props.tree, dropTargetId),
           })
       : undefined,
     canDrag: canDragCallback
