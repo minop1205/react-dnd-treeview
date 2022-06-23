@@ -24,6 +24,7 @@ export const parameters = {
             "Manual sort with placeholder",
             "Add, remove, duplicate nodes",
             "Drop element from outside treeview",
+            "Drop element from outside DndProvider",
           ],
         ],
       ],
