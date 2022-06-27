@@ -38,10 +38,7 @@ DropElementFromOutsideDndProvider.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  extraAcceptTypes: [...Object.values(NativeTypes)],
-  canDrop(tree, options) {
-    console.log(options.dragSource);
-  },
+  extraAcceptTypes: [NativeTypes.TEXT, NativeTypes.FILE],
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },

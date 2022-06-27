@@ -12,7 +12,13 @@ import {
   getModifiedIndex,
 } from "~/utils";
 import { useOpenIdsHelper } from "~/hooks";
-import { TreeState, TreeProps, TreeMethods, DropOptions } from "~/types";
+import {
+  TreeState,
+  TreeProps,
+  TreeMethods,
+  DropOptions,
+  NodeModel,
+} from "~/types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -50,7 +56,21 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (dragSource, dropTargetId, index) => {
+    onDrop: (dragSourceBase, dropTargetId, index) => {
+      let dragSource: NodeModel<T> | null = dragSourceBase;
+
+      if (props.dropItemTransformer) {
+        dragSource = props.dropItemTransformer(
+          monitor.getItemType(),
+          dragSourceBase,
+          dropTargetId
+        );
+
+        if (!dragSource) {
+          return;
+        }
+      }
+
       const options: DropOptions<T> = {
         dragSourceId: dragSource.id,
         dropTargetId,

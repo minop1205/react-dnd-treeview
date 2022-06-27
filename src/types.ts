@@ -1,5 +1,6 @@
 import { RefObject, ElementType, ReactElement } from "react";
 import { XYCoord } from "react-dnd";
+import { Identifier } from "dnd-core";
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -131,6 +132,7 @@ export type TreeStateBase<T> = {
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;
   placeholderRender?: PlaceholderRender<T>;
+  dropItemTransformer?: DropItemTransformer<T>;
 };
 
 export type TreeState<T> = TreeStateBase<T> & {
@@ -178,3 +180,9 @@ export type TreeMethods = {
   openAll(): void;
   closeAll(): void;
 };
+
+export type DropItemTransformer<T> = (
+  itemType: Identifier | null,
+  dropItem: any,
+  dropTargetId: NodeModel["id"]
+) => NodeModel<T> | null;
