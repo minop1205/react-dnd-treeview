@@ -20,17 +20,17 @@ import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
 import { Template } from "./Template";
-import styles from "./ExternalElementOutsideReactDnd.module.css";
+import styles from "./FileDrop.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/External element (outside react-dnd)",
+  title: "Examples/Tree/File drop",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const ExternalElementOutsideReactDnd = Template.bind({});
+export const FileDrop = Template.bind({});
 
-ExternalElementOutsideReactDnd.args = {
+FileDrop.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -38,7 +38,7 @@ ExternalElementOutsideReactDnd.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  extraAcceptTypes: [NativeTypes.TEXT],
+  extraAcceptTypes: [NativeTypes.FILE],
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
@@ -47,10 +47,9 @@ ExternalElementOutsideReactDnd.args = {
   ),
 };
 
-ExternalElementOutsideReactDnd.storyName =
-  "External element (outside react-dnd)";
+FileDrop.storyName = "File drop";
 
-ExternalElementOutsideReactDnd.parameters = {
+FileDrop.parameters = {
   docs: {
     page: pageFactory({
       jsId: "custom-drag-preview-js-s53fmx",
@@ -60,7 +59,7 @@ ExternalElementOutsideReactDnd.parameters = {
 };
 
 // if (!interactionsDisabled) {
-//   ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
+//   FileDrop.play = async ({ canvasElement }) => {
 //     const canvas = within(canvasElement);
 
 //     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();

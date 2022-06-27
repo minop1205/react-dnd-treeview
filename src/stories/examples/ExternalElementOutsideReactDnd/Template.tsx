@@ -45,24 +45,8 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     setLastId((state) => state + 1);
   };
 
-  const dropItemTransformer = (
-    itemType: Identifier | null,
-    dropItem: any,
-    dropTargetId: NodeModel["id"]
-  ) => {
-    if (itemType === "__NATIVE_FILE__") {
-      const file = dropItem.files[0] as File;
-
-      return {
-        id: lastId,
-        parent: dropTargetId,
-        text: file.name,
-        data: {
-          fileSize: `${dropItem.files[0].size / 1024}KB`,
-          fileType: "image",
-        },
-      };
-    } else if (itemType === "__NATIVE_TEXT__") {
+  const dropItemTransformer = (itemType: Identifier | null, dropItem: any) => {
+    if (itemType === "__NATIVE_TEXT__") {
       return JSON.parse(dropItem.text) as NodeModel<FileProperties>;
     }
 

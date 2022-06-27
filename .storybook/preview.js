@@ -25,6 +25,7 @@ export const parameters = {
             "Add, remove, duplicate nodes",
             "External element (inside react-dnd)",
             "External element (outside react-dnd)",
+            "File drop",
           ],
         ],
       ],
