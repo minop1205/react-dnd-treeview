@@ -6,7 +6,7 @@ import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { useDropHandler } from "~/stories/useDropHandler";
 import { ExternalNode } from "./ExternalNode";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
-import styles from "./DropElementFromOutsideDndProvider.module.css";
+import styles from "./ExternalElementOutsideReactDnd.module.css";
 import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
 import type { Identifier } from "dnd-core";

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useDrag } from "react-dnd";
-import { getEmptyImage } from "react-dnd-html5-backend";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import { NodeModel } from "~/types";
 import { FileProperties } from "~/stories/types";

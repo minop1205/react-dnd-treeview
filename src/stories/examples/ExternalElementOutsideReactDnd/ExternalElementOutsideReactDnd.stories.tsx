@@ -2,6 +2,7 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
+import { NativeTypes } from "react-dnd-html5-backend";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
@@ -19,17 +20,17 @@ import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
 import { Template } from "./Template";
-import styles from "./DropElementFromOutsideTreeview.module.css";
+import styles from "./ExternalElementOutsideReactDnd.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Drop element from outside treeview",
+  title: "Examples/Tree/External element (outside react-dnd)",
   argTypes,
 } as Meta<TreeProps<FileProperties>>;
 
-export const DropElementFromOutsideTreeview = Template.bind({});
+export const ExternalElementOutsideReactDnd = Template.bind({});
 
-DropElementFromOutsideTreeview.args = {
+ExternalElementOutsideReactDnd.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -37,7 +38,7 @@ DropElementFromOutsideTreeview.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  extraAcceptTypes: ["EXTERNAL_NODE"],
+  extraAcceptTypes: [NativeTypes.TEXT, NativeTypes.FILE],
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
@@ -46,9 +47,10 @@ DropElementFromOutsideTreeview.args = {
   ),
 };
 
-DropElementFromOutsideTreeview.storyName = "Drop element from outside treeview";
+ExternalElementOutsideReactDnd.storyName =
+  "External element (outside react-dnd)";
 
-DropElementFromOutsideTreeview.parameters = {
+ExternalElementOutsideReactDnd.parameters = {
   docs: {
     page: pageFactory({
       jsId: "custom-drag-preview-js-s53fmx",
@@ -58,7 +60,7 @@ DropElementFromOutsideTreeview.parameters = {
 };
 
 // if (!interactionsDisabled) {
-//   DropElementFromOutsideTreeview.play = async ({ canvasElement }) => {
+//   ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
 //     const canvas = within(canvasElement);
 
 //     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();

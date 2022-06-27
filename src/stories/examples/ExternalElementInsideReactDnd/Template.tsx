@@ -9,7 +9,7 @@ import { FileProperties } from "~/stories/types";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
 import { ExternalNode } from "./ExternalNode";
 import { DragLayer } from "./DragLayer";
-import styles from "./DropElementFromOutsideTreeview.module.css";
+import styles from "./ExternalElementInsideReactDnd.module.css";
 
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
   const [tree, updateTree] = useDropHandler<FileProperties>(args);
