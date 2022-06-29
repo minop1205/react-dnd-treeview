@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.2
+
+_June 29, 2022_
+
+### Changed
+
+- If the `initialOpen` property is updated, the open state of the tree will be updated.
+
 ## 2.0.1
 
 _June 15, 2022_
