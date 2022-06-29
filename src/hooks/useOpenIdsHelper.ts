@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   NodeModel,
   ToggleHandler,
@@ -21,17 +21,20 @@ export const useOpenIdsHelper = (
     handleClose: CloseHandler;
   }
 ] => {
-  let initialOpenIds: NodeModel["id"][] = [];
-
-  if (initialOpen === true) {
-    initialOpenIds = tree
-      .filter((node) => node.droppable)
-      .map((node) => node.id);
-  } else if (Array.isArray(initialOpen)) {
-    initialOpenIds = initialOpen;
-  }
+  let initialOpenIds: NodeModel["id"][] = useMemo(() => {
+    if (initialOpen === true) {
+      return initialOpenIds = tree
+        .filter((node) => node.droppable)
+        .map((node) => node.id);
+    } else if (Array.isArray(initialOpen)) {
+      return initialOpen;
+    }
+    return []
+  },[initialOpen]);
 
   const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
+
+  useEffect(() => setOpenIds(initialOpenIds), [initialOpen])
 
   const handleToggle: ToggleHandler = (targetId: NodeModel["id"], callback) => {
     const newOpenIds = openIds.includes(targetId)
