@@ -17,7 +17,7 @@ import {
   TreeProps,
   TreeMethods,
   DropOptions,
-  NodeModel,
+  NativeSourceDropOptions,
 } from "~/types";
 
 type Props<T> = PropsWithChildren<
@@ -56,21 +56,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (dragSourceBase, dropTargetId, index) => {
-      let dragSource: NodeModel<T> | null = dragSourceBase;
-
-      if (props.dropItemTransformer) {
-        dragSource = props.dropItemTransformer(
-          monitor.getItemType(),
-          dragSourceBase,
-          dropTargetId
-        );
-
-        if (!dragSource) {
-          return;
-        }
-      }
-
+    onDrop: (dragSource, dropTargetId, index) => {
       const options: DropOptions<T> = {
         dragSourceId: dragSource.id,
         dropTargetId,
@@ -103,6 +89,26 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
       }
 
       props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
+    },
+    onNativeSourceDrop: (dropTargetId, index) => {
+      if (props.onNativeSourceDrop) {
+        const options: NativeSourceDropOptions<T> = {
+          dropTargetId,
+          dropTarget: getTreeItem<T>(props.tree, dropTargetId),
+        };
+
+        if (props.sort) {
+          const [, destIndex] = getModifiedIndex(
+            props.tree,
+            dropTargetId,
+            dropTargetId,
+            index
+          );
+          options.destinationIndex = destIndex;
+        }
+
+        props.onNativeSourceDrop(monitor, options);
+      }
     },
     canDrop: canDropCallback
       ? (dragSourceId, dropTargetId) =>

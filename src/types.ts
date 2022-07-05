@@ -1,5 +1,6 @@
 import type { RefObject, ElementType, ReactElement } from "react";
-import type { DragSourceMonitor, XYCoord } from "react-dnd";
+import type { XYCoord } from "react-dnd";
+import type { DragDropMonitor } from "dnd-core";
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -39,7 +40,6 @@ export type DropHandler<T> = (
 ) => void;
 
 export type NativeSourceDropHandler = (
-  monitor: DragSourceMonitor,
   dropTargetId: NodeModel["id"],
   index: number
 ) => void;
@@ -182,7 +182,7 @@ export type TreeProps<T> = TreeStateBase<T> & {
   onChangeOpen?: ChangeOpenHandler;
   onDrop: (tree: NodeModel<T>[], options: DropOptions<T>) => void;
   onNativeSourceDrop?: (
-    monitor: DragSourceMonitor,
+    monitor: DragDropMonitor,
     options: NativeSourceDropOptions<T>
   ) => void;
   canDrop?: (tree: NodeModel<T>[], options: DropOptions<T>) => boolean | void;
