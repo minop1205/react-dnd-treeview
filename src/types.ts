@@ -1,6 +1,5 @@
-import { RefObject, ElementType, ReactElement } from "react";
-import { XYCoord } from "react-dnd";
-import { Identifier } from "dnd-core";
+import type { RefObject, ElementType, ReactElement } from "react";
+import type { DragSourceMonitor, XYCoord } from "react-dnd";
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -35,6 +34,12 @@ export type ClickHandler = (data: NodeModel) => void;
 
 export type DropHandler<T> = (
   dragSource: NodeModel<T>,
+  dropTargetId: NodeModel["id"],
+  index: number
+) => void;
+
+export type NativeSourceDropHandler = (
+  monitor: DragSourceMonitor,
   dropTargetId: NodeModel["id"],
   index: number
 ) => void;
@@ -132,7 +137,6 @@ export type TreeStateBase<T> = {
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;
   placeholderRender?: PlaceholderRender<T>;
-  dropItemTransformer?: DropItemTransformer<T>;
 };
 
 export type TreeState<T> = TreeStateBase<T> & {
@@ -146,6 +150,7 @@ export type TreeState<T> = TreeStateBase<T> & {
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
   onDrop: DropHandler<T>;
+  onNativeSourceDrop?: NativeSourceDropHandler;
   canDrop?: CanDropHandler;
   canDrag?: CanDragHandler;
   onToggle: ToggleHandler;
@@ -155,6 +160,12 @@ export type DropOptions<T = unknown> = {
   dragSourceId: NodeModel["id"];
   dropTargetId: NodeModel["id"];
   dragSource: NodeModel<T> | undefined;
+  dropTarget: NodeModel<T> | undefined;
+  destinationIndex?: number;
+};
+
+export type NativeSourceDropOptions<T = unknown> = {
+  dropTargetId: NodeModel["id"];
   dropTarget: NodeModel<T> | undefined;
   destinationIndex?: number;
 };
@@ -170,6 +181,10 @@ export type TreeProps<T> = TreeStateBase<T> & {
   initialOpen?: InitialOpen;
   onChangeOpen?: ChangeOpenHandler;
   onDrop: (tree: NodeModel<T>[], options: DropOptions<T>) => void;
+  onNativeSourceDrop?: (
+    monitor: DragSourceMonitor,
+    options: NativeSourceDropOptions<T>
+  ) => void;
   canDrop?: (tree: NodeModel<T>[], options: DropOptions<T>) => boolean | void;
   canDrag?: (node: NodeModel<T> | undefined) => boolean;
 };
@@ -180,9 +195,3 @@ export type TreeMethods = {
   openAll(): void;
   closeAll(): void;
 };
-
-export type DropItemTransformer<T> = (
-  itemType: Identifier | null,
-  dropItem: any,
-  dropTargetId: NodeModel["id"]
-) => NodeModel<T> | null;
