@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useDrop, DragElementWrapper } from "react-dnd";
+import { NativeTypes } from "react-dnd-html5-backend";
 import { ItemTypes } from "~/ItemTypes";
 import { PlaceholderContext } from "~/providers";
 import { NodeModel, DragItem } from "~/types";
@@ -22,7 +23,20 @@ export const useDropRoot = <T>(
         dropTargetId !== undefined &&
         index !== undefined
       ) {
-        onDrop(dragItem, rootId, index);
+        const dragSourceItemType = monitor.getItemType();
+
+        if (
+          dragSourceItemType === NativeTypes.FILE ||
+          dragSourceItemType === NativeTypes.URL ||
+          dragSourceItemType === NativeTypes.TEXT ||
+          dragSourceItemType === NativeTypes.HTML
+        ) {
+          if (treeContext.onNativeSourceDrop) {
+            treeContext.onNativeSourceDrop(rootId, index);
+          }
+        } else {
+          onDrop(dragItem, rootId, index);
+        }
       }
 
       placeholderContext.hidePlaceholder();
