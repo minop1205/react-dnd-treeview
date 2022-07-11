@@ -1,33 +1,41 @@
 import React, { useState } from "react";
 import { Story } from "@storybook/react";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { useDropHandler } from "~/stories/useDropHandler";
 import styles from "./TextDrop.module.css";
 import type { FileProperties } from "~/stories/types";
-import type { TreeProps, NodeModel, DropOptions } from "~/types";
-import type { Identifier } from "dnd-core";
+import type {
+  TreeProps,
+  NodeModel,
+  DropOptions,
+  NativeSourceDropOptions,
+} from "~/types";
+import type { DragDropMonitor } from "dnd-core";
 
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
-  const [tree, updateTree] = useDropHandler<FileProperties>(args);
+  const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [lastId, setLastId] = useState(105);
 
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
     options: DropOptions<FileProperties>
   ) => {
-    updateTree(newTree, options);
-    setLastId((state) => state + 1);
+    setTree(newTree);
+    args.onDrop(newTree, options);
   };
 
-  const dropItemTransformer = (
-    itemType: Identifier | null,
-    dropItem: any,
-    dropTargetId: NodeModel["id"]
+  const handleNativeSourceDrop = (
+    monitor: DragDropMonitor,
+    options: NativeSourceDropOptions<FileProperties>
   ) => {
-    if (itemType === "__NATIVE_TEXT__") {
-      const text = dropItem.text as string;
+    const sourceItem = monitor.getItem();
+    const itemType = monitor.getItemType();
+    const { dropTargetId } = options;
+    let node: NodeModel<FileProperties> | null = null;
 
-      return {
+    if (itemType === "__NATIVE_TEXT__") {
+      const text = sourceItem.text as string;
+
+      node = {
         id: lastId,
         parent: dropTargetId,
         text,
@@ -35,14 +43,14 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           fileSize: "1KB",
           fileType: "text",
         },
-      } as NodeModel<FileProperties>;
+      };
     } else if (itemType === "__NATIVE_HTML__") {
-      const html = dropItem.html as string;
+      const html = sourceItem.html as string;
       const tempEl = document.createElement("div");
       tempEl.innerHTML = html;
-      const text = tempEl.textContent;
+      const text = tempEl.textContent as string;
 
-      return {
+      node = {
         id: lastId,
         parent: dropTargetId,
         text,
@@ -50,10 +58,17 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           fileSize: "1KB",
           fileType: "text",
         },
-      } as NodeModel<FileProperties>;
+      };
     }
 
-    return dropItem as NodeModel<FileProperties>;
+    if (node) {
+      setTree([...tree, node]);
+      setLastId(lastId + 1);
+    }
+
+    if (args.onNativeSourceDrop) {
+      args.onNativeSourceDrop(monitor, options);
+    }
   };
 
   return (
@@ -70,7 +85,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           {...args}
           tree={tree}
           onDrop={handleDrop}
-          dropItemTransformer={dropItemTransformer}
+          onNativeSourceDrop={handleNativeSourceDrop}
         />
       </DndProvider>
     </div>
