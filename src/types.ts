@@ -158,7 +158,7 @@ export type DropOptions<T = unknown> = {
   monitor: DragDropMonitor;
 };
 
-export type TreeProps<T> = TreeStateBase<T> & {
+export type TreeProps<T = unknown> = TreeStateBase<T> & {
   extraAcceptTypes?: string[];
   listComponent?: ElementType;
   listItemComponent?: ElementType;

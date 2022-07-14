@@ -7,9 +7,9 @@ import { useDropHandler } from "~/stories/useDropHandler";
 import { ExternalNode } from "./ExternalNode";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
 import styles from "./ExternalElementOutsideReactDnd.module.css";
+import { NativeTypes } from "react-dnd-html5-backend";
 import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
-import type { Identifier } from "dnd-core";
 
 export const Template: Story<TreeProps<FileProperties>> = (args) => {
   const [tree, updateTree] = useDropHandler<FileProperties>(args);
@@ -21,13 +21,21 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     newTree: NodeModel<FileProperties>[],
     options: DropOptions<FileProperties>
   ) => {
-    const { dragSourceId } = options;
+    const { dropTargetId, monitor } = options;
+    const itemType = monitor.getItemType();
+
+    if (itemType === NativeTypes.TEXT) {
+      const nodeJson = monitor.getItem().text;
+      const node = JSON.parse(nodeJson) as NodeModel<FileProperties>;
+
+      node.parent = dropTargetId;
+      updateTree([...newTree, node], options);
+      setExternalNodes(externalNodes.filter((exnode) => exnode.id !== node.id));
+      setLastId((state) => state + 1);
+      return;
+    }
 
     updateTree(newTree, options);
-    setExternalNodes(
-      externalNodes.filter((exnode) => exnode.id !== dragSourceId)
-    );
-    setLastId((state) => state + 1);
   };
 
   const handleAddExternalNode = () => {
@@ -43,14 +51,6 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
 
     setExternalNodes([...externalNodes, node]);
     setLastId((state) => state + 1);
-  };
-
-  const dropItemTransformer = (itemType: Identifier | null, dropItem: any) => {
-    if (itemType === "__NATIVE_TEXT__") {
-      return JSON.parse(dropItem.text) as NodeModel<FileProperties>;
-    }
-
-    return dropItem as NodeModel<FileProperties>;
   };
 
   return (
@@ -77,12 +77,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           options={getBackendOptions()}
           debugMode={true}
         >
-          <Tree
-            {...args}
-            tree={tree}
-            onDrop={handleDrop}
-            dropItemTransformer={dropItemTransformer}
-          />
+          <Tree {...args} tree={tree} onDrop={handleDrop} />
         </DndProvider>
       </div>
     </div>

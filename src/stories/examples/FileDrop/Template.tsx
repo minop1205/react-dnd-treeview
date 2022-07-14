@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Story } from "@storybook/react";
+import { NativeTypes } from "react-dnd-html5-backend";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import styles from "./FileDrop.module.css";
-import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
-import type { DragDropMonitor } from "dnd-core";
+import { FileProperties } from "~/stories/types";
+import styles from "./FileDrop.module.css";
 
 const Input = styled("input")({
   display: "none",
@@ -20,8 +20,30 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     newTree: NodeModel<FileProperties>[],
     options: DropOptions<FileProperties>
   ) => {
-    setTree(newTree);
-    args.onDrop(newTree, options);
+    const { dropTargetId, monitor } = options;
+    const itemType = monitor.getItemType();
+
+    if (itemType === NativeTypes.FILE) {
+      const files: File[] = monitor.getItem().files;
+      const nodes: NodeModel<FileProperties>[] = files.map((file, index) => ({
+        id: lastId + index,
+        parent: dropTargetId,
+        text: file.name,
+        data: {
+          fileSize: `${file.size / 1024}KB`,
+          fileType: "text",
+        },
+      }));
+
+      const mergedTree = [...newTree, ...nodes];
+      setTree(mergedTree);
+      setLastId(lastId + files.length);
+      args.onDrop(mergedTree, options);
+    } else {
+      setTree(newTree);
+      setLastId(lastId + 1);
+      args.onDrop(newTree, options);
+    }
   };
 
   // const handleNativeSourceDrop = (

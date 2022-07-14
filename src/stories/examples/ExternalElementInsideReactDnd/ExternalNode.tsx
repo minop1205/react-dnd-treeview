@@ -13,7 +13,7 @@ type Props = {
 
 export const ExternalNode: React.FC<Props> = (props) => {
   const { id, droppable, data } = props.node;
-  const [collected, drag, dragPreview] = useDrag({
+  const [, drag, dragPreview] = useDrag({
     type: "EXTERNAL_NODE",
     item: props.node,
   });
