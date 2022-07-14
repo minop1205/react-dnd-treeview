@@ -12,13 +12,7 @@ import {
   getModifiedIndex,
 } from "~/utils";
 import { useOpenIdsHelper } from "~/hooks";
-import {
-  TreeState,
-  TreeProps,
-  TreeMethods,
-  DropOptions,
-  NativeSourceDropOptions,
-} from "~/types";
+import { TreeState, TreeProps, TreeMethods, DropOptions } from "~/types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -57,57 +51,50 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     ...props,
     openIds,
     onDrop: (dragSource, dropTargetId, index) => {
-      const options: DropOptions<T> = {
-        dragSourceId: dragSource.id,
-        dropTargetId,
-        dragSource,
-        dropTarget: getTreeItem<T>(props.tree, dropTargetId),
-      };
-
-      let tree = props.tree;
-
-      // If the dragSource does not exist in the tree,
-      // it is an external node, so add it to the tree
-      if (!getTreeItem(tree, dragSource.id)) {
-        tree = [...tree, dragSource];
-      }
-
-      if (props.sort === false) {
-        const [, destIndex] = getModifiedIndex(
-          tree,
-          dragSource.id,
-          dropTargetId,
-          index
-        );
-        options.destinationIndex = destIndex;
-        props.onDrop(
-          mutateTreeWithIndex<T>(tree, dragSource.id, dropTargetId, index),
-          options
-        );
-
-        return;
-      }
-
-      props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
-    },
-    onNativeSourceDrop: (dropTargetId, index) => {
-      if (props.onNativeSourceDrop) {
-        const options: NativeSourceDropOptions<T> = {
+      // if dragSource is null,
+      // it means that the drop is from the outside of the react-dnd.
+      if (!dragSource) {
+        const options: DropOptions<T> = {
           dropTargetId,
           dropTarget: getTreeItem<T>(props.tree, dropTargetId),
+          monitor,
         };
 
-        if (props.sort) {
+        props.onDrop(props.tree, options);
+      } else {
+        const options: DropOptions<T> = {
+          dragSourceId: dragSource.id,
+          dropTargetId,
+          dragSource: dragSource,
+          dropTarget: getTreeItem<T>(props.tree, dropTargetId),
+          monitor,
+        };
+
+        let tree = props.tree;
+
+        // If the dragSource does not exist in the tree,
+        // it is an external node, so add it to the tree
+        if (!getTreeItem(tree, dragSource.id)) {
+          tree = [...tree, dragSource];
+        }
+
+        if (props.sort === false) {
           const [, destIndex] = getModifiedIndex(
-            props.tree,
-            dropTargetId,
+            tree,
+            dragSource.id,
             dropTargetId,
             index
           );
           options.destinationIndex = destIndex;
+          props.onDrop(
+            mutateTreeWithIndex<T>(tree, dragSource.id, dropTargetId, index),
+            options
+          );
+
+          return;
         }
 
-        props.onNativeSourceDrop(monitor, options);
+        props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
       }
     },
     canDrop: canDropCallback
@@ -117,6 +104,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
             dropTargetId,
             dragSource: monitor.getItem(),
             dropTarget: getTreeItem(props.tree, dropTargetId),
+            monitor,
           })
       : undefined,
     canDrag: canDragCallback

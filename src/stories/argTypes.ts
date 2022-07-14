@@ -80,14 +80,6 @@ export const onDrop: CustomArgType = {
   action: "onDrop",
 };
 
-export const onNativeSourceDrop: CustomArgType = {
-  name: "onNativeSourceDrop",
-  table: {
-    type: { summary: "func" },
-  },
-  action: "onNativeSourceDrop",
-};
-
 export const onChangeOpen: CustomArgType = {
   name: "onChangeOpen",
   description:
