@@ -9,6 +9,7 @@ import {
   mutateTree,
   mutateTreeWithIndex,
   getTreeItem,
+  getDestIndex,
   getModifiedIndex,
 } from "~/utils";
 import { useOpenIdsHelper } from "~/hooks";
@@ -59,6 +60,14 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
           dropTarget: getTreeItem<T>(props.tree, dropTargetId),
           monitor,
         };
+
+        if (props.sort === false) {
+          options.destinationIndex = getDestIndex(
+            props.tree,
+            dropTargetId,
+            index
+          );
+        }
 
         props.onDrop(props.tree, options);
       } else {
