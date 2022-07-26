@@ -14,4 +14,5 @@ export const dragAndDrop = async (
   await dragEnterAndDragOver(dropTarget, coords);
   fireEvent.drop(dropTarget, coords);
   dragLeaveAndDragEnd(dragSource, dropTarget);
+  await wait();
 };
