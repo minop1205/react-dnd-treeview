@@ -88,6 +88,9 @@ if (!interactionsDisabled) {
 
     // hide preview when drag is canceled
     dragLeaveAndDragEnd(dragSource, dropTarget);
+
+    await wait();
+
     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
   };
 }

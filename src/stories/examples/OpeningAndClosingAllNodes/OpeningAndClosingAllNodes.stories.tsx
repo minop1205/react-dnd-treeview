@@ -7,6 +7,7 @@ import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import { wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
 import sampleData from "~/stories/assets/sample-default.json";
@@ -52,17 +53,21 @@ if (!interactionsDisabled) {
   OpeningAndClosingAllNodesStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
+    await wait();
+
     expect(canvas.queryByText("File 1-2")).toBeNull();
 
     const btnOpenAll = canvas.getByTestId("btn-open-all");
     const btnCloseAll = canvas.getByTestId("btn-close-all");
 
     userEvent.click(btnOpenAll);
+    await wait();
 
-    expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
+    expect(canvas.getByText("File 1-2")).toBeInTheDocument();
     expect(await canvas.findByText("File 2-1-1")).toBeInTheDocument();
 
     userEvent.click(btnCloseAll);
+    await wait();
 
     expect(canvas.queryByText("File 1-2")).toBeNull();
     expect(canvas.queryByText("File 2-1-1")).toBeNull();

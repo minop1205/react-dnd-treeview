@@ -7,6 +7,7 @@ import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
+import { wait, toggleNode } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -60,9 +61,12 @@ if (!interactionsDisabled) {
   AddRemoveDuplicateNodesStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
+    await wait();
+
     // add new node named File4 to root
     {
       userEvent.click(canvas.getByTestId("btn-add"));
+      await wait();
 
       const dialog = within(await canvas.findByTestId("dialog"));
 
@@ -76,14 +80,15 @@ if (!interactionsDisabled) {
     // delete Folder 1
     userEvent.hover(canvas.getByTestId("custom-node-1"));
     userEvent.click(await canvas.findByTestId("btn-delete-1"));
+    await wait();
     expect(canvas.queryByText("Folder 1")).toBeNull();
 
     // copy Folder 2
     userEvent.hover(canvas.getByTestId("custom-node-4"));
     userEvent.click(await canvas.findByTestId("btn-copy-4"));
     userEvent.unhover(canvas.getByTestId("custom-node-4"));
-    userEvent.click(await canvas.findByTestId("arrow-right-icon-12"));
-    userEvent.click(await canvas.findByTestId("arrow-right-icon-13"));
+    await toggleNode(await canvas.findByTestId("arrow-right-icon-12"));
+    await toggleNode(await canvas.findByTestId("arrow-right-icon-13"));
     expect(await canvas.findByText("File 2-1-1")).toBeInTheDocument();
   };
 }

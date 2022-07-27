@@ -19,7 +19,7 @@ export const pageFactory = (props: StoryDocumentProps) => {
         <Subtitle />
         <Description />
         <Primary />
-        <CodeViewer {...props} />
+        {/*<CodeViewer {...props} />*/}
         <ArgsTable story={PRIMARY_STORY} />
         <Stories />
       </>

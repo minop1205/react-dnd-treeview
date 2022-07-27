@@ -6,6 +6,7 @@ import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
+import { wait } from "~/stories/examples/helpers";
 import { FileProperties } from "~/stories/types";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
@@ -53,17 +54,20 @@ MultipleSelectionsStory.parameters = {
 };
 
 if (!interactionsDisabled) {
-  MultipleSelectionsStory.play = ({ canvasElement }) => {
+  MultipleSelectionsStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     expect(canvas.getByTestId("selected-node").textContent).toBe("none");
     userEvent.click(canvas.getByText("Folder 1"));
+    await wait();
     expect(canvas.getByTestId("selected-node").textContent).toBe("Folder 1");
     userEvent.click(canvas.getByText("File 3"));
+    await wait();
     expect(canvas.getByTestId("selected-node").textContent).toBe(
       "Folder 1, File 3"
     );
     userEvent.click(canvas.getByRole("list"));
+    await wait();
     expect(canvas.getByTestId("selected-node").textContent).toBe("none");
   };
 }

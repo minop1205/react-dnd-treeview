@@ -11,6 +11,7 @@ import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
+  wait,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "./CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -73,11 +74,12 @@ if (!interactionsDisabled) {
       const dropTarget = canvas.getByTestId("custom-node-1");
       const coords = getPointerCoords(dropTarget);
 
+      await wait();
       fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
-      await waitFor(() => new Promise((r) => window.setTimeout(r, 500)));
+      await wait(500);
       dragLeaveAndDragEnd(dragSource, dropTarget);
-
+      await wait();
       expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
     }
   };
