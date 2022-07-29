@@ -3,19 +3,13 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  getPointerCoords,
-  assertElementCoords,
-  wait,
-} from "~/stories/examples/helpers";
+import { getPointerCoords, wait } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
@@ -59,31 +53,28 @@ ExternalElementOutsideReactDnd.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    // drag over into tree root from element outside react-dnd;
+    // Cannot pass dataTransfer to the drop event,
+    // so testing the drop is not possible.
+    {
+      const dragSource = canvas.getByTestId("external-node-101");
+      const dropTarget = canvas.getByRole("list");
+      const coords = getPointerCoords(dropTarget, { x: 10, y: 10 });
+      const dataTransfer = new DataTransfer();
+      const options = {
+        dataTransfer,
+        ...coords,
+      };
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
-
-//     await wait();
-
-//     fireEvent.dragStart(dragSource);
-
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
-
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
-
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
-
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+      fireEvent.dragStart(dragSource, options);
+      fireEvent.dragEnter(dropTarget, coords);
+      fireEvent.dragOver(dropTarget, coords);
+      await wait();
+      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+    }
+  };
+}
