@@ -1,20 +1,14 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { within } from "@storybook/testing-library";
+import { Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  getPointerCoords,
-  assertElementCoords,
-  wait,
-} from "~/stories/examples/helpers";
+import { toggleNode, wait, dragAndDrop } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
@@ -57,31 +51,50 @@ ExternalElementInsideReactDnd.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   ExternalElementInsideReactDnd.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  ExternalElementInsideReactDnd.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
+    // drag and drop: External node 1 into root
+    {
+      const dragSource = canvas.getByTestId("external-node-101");
+      const dropTarget = canvas.getByRole("list");
 
-//     await wait();
+      await dragAndDrop(dragSource, dropTarget);
+      await wait();
 
-//     fireEvent.dragStart(dragSource);
+      expect(canvas.getByTestId("custom-node-101")).toBeInTheDocument();
+      expect(canvas.queryByTestId("external-node-101")).toBeNull();
+    }
 
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
+    // drag and drop: External node 2 into Folder 1
+    {
+      const dragSource = canvas.getByTestId("external-node-102");
+      const dropTarget = canvas.getByText("Folder 1");
 
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
+      await dragAndDrop(dragSource, dropTarget);
+      await wait();
+      await toggleNode(canvas.getByTestId("arrow-right-icon-1"));
 
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
+      expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
+      expect(canvas.queryByTestId("external-node-102")).toBeNull();
+    }
 
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+    // drag and drop: External node 2 into Folder 2
+    {
+      const dragSource = canvas.getByTestId("custom-node-102");
+      const dropTarget = canvas.getByText("Folder 2");
+
+      await dragAndDrop(dragSource, dropTarget);
+      await wait();
+
+      expect(canvas.queryByTestId("external-node-102")).toBeNull();
+
+      await toggleNode(canvas.getByTestId("arrow-right-icon-4"));
+
+      expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
+    }
+  };
+}
