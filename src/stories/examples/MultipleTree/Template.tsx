@@ -33,13 +33,28 @@ export const Template: Story = () => {
   return (
     <div className={styles.rootGrid}>
       <div className={styles.column}>
-        <TreeView tree={tree1} onDrop={handleDrop} rootId={100} />
+        <TreeView
+          tree={tree1}
+          onDrop={handleDrop}
+          rootId={100}
+          testIdPrefix="tree1-"
+        />
       </div>
       <div className={styles.column}>
-        <TreeView tree={tree2} onDrop={handleDrop} rootId={200} />
+        <TreeView
+          tree={tree2}
+          onDrop={handleDrop}
+          rootId={200}
+          testIdPrefix="tree2-"
+        />
       </div>
       <div className={styles.column}>
-        <TreeView tree={tree3} onDrop={handleDrop} rootId={300} />
+        <TreeView
+          tree={tree3}
+          onDrop={handleDrop}
+          rootId={300}
+          testIdPrefix="tree3-"
+        />
       </div>
     </div>
   );
