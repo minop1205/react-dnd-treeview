@@ -46,35 +46,6 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     }
   };
 
-  // const handleNativeSourceDrop = (
-  //   monitor: DragDropMonitor,
-  //   options: NativeSourceDropOptions<FileProperties>
-  // ) => {
-  //   const sourceItem = monitor.getItem();
-  //   const itemType = monitor.getItemType();
-  //   const { dropTargetId } = options;
-
-  //   if (itemType === "__NATIVE_FILE__") {
-  //     const files = sourceItem.files as File[];
-  //     const nodes: NodeModel<FileProperties>[] = files.map((file, index) => ({
-  //       id: lastId + index,
-  //       parent: dropTargetId,
-  //       text: file.name,
-  //       data: {
-  //         fileSize: `${file.size / 1024} KB`,
-  //         fileType: "text",
-  //       },
-  //     }));
-
-  //     setTree([...tree, ...nodes]);
-  //     setLastId(lastId + files.length);
-  //   }
-
-  //   if (args.onNativeSourceDrop) {
-  //     args.onNativeSourceDrop(monitor, options);
-  //   }
-  // };
-
   return (
     <div className={styles.rootGrid}>
       <div className={styles.fileChooser}>

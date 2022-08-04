@@ -57,7 +57,7 @@ if (!interactionsDisabled) {
   ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // drag over into tree root from element outside react-dnd;
+    // drag over into tree root from element outside react-dnd.
     // Cannot pass dataTransfer to the drop event,
     // so testing the drop is not possible.
     {

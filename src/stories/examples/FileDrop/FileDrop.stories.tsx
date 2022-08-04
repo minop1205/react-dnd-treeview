@@ -1,21 +1,13 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { within } from "@storybook/testing-library";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
-import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  getPointerCoords,
-  assertElementCoords,
-  wait,
-} from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
@@ -38,7 +30,12 @@ FileDrop.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  extraAcceptTypes: [NativeTypes.FILE],
+  extraAcceptTypes: [
+    NativeTypes.FILE,
+    NativeTypes.HTML,
+    NativeTypes.TEXT,
+    NativeTypes.URL,
+  ],
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
@@ -58,31 +55,12 @@ FileDrop.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   FileDrop.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  FileDrop.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
-
-//     await wait();
-
-//     fireEvent.dragStart(dragSource);
-
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
-
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
-
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
-
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+    // TODO:
+    // Testing is on hold for now
+    // because we cannot simulate drag and drop of external files.
+  };
+}
