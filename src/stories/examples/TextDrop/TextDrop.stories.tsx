@@ -3,17 +3,15 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import {
-  dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
-  assertElementCoords,
   wait,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
@@ -58,31 +56,57 @@ TextDrop.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   TextDrop.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  TextDrop.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    // Cannot pass dataTransfer to the drop event,
+    // so testing the drop is not possible.
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
+    // drag over external element
+    // that type is __NATIVE_TEXT__ into tree root
+    {
+      const dragSource = canvas.getByTestId("mock-text");
+      const dropTarget = canvas.getByRole("list");
+      const coords = getPointerCoords(dropTarget, { x: 10, y: 10 });
+      const dataTransfer = new DataTransfer();
+      const options = {
+        dataTransfer,
+        ...coords,
+      };
 
-//     await wait();
+      fireEvent.dragStart(dragSource, options);
+      fireEvent.dragEnter(dropTarget, coords);
+      fireEvent.dragOver(dropTarget, coords);
+      await wait();
 
-//     fireEvent.dragStart(dragSource);
+      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
 
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
+      dragLeaveAndDragEnd(dragSource, dropTarget);
+    }
 
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
+    await wait();
 
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
+    // drag over external element
+    // that type is __NATIVE_TEXT__ into Folder 1
+    {
+      const dragSource = canvas.getByTestId("mock-text");
+      const dropTarget = canvas.getAllByRole("listitem")[0];
+      const coords = getPointerCoords(dropTarget, { x: 10, y: 10 });
+      const dataTransfer = new DataTransfer();
+      const options = {
+        dataTransfer,
+        ...coords,
+      };
 
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+      fireEvent.dragStart(dragSource, options);
+      fireEvent.dragEnter(dropTarget, coords);
+      fireEvent.dragOver(dropTarget, coords);
+      await wait();
+
+      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+
+      dragLeaveAndDragEnd(dragSource, dropTarget);
+    }
+  };
+}

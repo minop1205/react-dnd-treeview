@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Story } from "@storybook/react";
+import { TextField } from "@mui/material";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import styles from "./TextDrop.module.css";
+import { MockText } from "./MockText";
 import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
@@ -62,7 +64,12 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
   return (
     <div className={styles.rootGrid}>
       <div className={styles.fileChooser}>
-        <p>ダミーテキストダミーテキストダミーテキストダミーテキスト</p>
+        <TextField
+          multiline
+          variant="outlined"
+          defaultValue="You can select text in this text field and drop a substring into the tree."
+        />
+        <MockText />
       </div>
       <DndProvider
         backend={MultiBackend}
