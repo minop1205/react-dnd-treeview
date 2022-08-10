@@ -59,6 +59,36 @@ function App() {
 }
 ```
 
+### Backends
+
+`MultiBackend` is a backend to support both touch and pointer devices. If you only need support for one or the other, you can also use the backend provided by [react-dnd-html5-backend](https://react-dnd.github.io/react-dnd/docs/backends/html5) or [react-dnd-touch-backend](https://react-dnd.github.io/react-dnd/docs/backends/touch).
+
+```jsx
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+function App() {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <Tree {...someProps}> />
+    </DndProvider>
+  );
+}
+```
+
+```jsx
+import { DndProvider } from "react-dnd";
+import { TouchBackend } from "react-dnd-touch-backend";
+
+function App() {
+  return (
+    <DndProvider backend={TouchBackend}>
+      <Tree {...someProps}> />
+    </DndProvider>
+  );
+}
+```
+
 ## Data Structure
 
 To display the treeview, pass data with the following structure to the `tree` property of the Tree component.
