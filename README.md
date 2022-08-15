@@ -373,25 +373,82 @@ function App() {
   const [treeData, setTreeData] = useState(SampleData);
   const handleDrop = (newTree) => setTreeData(newTree);
 
-  <Tree
-    {...props}
-    tree={treData}
-    onDrop={handleDrop}
-    classes={{
-      placeholder: styles.placeholder,
-    }}
-    sort={false}
-    insertDroppableFirst={false}
-    canDrop={(tree, { dragSource, dropTargetId }) => {
-      if (dragSource?.parent === dropTargetId) {
-        return true;
-      }
-    }}
-    dropTargetOffset={5}
-    placeholderRender={(node, { depth }) => (
-      <CustomPlaceholder node={node} depth={depth} />
-    )}
-  />;
+  return (
+    <Tree
+      {...props}
+      tree={treData}
+      onDrop={handleDrop}
+      classes={{
+        placeholder: styles.placeholder,
+      }}
+      sort={false}
+      insertDroppableFirst={false}
+      canDrop={(tree, { dragSource, dropTargetId }) => {
+        if (dragSource?.parent === dropTargetId) {
+          return true;
+        }
+      }}
+      dropTargetOffset={5}
+      placeholderRender={(node, { depth }) => (
+        <CustomPlaceholder node={node} depth={depth} />
+      )}
+    />;
+  );
+}
+```
+
+### External drag source
+
+To drop elements outside the tree into the tree, `extraAcceptTypes` must be set.
+
+If the external drag source is under a `DndProvider`, set the `type` and `item` using [useDrag](https://react-dnd.github.io/react-dnd/docs/api/use-drag) in react-dnd for that element. add the external drag source `type` to `extraAcceptTypes` so it can be dropped in the tree.
+
+If the external drag source is an element or file external to `DndProvider`, adding the `type` defined in react-dnd-html5-backend to `extraAcceptTypes` will allow dropping into the tree.
+
+In this case, the `onDrop` callback will access the dropped element via `options.monitor` and add the new node to the data array of tree, as in the following example.
+
+```jsx
+import { NativeTypes } from "react-dnd-html5-backend";
+
+function App() {
+  const [treeData, setTreeData] = useState(SampleData);
+  const [lastId, setLastId] = useState(100);
+
+  const handleDrop = (tree, options) => {
+    const { dropTargetId, monitor } = options;
+    const itemType = monitor.getItemType();
+
+    if (itemType === NativeTypes.FILE) {
+      const files = monitor.getItem().files;
+      const nodes = files.map((file, index) => ({
+        id: lastId + index,
+        parent: dropTargetId,
+        text: file.name,
+      }));
+
+      const mergedTree = [...tree, ...nodes];
+      setTree(mergedTree);
+      setLastId(lastId + files.length);
+    } else {
+      setTree(tree);
+    }
+  };
+
+  return (
+    <Tree
+      {...someProps}
+      tree={treeData}
+      extraAcceptTypes={[NativeTypes.FILE]}
+
+      {/*
+        extraAcceptTypes={[NativeTypes.URL]}
+        extraAcceptTypes={[NativeTypes.TEXT]}
+        extraAcceptTypes={[NativeTypes.HTML]}
+      */}
+
+      onDrop={handleDrop}
+    />;
+  );
 }
 ```
 
