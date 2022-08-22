@@ -4,10 +4,12 @@ import React, {
   ReactElement,
   createContext,
 } from "react";
+import { useDragDropManager } from "react-dnd";
 import {
   mutateTree,
   mutateTreeWithIndex,
   getTreeItem,
+  getDestIndex,
   getModifiedIndex,
 } from "~/utils";
 import { useOpenIdsHelper } from "~/hooks";
@@ -34,10 +36,12 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     closeAll: () => handleCloseAll(props.onChangeOpen),
   }));
 
+  const monitor = useDragDropManager().getMonitor();
   const canDropCallback = props.canDrop;
   const canDragCallback = props.canDrag;
 
   const value: TreeState<T> = {
+    extraAcceptTypes: [],
     listComponent: "ul",
     listItemComponent: "li",
     placeholderComponent: "li",
@@ -47,34 +51,69 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (id, parentId, index) => {
-      const options: DropOptions<T> = {
-        dragSourceId: id,
-        dropTargetId: parentId,
-        dragSource: getTreeItem<T>(props.tree, id),
-        dropTarget: getTreeItem<T>(props.tree, parentId),
-      };
+    onDrop: (dragSource, dropTargetId, index) => {
+      // if dragSource is null,
+      // it means that the drop is from the outside of the react-dnd.
+      if (!dragSource) {
+        const options: DropOptions<T> = {
+          dropTargetId,
+          dropTarget: getTreeItem<T>(props.tree, dropTargetId),
+          monitor,
+        };
 
-      if (props.sort === false) {
-        const [, destIndex] = getModifiedIndex(props.tree, id, parentId, index);
-        options.destinationIndex = destIndex;
-        props.onDrop(
-          mutateTreeWithIndex<T>(props.tree, id, parentId, index),
-          options
-        );
+        if (props.sort === false) {
+          options.destinationIndex = getDestIndex(
+            props.tree,
+            dropTargetId,
+            index
+          );
+        }
 
-        return;
+        props.onDrop(props.tree, options);
+      } else {
+        const options: DropOptions<T> = {
+          dragSourceId: dragSource.id,
+          dropTargetId,
+          dragSource: dragSource,
+          dropTarget: getTreeItem<T>(props.tree, dropTargetId),
+          monitor,
+        };
+
+        let tree = props.tree;
+
+        // If the dragSource does not exist in the tree,
+        // it is an external node, so add it to the tree
+        if (!getTreeItem(tree, dragSource.id)) {
+          tree = [...tree, dragSource];
+        }
+
+        if (props.sort === false) {
+          const [, destIndex] = getModifiedIndex(
+            tree,
+            dragSource.id,
+            dropTargetId,
+            index
+          );
+          options.destinationIndex = destIndex;
+          props.onDrop(
+            mutateTreeWithIndex<T>(tree, dragSource.id, dropTargetId, index),
+            options
+          );
+
+          return;
+        }
+
+        props.onDrop(mutateTree<T>(tree, dragSource.id, dropTargetId), options);
       }
-
-      props.onDrop(mutateTree<T>(props.tree, id, parentId), options);
     },
     canDrop: canDropCallback
-      ? (id, parentId) =>
+      ? (dragSourceId, dropTargetId) =>
           canDropCallback(props.tree, {
-            dragSourceId: id,
-            dropTargetId: parentId,
-            dragSource: getTreeItem(props.tree, id),
-            dropTarget: getTreeItem(props.tree, parentId),
+            dragSourceId,
+            dropTargetId,
+            dragSource: monitor.getItem(),
+            dropTarget: getTreeItem(props.tree, dropTargetId),
+            monitor,
           })
       : undefined,
     canDrag: canDragCallback

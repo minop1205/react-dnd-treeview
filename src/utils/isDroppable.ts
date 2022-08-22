@@ -2,13 +2,15 @@ import { isAncestor } from "./isAncestor";
 import { NodeModel, TreeState } from "~/types";
 
 export const isDroppable = <T>(
-  dragSourceId: NodeModel["id"],
+  dragSourceId: NodeModel["id"] | undefined,
   dropTargetId: NodeModel["id"],
   treeContext: TreeState<T>
 ): boolean => {
   const { tree, rootId, canDrop } = treeContext;
 
   if (dragSourceId === undefined) {
+    // Dropability judgment of each node in the undragged state.
+    // Without this process, the newly mounted node will not be able to be dropped unless it is re-rendered
     if (dropTargetId === rootId) {
       return true;
     }
@@ -34,21 +36,19 @@ export const isDroppable = <T>(
     }
 
     const dragSourceNode = tree.find((node) => node.id === dragSourceId);
-
-    if (
-      dragSourceNode === undefined ||
-      dragSourceNode.parent === dropTargetId
-    ) {
-      return false;
-    }
-
-    if (dropTargetId === rootId) {
-      return true;
-    }
-
     const dropTargetNode = tree.find((node) => node.id === dropTargetId);
 
-    if (dropTargetNode === undefined || !dropTargetNode.droppable) {
+    // dragSource is external node
+    if (dragSourceNode === undefined) {
+      return dropTargetId === rootId || !!dropTargetNode?.droppable;
+    }
+
+    // dropTarget is root node
+    if (dropTargetNode === undefined) {
+      return dragSourceNode.parent !== 0;
+    }
+
+    if (dragSourceNode.parent === dropTargetId || !dropTargetNode.droppable) {
       return false;
     }
 

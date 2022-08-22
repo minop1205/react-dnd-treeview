@@ -2,15 +2,16 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent, waitFor } from "@storybook/testing-library";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
+  wait,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "./CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -23,6 +24,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Auto expand with drag over node",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const AutoExpandWithDragOverNodeStory = DefaultTemplate.bind({});
@@ -66,11 +74,12 @@ if (!interactionsDisabled) {
       const dropTarget = canvas.getByTestId("custom-node-1");
       const coords = getPointerCoords(dropTarget);
 
+      await wait();
       fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
-      await waitFor(() => new Promise((r) => window.setTimeout(r, 500)));
+      await wait(500);
       dragLeaveAndDragEnd(dragSource, dropTarget);
-
+      await wait();
       expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
     }
   };

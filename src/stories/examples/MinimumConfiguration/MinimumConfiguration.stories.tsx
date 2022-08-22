@@ -1,8 +1,9 @@
 import React from "react";
+import { waitFor } from "@testing-library/react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
-import { within, userEvent, fireEvent } from "@storybook/testing-library";
-import { Tree } from "~/Tree";
+import { within, fireEvent, userEvent } from "@storybook/testing-library";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
 import { pageFactory } from "~/stories/pageFactory";
@@ -12,6 +13,8 @@ import {
   dragLeaveAndDragEnd,
   dragAndDrop,
   getPointerCoords,
+  toggleNode,
+  wait,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
@@ -22,6 +25,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Minimum configuration",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const MinimumConfigurationStory = DefaultTemplate.bind({});
@@ -71,10 +81,10 @@ if (!interactionsDisabled) {
     // open and close first node
     expect(canvas.queryByText("File 1-1")).toBeNull();
 
-    userEvent.click(canvas.getByTestId("open-icon-1"));
+    await toggleNode(canvas.getByTestId("open-icon-1"));
     expect(await canvas.findByText("File 1-1")).toBeInTheDocument();
 
-    userEvent.click(canvas.getByTestId("open-icon-1"));
+    await toggleNode(canvas.getByTestId("open-icon-1"));
     expect(canvas.queryByText("File 1-1")).toBeNull();
 
     // drag and drop: File 3 into Folder 1
@@ -82,7 +92,7 @@ if (!interactionsDisabled) {
     expect(canvas.queryByText("File 3")).toBeNull();
 
     // open Folder1
-    userEvent.click(canvas.getByTestId("open-icon-1"));
+    await toggleNode(canvas.getByTestId("open-icon-1"));
     expect(await canvas.findByText("File 3")).toBeInTheDocument();
 
     // drag and drop: File 3 into Folder 2
@@ -90,7 +100,7 @@ if (!interactionsDisabled) {
     expect(canvas.queryByText("File 3")).toBeNull();
 
     // open Folder2
-    userEvent.click(canvas.getByTestId("open-icon-4"));
+    await toggleNode(canvas.getByTestId("open-icon-4"));
 
     // drag and drop: Folder 2 into Folder 1
     await dragAndDrop(
@@ -118,9 +128,11 @@ if (!interactionsDisabled) {
       const dropTarget = canvas.getAllByRole("list")[0];
       const coords = getPointerCoords(dropTarget);
 
+      await wait();
       fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
       dragLeaveAndDragEnd(dragSource, dropTarget);
+      await wait();
 
       expect(await canvas.findByText("File 3")).toHaveStyle(
         "margin-inline-start: 20px"

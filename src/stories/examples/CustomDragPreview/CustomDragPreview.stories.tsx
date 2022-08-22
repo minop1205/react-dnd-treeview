@@ -2,9 +2,9 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
+import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { Tree } from "~/Tree";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
@@ -25,6 +25,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Custom drag preview",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const CustomDragPreviewStory = DefaultTemplate.bind({});
@@ -81,6 +88,9 @@ if (!interactionsDisabled) {
 
     // hide preview when drag is canceled
     dragLeaveAndDragEnd(dragSource, dropTarget);
+
+    await wait();
+
     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
   };
 }

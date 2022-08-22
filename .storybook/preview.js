@@ -1,7 +1,4 @@
-import { DndProvider } from "react-dnd";
-import { MultiBackend } from "dnd-multi-backend";
 import { ThemeProvider } from "@mui/material/styles";
-import { getBackendOptions } from "../src/utils/getBackendOptions";
 import { theme } from "../src/stories/examples/theme";
 
 export const parameters = {
@@ -26,6 +23,10 @@ export const parameters = {
             "Editable nodes",
             "Manual sort with placeholder",
             "Add, remove, duplicate nodes",
+            "External element (inside react-dnd)",
+            "External element (outside react-dnd)",
+            "File drop",
+            "Text drop",
           ],
         ],
       ],
@@ -39,13 +40,7 @@ const debugMode = !(process?.env?.STORYBOOK_DISABLE_INTERACTIONS === "true");
 export const decorators = [
   (Story) => (
     <ThemeProvider theme={theme}>
-      <DndProvider
-        backend={MultiBackend}
-        debugMode={debugMode}
-        options={getBackendOptions()}
-      >
-        <Story />
-      </DndProvider>
+      <Story />
     </ThemeProvider>
   ),
 ];

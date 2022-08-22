@@ -1,5 +1,6 @@
-import { RefObject, ElementType, ReactElement } from "react";
-import { XYCoord } from "react-dnd";
+import type { RefObject, ElementType, ReactElement } from "react";
+import type { XYCoord } from "react-dnd";
+import type { DragDropMonitor, Identifier } from "dnd-core";
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -10,7 +11,6 @@ export type NodeModel<T = unknown> = {
 };
 
 export type DragItem<T> = NodeModel<T> & {
-  type: symbol;
   ref: React.MutableRefObject<HTMLElement>;
 };
 
@@ -32,15 +32,15 @@ export type NodeRender<T> = (
 
 export type ClickHandler = (data: NodeModel) => void;
 
-export type DropHandler = (
-  id: NodeModel["id"],
-  parent: NodeModel["id"],
+export type DropHandler<T> = (
+  dragSource: NodeModel<T> | null,
+  dropTargetId: NodeModel["id"],
   index: number
 ) => void;
 
 export type CanDropHandler = (
-  id: NodeModel["id"],
-  parent: NodeModel["id"]
+  dragSourceId: NodeModel["id"],
+  dropTargetId: NodeModel["id"]
 ) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;
@@ -134,6 +134,7 @@ export type TreeStateBase<T> = {
 };
 
 export type TreeState<T> = TreeStateBase<T> & {
+  extraAcceptTypes: string[];
   listComponent: ElementType;
   listItemComponent: ElementType;
   placeholderComponent: ElementType;
@@ -142,21 +143,23 @@ export type TreeState<T> = TreeStateBase<T> & {
   dropTargetOffset: number;
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
-  onDrop: DropHandler;
+  onDrop: DropHandler<T>;
   canDrop?: CanDropHandler;
   canDrag?: CanDragHandler;
   onToggle: ToggleHandler;
 };
 
 export type DropOptions<T = unknown> = {
-  dragSourceId: NodeModel["id"];
+  dragSourceId?: NodeModel["id"];
   dropTargetId: NodeModel["id"];
-  dragSource: NodeModel<T> | undefined;
-  dropTarget: NodeModel<T> | undefined;
+  dragSource?: NodeModel<T>;
+  dropTarget?: NodeModel<T>;
   destinationIndex?: number;
+  monitor: DragDropMonitor;
 };
 
-export type TreeProps<T> = TreeStateBase<T> & {
+export type TreeProps<T = unknown> = TreeStateBase<T> & {
+  extraAcceptTypes?: string[];
   listComponent?: ElementType;
   listItemComponent?: ElementType;
   placeholderComponent?: ElementType;

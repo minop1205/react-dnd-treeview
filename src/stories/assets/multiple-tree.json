@@ -1,0 +1,164 @@
+[
+  {
+    "id": 101,
+    "parent": 100,
+    "droppable": true,
+    "text": "Folder 1 (Tree:1)"
+  },
+  {
+    "id": 102,
+    "parent": 101,
+    "text": "File 1-1 (Tree:1)",
+    "data": {
+      "fileType": "csv",
+      "fileSize": "0.5MB"
+    }
+  },
+  {
+    "id": 103,
+    "parent": 101,
+    "text": "File 1-2 (Tree:1)",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 104,
+    "parent": 100,
+    "droppable": true,
+    "text": "Folder 2 (Tree:1)"
+  },
+  {
+    "id": 105,
+    "parent": 104,
+    "droppable": true,
+    "text": "Folder 2-1 (Tree:1)"
+  },
+  {
+    "id": 106,
+    "parent": 105,
+    "text": "File 2-1-1 (Tree:1)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 107,
+    "parent": 100,
+    "text": "File 3 (Tree:1)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "0.8MB"
+    }
+  },
+  {
+    "id": 201,
+    "parent": 200,
+    "droppable": true,
+    "text": "Folder 1 (Tree:2)"
+  },
+  {
+    "id": 202,
+    "parent": 201,
+    "text": "File 1-1 (Tree:2)",
+    "data": {
+      "fileType": "csv",
+      "fileSize": "0.5MB"
+    }
+  },
+  {
+    "id": 203,
+    "parent": 201,
+    "text": "File 1-2 (Tree:2)",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 204,
+    "parent": 200,
+    "droppable": true,
+    "text": "Folder 2 (Tree:2)"
+  },
+  {
+    "id": 205,
+    "parent": 204,
+    "droppable": true,
+    "text": "Folder 2-1 (Tree:2)"
+  },
+  {
+    "id": 206,
+    "parent": 205,
+    "text": "File 2-1-1 (Tree:2)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 207,
+    "parent": 200,
+    "text": "File 3 (Tree:2)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "0.8MB"
+    }
+  },
+  {
+    "id": 301,
+    "parent": 300,
+    "droppable": true,
+    "text": "Folder 1 (Tree:3)"
+  },
+  {
+    "id": 302,
+    "parent": 301,
+    "text": "File 1-1 (Tree:3)",
+    "data": {
+      "fileType": "csv",
+      "fileSize": "0.5MB"
+    }
+  },
+  {
+    "id": 303,
+    "parent": 301,
+    "text": "File 1-2 (Tree:3)",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 304,
+    "parent": 300,
+    "droppable": true,
+    "text": "Folder 2 (Tree:3)"
+  },
+  {
+    "id": 305,
+    "parent": 304,
+    "droppable": true,
+    "text": "Folder 2-1 (Tree:3)"
+  },
+  {
+    "id": 306,
+    "parent": 305,
+    "text": "File 2-1-1 (Tree:3)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 307,
+    "parent": 300,
+    "text": "File 3 (Tree:3)",
+    "data": {
+      "fileType": "image",
+      "fileSize": "0.8MB"
+    }
+  }
+]

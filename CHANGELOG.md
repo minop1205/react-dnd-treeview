@@ -1,5 +1,17 @@
 # Change Log
 
+## 3.0.0
+
+_Aug 12, 2022_
+
+### Added
+
+- Nodes can now be added by dropping elements outside the tree, files, selected text, etc. into the tree.
+
+### Breaking changes
+
+- Among the `options` passed to the `onDrop` callback, `dragSourceId` and `dragSource` are now optional.<br>If the drag source is an element external to `DndProvider` or a file or selected text, these will be `undefined`.
+
 ## 2.0.2
 
 _June 29, 2022_

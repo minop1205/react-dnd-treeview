@@ -1,15 +1,13 @@
 import { fireEvent, waitFor } from "@storybook/testing-library";
 import { PointerCoords } from "~/stories/types";
+import { wait } from "./wait";
 
-export const dragEnterAndDragOver = (
+export const dragEnterAndDragOver = async (
   dropTarget: Element,
   pointerCoords: PointerCoords
-): Promise<null> =>
-  waitFor(
-    () =>
-      new Promise((r) => {
-        fireEvent.dragEnter(dropTarget, pointerCoords);
-        fireEvent.dragOver(dropTarget, pointerCoords);
-        setTimeout(r, 50);
-      })
-  );
+) => {
+  await wait();
+  fireEvent.dragEnter(dropTarget, pointerCoords);
+  fireEvent.dragOver(dropTarget, pointerCoords);
+  await wait();
+};

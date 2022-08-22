@@ -1,0 +1,13 @@
+.root {
+  align-items: center;
+  display: flex;
+  height: 32px;
+}
+
+.filetype {
+  display: flex;
+}
+
+.label {
+  padding-inline-start: 8px;
+}

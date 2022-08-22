@@ -10,10 +10,14 @@ type Props = {
   node: NodeModel<FileProperties>;
   depth: number;
   isOpen: boolean;
+  testIdPrefix?: string;
   onToggle: (id: NodeModel["id"]) => void;
 };
 
-export const CustomNode: React.FC<Props> = (props) => {
+export const CustomNode: React.FC<Props> = ({
+  testIdPrefix = "",
+  ...props
+}) => {
   const { id, droppable, data } = props.node;
   const indent = props.depth * 24;
 
@@ -26,7 +30,7 @@ export const CustomNode: React.FC<Props> = (props) => {
     <div
       className={styles.root}
       style={{ paddingInlineStart: indent }}
-      data-testid={`custom-node-${id}`}
+      data-testid={`${testIdPrefix}custom-node-${id}`}
     >
       <div className={`${styles.arrow} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
