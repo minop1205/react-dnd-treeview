@@ -31,7 +31,6 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
       node.parent = dropTargetId;
       updateTree([...newTree, node], options);
       setExternalNodes(externalNodes.filter((exnode) => exnode.id !== node.id));
-      setLastId((state) => state + 1);
       return;
     }
 

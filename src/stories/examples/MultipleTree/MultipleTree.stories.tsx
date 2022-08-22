@@ -33,8 +33,8 @@ MultipleTreeStory.storyName = "Multiple tree";
 MultipleTreeStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "multiple-tree-js-216o5l",
+      tsId: "multiple-tree-ts-6uysei",
     }),
   },
 };

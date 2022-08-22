@@ -45,8 +45,8 @@ ExternalElementInsideReactDnd.storyName = "External element (inside react-dnd)";
 ExternalElementInsideReactDnd.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "external-element-inside-react-dnd-js-lf66dj",
+      tsId: "external-element-inside-react-dnd-ts-sktogh",
     }),
   },
 };

@@ -52,7 +52,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
         <label htmlFor="contained-button-file">
           <Input id="contained-button-file" type="file" multiple />
           <Button variant="outlined" component="span">
-            Upload
+            Open File Chooser
           </Button>
         </label>
       </div>

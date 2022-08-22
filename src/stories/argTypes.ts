@@ -23,6 +23,15 @@ export const rootId: CustomArgType = {
   },
 };
 
+export const extraAcceptTypes: CustomArgType = {
+  name: "extraAcceptTypes",
+  description:
+    "If allowing drop from outside the tree, the [drag type](https://react-dnd.github.io/react-dnd/docs/api/use-drag#specification-object-members) of the drag source.",
+  table: {
+    type: { summary: "array" },
+  },
+};
+
 export const classes: CustomArgType = {
   name: "classes",
   description:

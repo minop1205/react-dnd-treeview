@@ -30,12 +30,7 @@ FileDrop.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  extraAcceptTypes: [
-    NativeTypes.FILE,
-    NativeTypes.HTML,
-    NativeTypes.TEXT,
-    NativeTypes.URL,
-  ],
+  extraAcceptTypes: [NativeTypes.FILE],
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
@@ -49,8 +44,8 @@ FileDrop.storyName = "File drop";
 FileDrop.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "file-drop-js-x1o985",
+      tsId: "file-drop-ts-4s5i48",
     }),
   },
 };

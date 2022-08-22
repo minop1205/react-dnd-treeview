@@ -50,8 +50,8 @@ TextDrop.storyName = "Text drop";
 TextDrop.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "text-drop-js-t4xpkq",
+      tsId: "text-drop-ts-odf9lz",
     }),
   },
 };

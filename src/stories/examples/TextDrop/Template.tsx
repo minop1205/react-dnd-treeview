@@ -36,6 +36,8 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           },
         },
       ];
+
+      setLastId(lastId + 1);
     } else if (itemType === NativeTypes.HTML) {
       const html = dragSource.html as string;
       const tempEl = document.createElement("div");
@@ -54,10 +56,11 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           },
         },
       ];
+
+      setLastId(lastId + 1);
     }
 
     setTree(mergedTree);
-    setLastId(lastId + 1);
     args.onDrop(mergedTree, options);
   };
 
