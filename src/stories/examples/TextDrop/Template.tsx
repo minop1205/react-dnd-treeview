@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Story } from "@storybook/react";
 import { TextField } from "@mui/material";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import styles from "./TextDrop.module.css";
 import { MockText } from "./MockText";
 import type { FileProperties } from "~/stories/types";
@@ -74,13 +74,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
         />
         <MockText />
       </div>
-      <DndProvider
-        backend={MultiBackend}
-        options={getBackendOptions()}
-        debugMode={true}
-      >
-        <Tree {...args} tree={tree} onDrop={handleDrop} />
-      </DndProvider>
+      <Tree {...args} tree={tree} onDrop={handleDrop} />
     </div>
   );
 };

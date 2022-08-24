@@ -2,7 +2,8 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within } from "@storybook/testing-library";
-import { Tree } from "~/index";
+import { DndProvider } from "react-dnd";
+import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -19,6 +20,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/External element (inside react-dnd)",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const ExternalElementInsideReactDnd = Template.bind({});
