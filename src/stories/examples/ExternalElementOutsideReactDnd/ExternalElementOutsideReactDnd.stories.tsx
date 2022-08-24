@@ -2,8 +2,9 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
+import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { Tree } from "~/index";
+import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -13,6 +14,8 @@ import { getPointerCoords, wait } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
+import { StoryProvider } from "./StoryProvider";
+import { ExternalContainer } from "./ExternalContainer";
 import { Template } from "./Template";
 import styles from "./ExternalElementOutsideReactDnd.module.css";
 
@@ -20,6 +23,23 @@ export default {
   component: Tree,
   title: "Examples/Tree/External element (outside react-dnd)",
   argTypes,
+  decorators: [
+    (Story, options) => {
+      const args = options.args as TreeProps<FileProperties>;
+      return (
+        <StoryProvider {...args}>
+          <div className={styles.rootGrid}>
+            <ExternalContainer />
+            <div>
+              <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+                <Story />
+              </DndProvider>
+            </div>
+          </div>
+        </StoryProvider>
+      );
+    },
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const ExternalElementOutsideReactDnd = Template.bind({});
