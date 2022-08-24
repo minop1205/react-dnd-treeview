@@ -2,8 +2,9 @@ import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent } from "@storybook/testing-library";
+import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { Tree } from "~/index";
+import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
@@ -24,6 +25,13 @@ export default {
   component: Tree,
   title: "Examples/Tree/Text drop",
   argTypes,
+  decorators: [
+    (Story) => (
+      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
+        <Story />
+      </DndProvider>
+    ),
+  ],
 } as Meta<TreeProps<FileProperties>>;
 
 export const TextDrop = Template.bind({});

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Story } from "@storybook/react";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import { TreeProps, NodeModel, DropOptions } from "~/types";
 import { useDropHandler } from "~/stories/useDropHandler";
 import { FileProperties } from "~/stories/types";
@@ -45,11 +45,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
   };
 
   return (
-    <DndProvider
-      backend={MultiBackend}
-      options={getBackendOptions()}
-      debugMode={true}
-    >
+    <>
       <DragLayer />
       <div className={styles.rootGrid}>
         <div className={styles.externalContainer}>
@@ -72,6 +68,6 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           <Tree {...args} tree={tree} onDrop={handleDrop} />
         </div>
       </div>
-    </DndProvider>
+    </>
   );
 };

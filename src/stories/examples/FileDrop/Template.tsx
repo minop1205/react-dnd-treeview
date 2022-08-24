@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Story } from "@storybook/react";
 import { NativeTypes } from "react-dnd-html5-backend";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { Tree } from "~/index";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
 import { FileProperties } from "~/stories/types";
 import styles from "./FileDrop.module.css";
@@ -56,13 +56,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           </Button>
         </label>
       </div>
-      <DndProvider
-        backend={MultiBackend}
-        options={getBackendOptions()}
-        debugMode={true}
-      >
-        <Tree {...args} tree={tree} onDrop={handleDrop} />
-      </DndProvider>
+      <Tree {...args} tree={tree} onDrop={handleDrop} />
     </div>
   );
 };
