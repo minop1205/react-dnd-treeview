@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.1.0
+
+_Sep 08, 2022_
+
+### Added
+
+- Added `onDragStart` and `onDragend` APIs for handling the start and end of node dragging.
+- Added Multiple drag sample.
+
 ## 3.0.0
 
 _Aug 12, 2022_
