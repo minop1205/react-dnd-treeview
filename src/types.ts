@@ -1,5 +1,5 @@
 import type { RefObject, ElementType, ReactElement } from "react";
-import type { XYCoord } from "react-dnd";
+import type { XYCoord, DragSourceMonitor } from "react-dnd";
 import type { DragDropMonitor, Identifier } from "dnd-core";
 
 export type NodeModel<T = unknown> = {
@@ -11,7 +11,7 @@ export type NodeModel<T = unknown> = {
 };
 
 export type DragItem<T> = NodeModel<T> & {
-  ref: React.MutableRefObject<HTMLElement>;
+  ref: RefObject<HTMLElement>;
 };
 
 export type RenderParams = {
@@ -131,6 +131,8 @@ export type TreeStateBase<T> = {
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;
   placeholderRender?: PlaceholderRender<T>;
+  onDragStart?: (node: NodeModel<T>, monitor: DragSourceMonitor) => void;
+  onDragEnd?: (node: NodeModel<T>, monitor: DragSourceMonitor) => void;
 };
 
 export type TreeState<T> = TreeStateBase<T> & {

@@ -89,6 +89,26 @@ export const onDrop: CustomArgType = {
   action: "onDrop",
 };
 
+export const onDragStart: CustomArgType = {
+  name: "onDragStart",
+  description:
+    "This event is fired when a node in the tree is started to be dragged. The event handler is passed the target node and a [DragSourceMonitor](https://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor) object.",
+  table: {
+    type: { summary: "func" },
+  },
+  action: "onDragStart",
+};
+
+export const onDragEnd: CustomArgType = {
+  name: "onDragEnd",
+  description:
+    "This event is fired when a node in the tree is finished being dragged. The event handler is passed the target node and a [DragSourceMonitor](https://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor) object.",
+  table: {
+    type: { summary: "func" },
+  },
+  action: "onDragEnd",
+};
+
 export const onChangeOpen: CustomArgType = {
   name: "onChangeOpen",
   description:

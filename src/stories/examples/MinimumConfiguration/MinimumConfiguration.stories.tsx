@@ -1,5 +1,4 @@
 import React from "react";
-import { waitFor } from "@testing-library/react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent, userEvent } from "@storybook/testing-library";
