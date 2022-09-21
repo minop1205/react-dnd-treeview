@@ -1,27 +1,20 @@
 ---
 name: Feature request
-about: 新しい機能の追加や既存機能の拡張・改善要望
-title: "機能要望："
-labels: "enhancement"
-assignees: "minop1205"
+about: Suggest an idea for this project
+title: ''
+labels: enhancement
+assignees: minop1205
+
 ---
 
-# 機能要望
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-## 概要
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-例: テキストが見切れている箇所にはマウスオーバーでツールチップを表示する
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
 
-## 目的・理由
-
-例: タイトルの一覧表示などでテキストが見切れていると、詳細画面に遷移しないとタイトル全体が確認できないため
-
-## 実装案があれば
-
-例:
-ツールチップには Material-UI tooltip を使用する。
-文字数だけでなく画面リサイズにも対応すべきなので、ResizeObserver を使用するなどしてテキストの見切れ判定を行う。
-
-## 参考情報
-
-参考 URL などあれば
+**Additional context**
+Add any other context or screenshots about the feature request here.
