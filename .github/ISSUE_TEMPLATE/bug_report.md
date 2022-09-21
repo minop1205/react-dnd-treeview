@@ -1,25 +1,38 @@
 ---
 name: Bug report
-about: 期待する動作との差異と再現方法についてのレポート
-title: "不具合報告："
-labels: "bug"
-assignees: "minop1205"
+about: Create a report to help us improve
+title: ''
+labels: bug
+assignees: minop1205
+
 ---
 
-# レポート
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-## 現状の動作
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-例: 別アカウントでログインし直した時に通知バッジの未読件数が更新されない。
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
-## 期待する動作
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
 
-例: ログインされたアカウントに応じた未読件数が表示される。
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
 
-## 再現方法
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
 
-例: ログアウト後、別アカウントで再度ログインする。
-
-## 参考情報
-
-バージョン情報、参考 URL などあれば
+**Additional context**
+Add any other context about the problem here.
