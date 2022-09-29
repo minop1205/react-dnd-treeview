@@ -20,7 +20,7 @@
   display: flex;
 }
 
-.arrow.is-open {
+.arrow.isOpen {
   transform: rotate(90deg);
 }
 
