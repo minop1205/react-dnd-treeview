@@ -25,7 +25,7 @@ type Props = PropsWithChildren<{
 export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
-  const ref = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const handleRef = useRef<any>(null);
   const item = treeContext.tree.find(
     (node) => node.id === props.id
@@ -33,20 +33,20 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const { openIds, classes } = treeContext;
   const open = openIds.includes(props.id);
 
-  const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, dragSource, drop] = useDropNode(item, ref);
+  const [isDragging, drag, preview] = useDragNode(item, containerRef);
+  const [isOver, dragSource, drop] = useDropNode(item, containerRef);
 
   useEffect(() => {
     if (handleRef.current) {
       drag(handleRef);
-      preview(ref);
+      preview(containerRef);
     } else {
-      drag(ref);
+      drag(containerRef);
     }
   }, []);
 
   if (isDroppable(dragSource?.id, props.id, treeContext)) {
-    drop(ref);
+    drop(containerRef);
   }
 
   const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
@@ -57,7 +57,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     }
   }, [preview, treeContext.dragPreviewRender]);
 
-  useDragControl(ref);
+  useDragControl(containerRef);
 
   const handleToggle = () => treeContext.onToggle(item.id);
 
@@ -83,13 +83,13 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     isDropTarget,
     draggable,
     hasChild,
-    containerRef: ref,
+    containerRef,
     handleRef,
     onToggle: handleToggle,
   };
 
   return (
-    <Component ref={ref} className={className} role="listitem">
+    <Component ref={containerRef} className={className} role="listitem">
       {treeContext.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />
