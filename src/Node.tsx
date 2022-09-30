@@ -26,6 +26,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const ref = useRef<HTMLElement>(null);
+  const handleRef = useRef<any>(null);
   const item = treeContext.tree.find(
     (node) => node.id === props.id
   ) as NodeModel<T>;
@@ -35,7 +36,14 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const [isDragging, drag, preview] = useDragNode(item, ref);
   const [isOver, dragSource, drop] = useDropNode(item, ref);
 
-  drag(ref);
+  useEffect(() => {
+    if (handleRef.current) {
+      drag(handleRef);
+      preview(ref);
+    } else {
+      drag(ref);
+    }
+  }, []);
 
   if (isDroppable(dragSource?.id, props.id, treeContext)) {
     drop(ref);
@@ -76,6 +84,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     draggable,
     hasChild,
     containerRef: ref,
+    handleRef,
     onToggle: handleToggle,
   };
 
