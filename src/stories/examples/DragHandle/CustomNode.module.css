@@ -28,6 +28,10 @@
   display: flex;
 }
 
+.handle > svg {
+  pointer-events: none;
+}
+
 .label {
   padding-inline-start: 8px;
 }
