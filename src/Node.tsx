@@ -39,7 +39,6 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   useEffect(() => {
     if (handleRef.current) {
       drag(handleRef);
-      preview(containerRef);
     } else {
       drag(containerRef);
     }
@@ -49,11 +48,11 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     drop(containerRef);
   }
 
-  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
-
   useEffect(() => {
     if (treeContext.dragPreviewRender) {
       preview(getEmptyImage(), { captureDraggingState: true });
+    } else if (handleRef.current) {
+      preview(containerRef);
     }
   }, [preview, treeContext.dragPreviewRender]);
 
@@ -75,6 +74,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
   const isDropTarget = placeholderContext.dropTargetId === props.id;
+  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
 
   const params: RenderParams = {
     depth: props.depth,
