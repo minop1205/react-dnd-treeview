@@ -32,7 +32,11 @@ export const CustomNode: React.FC<Props> = ({
       style={{ paddingInlineStart: indent }}
       data-testid={`${testIdPrefix}custom-node-${id}`}
     >
-      <div className={styles.handle} ref={props.handleRef}>
+      <div
+        className={styles.handle}
+        ref={props.handleRef}
+        data-testid={`drag-handle-${props.node.id}`}
+      >
         <DragHandleIcon />
       </div>
       <div className={styles.label}>

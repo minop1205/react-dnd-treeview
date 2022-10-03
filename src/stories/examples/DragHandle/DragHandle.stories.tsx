@@ -10,7 +10,6 @@ import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
-  assertElementCoords,
   wait,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
@@ -74,34 +73,54 @@ DragHandleStory.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   CustomDragPreviewStory.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  DragHandleStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    const assertPlaceholderCoords = (x: number, y: number) => {
+      const bbox = canvas
+        .getByTestId("custom-drag-preview")
+        .getBoundingClientRect();
+      expect(bbox.x).toBe(x);
+      expect(bbox.y).toBe(y);
+    };
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
+    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
-//     await wait();
+    // starting a drag on an element other than a handle
+    // does not allow preview display or drop
+    {
+      const file3Text = canvas.getByText("File 3");
+      const folder1Node = canvas.getByTestId("custom-node-1");
+      const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
-//     fireEvent.dragStart(dragSource);
+      await wait();
+      fireEvent.dragStart(file3Text);
+      await dragEnterAndDragOver(folder1Node, coords);
+      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+      fireEvent.drop(folder1Node, coords);
+      await wait();
+      dragLeaveAndDragEnd(file3Text, folder1Node);
+      await wait();
+      expect(await canvas.findByText("File 3")).toBeInTheDocument();
+    }
 
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
+    // preview display and drop possible by starting drag with handle
+    {
+      const file3Handle = canvas.getByTestId("drag-handle-7");
+      const folder1Node = canvas.getByTestId("custom-node-1");
+      const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
-
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
-
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-
-//     await wait();
-
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+      await wait();
+      fireEvent.dragStart(file3Handle);
+      await dragEnterAndDragOver(folder1Node, coords);
+      assertPlaceholderCoords(32, 48);
+      fireEvent.drop(folder1Node, coords);
+      await wait();
+      dragLeaveAndDragEnd(file3Handle, folder1Node);
+      await wait();
+      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+      expect(canvas.queryByText("File 3")).toBeNull();
+    }
+  };
+}
