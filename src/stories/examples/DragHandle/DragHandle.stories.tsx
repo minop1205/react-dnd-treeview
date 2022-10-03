@@ -98,11 +98,6 @@ if (!interactionsDisabled) {
       fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(folder1Node, coords);
       expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-      fireEvent.drop(folder1Node, coords);
-      await wait();
-      dragLeaveAndDragEnd(file3Text, folder1Node);
-      await wait();
-      expect(await canvas.findByText("File 3")).toBeInTheDocument();
     }
 
     // preview display and drop possible by starting drag with handle
