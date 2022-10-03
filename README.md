@@ -190,7 +190,7 @@ you can use the `data` property.
 ]
 ```
 
-### Node Properties
+### Node properties
 
 | Key       | Type                 | Required | Default     | Description                                                                                     |
 | --------- | -------------------- | -------- | ----------- | ----------------------------------------------------------------------------------------------- |
@@ -246,19 +246,36 @@ To render each tree node, please pass a render function to the `render` property
 
 The arguments passed to the render function are as follows
 
-| Name                 | Type              | Description                                                                                                 |
-| -------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| data                 | `object`          | Node data. (an element in the tree data array)                                                              |
-| options.depth        | `number`          | The depth of the node hierarchy.                                                                            |
-| options.isOpen       | `boolean`         | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.             |
-| options.draggable    | `boolean`         | Indicates whether this node is draggable or not.                                                            |
-| options.hasChild     | `boolean`         | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise. |
-| options.isDragging   | `boolean`         | Flag indicating whether this node is being dragged or not.                                                  |
-| options.isDropTarget | `boolean`         | Flag indicating whether or not this node is a drop target.                                                  |
-| options.containerRef | `React.RefObject` | Reference to the HTML element (default: `li` tag) that wraps the custom node.                               |
-| options.onToggle     | `function`        | An event handler for the open/close button of a node.                                                       |
+| Name                 | Type              | Description                                                                                                                                                                                                                                                                 |
+| -------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| data                 | `object`          | Node data. (an element in the tree data array)                                                                                                                                                                                                                              |
+| options.depth        | `number`          | The depth of the node hierarchy.                                                                                                                                                                                                                                            |
+| options.isOpen       | `boolean`         | The open and closed state of the node.<br>If `droppable` is not `true`, isOpen is always false.                                                                                                                                                                             |
+| options.draggable    | `boolean`         | Indicates whether this node is draggable or not.                                                                                                                                                                                                                            |
+| options.hasChild     | `boolean`         | Flag indicating whether or not the node has children. It is true if the node has children, false otherwise.                                                                                                                                                                 |
+| options.isDragging   | `boolean`         | Flag indicating whether this node is being dragged or not.                                                                                                                                                                                                                  |
+| options.isDropTarget | `boolean`         | Flag indicating whether or not this node is a drop target.                                                                                                                                                                                                                  |
+| options.containerRef | `React.RefObject` | Reference to the HTML element (default: `li` tag) that wraps the custom node.                                                                                                                                                                                               |
+| options.handleRef    | `React.RefObject` | Reference to the HTML element you wish to set as a drag handle. It is used by assigning it to the `ref` attribute of the element you want to set as a handle.By default, no handle is set and the entire node is draggable.<br>See [Drag handle](#Drag-handle) for details. |
+| options.onToggle     | `function`        | An event handler for the open/close button of a node.                                                                                                                                                                                                                       |
 
-### Dragging Preview
+### Drag handle
+
+By default, the entire node is draggable, but the `handleRef` render option allows the node to be dragged only by the specified handle, as in the following example.
+
+```jsx
+<Tree
+  {...props}
+  render={(node, { handleRef }) => (
+    <div>
+      <span ref={handleRef}>[Drag me]</span>
+      {node.text}
+    </div>
+  )}
+/>
+```
+
+### Dragging preview
 
 By default, the drag preview is a screenshot of a DOM node.  
 The `dragPreviewRender` property allows you to display a custom React component instead of a screenshot.
@@ -454,7 +471,7 @@ function App() {
 }
 ```
 
-### Component Styling
+### Component styling
 
 You are free to define the styling of individual nodes in the tree in your Render props, but the rest of the tree can be styled by specifying the CSS class name for the `classes` property.
 
