@@ -1,5 +1,5 @@
 import type { RefObject, ElementType, ReactElement } from "react";
-import type { XYCoord, DragSourceMonitor, ConnectableElement } from "react-dnd";
+import type { XYCoord, DragSourceMonitor } from "react-dnd";
 import type { DragDropMonitor } from "dnd-core";
 import React from "react";
 
