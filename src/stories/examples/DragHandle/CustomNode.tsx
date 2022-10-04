@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import { NodeModel } from "~/types";
 import styles from "./CustomNode.module.css";
@@ -45,7 +45,7 @@ export const CustomNode: React.FC<Props> = ({
       <div className={`${styles.expand} ${props.isOpen ? styles.isOpen : ""}`}>
         {props.node.droppable && (
           <div onClick={handleToggle}>
-            <ExpandMoreIcon data-testid={`expand-more-icon-${id}`} />
+            <ArrowDropDownIcon data-testid={`arrow-drop-down-icon-${id}`} />
           </div>
         )}
       </div>

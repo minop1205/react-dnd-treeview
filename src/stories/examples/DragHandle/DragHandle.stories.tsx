@@ -67,8 +67,8 @@ DragHandleStory.storyName = "Drag handle";
 DragHandleStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "drag-handle-js-fb4ys9",
+      tsId: "drag-handle-ts-050v5h",
     }),
   },
 };
