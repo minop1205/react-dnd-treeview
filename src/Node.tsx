@@ -25,31 +25,38 @@ type Props = PropsWithChildren<{
 export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
-  const ref = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const handleRef = useRef<any>(null);
   const item = treeContext.tree.find(
     (node) => node.id === props.id
   ) as NodeModel<T>;
   const { openIds, classes } = treeContext;
   const open = openIds.includes(props.id);
 
-  const [isDragging, drag, preview] = useDragNode(item, ref);
-  const [isOver, dragSource, drop] = useDropNode(item, ref);
+  const [isDragging, drag, preview] = useDragNode(item, containerRef);
+  const [isOver, dragSource, drop] = useDropNode(item, containerRef);
 
-  drag(ref);
+  useEffect(() => {
+    if (handleRef.current) {
+      drag(handleRef);
+    } else {
+      drag(containerRef);
+    }
+  }, []);
 
   if (isDroppable(dragSource?.id, props.id, treeContext)) {
-    drop(ref);
+    drop(containerRef);
   }
-
-  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
 
   useEffect(() => {
     if (treeContext.dragPreviewRender) {
       preview(getEmptyImage(), { captureDraggingState: true });
+    } else if (handleRef.current) {
+      preview(containerRef);
     }
   }, [preview, treeContext.dragPreviewRender]);
 
-  useDragControl(ref);
+  useDragControl(containerRef);
 
   const handleToggle = () => treeContext.onToggle(item.id);
 
@@ -67,6 +74,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
   const isDropTarget = placeholderContext.dropTargetId === props.id;
+  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
 
   const params: RenderParams = {
     depth: props.depth,
@@ -75,12 +83,13 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     isDropTarget,
     draggable,
     hasChild,
-    containerRef: ref,
+    containerRef,
+    handleRef,
     onToggle: handleToggle,
   };
 
   return (
-    <Component ref={ref} className={className} role="listitem">
+    <Component ref={containerRef} className={className} role="listitem">
       {treeContext.render(item, params)}
       {open && hasChild && (
         <Container parentId={props.id} depth={props.depth + 1} />

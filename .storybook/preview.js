@@ -27,6 +27,7 @@ export const parameters = {
             "External element (outside react-dnd)",
             "File drop",
             "Text drop",
+            "Drag handle",
           ],
         ],
       ],

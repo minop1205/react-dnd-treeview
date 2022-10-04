@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.2.0
+
+_Oct 04, 2022_
+
+### Added
+
+- Added `handleRef` to Render params to support dragging with handle.
+
 ## 3.1.0
 
 _Sep 08, 2022_
