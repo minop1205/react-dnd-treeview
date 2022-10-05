@@ -2,11 +2,15 @@
 
 ## 3.2.0
 
-_Oct 04, 2022_
+_Oct 05, 2022_
 
 ### Added
 
 - Added `handleRef` to Render params to support dragging with handle.
+
+### Fixed
+
+- Rollup bundling process does not handle "~" alias.
 
 ## 3.1.0
 

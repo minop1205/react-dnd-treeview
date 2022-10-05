@@ -25,6 +25,21 @@ export default {
       tsconfig: "tsconfig.build.json",
       useTsconfigDeclarationDir: true,
       clean: true,
+      // Resolve path alias in declaration files (.d.ts)
+      // https://github.com/minop1205/react-dnd-treeview/issues/149
+      // https://github.com/ezolenko/rollup-plugin-typescript2/issues/201#issuecomment-591942905
+      typescript: require("ttypescript"),
+      tsconfigDefaults: {
+        compilerOptions: {
+          plugins: [
+            { transform: "typescript-transform-paths" },
+            {
+              transform: "typescript-transform-paths",
+              afterDeclarations: true,
+            },
+          ],
+        },
+      },
     }),
   ],
 };
