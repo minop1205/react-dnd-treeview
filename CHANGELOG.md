@@ -7,6 +7,7 @@ _Oct 05, 2022_
 ### Added
 
 - Added `handleRef` to Render params to support dragging with handle.
+- Added React 17.x and React DnD 15.x to peer dependencies.
 
 ### Fixed
 
