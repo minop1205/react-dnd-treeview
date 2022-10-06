@@ -7,8 +7,8 @@ import { TouchBackend } from "react-dnd-touch-backend";
 
 export const getBackendOptions = (
   options: {
-    html5?: HTML5BackendOptions;
-    touch?: TouchBackendOptions;
+    html5?: Partial<HTML5BackendOptions>;
+    touch?: Partial<TouchBackendOptions>;
   } = {}
 ): MultiBackendOptions => {
   return {

@@ -9,6 +9,10 @@ _Oct 05, 2022_
 - Added `handleRef` to Render params to support dragging with handle.
 - Added React 17.x and React DnD 15.x to peer dependencies.
 
+### Changed
+
+- Changed all parameters of `getBackendOptions` to optional.
+
 ### Fixed
 
 - Rollup bundling process does not handle "~" alias.
