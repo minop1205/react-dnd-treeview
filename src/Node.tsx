@@ -36,13 +36,11 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const [isDragging, drag, preview] = useDragNode(item, containerRef);
   const [isOver, dragSource, drop] = useDropNode(item, containerRef);
 
-  useEffect(() => {
-    if (handleRef.current) {
-      drag(handleRef);
-    } else {
-      drag(containerRef);
-    }
-  }, []);
+  if (handleRef.current) {
+    drag(handleRef);
+  } else {
+    drag(containerRef);
+  }
 
   if (isDroppable(dragSource?.id, props.id, treeContext)) {
     drop(containerRef);
