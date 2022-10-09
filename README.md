@@ -89,6 +89,52 @@ function App() {
 }
 ```
 
+### Backend options
+
+`HTML5Backend`, `TouchBackend` and `MultiBackend` allow setting the BackendOptions defined in `react-dnd`.
+
+For more information on `TouchBackend`, please see [here](https://react-dnd.github.io/react-dnd/docs/backends/touch#options). (For the HTML5Backend option, only the `rootElement` option is available.)
+
+```jsx
+import { DndProvider } from "react-dnd";
+import { HTML5Backend, HTML5BackendOptions } from "react-dnd-html5-backend";
+import {TouchBackend, TouchBackendOptions} from "react-dnd-touch-backend"
+import {Tree, MultiBackend, getBackendOptions} from "@minoru/react-dnd-treeview"
+
+const touchOptions: Partial<TouchBackendOptions> = {
+  // some options
+};
+
+const html5Options: Partial<HTML5BackendOptions> = {
+  rootElement: document.body,
+  // some options
+};
+
+const multiOptions = {
+  touch: touchOptions,
+  html5: html5Options,
+}
+
+function App() {
+  return (
+    <DndProvider
+      backend={MultiBackend}
+      options={getBackendOptions(multiOptions)}
+
+      // or
+      // backend={HTML5Backend}
+      // options={html5Options}
+
+      // or
+      // backend={TouchBackend}
+      // options={touchOptions}
+    >
+      <Tree {...someProps}> />
+    </DndProvider>
+  );
+}
+```
+
 ## Data Structure
 
 To display the treeview, pass data with the following structure to the `tree` property of the Tree component.
