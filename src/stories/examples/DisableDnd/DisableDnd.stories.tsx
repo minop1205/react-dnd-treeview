@@ -55,8 +55,8 @@ DisableDndStory.storyName = "Disable dnd";
 DisableDndStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "drag-and-drop-as-optional-js-0z31vo",
+      tsId: "drag-and-drop-as-optional-ts-sqzo11",
     }),
   },
 };
