@@ -1,19 +1,13 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { within, userEvent } from "@storybook/testing-library";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps, DragLayerMonitorProps, NodeModel } from "~/types";
 import { FileProperties } from "~/stories/types";
-import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  getPointerCoords,
-  assertElementCoords,
-  wait,
-} from "~/stories/examples/helpers";
+import { dragAndDrop, wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { CustomNode } from "./CustomNode";
@@ -74,34 +68,25 @@ DynamicHierarchyStory.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   DynamicHierarchyStory.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  DynamicHierarchyStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    expect(canvas.queryByTestId("arrow-right-icon-1")).toBeNull();
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
+    // drag and drop: Item 2 into Item 1
+    {
+      await wait(500);
+      await dragAndDrop(
+        canvas.getByText("Item 2"),
+        canvas.getByTestId("custom-node-1")
+      );
 
-//     await wait();
+      expect(canvas.queryByText("Item 2")).toBeNull();
 
-//     fireEvent.dragStart(dragSource);
+      await userEvent.click(canvas.getByTestId("arrow-right-icon-1"));
 
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
-
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
-
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
-
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-
-//     await wait();
-
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+      expect(await canvas.findByText("Item 2")).toBeInTheDocument();
+    }
+  };
+}
