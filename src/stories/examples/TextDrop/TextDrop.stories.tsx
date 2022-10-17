@@ -23,7 +23,7 @@ import styles from "./TextDrop.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Text drop",
+  title: "Basic Examples/Text drop",
   argTypes,
   decorators: [
     (Story) => (

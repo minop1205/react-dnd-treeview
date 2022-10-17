@@ -17,7 +17,7 @@ import styles from "./AddRemoveDuplicateNodes.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Add, remove, duplicate nodes",
+  title: "Basic Examples/Add, remove, duplicate nodes",
   argTypes,
   decorators: [
     (Story) => (

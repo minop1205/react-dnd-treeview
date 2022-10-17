@@ -23,7 +23,7 @@ import styles from "./CustomDragPreview.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom drag preview",
+  title: "Basic Examples/Custom drag preview",
   argTypes,
   decorators: [
     (Story) => (

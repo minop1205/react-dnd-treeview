@@ -24,7 +24,7 @@ import styles from "./CustomNode.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Custom node",
+  title: "Basic Examples/Custom node",
   argTypes,
   decorators: [
     (Story) => (

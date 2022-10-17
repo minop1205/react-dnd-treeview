@@ -15,7 +15,7 @@ import styles from "./OpeningAndClosingAllNodes.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Opening and closing all nodes",
+  title: "Basic Examples/Opening and closing all nodes",
   argTypes,
   decorators: [
     (Story) => (

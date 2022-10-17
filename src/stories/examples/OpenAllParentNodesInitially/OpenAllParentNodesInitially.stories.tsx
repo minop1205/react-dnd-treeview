@@ -16,7 +16,7 @@ import styles from "./OpenAllParentNodesInitially.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Open all parent nodes initially",
+  title: "Basic Examples/Open all parent nodes initially",
   argTypes,
   decorators: [
     (Story) => (

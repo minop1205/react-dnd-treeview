@@ -22,7 +22,7 @@ import styles from "./AutoExpandWithDragOverNode.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Auto expand with drag over node",
+  title: "Basic Examples/Auto expand with drag over node",
   argTypes,
   decorators: [
     (Story) => (

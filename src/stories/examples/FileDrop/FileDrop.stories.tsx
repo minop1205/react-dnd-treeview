@@ -17,7 +17,7 @@ import styles from "./FileDrop.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/File drop",
+  title: "Basic Examples/File drop",
   argTypes,
   decorators: [
     (Story) => (

@@ -16,7 +16,7 @@ import styles from "./MultipleSelections.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Multiple selections",
+  title: "Basic Examples/Multiple selections",
   argTypes,
   decorators: [
     (Story) => (
