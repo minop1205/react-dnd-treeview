@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { within, fireEvent, userEvent } from "@storybook/testing-library";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
@@ -10,10 +10,8 @@ import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import {
   dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
   getPointerCoords,
-  assertElementCoords,
-  wait,
+  dragAndDrop,
 } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
@@ -63,34 +61,34 @@ DisableDndStory.parameters = {
   },
 };
 
-// if (!interactionsDisabled) {
-//   DisableDndStory.play = async ({ canvasElement }) => {
-//     const canvas = within(canvasElement);
+if (!interactionsDisabled) {
+  DisableDndStory.play = async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    expect(canvas.getByText("File 3")).toBeInTheDocument();
 
-//     // show preview during dragging
-//     const dragSource = canvas.getByText("File 3");
-//     const dropTarget = canvas.getByTestId("custom-node-1");
+    // drag and drop: File 3 into Folder 1
+    {
+      await dragAndDrop(
+        canvas.getByText("File 3"),
+        canvas.getByTestId("custom-node-1")
+      );
 
-//     await wait();
+      expect(canvas.queryByText("File 3")).toBeNull();
+    }
 
-//     fireEvent.dragStart(dragSource);
+    // disable dnd
+    await userEvent.click(canvas.getByTestId("switch-dnd"));
 
-//     const coords = getPointerCoords(dropTarget);
-//     await dragEnterAndDragOver(dropTarget, coords);
+    // drag and drop: Folder 2 into Folder 1
+    {
+      const dragSource = canvas.getByText("Folder 2");
+      const dropTarget = canvas.getByText("Folder 1");
+      const coords = getPointerCoords(dropTarget, { x: 5, y: 5 });
 
-//     expect(
-//       await canvas.findByTestId("custom-drag-preview")
-//     ).toBeInTheDocument();
-
-//     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
-
-//     // hide preview when drag is canceled
-//     dragLeaveAndDragEnd(dragSource, dropTarget);
-
-//     await wait();
-
-//     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-//   };
-// }
+      fireEvent.dragStart(dragSource);
+      await dragEnterAndDragOver(dropTarget, coords);
+      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    }
+  };
+}

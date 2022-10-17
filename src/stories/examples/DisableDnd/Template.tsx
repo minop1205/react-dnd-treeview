@@ -21,7 +21,11 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
         <FormGroup>
           <FormControlLabel
             control={
-              <Switch checked={enableDnd} onChange={handleClickSwitch} />
+              <Switch
+                checked={enableDnd}
+                onChange={handleClickSwitch}
+                data-testid="switch-dnd"
+              />
             }
             label={`Dnd is ${enableDnd ? "enabled" : "disabled"}`}
           />
