@@ -26,6 +26,7 @@ export const parameters = {
           "File drop",
           "Text drop",
           "Drag handle",
+          "Disable dnd",
         ],
         "Advanced Examples",
         ["Multiple tree", "Multiple drag"],
