@@ -9,7 +9,7 @@ You can use render props to create each node freely.
 
 Some of the examples below use [MUI(Material-UI)](https://mui.com) components, but TreeView does not depend on MUI, so you can use other libraries or your own custom components.
 
-[https://minop1205.github.io/react-dnd-treeview/](https://minop1205.github.io/react-dnd-treeview/?path=/docs/examples-tree-minimum-configuration--minimum-configuration-story)
+[https://minop1205.github.io/react-dnd-treeview/](https://minop1205.github.io/react-dnd-treeview/?path=/docs/basic-examples-minimum-configuration--minimum-configuration-story)
 
 ## Breaking changes and migration
 

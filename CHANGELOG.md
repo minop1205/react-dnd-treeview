@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.2.1
+
+_Oct 19, 2022_
+
+### Fixed
+
+- The URL of the demo page listed in the README is incorrect.
+
 ## 3.2.0
 
 _Oct 05, 2022_
