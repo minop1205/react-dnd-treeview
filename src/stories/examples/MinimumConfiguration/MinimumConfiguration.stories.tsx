@@ -22,7 +22,7 @@ import styles from "./MinimumConfiguration.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Minimum configuration",
+  title: "Basic Examples/Minimum configuration",
   argTypes,
   decorators: [
     (Story) => (

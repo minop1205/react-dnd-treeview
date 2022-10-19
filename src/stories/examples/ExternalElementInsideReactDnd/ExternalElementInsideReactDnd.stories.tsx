@@ -18,7 +18,7 @@ import styles from "./ExternalElementInsideReactDnd.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/External element (inside react-dnd)",
+  title: "Basic Examples/External element (inside react-dnd)",
   argTypes,
   decorators: [
     (Story) => (

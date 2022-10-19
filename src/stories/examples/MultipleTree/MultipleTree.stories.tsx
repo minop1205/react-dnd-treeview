@@ -13,7 +13,7 @@ import { Template } from "./Template";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Multiple tree",
+  title: "Advanced Examples/Multiple tree",
   argTypes,
   decorators: [
     (Story) => (

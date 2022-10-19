@@ -25,7 +25,7 @@ import styles from "./ManualSortWithPlaceholder.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Manual sort with placeholder",
+  title: "Basic Examples/Manual sort with placeholder",
   argTypes,
   decorators: [
     (Story) => (

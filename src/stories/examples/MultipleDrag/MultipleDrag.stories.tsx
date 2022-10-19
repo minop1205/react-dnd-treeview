@@ -25,7 +25,7 @@ import styles from "./MultipleDrag.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Multiple drag",
+  title: "Advanced Examples/Multiple drag",
   argTypes,
   decorators: [
     (Story) => (

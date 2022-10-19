@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 1"
+  },
+  {
+    "id": 2,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 2"
+  },
+  {
+    "id": 3,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 3"
+  },
+  {
+    "id": 4,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 4"
+  },
+  {
+    "id": 5,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 5"
+  },
+  {
+    "id": 6,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 6"
+  },
+  {
+    "id": 7,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 7"
+  },
+  {
+    "id": 8,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 8"
+  },
+  {
+    "id": 9,
+    "parent": 0,
+    "droppable": true,
+    "text": "Item 9"
+  }
+]

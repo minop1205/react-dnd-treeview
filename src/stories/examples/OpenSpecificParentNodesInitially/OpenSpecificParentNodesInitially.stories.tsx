@@ -16,7 +16,7 @@ import styles from "./OpenSpecificParentNodesInitially.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Open specific parent nodes initially",
+  title: "Basic Examples/Open specific parent nodes initially",
   argTypes,
   decorators: [
     (Story) => (

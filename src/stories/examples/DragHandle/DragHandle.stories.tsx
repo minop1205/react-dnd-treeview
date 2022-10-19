@@ -22,7 +22,7 @@ import styles from "./DragHandle.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Drag handle",
+  title: "Basic Examples/Drag handle",
   argTypes,
   decorators: [
     (Story) => (

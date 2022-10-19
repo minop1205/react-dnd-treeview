@@ -16,7 +16,7 @@ import styles from "./EditableNodes.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Editable nodes",
+  title: "Basic Examples/Editable nodes",
   argTypes,
   decorators: [
     (Story) => (

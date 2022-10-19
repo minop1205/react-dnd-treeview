@@ -1,0 +1,21 @@
+.app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.switchContainer {
+  padding: 16px 32px 0;
+}
+
+.treeRoot {
+  padding: 16px 24px 32px;
+}
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
+}

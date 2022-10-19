@@ -13,10 +13,13 @@
     "drag and drop",
     "dnd",
     "react",
+    "tree",
     "treeview",
     "component",
     "headless component",
-    "touch support"
+    "touch support",
+    "sortable",
+    "hierarchical data"
   ],
   "type": "module",
   "main": "dist/index.js",

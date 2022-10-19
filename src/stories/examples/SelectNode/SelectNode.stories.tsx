@@ -15,7 +15,7 @@ import styles from "./SelectNode.module.css";
 
 export default {
   component: Tree,
-  title: "Examples/Tree/Select node",
+  title: "Basic Examples/Select node",
   argTypes,
   decorators: [
     (Story) => (
