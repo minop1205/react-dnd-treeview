@@ -30,16 +30,6 @@ export default {
 
 export const DynamicHierarchyStory = DefaultTemplate.bind({});
 
-const compareNodeId = (a: NodeModel, b: NodeModel) => {
-  if (a.id > b.id) {
-    return 1;
-  } else if (b.id > a.id) {
-    return -1;
-  }
-
-  return 0;
-};
-
 DynamicHierarchyStory.args = {
   rootId: 0,
   tree: sampleData,
@@ -48,7 +38,6 @@ DynamicHierarchyStory.args = {
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
   },
-  sort: compareNodeId,
   render: function render(node, options) {
     return <CustomNode node={node} {...options} />;
   },
