@@ -62,8 +62,8 @@ DynamicHierarchyStory.storyName = "Dynamic hierarchy";
 DynamicHierarchyStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
+      jsId: "dynamic-hierarchy-js-n8m7zn",
+      tsId: "dynamic-hierarchy-ts-dz4bis",
     }),
   },
 };
