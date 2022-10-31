@@ -12,6 +12,7 @@ import {
   useDragNode,
   useDropNode,
   useDragControl,
+  useDragHandle,
 } from "./hooks";
 import { PlaceholderContext } from "./providers";
 import { NodeModel, RenderParams } from "./types";
@@ -36,13 +37,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const [isDragging, drag, preview] = useDragNode(item, containerRef);
   const [isOver, dragSource, drop] = useDropNode(item, containerRef);
 
-  useEffect(() => {
-    if (handleRef.current) {
-      drag(handleRef);
-    } else {
-      drag(containerRef);
-    }
-  }, [handleRef.current]);
+  useDragHandle(containerRef, handleRef, drag);
 
   if (isDroppable(dragSource?.id, props.id, treeContext)) {
     drop(containerRef);
