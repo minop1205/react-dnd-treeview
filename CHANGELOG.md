@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.2.2
+
+_Oct 31, 2022_
+
+### Fixed
+
+- Nodes may not be draggable.
+
 ## 3.2.1
 
 _Oct 19, 2022_
