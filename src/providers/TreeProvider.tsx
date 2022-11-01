@@ -51,7 +51,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     initialOpen: false,
     ...props,
     openIds,
-    onDrop: (dragSource, dropTargetId, index) => {
+    onDrop: (dragSource, dropTargetId, placeholderIndex) => {
       // if dragSource is null,
       // it means that the drop is from the outside of the react-dnd.
       if (!dragSource) {
@@ -65,8 +65,10 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
           options.destinationIndex = getDestIndex(
             props.tree,
             dropTargetId,
-            index
+            placeholderIndex
           );
+
+          options.relativeIndex = placeholderIndex;
         }
 
         props.onDrop(props.tree, options);
@@ -92,11 +94,17 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
             tree,
             dragSource.id,
             dropTargetId,
-            index
+            placeholderIndex
           );
           options.destinationIndex = destIndex;
+          options.relativeIndex = placeholderIndex;
           props.onDrop(
-            mutateTreeWithIndex<T>(tree, dragSource.id, dropTargetId, index),
+            mutateTreeWithIndex<T>(
+              tree,
+              dragSource.id,
+              dropTargetId,
+              placeholderIndex
+            ),
             options
           );
 

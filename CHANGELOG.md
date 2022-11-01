@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.3.0
+
+_Nov 2, 2022_
+
+### Added
+
+- Added `relativeIndex` to options passed `onDrop` callback.
+
 ## 3.2.2
 
 _Oct 31, 2022_
