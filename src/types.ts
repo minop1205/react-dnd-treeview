@@ -159,6 +159,7 @@ export type DropOptions<T = unknown> = {
   dragSource?: NodeModel<T>;
   dropTarget?: NodeModel<T>;
   destinationIndex?: number;
+  relativeIndex?: number;
   monitor: DragDropMonitor;
 };
 
