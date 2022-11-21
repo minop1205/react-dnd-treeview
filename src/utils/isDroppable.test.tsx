@@ -19,6 +19,7 @@ describe("isDroppable", () => {
       placeholderComponent: "li",
       sort: false,
       insertDroppableFirst: true,
+      enableAnimateExpand: false,
       dropTargetOffset: 0,
       initialOpen: false,
       openIds: [],

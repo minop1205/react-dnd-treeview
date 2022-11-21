@@ -31,9 +31,12 @@
     "access": "public"
   },
   "dependencies": {
+    "@juggle/resize-observer": "^3.3.1",
     "dnd-multi-backend": "^7.0.0-alpha.4",
+    "framer-motion": "^6.2.8",
     "react-dnd-html5-backend": "^16.0.1",
-    "react-dnd-touch-backend": "^16.0.1"
+    "react-dnd-touch-backend": "^16.0.1",
+    "react-use-measure": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",

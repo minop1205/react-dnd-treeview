@@ -160,6 +160,16 @@ export const insertDroppableFirst: CustomArgType = {
   },
 };
 
+export const enableAnimateExpand: CustomArgType = {
+  name: "enableAnimateExpand",
+  description:
+    "Specifies whether use animation when toggle expanding the node.",
+  table: {
+    type: { summary: "boolean" },
+    defaultValue: { summary: "false" },
+  },
+};
+
 export const placeholderRender: CustomArgType = {
   name: "placeholderRender",
   description:

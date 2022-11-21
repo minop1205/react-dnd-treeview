@@ -6,6 +6,7 @@ import React, {
   ReactElement,
 } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
+import { AnimateHeight } from "./AnimateHeight";
 import { Container } from "./Container";
 import {
   useTreeContext,
@@ -31,7 +32,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const item = treeContext.tree.find(
     (node) => node.id === props.id
   ) as NodeModel<T>;
-  const { openIds, classes } = treeContext;
+  const { openIds, classes, enableAnimateExpand } = treeContext;
   const open = openIds.includes(props.id);
 
   const [isDragging, drag, preview] = useDragNode(item, containerRef);
@@ -86,8 +87,13 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   return (
     <Component ref={containerRef} className={className} role="listitem">
       {treeContext.render(item, params)}
-      {open && hasChild && (
-        <Container parentId={props.id} depth={props.depth + 1} />
+      {enableAnimateExpand ? (
+        <AnimateHeight isVisible={open && hasChild}>
+          <Container parentId={props.id} depth={props.depth + 1} />
+        </AnimateHeight>
+      ) : (
+        open &&
+        hasChild && <Container parentId={props.id} depth={props.depth + 1} />
       )}
     </Component>
   );
