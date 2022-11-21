@@ -8,5 +8,6 @@ export { getDropTarget } from "./getDropTarget";
 export { getDestIndex } from "./getDestIndex";
 export { getModifiedIndex } from "./getModifiedIndex";
 export { getDescendants } from "./getDescendants";
+export { getParents } from "./getParents";
 export { getBackendOptions } from "./getBackendOptions";
 export { isNodeModel } from "./isNodeModel";
