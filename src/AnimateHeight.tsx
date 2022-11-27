@@ -2,7 +2,7 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import type { Target, Tween } from "framer-motion";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
-import React from "react";
+import React, { useState } from "react";
 
 interface AnimateHeightProps {
   isVisible: boolean;
@@ -27,10 +27,18 @@ export function AnimateHeight(props: AnimateHeightProps) {
     children,
   } = props;
   const [ref, { height }] = useMeasure({ polyfill: ResizeObserver });
-
+  const [animating, setAnimating] = useState(false);
+  const onAnimationStart = () => {
+    setAnimating(true);
+  };
+  const onAnimationComplete = () => {
+    setAnimating(false);
+  };
   return (
     <motion.div
-      style={isVisible ? {} : { overflow: "hidden" }}
+      style={isVisible && !animating ? {} : { overflow: "hidden" }}
+      onAnimationComplete={onAnimationComplete}
+      onAnimationStart={onAnimationStart}
       initial={isVisible ? "open" : "close"}
       animate={isVisible ? "open" : "close"}
       inherit={false}
