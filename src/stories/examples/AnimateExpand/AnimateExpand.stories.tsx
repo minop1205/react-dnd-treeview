@@ -3,21 +3,16 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent, userEvent } from "@storybook/testing-library";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { TreeProps } from "~/types";
+import { TreeProps, DragLayerMonitorProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { pageFactory } from "~/stories/pageFactory";
 import { FileProperties } from "~/stories/types";
-import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  dragAndDrop,
-  getPointerCoords,
-  toggleNode,
-  wait,
-} from "~/stories/examples/helpers";
+import { toggleNode, wait } from "~/stories/examples/helpers";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample2.json";
+import sampleData from "~/stories/assets/sample-animate-expand.json";
 import styles from "./AnimateExpand.module.css";
 
 export default {
@@ -41,23 +36,15 @@ AnimateExpandStory.args = {
   enableAnimateExpand: true,
   classes: {
     root: styles.treeRoot,
+    draggingSource: styles.draggingSource,
+    dropTarget: styles.dropTarget,
   },
-  render: function render(node, { depth, isOpen, onToggle }) {
-    return (
-      <div
-        style={{ marginInlineStart: depth * 10 }}
-        data-testid={`node-${node.id}`}
-      >
-        {node.droppable && (
-          <span onClick={onToggle} data-testid={`open-icon-${node.id}`}>
-            {isOpen ? "[-]" : "[+]"}
-          </span>
-        )}
-        {node.text}
-      </div>
-    );
+  render: function render(node, options) {
+    return <CustomNode node={node} {...options} />;
   },
-  dragPreviewRender: (monitor) => <div>{monitor.item.text}</div>,
+  dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
+    <CustomDragPreview monitorProps={monitorProps} />
+  ),
 };
 
 AnimateExpandStory.storyName = "AnimateExpand";
@@ -75,68 +62,19 @@ if (!interactionsDisabled) {
   AnimateExpandStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // count nodes
-    expect(canvas.getAllByRole("listitem").length).toBe(3);
+    // If enableAnimateExpand is true, hidden nodes are rendered.
+    expect(canvas.getByText("File 1-01")).toBeInTheDocument();
+    expect(canvas.getByText("File 2-1-1")).toBeInTheDocument();
 
-    // open and close first node
-    expect(canvas.queryByText("File 1-1")).toBeNull();
+    // Check style attributes before and after opening a node.
+    const animateContainer =
+      canvas.getByTestId("custom-node-1").nextElementSibling;
 
-    await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(await canvas.findByText("File 1-1")).toBeInTheDocument();
+    expect(animateContainer).toHaveStyle({ height: 0, opacity: 0 });
 
-    await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(canvas.queryByText("File 1-1")).toBeNull();
+    await toggleNode(canvas.getByTestId("arrow-right-icon-1"));
+    await wait(300);
 
-    // drag and drop: File 3 into Folder 1
-    await dragAndDrop(canvas.getByText("File 3"), canvas.getByTestId("node-1"));
-    expect(canvas.queryByText("File 3")).toBeNull();
-
-    // open Folder1
-    await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(await canvas.findByText("File 3")).toBeInTheDocument();
-
-    // drag and drop: File 3 into Folder 2
-    await dragAndDrop(canvas.getByText("File 3"), canvas.getByTestId("node-4"));
-    expect(canvas.queryByText("File 3")).toBeNull();
-
-    // open Folder2
-    await toggleNode(canvas.getByTestId("open-icon-4"));
-
-    // drag and drop: Folder 2 into Folder 1
-    await dragAndDrop(
-      canvas.getByText("Folder 2"),
-      canvas.getByTestId("node-1")
-    );
-
-    expect(await canvas.findByTestId("node-4")).toHaveStyle(
-      "margin-inline-start: 10px"
-    );
-
-    // drag and drop: File 1-2 into root node
-    await dragAndDrop(
-      canvas.getByText("File 1-2"),
-      canvas.getAllByRole("list")[0]
-    );
-
-    expect(await canvas.findByText("File 1-2")).toHaveStyle(
-      "margin-inline-start: 0px"
-    );
-
-    // drag File3 and cancel drag
-    {
-      const dragSource = canvas.getByText("File 3");
-      const dropTarget = canvas.getAllByRole("list")[0];
-      const coords = getPointerCoords(dropTarget);
-
-      await wait();
-      fireEvent.dragStart(dragSource);
-      await dragEnterAndDragOver(dropTarget, coords);
-      dragLeaveAndDragEnd(dragSource, dropTarget);
-      await wait();
-
-      expect(await canvas.findByText("File 3")).toHaveStyle(
-        "margin-inline-start: 20px"
-      );
-    }
+    expect(animateContainer).toHaveStyle({ height: "640px", opacity: 1 });
   };
 }

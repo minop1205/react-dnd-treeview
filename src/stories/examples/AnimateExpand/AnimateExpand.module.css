@@ -3,3 +3,11 @@
   height: 100%;
   padding: 32px;
 }
+
+.draggingSource {
+  opacity: 0.3;
+}
+
+.dropTarget {
+  background-color: #e8f0fe;
+}
