@@ -3,8 +3,9 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/jest";
 import { within, fireEvent, userEvent } from "@storybook/testing-library";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { TreeProps } from "~/types";
+import { TreeProps, DragLayerMonitorProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { pageFactory } from "~/stories/pageFactory";
 import { FileProperties } from "~/stories/types";
 import {
@@ -15,9 +16,10 @@ import {
   toggleNode,
   wait,
 } from "~/stories/examples/helpers";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample2.json";
+import sampleData from "~/stories/assets/sample-animate-expand.json";
 import styles from "./AnimateExpand.module.css";
 
 export default {
@@ -41,23 +43,15 @@ AnimateExpandStory.args = {
   enableAnimateExpand: true,
   classes: {
     root: styles.treeRoot,
+    draggingSource: styles.draggingSource,
+    dropTarget: styles.dropTarget,
   },
-  render: function render(node, { depth, isOpen, onToggle }) {
-    return (
-      <div
-        style={{ marginInlineStart: depth * 10 }}
-        data-testid={`node-${node.id}`}
-      >
-        {node.droppable && (
-          <span onClick={onToggle} data-testid={`open-icon-${node.id}`}>
-            {isOpen ? "[-]" : "[+]"}
-          </span>
-        )}
-        {node.text}
-      </div>
-    );
+  render: function render(node, options) {
+    return <CustomNode node={node} {...options} />;
   },
-  dragPreviewRender: (monitor) => <div>{monitor.item.text}</div>,
+  dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
+    <CustomDragPreview monitorProps={monitorProps} />
+  ),
 };
 
 AnimateExpandStory.storyName = "AnimateExpand";

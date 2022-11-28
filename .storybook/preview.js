@@ -10,9 +10,9 @@ export const parameters = {
         "Basic Examples",
         [
           "Minimum configuration",
-          "AnimateExpand",
           "Custom node",
           "Custom drag preview",
+          "AnimateExpand",
           "Select node",
           "Multiple selections",
           "Opening and closing all nodes",
