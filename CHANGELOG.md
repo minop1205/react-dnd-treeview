@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.4.0
+
+_Nov 29, 2022_
+
+### Added
+
+- Added `enableAnimateExpand` API to support open/close animation.
+
 ## 3.3.0
 
 _Nov 2, 2022_
