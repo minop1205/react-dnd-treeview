@@ -3,7 +3,7 @@
 A draggable and droppable React treeview component.  
 You can use render props to create each node freely.
 
-![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/98293395-94441000-1ff1-11eb-81db-b84c31b03c6b.gif)
+![react-dnd-treeview](https://user-images.githubusercontent.com/3772820/204380436-4c501e28-6c0a-43ea-a317-6620d6dc1ca0.gif)
 
 ## Demo and Examples
 
