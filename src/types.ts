@@ -144,6 +144,7 @@ export type TreeState<T> = TreeStateBase<T> & {
   placeholderComponent: ElementType;
   sort: SortCallback<T> | boolean;
   insertDroppableFirst: boolean;
+  enableAnimateExpand: boolean;
   dropTargetOffset: number;
   initialOpen: InitialOpen;
   openIds: NodeModel["id"][];
@@ -170,6 +171,7 @@ export type TreeProps<T = unknown> = TreeStateBase<T> & {
   placeholderComponent?: ElementType;
   sort?: SortCallback<T> | boolean;
   insertDroppableFirst?: boolean;
+  enableAnimateExpand?: boolean;
   dropTargetOffset?: number;
   initialOpen?: InitialOpen;
   onChangeOpen?: ChangeOpenHandler;

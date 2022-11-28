@@ -47,6 +47,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
     placeholderComponent: "li",
     sort: true,
     insertDroppableFirst: true,
+    enableAnimateExpand: false,
     dropTargetOffset: 0,
     initialOpen: false,
     ...props,
