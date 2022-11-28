@@ -52,8 +52,8 @@ AnimateExpandStory.storyName = "AnimateExpand";
 AnimateExpandStory.parameters = {
   docs: {
     page: pageFactory({
-      jsId: "animate-expand-js-mrhwrd",
-      tsId: "animate-expand-ts-tn9xj7",
+      jsId: "animateexpand-js-vtvh18",
+      tsId: "animateexpand-ts-l5rd4r",
     }),
   },
 };
