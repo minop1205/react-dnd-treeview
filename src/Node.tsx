@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useContext,
-  PropsWithChildren,
-  ReactElement,
-} from "react";
+import React, { useEffect, useRef, useContext, ReactElement } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { AnimateHeight } from "./AnimateHeight";
 import { Container } from "./Container";
@@ -19,10 +13,10 @@ import { PlaceholderContext } from "./providers";
 import { NodeModel, RenderParams } from "./types";
 import { isDroppable } from "./utils";
 
-type Props = PropsWithChildren<{
+type Props = {
   id: NodeModel["id"];
   depth: number;
-}>;
+};
 
 export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
@@ -70,7 +64,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
   const isDropTarget = placeholderContext.dropTargetId === props.id;
-  const hasChild = !!treeContext.tree.find((node) => node.parent === props.id);
+  const children = treeContext.tree.filter((node) => node.parent === props.id);
 
   const params: RenderParams = {
     depth: props.depth,
@@ -78,7 +72,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     isDragging,
     isDropTarget,
     draggable,
-    hasChild,
+    hasChild: children.length > 0,
     containerRef,
     handleRef,
     onToggle: handleToggle,
@@ -87,13 +81,13 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   return (
     <Component ref={containerRef} className={className} role="listitem">
       {treeContext.render(item, params)}
-      {enableAnimateExpand ? (
-        <AnimateHeight isVisible={open && hasChild}>
+      {enableAnimateExpand && params.hasChild && (
+        <AnimateHeight isVisible={open} childrenCount={children.length}>
           <Container parentId={props.id} depth={props.depth + 1} />
         </AnimateHeight>
-      ) : (
-        open &&
-        hasChild && <Container parentId={props.id} depth={props.depth + 1} />
+      )}
+      {!enableAnimateExpand && params.hasChild && open && (
+        <Container parentId={props.id} depth={props.depth + 1} />
       )}
     </Component>
   );
