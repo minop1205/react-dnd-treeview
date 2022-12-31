@@ -1,5 +1,11 @@
 # Change Log
 
+## 3.4.1
+
+_Dec 31, 2022_
+
+- Improved performance when `enableAnimateExpand` is `true`.
+
 ## 3.4.0
 
 _Nov 29, 2022_
