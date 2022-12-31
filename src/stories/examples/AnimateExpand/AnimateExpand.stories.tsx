@@ -62,9 +62,9 @@ if (!interactionsDisabled) {
   AnimateExpandStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    // If enableAnimateExpand is true, hidden nodes are rendered.
-    expect(canvas.getByText("File 1-01")).toBeInTheDocument();
-    expect(canvas.getByText("File 2-1-1")).toBeInTheDocument();
+    // Do not render hidden nodes.
+    expect(canvas.queryByText("File 1-01")).toBe(null);
+    expect(canvas.queryByText("File 2-1-1")).toBe(null);
 
     // Check style attributes before and after opening a node.
     const animateContainer =
