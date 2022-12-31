@@ -82,7 +82,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     <Component ref={containerRef} className={className} role="listitem">
       {treeContext.render(item, params)}
       {enableAnimateExpand && params.hasChild && (
-        <AnimateHeight isVisible={open} childrenCount={children.length}>
+        <AnimateHeight isVisible={open}>
           <Container parentId={props.id} depth={props.depth + 1} />
         </AnimateHeight>
       )}

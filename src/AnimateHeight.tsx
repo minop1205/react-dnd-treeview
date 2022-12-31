@@ -14,7 +14,6 @@ interface AnimateHeightProps {
     close: Target;
   };
   children: React.ReactNode;
-  childrenCount: number;
 }
 
 export function AnimateHeight(props: AnimateHeightProps) {
@@ -27,65 +26,62 @@ export function AnimateHeight(props: AnimateHeightProps) {
       close: { opacity: 0, height: 0 },
     },
     children,
-    childrenCount,
   } = props;
+
   const [ref, { height }] = useMeasure({ polyfill: ResizeObserver });
-  const [animating, setAnimating] = useState(false);
-
-  const [visible, setVisible] = useState(isVisible);
-  const [visibleChildren, setVisibleChildren] = useState(isVisible);
-
-  const onAnimationStart = () => {
-    setAnimating(true);
-  };
+  const [isVisibleChildren, setIsVisibleChildren] = useState(isVisible);
+  const [isVisibleContainer, setIsVisibleContainer] = useState(isVisible);
+  const [transition, setTransition] = useState(false);
 
   const onAnimationComplete = () => {
-    setAnimating(false);
+    setTransition(false);
 
-    if (!visible) {
-      setVisibleChildren(false);
+    if (!isVisible) {
+      setIsVisibleChildren(false);
     }
   };
 
   useEffect(() => {
+    setTransition(true);
+
     if (isVisible) {
-      setVisible(true);
-      setVisibleChildren(true);
+      setIsVisibleChildren(true);
     } else {
-      setVisible(false);
+      setIsVisibleContainer(false);
     }
   }, [isVisible]);
 
+  useEffect(() => {
+    if (isVisibleChildren) {
+      setIsVisibleContainer(true);
+    }
+  }, [height]);
+
   return (
     <motion.div
-      style={visible && !animating ? undefined : { overflow: "hidden" }}
+      style={transition ? { overflow: "hidden" } : undefined}
       onAnimationComplete={onAnimationComplete}
-      onAnimationStart={onAnimationStart}
-      initial={visible ? "open" : "close"}
-      animate={visible ? "open" : "close"}
+      initial={isVisibleContainer ? "open" : "close"}
+      animate={isVisibleContainer ? "open" : "close"}
       inherit={false}
       variants={variants}
-      transition={{
-        ease,
-        duration: computeDuration(childrenCount, duration),
-      }}
+      transition={{ ease, duration: computeDuration(height, duration) }}
     >
-      <div ref={ref}>{visibleChildren && children}</div>
+      <div ref={ref}>{isVisibleChildren && children}</div>
     </motion.div>
   );
 }
 
-// Auto compute the duration by children count
-function computeDuration(childrenCount: number, fixedDuration?: number) {
+function computeDuration(height: number, fixedDuration?: number) {
   if (fixedDuration) {
     return fixedDuration;
   }
 
-  if (childrenCount === 0) {
+  if (!height) {
     return 0;
   }
 
-  const constant = (childrenCount * 30) / 36;
+  const constant = height / 36;
   // ??? don't know why use below computed expression (just copy it from somewhere)
   return Math.round((4 + 10 * constant ** 0.25 + constant / 5) * 10) / 1500;
 }
