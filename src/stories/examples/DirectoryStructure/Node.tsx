@@ -24,7 +24,7 @@ const Node: React.FC<{
 
   return (
     <div
-      className={`${styles.nodeWrapper} tree-node ${node.droppable && isDropTarget ? styles.dropTarget : ""}`}
+      className={`tree-node ${styles.nodeWrapper} ${node.droppable && isDropTarget ? styles.dropTarget : ""}`}
       style={{ marginInlineStart: indent }}
       onClick={handleToggle}
     >

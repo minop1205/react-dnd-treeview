@@ -1,6 +1,5 @@
 import React from "react";
 import { NodeModel } from "~/types";
-import styles from "./DirectoryStructure.module.css";
 
 const Placeholder: React.FC<{ node: NodeModel; depth: number }> = ({ node, depth }) => {
   return (

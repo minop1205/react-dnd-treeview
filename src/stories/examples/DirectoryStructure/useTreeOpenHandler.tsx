@@ -23,17 +23,6 @@ const useTreeOpenHandler = () => {
     openIds.includes(id) ? close(id) : open(id);
   };
 
-  const isVisible = (id: number | string, treeData: NodeModel[]): boolean => {
-    const parentId = treeData.find((node) => node.id === id)?.parent;
-    const parentExistsInTree = parentId && treeData.find((node) => node.id === parentId);
-    if (parentExistsInTree) {
-      const isParentVisible = openIds.includes(parentId);
-      return isParentVisible ? isVisible(parentId, treeData) : false;
-    } else {
-      return true;
-    }
-  };
-
   const getPipeHeight = (id: number | string, treeData: NodeModel[]) => {
     treeData = getDescendants(treeData, id);
     const ROW_HEIGHT = 32;
@@ -43,7 +32,6 @@ const useTreeOpenHandler = () => {
       node?.droppable && openIds.includes(node.id) && treeData.filter((n) => n.parent === node.id).length > 0;
 
     const getHeightOfId = (id: number | string): number => {
-      //   if (!openIds.includes(id)) return 0;
       const directChildren = treeData.filter((node) => node.parent === id);
       const heightOfChildren = directChildren.map((node) =>
         droppableHeightExceedsRow(node) ? getHeightOfId(node.id) + ROW_HEIGHT + LIST_PADDING : ROW_HEIGHT
@@ -60,7 +48,7 @@ const useTreeOpenHandler = () => {
     return getHeightOfId(id);
   };
 
-  return { ref, open, close, toggle, getPipeHeight, isVisible, openIds };
+  return { ref, open, close, toggle, getPipeHeight, openIds };
 };
 
 export default useTreeOpenHandler;

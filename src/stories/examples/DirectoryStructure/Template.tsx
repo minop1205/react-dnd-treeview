@@ -25,7 +25,7 @@ const Template: Story<TreeProps<FileProperties>> = () => {
   const { ref, getPipeHeight, toggle } = useTreeOpenHandler();
   const [treeData, setTreeData] = React.useState<NodeModel[]>(sampleData);
 
-  const handleDrop = (newTree: NodeModel[], e: DropOptions) => {
+  const handleDrop = (_newTree: NodeModel[], e: DropOptions) => {
     const { dragSourceId, dropTargetId, destinationIndex } = e;
     if (typeof dragSourceId === "undefined" || typeof dropTargetId === "undefined") return;
     const start = treeData.find((v) => v.id === dragSourceId);
@@ -34,13 +34,11 @@ const Template: Story<TreeProps<FileProperties>> = () => {
     if (start?.parent === dropTargetId && start && typeof destinationIndex === "number") {
       setTreeData((treeData) => {
         const output = reorderArray(treeData, treeData.indexOf(start), destinationIndex);
-        // console.log("Reordered", treeData, output);
         return output;
       });
     }
 
     if (start?.parent !== dropTargetId && start && typeof destinationIndex === "number") {
-      // check if the target is a descendant to prevent removal of elements from visible tree
       if (
         getDescendants(treeData, dragSourceId).find((el) => el.id === dropTargetId) ||
         dropTargetId === dragSourceId ||
@@ -75,7 +73,7 @@ const Template: Story<TreeProps<FileProperties>> = () => {
         canDrop={() => true}
         dropTargetOffset={5}
         placeholderRender={(node, { depth }) => <Placeholder node={node} depth={depth} />}
-        render={(node, { depth, isOpen, onToggle, isDropTarget }) => (
+        render={(node, { depth, isOpen, isDropTarget }) => (
           <Node
             getPipeHeight={getPipeHeight}
             node={node}
