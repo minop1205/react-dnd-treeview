@@ -29,9 +29,10 @@
 
 .nodeWrapper .expandIconWrapper.isOpen {
   transform: rotate(180deg);
-  & svg path {
-    fill: #4f5272;
-  }
+}
+
+.nodeWrapper .expandIconWrapper.isOpen svg path {
+  fill: #4f5272;
 }
 
 .nodeWrapper .labelGridItem {
