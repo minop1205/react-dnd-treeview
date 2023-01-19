@@ -29,6 +29,7 @@ export const parameters = {
           "Drag handle",
           "Disable dnd",
           "Dynamic hierarchy",
+          "Directory structure",
         ],
         "Advanced Examples",
         ["Multiple tree", "Multiple drag"],
