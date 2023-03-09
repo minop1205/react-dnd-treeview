@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.4.2
+
+_Mar 9, 2023_
+
+### Fixed
+
+- `canDrop` API is not called when dragging an external node over a tree.
+
 ## 3.4.1
 
 _Dec 31, 2022_

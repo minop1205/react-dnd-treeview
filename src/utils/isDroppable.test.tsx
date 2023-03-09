@@ -1,5 +1,5 @@
 import React from "react";
-import { NodeRender, TreeState } from "~/types";
+import { NodeRender, TreeState, NativeDragItem } from "~/types";
 import { isDroppable } from "./isDroppable";
 import treeData from "../stories/assets/sample-default.json";
 
@@ -27,9 +27,55 @@ describe("isDroppable", () => {
       onToggle: () => undefined,
     };
 
-    expect(isDroppable(7, 7, treeContext)).toBe(false);
-    expect(isDroppable(7, 1, treeContext)).toBe(true);
-    expect(isDroppable(1, 1, treeContext)).toBe(false);
-    expect(isDroppable(4, 5, treeContext)).toBe(false);
+    const nativeDragSource: NativeDragItem = {
+      dataTransfer: {} as DataTransfer,
+    };
+
+    expect(isDroppable(treeData[6], 7, treeContext)).toBe(false);
+    expect(isDroppable(treeData[6], 1, treeContext)).toBe(true);
+    expect(isDroppable(treeData[0], 1, treeContext)).toBe(false);
+    expect(isDroppable(treeData[3], 5, treeContext)).toBe(false);
+    expect(isDroppable(treeData[6], 0, treeContext)).toBe(false);
+    expect(isDroppable(treeData[1], 0, treeContext)).toBe(true);
+    expect(isDroppable(null, 0, treeContext)).toBe(true);
+    expect(isDroppable(null, 1, treeContext)).toBe(true);
+    expect(isDroppable(null, 2, treeContext)).toBe(false);
+    expect(isDroppable(nativeDragSource, 0, treeContext)).toBe(true);
+    expect(isDroppable(nativeDragSource, 1, treeContext)).toBe(true);
+    expect(isDroppable(nativeDragSource, 2, treeContext)).toBe(false);
+
+    treeContext.canDrop = () => {
+      return false;
+    };
+
+    expect(isDroppable(treeData[6], 7, treeContext)).toBe(false);
+    expect(isDroppable(treeData[6], 1, treeContext)).toBe(false);
+    expect(isDroppable(treeData[0], 1, treeContext)).toBe(false);
+    expect(isDroppable(treeData[3], 5, treeContext)).toBe(false);
+    expect(isDroppable(treeData[6], 0, treeContext)).toBe(false);
+    expect(isDroppable(treeData[1], 0, treeContext)).toBe(false);
+    expect(isDroppable(null, 0, treeContext)).toBe(true);
+    expect(isDroppable(null, 1, treeContext)).toBe(true);
+    expect(isDroppable(null, 2, treeContext)).toBe(false);
+    expect(isDroppable(nativeDragSource, 0, treeContext)).toBe(false);
+    expect(isDroppable(nativeDragSource, 1, treeContext)).toBe(false);
+    expect(isDroppable(nativeDragSource, 2, treeContext)).toBe(false);
+
+    treeContext.canDrop = () => {
+      return true;
+    };
+
+    expect(isDroppable(treeData[6], 7, treeContext)).toBe(true);
+    expect(isDroppable(treeData[6], 1, treeContext)).toBe(true);
+    expect(isDroppable(treeData[0], 1, treeContext)).toBe(true);
+    expect(isDroppable(treeData[3], 5, treeContext)).toBe(true);
+    expect(isDroppable(treeData[6], 0, treeContext)).toBe(true);
+    expect(isDroppable(treeData[1], 0, treeContext)).toBe(true);
+    expect(isDroppable(null, 0, treeContext)).toBe(true);
+    expect(isDroppable(null, 1, treeContext)).toBe(true);
+    expect(isDroppable(null, 2, treeContext)).toBe(false);
+    expect(isDroppable(nativeDragSource, 0, treeContext)).toBe(true);
+    expect(isDroppable(nativeDragSource, 1, treeContext)).toBe(true);
+    expect(isDroppable(nativeDragSource, 2, treeContext)).toBe(true);
   });
 });

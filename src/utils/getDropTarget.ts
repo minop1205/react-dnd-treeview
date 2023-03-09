@@ -119,7 +119,7 @@ export const getDropTarget = <T>(
       };
     }
 
-    if (isDroppable(dragSource.id, node.parent, context)) {
+    if (isDroppable(dragSource, node.parent, context)) {
       const outerIndex = getOuterIndex(node, nodeEl, monitor);
 
       if (outerIndex === null) {
@@ -135,7 +135,7 @@ export const getDropTarget = <T>(
     return null;
   } else {
     if (hoverPosition === "upper") {
-      if (isDroppable(dragSource.id, node.parent, context)) {
+      if (isDroppable(dragSource, node.parent, context)) {
         const outerIndex = getOuterIndex(node, nodeEl, monitor);
 
         if (outerIndex === null) {
