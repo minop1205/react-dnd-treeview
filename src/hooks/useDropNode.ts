@@ -9,7 +9,7 @@ import { useTreeContext } from "~/hooks";
 export const useDropNode = <T>(
   item: NodeModel<T>,
   ref: React.RefObject<HTMLElement>
-): [boolean, NodeModel, DragElementWrapper<HTMLElement>] => {
+): [boolean, NodeModel<T>, DragElementWrapper<HTMLElement>] => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
@@ -46,11 +46,7 @@ export const useDropNode = <T>(
           return false;
         }
 
-        return isDroppable(
-          isNodeModel<T>(dragItem) ? dragItem.id : undefined,
-          dropTarget.id,
-          treeContext
-        );
+        return isDroppable(dragItem, dropTarget.id, treeContext);
       }
 
       return false;
@@ -69,11 +65,7 @@ export const useDropNode = <T>(
 
         if (
           dropTarget === null ||
-          !isDroppable(
-            isNodeModel<T>(dragItem) ? dragItem.id : undefined,
-            dropTarget.id,
-            treeContext
-          )
+          !isDroppable(dragItem, dropTarget.id, treeContext)
         ) {
           hidePlaceholder();
           return;

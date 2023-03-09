@@ -30,11 +30,11 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const open = openIds.includes(props.id);
 
   const [isDragging, drag, preview] = useDragNode(item, containerRef);
-  const [isOver, dragSource, drop] = useDropNode(item, containerRef);
+  const [isOver, dragSource, drop] = useDropNode<T>(item, containerRef);
 
   useDragHandle(containerRef, handleRef, drag);
 
-  if (isDroppable(dragSource?.id, props.id, treeContext)) {
+  if (isDroppable(dragSource, props.id, treeContext)) {
     drop(containerRef);
   }
 

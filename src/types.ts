@@ -15,6 +15,10 @@ export type DragItem<T> = NodeModel<T> & {
   ref: RefObject<HTMLElement>;
 };
 
+export type NativeDragItem = {
+  dataTransfer: DataTransfer;
+};
+
 export type RenderParams = {
   depth: number;
   isOpen: boolean;
@@ -41,7 +45,7 @@ export type DropHandler<T> = (
 ) => void;
 
 export type CanDropHandler = (
-  dragSourceId: NodeModel["id"],
+  dragSourceId: NodeModel["id"] | null,
   dropTargetId: NodeModel["id"]
 ) => boolean | void;
 

@@ -36,11 +36,11 @@ export const Container = <T,>(props: Props): ReactElement => {
     }
   }
 
-  const [isOver, dragSource, drop] = useDropRoot(ref);
+  const [isOver, dragSource, drop] = useDropRoot<T>(ref);
 
   if (
     props.parentId === treeContext.rootId &&
-    isDroppable(dragSource?.id, treeContext.rootId, treeContext)
+    isDroppable<T>(dragSource, treeContext.rootId, treeContext)
   ) {
     drop(ref);
   }
