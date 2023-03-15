@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.4.3
+
+_Mar 15, 2023_
+
+### Fixed
+
+- `openAll` method and `initialOpen` API don't work for non-droppable node.
+
 ## 3.4.2
 
 _Mar 9, 2023_
@@ -11,6 +19,8 @@ _Mar 9, 2023_
 ## 3.4.1
 
 _Dec 31, 2022_
+
+### Fixed
 
 - Improved performance when `enableAnimateExpand` is `true`.
 
