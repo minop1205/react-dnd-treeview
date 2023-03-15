@@ -11,7 +11,7 @@ import {
 } from "./hooks";
 import { PlaceholderContext } from "./providers";
 import { NodeModel, RenderParams } from "./types";
-import { isDroppable } from "./utils";
+import { isDroppable, hasChildNodes } from "./utils";
 
 type Props = {
   id: NodeModel["id"];
@@ -64,7 +64,6 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
   const isDropTarget = placeholderContext.dropTargetId === props.id;
-  const children = treeContext.tree.filter((node) => node.parent === props.id);
 
   const params: RenderParams = {
     depth: props.depth,
@@ -72,7 +71,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     isDragging,
     isDropTarget,
     draggable,
-    hasChild: children.length > 0,
+    hasChild: hasChildNodes(treeContext.tree, props.id),
     containerRef,
     handleRef,
     onToggle: handleToggle,
