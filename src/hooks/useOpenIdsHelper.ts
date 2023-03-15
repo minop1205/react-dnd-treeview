@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { hasChildNodes } from "~/utils";
 import {
   NodeModel,
   ToggleHandler,
@@ -21,20 +22,20 @@ export const useOpenIdsHelper = (
     handleClose: CloseHandler;
   }
 ] => {
-  let initialOpenIds: NodeModel["id"][] = useMemo(() => {
+  const initialOpenIds: NodeModel["id"][] = useMemo(() => {
     if (initialOpen === true) {
-      return initialOpenIds = tree
-        .filter((node) => node.droppable)
+      return tree
+        .filter((node) => hasChildNodes(tree, node.id))
         .map((node) => node.id);
     } else if (Array.isArray(initialOpen)) {
       return initialOpen;
     }
-    return []
-  },[initialOpen]);
+    return [];
+  }, [initialOpen]);
 
   const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
 
-  useEffect(() => setOpenIds(initialOpenIds), [initialOpen])
+  useEffect(() => setOpenIds(initialOpenIds), [initialOpen]);
 
   const handleToggle: ToggleHandler = (targetId: NodeModel["id"], callback) => {
     const newOpenIds = openIds.includes(targetId)
@@ -58,7 +59,7 @@ export const useOpenIdsHelper = (
 
   const handleOpenAll = (callback: ChangeOpenHandler | undefined) => {
     const newOpenIds = tree
-      .filter((node) => node.droppable)
+      .filter((node) => hasChildNodes(tree, node.id))
       .map((node) => node.id);
     setOpenIds(newOpenIds);
 

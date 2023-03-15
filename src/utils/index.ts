@@ -11,3 +11,4 @@ export { getDescendants } from "./getDescendants";
 export { getParents } from "./getParents";
 export { getBackendOptions } from "./getBackendOptions";
 export { isNodeModel } from "./isNodeModel";
+export { hasChildNodes } from "./hasChildNodes";
