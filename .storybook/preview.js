@@ -15,7 +15,7 @@ export const parameters = {
           "AnimateExpand",
           "Select node",
           "Multiple selections",
-          "Opening and closing all nodes",
+          "Open and close method",
           "Open all parent nodes initially",
           "Open specific parent nodes initially",
           "Auto expand with drag over node",

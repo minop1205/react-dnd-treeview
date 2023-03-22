@@ -1,6 +1,6 @@
 .actions {
-  display: inline-grid;
-  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  display: flex;
   gap: 16px;
   margin: 8px;
   padding: 8px;
@@ -18,4 +18,8 @@
 
 .dropTarget {
   background-color: #e8f0fe;
+}
+
+.input {
+  padding: 2px 16px;
 }

@@ -10,12 +10,12 @@ import { FileProperties } from "~/stories/types";
 import { wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
-import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./OpeningAndClosingAllNodes.module.css";
+import sampleData from "~/stories/assets/sample-id-text.json";
+import styles from "./OpenAndCloseMethod.module.css";
 
 export default {
   component: Tree,
-  title: "Basic Examples/Opening and closing all nodes",
+  title: "Basic Examples/Open and close method",
   argTypes,
   decorators: [
     (Story) => (
@@ -26,9 +26,9 @@ export default {
   ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const OpeningAndClosingAllNodesStory = Template.bind({});
+export const OpenAndCloseMethodStory = Template.bind({});
 
-OpeningAndClosingAllNodesStory.args = {
+OpenAndCloseMethodStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -38,9 +38,9 @@ OpeningAndClosingAllNodesStory.args = {
   },
 };
 
-OpeningAndClosingAllNodesStory.storyName = "Opening and closing all nodes";
+OpenAndCloseMethodStory.storyName = "Open and close method";
 
-OpeningAndClosingAllNodesStory.parameters = {
+OpenAndCloseMethodStory.parameters = {
   docs: {
     page: pageFactory({
       jsId: "opening-and-closing-all-nodes-js-eqxzti",
@@ -50,7 +50,7 @@ OpeningAndClosingAllNodesStory.parameters = {
 };
 
 if (!interactionsDisabled) {
-  OpeningAndClosingAllNodesStory.play = async ({ canvasElement }) => {
+  OpenAndCloseMethodStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await wait();
