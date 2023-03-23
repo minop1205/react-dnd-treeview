@@ -54,11 +54,11 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
       </div>
       <div className={styles.actions}>
         <TextField
-          InputProps={{
-            className: styles.input,
-          }}
           inputProps={{
             "data-testid": "input-ids",
+            style: {
+              padding: "6.75px 16px",
+            },
           }}
           variant="outlined"
           placeholder="e.g. 1, 4, 5"
