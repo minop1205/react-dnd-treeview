@@ -57,6 +57,9 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
           InputProps={{
             className: styles.input,
           }}
+          inputProps={{
+            "data-testid": "input-ids",
+          }}
           variant="outlined"
           placeholder="e.g. 1, 4, 5"
           onChange={handleChangeText}

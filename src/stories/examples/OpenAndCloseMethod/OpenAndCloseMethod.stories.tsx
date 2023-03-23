@@ -55,7 +55,7 @@ if (!interactionsDisabled) {
 
     await wait();
 
-    expect(canvas.queryByText("File 1-2")).toBeNull();
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
 
     const btnOpenAll = canvas.getByTestId("btn-open-all");
     const btnCloseAll = canvas.getByTestId("btn-close-all");
@@ -63,13 +63,31 @@ if (!interactionsDisabled) {
     userEvent.click(btnOpenAll);
     await wait();
 
-    expect(canvas.getByText("File 1-2")).toBeInTheDocument();
-    expect(await canvas.findByText("File 2-1-1")).toBeInTheDocument();
+    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
 
     userEvent.click(btnCloseAll);
     await wait();
 
-    expect(canvas.queryByText("File 1-2")).toBeNull();
-    expect(canvas.queryByText("File 2-1-1")).toBeNull();
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
+
+    const btnOpenSpecified = canvas.getByTestId("btn-open-specified");
+    const btnCloseSpecified = canvas.getByTestId("btn-close-specified");
+    const textField = canvas.getByTestId("input-ids");
+
+    userEvent.click(textField);
+    userEvent.type(textField, "1, 4, 5");
+    userEvent.click(btnOpenSpecified);
+    await wait();
+
+    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
+
+    userEvent.click(btnCloseSpecified);
+    await wait();
+
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
   };
 }
