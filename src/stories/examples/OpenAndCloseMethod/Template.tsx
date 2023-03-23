@@ -23,7 +23,6 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     idTexts = idTexts.filter((id) => id !== "");
     let ids = idTexts.map((id) => Number(id));
     ids = ids.filter((id) => !isNaN(id));
-    console.log(ids);
     return ids;
   };
 
