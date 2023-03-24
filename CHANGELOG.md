@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.4.4
+
+_Mar 23, 2023_
+
+### Fixed
+
+- Can not open a node with `droppable` set to `false` with the `open` method.
+
 ## 3.4.3
 
 _Mar 15, 2023_

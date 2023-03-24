@@ -10,12 +10,12 @@ import { FileProperties } from "~/stories/types";
 import { wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
-import sampleData from "~/stories/assets/sample-default.json";
-import styles from "./OpeningAndClosingAllNodes.module.css";
+import sampleData from "~/stories/assets/sample-id-text.json";
+import styles from "./OpenAndCloseMethod.module.css";
 
 export default {
   component: Tree,
-  title: "Basic Examples/Opening and closing all nodes",
+  title: "Basic Examples/Open and close method",
   argTypes,
   decorators: [
     (Story) => (
@@ -26,9 +26,9 @@ export default {
   ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const OpeningAndClosingAllNodesStory = Template.bind({});
+export const OpenAndCloseMethodStory = Template.bind({});
 
-OpeningAndClosingAllNodesStory.args = {
+OpenAndCloseMethodStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -38,9 +38,9 @@ OpeningAndClosingAllNodesStory.args = {
   },
 };
 
-OpeningAndClosingAllNodesStory.storyName = "Opening and closing all nodes";
+OpenAndCloseMethodStory.storyName = "Open and close method";
 
-OpeningAndClosingAllNodesStory.parameters = {
+OpenAndCloseMethodStory.parameters = {
   docs: {
     page: pageFactory({
       jsId: "opening-and-closing-all-nodes-js-eqxzti",
@@ -50,12 +50,12 @@ OpeningAndClosingAllNodesStory.parameters = {
 };
 
 if (!interactionsDisabled) {
-  OpeningAndClosingAllNodesStory.play = async ({ canvasElement }) => {
+  OpenAndCloseMethodStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await wait();
 
-    expect(canvas.queryByText("File 1-2")).toBeNull();
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
 
     const btnOpenAll = canvas.getByTestId("btn-open-all");
     const btnCloseAll = canvas.getByTestId("btn-close-all");
@@ -63,13 +63,31 @@ if (!interactionsDisabled) {
     userEvent.click(btnOpenAll);
     await wait();
 
-    expect(canvas.getByText("File 1-2")).toBeInTheDocument();
-    expect(await canvas.findByText("File 2-1-1")).toBeInTheDocument();
+    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
 
     userEvent.click(btnCloseAll);
     await wait();
 
-    expect(canvas.queryByText("File 1-2")).toBeNull();
-    expect(canvas.queryByText("File 2-1-1")).toBeNull();
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
+
+    const btnOpenSpecified = canvas.getByTestId("btn-open-specified");
+    const btnCloseSpecified = canvas.getByTestId("btn-close-specified");
+    const textField = canvas.getByTestId("input-ids");
+
+    userEvent.click(textField);
+    userEvent.type(textField, "1, 4, 5");
+    userEvent.click(btnOpenSpecified);
+    await wait();
+
+    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
+
+    userEvent.click(btnCloseSpecified);
+    await wait();
+
+    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
   };
 }

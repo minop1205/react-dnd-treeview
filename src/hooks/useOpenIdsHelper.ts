@@ -22,6 +22,9 @@ export const useOpenIdsHelper = (
     handleClose: CloseHandler;
   }
 ] => {
+  // Only a parent node with a child node can be opened.
+  // The droppable property has no effect.
+  // However, if an ID is specified, It is applied unconditionally.
   const initialOpenIds: NodeModel["id"][] = useMemo(() => {
     if (initialOpen === true) {
       return tree
@@ -69,18 +72,20 @@ export const useOpenIdsHelper = (
   };
 
   const handleOpen: OpenHandler = (targetIds, callback) => {
-    const newOpenIds = [
-      ...openIds,
-      ...tree
-        .filter(
-          (node) =>
-            node.droppable &&
-            (Array.isArray(targetIds)
-              ? targetIds.includes(node.id)
-              : node.id === targetIds)
-        )
-        .map((node) => node.id),
-    ].filter((value, index, self) => self.indexOf(value) === index);
+    let newOpenIds: NodeModel["id"][] = [];
+
+    if (Array.isArray(targetIds)) {
+      const targetNodes = tree.filter(
+        (node) => targetIds.includes(node.id) && hasChildNodes(tree, node.id)
+      );
+      newOpenIds = [...openIds, ...targetNodes.map((node) => node.id)].filter(
+        (value, index, self) => self.indexOf(value) === index
+      );
+    } else {
+      newOpenIds = openIds.includes(targetIds)
+        ? openIds
+        : [...openIds, targetIds];
+    }
 
     setOpenIds(newOpenIds);
 
