@@ -116,14 +116,19 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
       }
     },
     canDrop: canDropCallback
-      ? (dragSourceId, dropTargetId) =>
-          canDropCallback(props.tree, {
+      ? (dragSourceId, dropTargetId, index) => {
+          const options: DropOptions<T> = {
             dragSourceId: dragSourceId ?? undefined,
             dropTargetId,
             dragSource: monitor.getItem(),
             dropTarget: getTreeItem(props.tree, dropTargetId),
             monitor,
-          })
+          };
+          if (props.sort === false) {
+            options.relativeIndex = index ?? undefined;
+          }
+          return canDropCallback(props.tree, options);
+        }
       : undefined,
     canDrag: canDragCallback
       ? (id) => canDragCallback(getTreeItem(props.tree, id))

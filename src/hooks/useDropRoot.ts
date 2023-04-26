@@ -37,7 +37,19 @@ export const useDropRoot = <T>(
           return false;
         }
 
-        return isDroppable(dragItem, rootId, treeContext);
+        const dropTarget = getDropTarget<T>(
+          dragItem,
+          ref.current,
+          monitor,
+          treeContext
+        );
+
+        return isDroppable(
+          dragItem,
+          rootId,
+          treeContext,
+          dropTarget?.index ?? 0
+        );
       }
 
       return false;
@@ -57,7 +69,7 @@ export const useDropRoot = <T>(
 
         if (
           dropTarget === null ||
-          !isDroppable(dragItem, rootId, treeContext)
+          !isDroppable(dragItem, rootId, treeContext, null)
         ) {
           hidePlaceholder();
           return;

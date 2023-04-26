@@ -46,7 +46,8 @@ export type DropHandler<T> = (
 
 export type CanDropHandler = (
   dragSourceId: NodeModel["id"] | null,
-  dropTargetId: NodeModel["id"]
+  dropTargetId: NodeModel["id"],
+  index: number | null
 ) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;

@@ -46,7 +46,12 @@ export const useDropNode = <T>(
           return false;
         }
 
-        return isDroppable(dragItem, dropTarget.id, treeContext);
+        return isDroppable(
+          dragItem,
+          dropTarget.id,
+          treeContext,
+          dropTarget.index
+        );
       }
 
       return false;
@@ -65,7 +70,7 @@ export const useDropNode = <T>(
 
         if (
           dropTarget === null ||
-          !isDroppable(dragItem, dropTarget.id, treeContext)
+          !isDroppable(dragItem, dropTarget.id, treeContext, dropTarget.index)
         ) {
           hidePlaceholder();
           return;

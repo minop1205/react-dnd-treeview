@@ -111,6 +111,7 @@ export const getDropTarget = <T>(
     context
   );
 
+  const outerIndex = getOuterIndex(node, nodeEl, monitor);
   if (!list) {
     if (hoverPosition === "middle") {
       return {
@@ -119,9 +120,7 @@ export const getDropTarget = <T>(
       };
     }
 
-    if (isDroppable(dragSource, node.parent, context)) {
-      const outerIndex = getOuterIndex(node, nodeEl, monitor);
-
+    if (isDroppable(dragSource, node.parent, context, outerIndex)) {
       if (outerIndex === null) {
         return null;
       }
@@ -135,9 +134,7 @@ export const getDropTarget = <T>(
     return null;
   } else {
     if (hoverPosition === "upper") {
-      if (isDroppable(dragSource, node.parent, context)) {
-        const outerIndex = getOuterIndex(node, nodeEl, monitor);
-
+      if (isDroppable(dragSource, node.parent, context, outerIndex)) {
         if (outerIndex === null) {
           return null;
         }

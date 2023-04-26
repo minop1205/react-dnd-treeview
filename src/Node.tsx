@@ -34,7 +34,14 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   useDragHandle(containerRef, handleRef, drag);
 
-  if (isDroppable(dragSource, props.id, treeContext)) {
+  if (
+    isDroppable(
+      dragSource,
+      props.id,
+      treeContext,
+      placeholderContext.index ?? null
+    )
+  ) {
     drop(containerRef);
   }
 

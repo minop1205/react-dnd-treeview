@@ -5,7 +5,8 @@ import { isNodeModel } from "./isNodeModel";
 export const isDroppable = <T>(
   dragSource: NodeModel<T> | NativeDragItem | null,
   dropTargetId: NodeModel["id"],
-  treeContext: TreeState<T>
+  treeContext: TreeState<T>,
+  index: number | null
 ): boolean => {
   const { tree, rootId, canDrop } = treeContext;
 
@@ -27,8 +28,7 @@ export const isDroppable = <T>(
     const dragSourceId = isNodeModel<T>(dragSource) ? dragSource.id : null;
 
     if (canDrop) {
-      const result = canDrop(dragSourceId, dropTargetId);
-
+      const result = canDrop(dragSourceId, dropTargetId, index);
       if (result !== undefined) {
         return result;
       }

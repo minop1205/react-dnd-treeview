@@ -40,7 +40,7 @@ export const Container = <T,>(props: Props): ReactElement => {
 
   if (
     props.parentId === treeContext.rootId &&
-    isDroppable<T>(dragSource, treeContext.rootId, treeContext)
+    isDroppable<T>(dragSource, treeContext.rootId, treeContext, null)
   ) {
     drop(ref);
   }
