@@ -51,10 +51,10 @@ export type CanDropHandler = (
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;
 
-export type Classes = {
+export type Classes<T = unknown> = {
   root?: string;
   container?: string;
-  listItem?: string;
+  listItem?: string | ((node: NodeModel<T>, params: RenderParams) => string);
   dropTarget?: string;
   draggingSource?: string;
   placeholder?: string;
@@ -132,7 +132,7 @@ export type RootProps = Omit<
 export type TreeStateBase<T> = {
   tree: NodeModel<T>[];
   rootId: NodeModel["id"];
-  classes?: Classes;
+  classes?: Classes<T>;
   rootProps?: RootProps;
   render: NodeRender<T>;
   dragPreviewRender?: DragPreviewRender<T>;

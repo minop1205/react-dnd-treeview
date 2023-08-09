@@ -51,17 +51,6 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const handleToggle = () => treeContext.onToggle(item.id);
 
   const Component = treeContext.listItemComponent;
-
-  let className = classes?.listItem || "";
-
-  if (isOver && classes?.dropTarget) {
-    className = `${className} ${classes.dropTarget}`;
-  }
-
-  if (isDragging && classes?.draggingSource) {
-    className = `${className} ${classes.draggingSource}`;
-  }
-
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;
   const isDropTarget = placeholderContext.dropTargetId === props.id;
 
@@ -76,6 +65,23 @@ export const Node = <T,>(props: Props): ReactElement | null => {
     handleRef,
     onToggle: handleToggle,
   };
+
+  let className = "";
+
+  if (classes?.listItem) {
+    className =
+      typeof classes.listItem === "string"
+        ? classes.listItem
+        : classes.listItem(item, params);
+  }
+
+  if (isOver && classes?.dropTarget) {
+    className = `${className} ${classes.dropTarget}`;
+  }
+
+  if (isDragging && classes?.draggingSource) {
+    className = `${className} ${classes.draggingSource}`;
+  }
 
   return (
     <Component ref={containerRef} className={className} role="listitem">

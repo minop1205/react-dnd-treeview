@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.5.0
+
+_Jul 06, 2023_
+
+### Added
+
+- Made `listItem` key in `classes` API support callback function.
+
 ## 3.4.4
 
 _Mar 23, 2023_

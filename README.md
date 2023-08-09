@@ -529,20 +529,27 @@ You are free to define the styling of individual nodes in the tree in your Rende
   classes={{
     root: "my-root-classname",
     dragOver: "my-dragover-classname",
+    // listItem: "my-listitem-classname",
+    // You can use callback function for listItem class name.
+    listItem: (node, options) => {
+      return options.depth === 0
+        ? "my-listitem-root-classname"
+        : "my-listitem-classname";
+    },
   }}
 />
 ```
 
 You can use the following keys for the objects you pass to the `classes` property. Neither key is required.
 
-| Name           | Description                                                                                                    |
-| -------------- | -------------------------------------------------------------------------------------------------------------- |
-| root           | CSS class name to give to the top-level container element (by default, `ul` tag) that wraps all nodes.         |
-| container      | CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag). |
-| listItem       | CSS class name to give to the element that wraps each node item (by default, `li` tag).                        |
-| dropTarget     | CSS class name to give to the area that can be dropped during a node dragging operation.                       |
-| draggingSource | CSS class name to give to the node during the dragging operation.                                              |
-| placeholder    | CSS class name to give to the element wrapping the placeholder (by default, `li` tag).                         |
+| Name           | type                   | Description                                                                                                                                                               |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| root           | `string`               | CSS class name to give to the top-level container element (by default, `ul` tag) that wraps all nodes.                                                                    |
+| container      | `string`               | CSS class name to give to the element wrapping the list of nodes of the same hierarchy (by default, `ul` tag).                                                            |
+| listItem       | `string` \| `function` | CSS class name to give to the element that wraps each node item (by default, `li` tag).<br>It is also possible to dynamically create class names using callback function. |
+| dropTarget     | `string`               | CSS class name to give to the area that can be dropped during a node dragging operation.                                                                                  |
+| draggingSource | `string`               | CSS class name to give to the node during the dragging operation.                                                                                                         |
+| placeholder    | `string`               | CSS class name to give to the element wrapping the placeholder (by default, `li` tag).                                                                                    |
 
 ### Usage to open / close methods
 
