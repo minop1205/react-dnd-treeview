@@ -6,6 +6,7 @@ import React from "react";
 export type NodeModel<T = unknown> = {
   id: number | string;
   parent: number | string;
+  hasChildren: boolean;
   text: string;
   droppable?: boolean;
   data?: T;
