@@ -123,7 +123,7 @@ export const onChangeOpen: CustomArgType = {
 export const canDrop: CustomArgType = {
   name: "canDrop",
   description:
-    "callback function to determine if a given node can be dropped to another node.<br>If nothing is returned (or if `undefined` is returned), the default rules are followed.<br>If it returns `true` or `false`, the default rules will be overridden and the `dropable` properties of each node will not be referenced.<br>This callback takes the current tree and the same option object that is passed to the onDrop callback.",
+    "callback function to determine if a given node can be dropped to another node.<br>If nothing is returned (or if `undefined` is returned), the default rules are followed.<br>If it returns `true` or `false`, the default rules will be overridden and the `droppable` properties of each node will not be referenced.<br>This callback takes the current tree and the same option object that is passed to the onDrop callback.",
   table: {
     type: { summary: "func" },
     defaultValue: { summary: "undefined" },
@@ -192,7 +192,7 @@ export const placeholderComponent: CustomArgType = {
 export const dropTargetOffset: CustomArgType = {
   name: "dropTargetOffset",
   description:
-    "Effective drop range of a dropable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.",
+    "Effective drop range of a droppable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.",
   table: {
     type: { summary: "number" },
     defaultValue: { summary: "0" },
