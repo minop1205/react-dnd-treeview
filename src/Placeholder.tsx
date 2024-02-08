@@ -26,13 +26,16 @@ export const Placeholder = <T,>(props: Props): ReactElement | null => {
     return null;
   }
 
+
   const visible =
     props.dropTargetId === placeholderContext.dropTargetId &&
     (props.index === placeholderContext.index ||
       (props.index === undefined &&
         props.listCount === placeholderContext.index));
 
-  if (!visible) {
+  const targetIds = monitor.getTargetIds();
+
+  if (!visible || !targetIds.length) {
     return null;
   }
 
