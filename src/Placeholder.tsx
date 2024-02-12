@@ -26,7 +26,6 @@ export const Placeholder = <T,>(props: Props): ReactElement | null => {
     return null;
   }
 
-
   const visible =
     props.dropTargetId === placeholderContext.dropTargetId &&
     (props.index === placeholderContext.index ||
