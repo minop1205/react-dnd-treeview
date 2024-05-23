@@ -1,4 +1,4 @@
-import { fireEvent } from "@storybook/testing-library";
+import { fireEvent } from "@storybook/test";
 
 export const dragLeaveAndDragEnd = (
   dragSource: Element,

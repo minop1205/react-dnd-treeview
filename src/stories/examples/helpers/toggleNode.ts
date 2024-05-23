@@ -1,4 +1,4 @@
-import { userEvent } from "@storybook/testing-library";
+import { userEvent } from "@storybook/test";
 import { wait } from "./wait";
 
 export const toggleNode = async (targetElement: HTMLElement) => {

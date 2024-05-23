@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";

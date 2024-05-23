@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
@@ -71,7 +71,7 @@ if (!interactionsDisabled) {
     {
       await dragAndDrop(
         canvas.getByText("File 3"),
-        canvas.getByTestId("custom-node-1")
+        canvas.getByTestId("custom-node-1"),
       );
 
       expect(canvas.queryByText("File 3")).toBeNull();

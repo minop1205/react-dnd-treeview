@@ -1,4 +1,4 @@
-import { expect } from "@storybook/jest";
+import { expect } from "@storybook/test";
 
 export const assertElementCoords = (element: Element, x: number, y: number) => {
   const bbox = element.getBoundingClientRect();

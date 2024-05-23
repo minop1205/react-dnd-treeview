@@ -1,0 +1,271 @@
+🔎 checking possible migrations..
+
+🔎 found a 'new-frameworks' migration:
+╭ Automigration detected ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                                                                         │
+│   We've detected your project is not fully setup with the new framework format, which was introduced in Storybook 7.                                                                    │
+│                                                                                                                                                                                         │
+│   Storybook 7 introduced the concept of frameworks, which abstracts configuration for renderers (e.g. React, Vue), builders (e.g. Webpack, Vite) and defaults to make integrations      │
+│   easier.                                                                                                                                                                               │
+│                                                                                                                                                                                         │
+│   Your project should be updated to use Storybook's framework: @storybook/react-webpack5. We can attempt to do this for you automatically.                                              │
+│                                                                                                                                                                                         │
+│   Here are the steps this migration will do to migrate your project:                                                                                                                    │
+│   - Add the following dependencies:                                                                                                                                                     │
+│   - * @storybook/react-webpack5                                                                                                                                                         │
+│   - Update or specify the framework field in .storybook/main.js with the value of "@storybook/react-webpack5".                                                                          │
+│                                                                                                                                                                                         │
+│                                                                                                                                                                                         │
+│   To learn more about the new framework format, see: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-framework-api                                                  │
+│                                                                                                                                                                                         │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'new-frameworks' migration on your project? › (Y/n)✔ Do you want to run the 'new-frameworks' migration on your project? … yes
+✅ Installing new dependencies: @storybook/react-webpack5
+✅ Updating main.js
+✅ Updating "framework" field
+✅ ran new-frameworks migration
+Unable to find .eslintrc config file, skipping
+
+🔎 found a 'storybook-binary' migration:
+╭ Automigration detected ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                           │
+│   We've detected you are using Storybook 8.1.1 without Storybook's storybook binary. Starting in Storybook 7.0, it has to be installed.   │
+│                                                                                                                                           │
+│                                                                                                                                           │
+│   More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#start-storybook--build-storybook-binaries-removed            │
+│                                                                                                                                           │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'storybook-binary' migration on your project? › (Y/n)✔ Do you want to run the 'storybook-binary' migration on your project? … yes
+
+✅ Adding 'storybook' as dev dependency
+
+✅ ran storybook-binary migration
+
+🔎 found a 'sb-scripts' migration:
+╭ Automigration detected ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                               │
+│   We've detected you are using Storybook 8.1.1 with scripts from previous versions of Storybook.                                              │
+│   Starting in Storybook 7, the start-storybook and build-storybook binaries have changed to storybook dev and storybook build respectively.   │
+│   In order to work with Storybook 8.1.1, your storybook scripts have to be adjusted to use the binary. We can adjust them for you:            │
+│                                                                                                                                               │
+│   storybook                                                                                                                                   │
+│   from:                                                                                                                                       │
+│   start-storybook -p 6006 -s ./src/stories/assets                                                                                             │
+│   to:                                                                                                                                         │
+│   storybook dev -p 6006 -s ./src/stories/assets                                                                                               │
+│                                                                                                                                               │
+│   storybook:build                                                                                                                             │
+│   from:                                                                                                                                       │
+│   STORYBOOK_DISABLE_INTERACTIONS=true build-storybook                                                                                         │
+│   to:                                                                                                                                         │
+│   STORYBOOK_DISABLE_INTERACTIONS=true storybook build                                                                                         │
+│                                                                                                                                               │
+│   In case this migration did not cover all of your scripts, or you'd like more info:                                                          │
+│   https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#start-storybook--build-storybook-binaries-removed                           │
+│                                                                                                                                               │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'sb-scripts' migration on your project? › (Y/n)✔ Do you want to run the 'sb-scripts' migration on your project? … yes
+✅ Updating scripts in package.json
+
+
+✅ ran sb-scripts migration
+
+🔎 found a 'remove-jest-testing-library' migration:
+╭ Automigration detected ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                              │
+│   Attention: We've detected that you're using the following packages which are known to be incompatible since Storybook 8:   │
+│                                                                                                                              │
+│   - @storybook/jest                                                                                                          │
+│   - @storybook/testing-library                                                                                               │
+│                                                                                                                              │
+│   We will uninstall them for you and install @storybook/test instead.                                                        │
+│                                                                                                                              │
+│   Also, we can help you migrate your stories to use the new package.                                                         │
+│                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'remove-jest-testing-library' migration on your project? › (Y/n)✔ Do you want to run the 'remove-jest-testing-library' migration on your project? … yes
+? Please enter the glob for your stories to migrate to @storybook/test › ./src/**/*.stories.*✔ Please enter the glob for your stories to migrate to @storybook/test … ./src/**/*.stories.*
+=> Applying migrate-to-test-package: 24 files
+✅ ran remove-jest-testing-library migration
+
+🔎 found a 'autodocsTrue' migration:
+╭ Automigration detected ────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                    │
+│   We've changed the configuration of autodocs (previous docsPage), so now the value:               │
+│     - docs.autodocs: true -- means automatically create docs for every CSF file                    │
+│     - docs.autodocs: 'tag' -- means only create autodocs for CSF files with the 'autodocs' tag     │
+│     - docs.autodocs: false -- means never create autodocs                                          │
+│                                                                                                    │
+│   Based on your prior configuration,  we can set the `docs.autodocs` to keep your old behaviour:   │
+│                                                                                                    │
+│   docs: { autodocs: true }                                                                         │
+│                                                                                                    │
+│   More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#autodocs-changes      │
+│                                                                                                    │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'autodocsTrue' migration on your project? › (Y/n)✔ Do you want to run the 'autodocsTrue' migration on your project? … yes
+✅ Setting 'docs.autodocs' to true in main.js
+✅ ran autodocsTrue migration
+
+🔎 found a 'react-docgen' migration:
+╭ Automigration detected ─────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                 │
+│   Since Storybook 8.0, react-docgen is now the default for generating component controls, replacing react-docgen-typescript.    │
+│   This offers better performance and suits most cases.                                                                          │
+│   However, for complex TypeScript types or specific type features, the generated controls might not be as precise.              │
+│                                                                                                                                 │
+│   For more on this change, check the migration guide:                                                                           │
+│   https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react-docgen-component-analysis-by-default                    │
+│                                                                                                                                 │
+│   For known "react-docgen" limitations, see:                                                                                    │
+│   https://github.com/storybookjs/storybook/issues/26606                                                                         │
+│                                                                                                                                 │
+│   Press Y to revert to react-docgen-typesript, press N to use react-docgen                                                      │
+│                                                                                                                                 │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'react-docgen' migration on your project? › (Y/n)✔ Do you want to run the 'react-docgen' migration on your project? … no
+
+🔎 found a 'webpack5-compiler-setup' migration:
+╭ Automigration detected ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                                                  │
+│   Storybook's Webpack5 builder is now compiler agnostic, meaning you can choose a compiler addon that best fits your project:                                    │
+│                                                                                                                                                                  │
+│     - Babel: A vast ecosystem and is battle-tested. It's a robust choice if you have an extensive Babel setup or need specific Babel plugins for your project.   │
+│     - SWC:  Fast and easy to configure. Ideal if you want faster builds and have a straightforward configuration without the need for Babel's extensibility.     │
+│                                                                                                                                                                  │
+│   In the next step, Storybook will ask you to choose a compiler to automatically set it up for you.                                                              │
+│                                                                                                                                                                  │
+│   After the migration, you can switch Webpack5 compilers by swapping the addon in your project.                                                                  │
+│   You can find more information here: https://storybook.js.org/docs/8.0/builders/webpack#compiler-support                                                        │
+│                                                                                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'webpack5-compiler-setup' migration on your project? › (Y/n)✔ Do you want to run the 'webpack5-compiler-setup' migration on your project? … yes
+? Which compiler would you like to use? › - Use arrow-keys. Return to submit.
+❯   Babel - Choose Babel for a vast ecosystem and battle-tested reliability.
+    SWC
+? Which compiler would you like to use? › - Use arrow-keys. Return to submit.
+    Babel
+❯   SWC - Choose SWC for fast builds and simple configuration.
+? Which compiler would you like to use? › - Use arrow-keys. Return to submit.
+❯   Babel - Choose Babel for a vast ecosystem and battle-tested reliability.
+    SWC
+? Which compiler would you like to use? › - Use arrow-keys. Return to submit.
+    Babel
+❯   SWC - Choose SWC for fast builds and simple configuration.
+✔ Which compiler would you like to use? › SWC
+Verifying @storybook/addon-webpack5-compiler-swc
+Installing @storybook/addon-webpack5-compiler-swc@^1.0.2
+Adding '@storybook/addon-webpack5-compiler-swc' to main.js addons field.
+✅ ran webpack5-compiler-setup migration
+
+🔎 found a 'upgradeStorybookRelatedDependencies' migration:
+╭ Automigration detected ────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                        │
+│   You're upgrading to the latest version of Storybook. We recommend upgrading the following packages:                                  │
+│   - @storybook/test-runner: 0.5.0 => 0.18.1                                                                                            │
+│   - @storybook/testing-react: 1.3.0 => 2.0.1                                                                                           │
+│                                                                                                                                        │
+│   After upgrading, we will run the dedupe command, which could possibly have effects on dependencies that are not Storybook related.   │
+│   see: https://docs.npmjs.com/cli/commands/npm-dedupe                                                                                  │
+│                                                                                                                                        │
+│   Do you want to proceed (upgrade the detected packages)?                                                                              │
+│                                                                                                                                        │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'upgradeStorybookRelatedDependencies' migration on your project? › (y/N)✔ Do you want to run the 'upgradeStorybookRelatedDependencies' migration on your project? … yes
+Installing dependencies...
+
+An error occurred while installing dependencies.
+❌ error when running upgradeStorybookRelatedDependencies migration
+HandledError: Error: Command failed with exit code 1: npm install
+    at NPMProxy.installDependencies (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/core-common/dist/index.js:28:4695)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Object.run (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:571:541)
+    ... 2 lines matching cause stack trace ...
+    at async doUpgrade (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:650:1628)
+    at async withTelemetry (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/core-server/dist/index.js:28:3599)
+    at async upgrade (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:650:2097) {
+  handled: true,
+  cause: Error: Command failed with exit code 1: npm install
+      at makeError (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/execa/lib/error.js:60:11)
+      at handlePromise (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/execa/index.js:118:26)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async NPMProxy.executeCommand (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/core-common/dist/index.js:35:1948)
+      at async NPMProxy.runInstall (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/core-common/dist/index.js:35:5264)
+      at async NPMProxy.installDependencies (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/core-common/dist/index.js:28:4590)
+      at async Object.run (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:571:541)
+      at async runFixes (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:636:1794)
+      at async automigrate (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:634:1629)
+      at async doUpgrade (/Users/minoru/.npm/_npx/bc7e1e37fcb46ffc/node_modules/@storybook/cli/dist/generate.js:650:1628) {
+    shortMessage: 'Command failed with exit code 1: npm install',
+    command: 'npm install',
+    escapedCommand: 'npm install',
+    exitCode: 1,
+    signal: undefined,
+    signalDescription: undefined,
+    stdout: undefined,
+    stderr: undefined,
+    failed: true,
+    timedOut: false,
+    isCanceled: false,
+    killed: false
+  }
+}
+
+
+🔎 found a 'visual-tests-addon' migration:
+╭ Automigration detected ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                                                                         │
+│   New to Storybook 8: Storybook's Visual Tests addon helps you catch unintentional changes/bugs in your stories. The addon is powered by Chromatic, a cloud-based testing tool          │
+│   developed by Storybook's core team.                                                                                                                                                   │
+│                                                                                                                                                                                         │
+│   Learn more: storybook.js.org/docs/writing-tests/visual-testing                                                                                                                        │
+│                                                                                                                                                                                         │
+│   Install Visual Tests addon in your project?                                                                                                                                           │
+│                                                                                                                                                                                         │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'visual-tests-addon' migration on your project? › (Y/n)✔ Do you want to run the 'visual-tests-addon' migration on your project? … no
+
+🔎 found a 'autodocs-tags' migration:
+╭ Automigration detected ───────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                   │
+│   The docs.autodocs setting in .storybook/main.js is deprecated.                                                  │
+│                                                                                                                   │
+│   Learn more: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#mainjs-docsautodocs-is-deprecated   │
+│                                                                                                                   │
+│   Remove docs.autodocs and update .storybook/preview.js?                                                          │
+│                                                                                                                   │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'autodocs-tags' migration on your project? › (Y/n)✔ Do you want to run the 'autodocs-tags' migration on your project? … yes
+✅ Adding "autodocs" tag to .storybook/preview.js
+✅ Removing "docs.autodocs" from .storybook/main.js
+✅ ran autodocs-tags migration
+WARN An issue occurred while trying to find dependencies metadata using npm.
+
+╭ Migration check ran with failures ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                                               │
+│   Successful migrations:                                                                                                                                      │
+│                                                                                                                                                               │
+│   new-frameworks, storybook-binary, sb-scripts, remove-jest-testing-library, autodocsTrue, webpack5-compiler-setup, autodocs-tags                             │
+│                                                                                                                                                               │
+│   Failed migrations:                                                                                                                                          │
+│                                                                                                                                                               │
+│   upgradeStorybookRelatedDependencies:                                                                                                                        │
+│   Error: Command failed with exit code 1: npm install                                                                                                         │
+│                                                                                                                                                               │
+│   You can find the full logs in /Users/minoru/Documents/Packages/react-dnd-treeview/migration-storybook.log                                                   │
+│                                                                                                                                                               │
+│   Skipped migrations:                                                                                                                                         │
+│                                                                                                                                                               │
+│   react-docgen, visual-tests-addon                                                                                                                            │
+│                                                                                                                                                               │
+│   ─────────────────────────────────────────────────                                                                                                           │
+│                                                                                                                                                               │
+│   If you'd like to run the migrations again, you can do so by running 'npx storybook automigrate'                                                             │
+│                                                                                                                                                               │
+│   The automigrations try to migrate common patterns in your project, but might not contain everything needed to migrate to the latest version of Storybook.   │
+│                                                                                                                                                               │
+│   Please check the changelog and migration guide for manual migrations and more information: https://storybook.js.org/docs/8.0/migration-guide                │
+│   And reach out on Discord if you need help: https://discord.gg/storybook                                                                                     │
+│                                                                                                                                                               │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+

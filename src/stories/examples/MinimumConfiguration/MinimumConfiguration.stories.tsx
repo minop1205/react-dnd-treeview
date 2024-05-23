@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
@@ -104,21 +104,21 @@ if (!interactionsDisabled) {
     // drag and drop: Folder 2 into Folder 1
     await dragAndDrop(
       canvas.getByText("Folder 2"),
-      canvas.getByTestId("node-1")
+      canvas.getByTestId("node-1"),
     );
 
     expect(await canvas.findByTestId("node-4")).toHaveStyle(
-      "margin-inline-start: 10px"
+      "margin-inline-start: 10px",
     );
 
     // drag and drop: File 1-2 into root node
     await dragAndDrop(
       canvas.getByText("File 1-2"),
-      canvas.getAllByRole("list")[0]
+      canvas.getAllByRole("list")[0],
     );
 
     expect(await canvas.findByText("File 1-2")).toHaveStyle(
-      "margin-inline-start: 0px"
+      "margin-inline-start: 0px",
     );
 
     // drag File3 and cancel drag
@@ -134,7 +134,7 @@ if (!interactionsDisabled) {
       await wait();
 
       expect(await canvas.findByText("File 3")).toHaveStyle(
-        "margin-inline-start: 20px"
+        "margin-inline-start: 20px",
       );
     }
   };

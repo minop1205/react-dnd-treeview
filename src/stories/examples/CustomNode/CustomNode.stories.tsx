@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
@@ -80,7 +80,7 @@ if (!interactionsDisabled) {
     // drag and drop: File 3 into Folder 1
     await dragAndDrop(
       canvas.getByText("File 3"),
-      canvas.getByTestId("custom-node-1")
+      canvas.getByTestId("custom-node-1"),
     );
     expect(canvas.queryByText("File 3")).toBeNull();
 
@@ -91,7 +91,7 @@ if (!interactionsDisabled) {
     // drag and drop: File 3 into Folder 2
     await dragAndDrop(
       canvas.getByText("File 3"),
-      canvas.getByTestId("custom-node-4")
+      canvas.getByTestId("custom-node-4"),
     );
     expect(canvas.queryByText("File 3")).toBeNull();
 
@@ -101,7 +101,7 @@ if (!interactionsDisabled) {
     // drag and drop: Folder 2 into Folder 1
     await dragAndDrop(
       canvas.getByText("Folder 2"),
-      canvas.getByTestId("custom-node-1")
+      canvas.getByTestId("custom-node-1"),
     );
 
     assertElementCoords(await canvas.findByTestId("custom-node-4"), 32, 64);
@@ -109,7 +109,7 @@ if (!interactionsDisabled) {
     // drag and drop: File 1-2 into root node
     await dragAndDrop(
       canvas.getByText("File 1-2"),
-      canvas.getAllByRole("list")[0]
+      canvas.getAllByRole("list")[0],
     );
 
     assertElementCoords(await canvas.findByTestId("custom-node-3"), 32, 192);

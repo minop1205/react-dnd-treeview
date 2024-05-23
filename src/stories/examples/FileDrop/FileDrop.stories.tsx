@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { within } from "@storybook/testing-library";
+import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";

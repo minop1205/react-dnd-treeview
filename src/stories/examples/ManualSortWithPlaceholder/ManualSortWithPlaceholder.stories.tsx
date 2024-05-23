@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";

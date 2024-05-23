@@ -1,4 +1,4 @@
-import { fireEvent } from "@storybook/testing-library";
+import { fireEvent } from "@storybook/test";
 import { getPointerCoords } from "./getPointerCoords";
 import { dragEnterAndDragOver } from "./dragEnterAndDragOver";
 import { dragLeaveAndDragEnd } from "./dragLeaveAndDragEnd";

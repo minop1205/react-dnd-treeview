@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from "@storybook/testing-library";
+import { fireEvent, waitFor } from "@storybook/test";
 import { PointerCoords } from "~/stories/types";
 import { wait } from "./wait";
 

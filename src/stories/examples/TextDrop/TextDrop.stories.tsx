@@ -1,7 +1,7 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
