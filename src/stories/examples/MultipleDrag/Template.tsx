@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Tree } from "~/Tree";
 import { isAncestor } from "~/utils";
 import {
@@ -14,7 +14,7 @@ import { CustomDragPreview } from "~/stories/examples/components/CustomDragPrevi
 import { CustomNode } from "./CustomNode";
 import { MultipleDragPreview } from "./MultipleDragPreview";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [selectedNodes, setSelectedNodes] = useState<
     NodeModel<FileProperties>[]
   >([]);

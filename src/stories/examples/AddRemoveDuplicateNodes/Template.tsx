@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { Tree } from "~/Tree";
@@ -28,7 +28,7 @@ const getLastId = (treeData: NodeModel[]) => {
   return 0;
 };
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [open, setOpen] = useState<boolean>(false);
   const handleDrop = (

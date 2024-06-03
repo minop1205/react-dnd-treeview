@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree } from "~/index";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
@@ -12,7 +12,7 @@ const Input = styled("input")({
   display: "none",
 });
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [lastId, setLastId] = useState(105);
 

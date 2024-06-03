@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Tree } from "~/index";
 import { TreeProps, NodeModel, DropOptions } from "~/types";
 import { useDropHandler } from "~/stories/useDropHandler";
@@ -11,7 +11,7 @@ import { ExternalNode } from "./ExternalNode";
 import { DragLayer } from "./DragLayer";
 import styles from "./ExternalElementInsideReactDnd.module.css";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, updateTree] = useDropHandler<FileProperties>(args);
   const [externalNodes, setExternalNodes] =
     useState<NodeModel<FileProperties>[]>(externalNodesJson);

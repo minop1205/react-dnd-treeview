@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { FormGroup, FormControlLabel, Switch } from "@mui/material";
 import { Tree } from "~/Tree";
 import { TreeProps } from "~/types";
@@ -7,7 +7,7 @@ import { useDropHandler } from "~/stories/useDropHandler";
 import { FileProperties } from "~/stories/types";
 import styles from "./DisableDnd.module.css";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, handleDrop] = useDropHandler<FileProperties>(args);
   const [enableDnd, setEnableDnd] = useState(true);
 

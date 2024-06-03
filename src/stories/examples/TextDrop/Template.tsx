@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { TextField } from "@mui/material";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree } from "~/index";
@@ -8,7 +8,7 @@ import { MockText } from "./MockText";
 import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [lastId, setLastId] = useState(105);
 

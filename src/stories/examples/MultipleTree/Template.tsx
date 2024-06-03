@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { NodeModel, DropOptions } from "~/types";
 import sampleData from "~/stories/assets/multiple-tree.json";
 import { getDescendants } from "~/utils";
 import { TreeView } from "./TreeView";
 import styles from "./MultipleTree.module.css";
 
-export const Template: Story = () => {
+export const Template: StoryFn = () => {
   const [treeData, setTreeData] = useState<NodeModel[]>(sampleData);
   const handleDrop = (
     newTree: NodeModel[],

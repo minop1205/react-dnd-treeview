@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Button, TextField } from "@mui/material";
 import { Tree } from "~/Tree";
 import { TreeProps, NodeModel, TreeMethods } from "~/types";
@@ -9,7 +9,7 @@ import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import styles from "./OpenAndCloseMethod.module.css";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, handleDrop] = useDropHandler<FileProperties>(args);
   const [text, setText] = useState<string>("");
   const ref = useRef<TreeMethods>(null);
