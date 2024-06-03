@@ -4,10 +4,8 @@ import {
   Subtitle,
   Description,
   Primary,
-  ArgsTable,
-  Stories,
-  PRIMARY_STORY,
-} from "@storybook/addon-docs";
+  Controls,
+} from "@storybook/blocks";
 import { CodeViewer } from "./CodeViewer";
 import { StoryDocumentProps } from "./types";
 
@@ -20,8 +18,7 @@ export const pageFactory = (props: StoryDocumentProps) => {
         <Description />
         <Primary />
         <CodeViewer {...props} />
-        <ArgsTable story={PRIMARY_STORY} />
-        <Stories />
+        <Controls />
       </>
     );
   };
