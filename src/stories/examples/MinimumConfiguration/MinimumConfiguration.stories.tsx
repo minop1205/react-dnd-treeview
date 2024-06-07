@@ -1,11 +1,10 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
-import { within, fireEvent, userEvent } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
-import { pageFactory } from "~/stories/pageFactory";
 import { FileProperties } from "~/stories/types";
 import {
   dragEnterAndDragOver,
@@ -62,11 +61,9 @@ MinimumConfigurationStory.args = {
 MinimumConfigurationStory.storyName = "Minimum configuration";
 
 MinimumConfigurationStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "minimum-configuration-js-mrhwrd",
-      tsId: "minimum-configuration-ts-tn9xj7",
-    }),
+  csb: {
+    jsId: "minimum-configuration-js-mrhwrd",
+    tsId: "minimum-configuration-ts-tn9xj7",
   },
 };
 
