@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -49,11 +48,9 @@ OpenAllParentNodesInitially.args = {
 OpenAllParentNodesInitially.storyName = "Open all parent nodes initially";
 
 OpenAllParentNodesInitially.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "open-all-parent-nodes-initially-js-xowqs7",
-      tsId: "open-all-parent-nodes-initially-ts-vdm3no",
-    }),
+  csb: {
+    jsId: "open-all-parent-nodes-initially-js-xowqs7",
+    tsId: "open-all-parent-nodes-initially-ts-vdm3no",
   },
 };
 

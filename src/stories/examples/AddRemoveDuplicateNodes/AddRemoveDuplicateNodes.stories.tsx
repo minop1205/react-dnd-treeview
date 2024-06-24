@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
@@ -49,11 +48,9 @@ AddRemoveDuplicateNodesStory.args = {
 AddRemoveDuplicateNodesStory.storyName = "Add, remove, duplicate nodes";
 
 AddRemoveDuplicateNodesStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "add-remove-duplicate-js-u9v93e",
-      tsId: "add-remove-duplicate-ts-8q20pd",
-    }),
+  csb: {
+    jsId: "add-remove-duplicate-js-u9v93e",
+    tsId: "add-remove-duplicate-ts-8q20pd",
   },
 };
 
@@ -70,23 +67,23 @@ if (!interactionsDisabled) {
 
       const dialog = within(await canvas.findByTestId("dialog"));
 
-      userEvent.click(dialog.getByTestId("dialog-input-text"));
-      userEvent.type(dialog.getByTestId("dialog-input-text"), "File 4");
-      userEvent.click(dialog.getByText(/submit/i));
+      await userEvent.click(dialog.getByTestId("dialog-input-text"));
+      await userEvent.type(dialog.getByTestId("dialog-input-text"), "File 4");
+      await userEvent.click(dialog.getByText(/submit/i));
     }
 
     expect(await canvas.findByText("File 4"));
 
     // delete Folder 1
-    userEvent.hover(canvas.getByTestId("custom-node-1"));
-    userEvent.click(await canvas.findByTestId("btn-delete-1"));
+    await userEvent.hover(canvas.getByTestId("custom-node-1"));
+    await userEvent.click(await canvas.findByTestId("btn-delete-1"));
     await wait();
     expect(canvas.queryByText("Folder 1")).toBeNull();
 
     // copy Folder 2
-    userEvent.hover(canvas.getByTestId("custom-node-4"));
-    userEvent.click(await canvas.findByTestId("btn-copy-4"));
-    userEvent.unhover(canvas.getByTestId("custom-node-4"));
+    await userEvent.hover(canvas.getByTestId("custom-node-4"));
+    await userEvent.click(await canvas.findByTestId("btn-copy-4"));
+    await userEvent.unhover(canvas.getByTestId("custom-node-4"));
     await toggleNode(await canvas.findByTestId("arrow-right-icon-12"));
     await toggleNode(await canvas.findByTestId("arrow-right-icon-13"));
     expect(await canvas.findByText("File 2-1-1")).toBeInTheDocument();

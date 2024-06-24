@@ -6,7 +6,6 @@ import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import { FileProperties } from "~/stories/types";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import {
   getPointerCoords,
@@ -68,20 +67,19 @@ ManualSortWithPlaceholderStory.args = {
 ManualSortWithPlaceholderStory.storyName = "Manual sort with placeholder";
 
 ManualSortWithPlaceholderStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "placeholder-js-bvev61",
-      tsId: "placeholder-ts-bsuyhv",
-    }),
+  csb: {
+    jsId: "placeholder-js-bvev61",
+    tsId: "placeholder-ts-bsuyhv",
   },
 };
 
 if (!interactionsDisabled) {
   ManualSortWithPlaceholderStory.play = async ({ canvasElement }) => {
     const assertPlaceholderCoords = (x: number, y: number) => {
+      const topMargin = 40; // height of CodeSandbox link bar
       const bbox = canvas.getByTestId("placeholder").getBoundingClientRect();
       expect(bbox.x).toBe(x);
-      expect(bbox.y).toBe(y);
+      expect(bbox.y).toBe(y + topMargin);
     };
 
     const canvas = within(canvasElement);

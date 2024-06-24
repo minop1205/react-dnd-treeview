@@ -16,7 +16,7 @@
 .rootGrid {
   display: grid;
   grid-template-columns: auto 1fr;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .externalContainer {

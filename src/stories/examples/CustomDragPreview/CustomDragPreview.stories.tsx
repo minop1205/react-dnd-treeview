@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -55,11 +54,9 @@ CustomDragPreviewStory.args = {
 CustomDragPreviewStory.storyName = "Custom drag preview";
 
 CustomDragPreviewStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "custom-drag-preview-js-s53fmx",
-      tsId: "custom-drag-preview-ts-ibvb07",
-    }),
+  csb: {
+    jsId: "custom-drag-preview-js-s53fmx",
+    tsId: "custom-drag-preview-ts-ibvb07",
   },
 };
 
@@ -81,7 +78,7 @@ if (!interactionsDisabled) {
     await dragEnterAndDragOver(dropTarget, coords);
 
     expect(
-      await canvas.findByTestId("custom-drag-preview"),
+      await canvas.findByTestId("custom-drag-preview")
     ).toBeInTheDocument();
 
     assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);

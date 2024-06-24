@@ -1,8 +1,8 @@
 import React from "react";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, Link } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { theme } from "../src/stories/examples/theme";
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
-import { Link } from "@mui/material";
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
@@ -59,7 +59,7 @@ const preview: Preview = {
       return (
         <>
           <div className="csb-link-container">
-            <p>Show code on CodeSandbox</p>
+            <p>View code on CodeSandbox</p>
             <div className="csb-link-items">
               {jsId && (
                 <Link
@@ -69,6 +69,7 @@ const preview: Preview = {
                   rel="noreferrer noopener"
                 >
                   JavaScript
+                  <OpenInNewIcon fontSize="inherit" />
                 </Link>
               )}
               {tsId && (
@@ -79,6 +80,7 @@ const preview: Preview = {
                   rel="noreferrer noopener"
                 >
                   TypeScript
+                  <OpenInNewIcon fontSize="inherit" />
                 </Link>
               )}
             </div>

@@ -1,11 +1,9 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/test";
-import { within, fireEvent } from "@storybook/test";
+import { expect, fireEvent, within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -65,11 +63,9 @@ ExternalElementOutsideReactDnd.storyName =
   "External element (outside react-dnd)";
 
 ExternalElementOutsideReactDnd.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "external-element-outside-react-dnd-js-67bw7o",
-      tsId: "external-element-outside-react-dnd-ts-zughk9",
-    }),
+  csb: {
+    jsId: "external-element-outside-react-dnd-js-67bw7o",
+    tsId: "external-element-outside-react-dnd-ts-zughk9",
   },
 };
 
@@ -82,17 +78,21 @@ if (!interactionsDisabled) {
     // so testing the drop is not possible.
     {
       const dragSource = canvas.getByTestId("external-node-101");
+      const dragSource2 = canvas.getByTestId("custom-node-7");
       const dropTarget = canvas.getByRole("list");
-      const coords = getPointerCoords(dropTarget, { x: 10, y: 10 });
+      const coords = getPointerCoords(dropTarget, { x: 20, y: 20 });
       const dataTransfer = new DataTransfer();
       const options = {
         dataTransfer,
         ...coords,
       };
 
+      await wait();
+
       fireEvent.dragStart(dragSource, options);
       fireEvent.dragEnter(dropTarget, coords);
       fireEvent.dragOver(dropTarget, coords);
+
       await wait();
       expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
     }

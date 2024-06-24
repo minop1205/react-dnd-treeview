@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
@@ -41,11 +40,9 @@ OpenAndCloseMethodStory.args = {
 OpenAndCloseMethodStory.storyName = "Open and close method";
 
 OpenAndCloseMethodStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "opening-and-closing-all-nodes-js-eqxzti",
-      tsId: "opening-and-closing-all-nodes-ts-xeb5v4",
-    }),
+  csb: {
+    jsId: "opening-and-closing-all-nodes-js-eqxzti",
+    tsId: "opening-and-closing-all-nodes-ts-xeb5v4",
   },
 };
 
@@ -75,9 +72,8 @@ if (!interactionsDisabled) {
     const btnOpenSpecified = canvas.getByTestId("btn-open-specified");
     const btnCloseSpecified = canvas.getByTestId("btn-close-specified");
     const textField = canvas.getByTestId("input-ids");
-
     userEvent.click(textField);
-    userEvent.type(textField, "1, 4, 5");
+    await userEvent.type(textField, "1, 4, 5");
     userEvent.click(btnOpenSpecified);
     await wait();
 

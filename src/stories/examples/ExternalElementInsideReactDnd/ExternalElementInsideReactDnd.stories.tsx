@@ -4,7 +4,6 @@ import { expect } from "@storybook/test";
 import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -51,11 +50,9 @@ ExternalElementInsideReactDnd.args = {
 ExternalElementInsideReactDnd.storyName = "External element (inside react-dnd)";
 
 ExternalElementInsideReactDnd.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "external-element-inside-react-dnd-js-lf66dj",
-      tsId: "external-element-inside-react-dnd-ts-sktogh",
-    }),
+  csb: {
+    jsId: "external-element-inside-react-dnd-js-lf66dj",
+    tsId: "external-element-inside-react-dnd-ts-sktogh",
   },
 };
 

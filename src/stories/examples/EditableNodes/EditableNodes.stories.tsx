@@ -4,7 +4,6 @@ import { expect } from "@storybook/test";
 import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
@@ -45,11 +44,9 @@ EditableNodesStory.args = {
 EditableNodesStory.storyName = "Editable nodes";
 
 EditableNodesStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "editable-js-gdszw4",
-      tsId: "editable-ts-4v1034",
-    }),
+  csb: {
+    jsId: "editable-js-gdszw4",
+    tsId: "editable-ts-4v1034",
   },
 };
 

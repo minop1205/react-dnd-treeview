@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -50,11 +49,9 @@ OpenSpecificParentNodesInitially.storyName =
   "Open specific parent nodes initially";
 
 OpenSpecificParentNodesInitially.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "open-specific-parent-nodes-initially-js-forked-tz2y6f",
-      tsId: "open-specific-parent-nodes-initially-ts-forked-kyh3h7",
-    }),
+  csb: {
+    jsId: "open-specific-parent-nodes-initially-js-forked-tz2y6f",
+    tsId: "open-specific-parent-nodes-initially-ts-forked-kyh3h7",
   },
 };
 

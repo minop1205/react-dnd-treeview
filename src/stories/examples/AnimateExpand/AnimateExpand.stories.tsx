@@ -6,7 +6,6 @@ import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { pageFactory } from "~/stories/pageFactory";
 import { FileProperties } from "~/stories/types";
 import { toggleNode, wait } from "~/stories/examples/helpers";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
@@ -50,11 +49,9 @@ AnimateExpandStory.args = {
 AnimateExpandStory.storyName = "AnimateExpand";
 
 AnimateExpandStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "animateexpand-js-vtvh18",
-      tsId: "animateexpand-ts-l5rd4r",
-    }),
+  csb: {
+    jsId: "animateexpand-js-vtvh18",
+    tsId: "animateexpand-ts-l5rd4r",
   },
 };
 

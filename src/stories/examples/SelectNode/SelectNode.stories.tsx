@@ -3,7 +3,6 @@ import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { wait } from "~/stories/examples/helpers";
@@ -41,11 +40,9 @@ SelectNodeStory.args = {
 SelectNodeStory.storyName = "Select node";
 
 SelectNodeStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "select-node-js-diykvq",
-      tsId: "select-node-ts-gocexe",
-    }),
+  csb: {
+    jsId: "select-node-js-diykvq",
+    tsId: "select-node-ts-gocexe",
   },
 };
 
