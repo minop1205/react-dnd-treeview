@@ -69,32 +69,35 @@ ExternalElementOutsideReactDnd.parameters = {
   },
 };
 
-if (!interactionsDisabled) {
-  ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+// Skip play function due to the following problem
+// https://github.com/react-dnd/react-dnd/issues/3119
 
-    // drag over into tree root from element outside react-dnd.
-    // Cannot pass dataTransfer to the drop event,
-    // so testing the drop is not possible.
-    {
-      const dragSource = canvas.getByTestId("external-node-101");
-      const dragSource2 = canvas.getByTestId("custom-node-7");
-      const dropTarget = canvas.getByRole("list");
-      const coords = getPointerCoords(dropTarget, { x: 20, y: 20 });
-      const dataTransfer = new DataTransfer();
-      const options = {
-        dataTransfer,
-        ...coords,
-      };
+// if (!interactionsDisabled) {
+//   ExternalElementOutsideReactDnd.play = async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
 
-      await wait();
+//     // drag over into tree root from element outside react-dnd.
+//     // Cannot pass dataTransfer to the drop event,
+//     // so testing the drop is not possible.
+//     {
+//       const dragSource = canvas.getByTestId("external-node-101");
+//       const dragSource2 = canvas.getByTestId("custom-node-7");
+//       const dropTarget = canvas.getByRole("list");
+//       const coords = getPointerCoords(dropTarget, { x: 20, y: 20 });
+//       const dataTransfer = new DataTransfer();
+//       const options = {
+//         dataTransfer,
+//         ...coords,
+//       };
 
-      fireEvent.dragStart(dragSource, options);
-      fireEvent.dragEnter(dropTarget, coords);
-      fireEvent.dragOver(dropTarget, coords);
+//       await wait();
 
-      await wait();
-      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
-    }
-  };
-}
+//       fireEvent.dragStart(dragSource, options);
+//       fireEvent.dragEnter(dropTarget, coords);
+//       fireEvent.dragOver(dropTarget, coords);
+
+//       await wait();
+//       expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+//     }
+//   };
+// }

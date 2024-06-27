@@ -50,11 +50,9 @@ FileDrop.args = {
 FileDrop.storyName = "File drop";
 
 FileDrop.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "file-drop-js-x1o985",
-      tsId: "file-drop-ts-4s5i48",
-    }),
+  csb: {
+    jsId: "file-drop-js-x1o985",
+    tsId: "file-drop-ts-4s5i48",
   },
 };
 

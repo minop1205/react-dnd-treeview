@@ -49,11 +49,9 @@ DynamicHierarchyStory.args = {
 DynamicHierarchyStory.storyName = "Dynamic hierarchy";
 
 DynamicHierarchyStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "dynamic-hierarchy-js-n8m7zn",
-      tsId: "dynamic-hierarchy-ts-dz4bis",
-    }),
+  csb: {
+    jsId: "dynamic-hierarchy-js-n8m7zn",
+    tsId: "dynamic-hierarchy-ts-dz4bis",
   },
 };
 
@@ -68,7 +66,7 @@ if (!interactionsDisabled) {
       await wait(500);
       await dragAndDrop(
         canvas.getByText("Item 2"),
-        canvas.getByTestId("custom-node-1"),
+        canvas.getByTestId("custom-node-1")
       );
 
       expect(canvas.queryByText("Item 2")).toBeNull();

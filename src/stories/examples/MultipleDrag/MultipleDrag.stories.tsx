@@ -66,11 +66,9 @@ MultipleDragStory.args = {
 MultipleDragStory.storyName = "Multiple drag";
 
 MultipleDragStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "multiple-drag-js-m3ut0u",
-      tsId: "multiple-drag-ts-nf0m3k",
-    }),
+  csb: {
+    jsId: "multiple-drag-js-m3ut0u",
+    tsId: "multiple-drag-ts-nf0m3k",
   },
 };
 

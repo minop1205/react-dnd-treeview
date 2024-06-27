@@ -53,11 +53,9 @@ DisableDndStory.args = {
 DisableDndStory.storyName = "Disable dnd";
 
 DisableDndStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "drag-and-drop-as-optional-js-0z31vo",
-      tsId: "drag-and-drop-as-optional-ts-sqzo11",
-    }),
+  csb: {
+    jsId: "drag-and-drop-as-optional-js-0z31vo",
+    tsId: "drag-and-drop-as-optional-ts-sqzo11",
   },
 };
 
@@ -71,7 +69,7 @@ if (!interactionsDisabled) {
     {
       await dragAndDrop(
         canvas.getByText("File 3"),
-        canvas.getByTestId("custom-node-1"),
+        canvas.getByTestId("custom-node-1")
       );
 
       expect(canvas.queryByText("File 3")).toBeNull();

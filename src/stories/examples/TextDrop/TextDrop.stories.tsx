@@ -56,11 +56,9 @@ TextDrop.args = {
 TextDrop.storyName = "Text drop";
 
 TextDrop.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "text-drop-js-t4xpkq",
-      tsId: "text-drop-ts-odf9lz",
-    }),
+  csb: {
+    jsId: "text-drop-js-t4xpkq",
+    tsId: "text-drop-ts-odf9lz",
   },
 };
 

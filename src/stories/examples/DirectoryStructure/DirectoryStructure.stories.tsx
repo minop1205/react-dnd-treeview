@@ -26,10 +26,8 @@ export const DirectoryStructureStory = Template.bind({});
 DirectoryStructureStory.storyName = "Directory structure";
 
 DirectoryStructureStory.parameters = {
-  docs: {
-    page: pageFactory({
-      tsId: "directory-structure-ts-35p68l",
-      jsId: "directory-structure-js-ctx1cq",
-    }),
+  csb: {
+    tsId: "directory-structure-ts-35p68l",
+    jsId: "directory-structure-js-ctx1cq",
   },
 };

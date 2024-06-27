@@ -52,11 +52,9 @@ DynamicClassNameStory.args = {
 DynamicClassNameStory.storyName = "Dynamic class name";
 
 DynamicClassNameStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "dynamic-class-name-js-vskw43",
-      tsId: "dynamic-class-name-ts-thrng9",
-    }),
+  csb: {
+    jsId: "dynamic-class-name-js-vskw43",
+    tsId: "dynamic-class-name-ts-thrng9",
   },
 };
 

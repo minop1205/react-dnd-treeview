@@ -31,11 +31,9 @@ MultipleTreeStory.args = {};
 MultipleTreeStory.storyName = "Multiple tree";
 
 MultipleTreeStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "multiple-tree-js-216o5l",
-      tsId: "multiple-tree-ts-6uysei",
-    }),
+  csb: {
+    jsId: "multiple-tree-js-216o5l",
+    tsId: "multiple-tree-ts-6uysei",
   },
 };
 

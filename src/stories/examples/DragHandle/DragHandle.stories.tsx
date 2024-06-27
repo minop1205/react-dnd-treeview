@@ -65,11 +65,9 @@ DragHandleStory.args = {
 DragHandleStory.storyName = "Drag handle";
 
 DragHandleStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "drag-handle-js-fb4ys9",
-      tsId: "drag-handle-ts-050v5h",
-    }),
+  csb: {
+    jsId: "drag-handle-js-fb4ys9",
+    tsId: "drag-handle-ts-050v5h",
   },
 };
 
@@ -77,12 +75,13 @@ if (!interactionsDisabled) {
   DragHandleStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const assertPlaceholderCoords = (x: number, y: number) => {
+    const assertDragPreviewCoords = (x: number, y: number) => {
+      const topMargin = 40; // height of CodeSandbox link bar
       const bbox = canvas
         .getByTestId("custom-drag-preview")
         .getBoundingClientRect();
       expect(bbox.x).toBe(x);
-      expect(bbox.y).toBe(y);
+      expect(bbox.y).toBe(y + topMargin);
     };
 
     expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
@@ -109,7 +108,7 @@ if (!interactionsDisabled) {
       await wait();
       fireEvent.dragStart(file3Handle);
       await dragEnterAndDragOver(folder1Node, coords);
-      assertPlaceholderCoords(32, 48);
+      assertDragPreviewCoords(32, 48);
       fireEvent.drop(folder1Node, coords);
       await wait();
       dragLeaveAndDragEnd(file3Handle, folder1Node);
