@@ -66,10 +66,10 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   return (
     <div className={styles.rootGrid}>
       <div className={styles.textareaWrapper}>
-        <textarea className={styles.textarea}>
-          You can select text in this text field and drop a substring into the
-          tree.
-        </textarea>
+        <textarea
+          className={styles.textarea}
+          defaultValue="You can select text in this text field and drop a substring into the tree."
+        />
         <MockText />
       </div>
       <Tree {...args} tree={tree} onDrop={handleDrop} />

@@ -1,7 +1,6 @@
 import React from "react";
 import { Meta } from "@storybook/react";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { TreeProps } from "~/types";
 import { FileProperties } from "~/stories/types";
