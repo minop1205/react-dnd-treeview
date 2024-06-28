@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { StoryFn } from "@storybook/react";
-import { TextField } from "@mui/material";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree } from "~/index";
 import styles from "./TextDrop.module.css";
@@ -66,12 +65,11 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
 
   return (
     <div className={styles.rootGrid}>
-      <div className={styles.fileChooser}>
-        <TextField
-          multiline
-          variant="outlined"
-          defaultValue="You can select text in this text field and drop a substring into the tree."
-        />
+      <div className={styles.textareaWrapper}>
+        <textarea className={styles.textarea}>
+          You can select text in this text field and drop a substring into the
+          tree.
+        </textarea>
         <MockText />
       </div>
       <Tree {...args} tree={tree} onDrop={handleDrop} />

@@ -1,11 +1,9 @@
 import React from "react";
 import { Meta } from "@storybook/react";
-import { expect } from "@storybook/test";
-import { within, fireEvent } from "@storybook/test";
+import { expect, within, fireEvent } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { TreeProps, DragLayerMonitorProps } from "~/types";
@@ -34,9 +32,9 @@ export default {
   ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const TextDrop = Template.bind({});
+export const TextDropStory = Template.bind({});
 
-TextDrop.args = {
+TextDropStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -53,9 +51,9 @@ TextDrop.args = {
   ),
 };
 
-TextDrop.storyName = "Text drop";
+TextDropStory.storyName = "Text drop";
 
-TextDrop.parameters = {
+TextDropStory.parameters = {
   csb: {
     jsId: "text-drop-js-t4xpkq",
     tsId: "text-drop-ts-odf9lz",
@@ -63,7 +61,7 @@ TextDrop.parameters = {
 };
 
 if (!interactionsDisabled) {
-  TextDrop.play = async ({ canvasElement }) => {
+  TextDropStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     // Cannot pass dataTransfer to the drop event,
