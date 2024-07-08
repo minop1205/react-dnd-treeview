@@ -90,6 +90,7 @@
     "storybook": "^8.1.11",
     "storybook-css-modules-preset": "^1.1.1",
     "ts-jest": "^29.1.5",
+    "ts-patch": "^3.2.1",
     "tslib": "^2.6.3",
     "ttypescript": "^1.5.15",
     "typescript": "^5.5.2",
