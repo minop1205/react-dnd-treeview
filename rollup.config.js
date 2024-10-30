@@ -1,10 +1,10 @@
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import typescript from "rollup-plugin-typescript2";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
-import packageJson from "./package.json" with { type: "json" };
 import alias from "@rollup/plugin-alias";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import typescript from "rollup-plugin-typescript2";
+import packageJson from "./package.json" with { type: "json" };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
