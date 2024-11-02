@@ -1,7 +1,7 @@
-import type { RefObject, ElementType, ReactElement } from "react";
-import type { XYCoord, DragSourceMonitor } from "react-dnd";
 import type { DragDropMonitor } from "dnd-core";
-import React from "react";
+import type { RefObject, ElementType, ReactElement } from "react";
+import type React from "react";
+import type { XYCoord, DragSourceMonitor } from "react-dnd";
 
 export type NodeModel<T = unknown> = {
   id: number | string;
@@ -33,7 +33,7 @@ export type RenderParams = {
 
 export type NodeRender<T> = (
   node: NodeModel<T>,
-  params: RenderParams
+  params: RenderParams,
 ) => ReactElement;
 
 export type ClickHandler = (data: NodeModel) => void;
@@ -41,12 +41,12 @@ export type ClickHandler = (data: NodeModel) => void;
 export type DropHandler<T> = (
   dragSource: NodeModel<T> | null,
   dropTargetId: NodeModel["id"],
-  index: number
+  index: number,
 ) => void;
 
 export type CanDropHandler = (
   dragSourceId: NodeModel["id"] | null,
-  dropTargetId: NodeModel["id"]
+  dropTargetId: NodeModel["id"],
 ) => boolean | void;
 
 export type CanDragHandler = (id: NodeModel["id"]) => boolean;
@@ -62,7 +62,7 @@ export type Classes<T = unknown> = {
 
 export type SortCallback<T = unknown> = (
   a: NodeModel<T>,
-  b: NodeModel<T>
+  b: NodeModel<T>,
 ) => number;
 
 export type DragLayerMonitorProps<T> = {
@@ -72,7 +72,7 @@ export type DragLayerMonitorProps<T> = {
 };
 
 export type DragPreviewRender<T> = (
-  monitorProps: DragLayerMonitorProps<T>
+  monitorProps: DragLayerMonitorProps<T>,
 ) => ReactElement;
 
 export type PlaceholderRenderParams = {
@@ -81,7 +81,7 @@ export type PlaceholderRenderParams = {
 
 export type PlaceholderRender<T> = (
   node: NodeModel<T>,
-  params: PlaceholderRenderParams
+  params: PlaceholderRenderParams,
 ) => ReactElement;
 
 export type DragOverProps = {
@@ -92,17 +92,17 @@ export type DragOverProps = {
 
 export type OpenHandler = (
   targetIds: NodeModel["id"] | NodeModel["id"][],
-  callback?: ChangeOpenHandler
+  callback?: ChangeOpenHandler,
 ) => void;
 
 export type CloseHandler = (
   targetIds: NodeModel["id"] | NodeModel["id"][],
-  callback?: ChangeOpenHandler
+  callback?: ChangeOpenHandler,
 ) => void;
 
 export type ToggleHandler = (
   id: NodeModel["id"],
-  callback?: ChangeOpenHandler
+  callback?: ChangeOpenHandler,
 ) => void;
 
 export type ChangeOpenHandler = (newOpenIds: NodeModel["id"][]) => void;

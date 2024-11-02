@@ -1,12 +1,12 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
+import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
@@ -14,11 +14,11 @@ import {
   assertElementCoords,
   wait,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./CustomDragPreview.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -64,7 +64,7 @@ if (!interactionsDisabled) {
   CustomDragPreviewStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
     // show preview during dragging
     const dragSource = canvas.getByText("File 3");
@@ -72,22 +72,26 @@ if (!interactionsDisabled) {
 
     await wait();
 
-    fireEvent.dragStart(dragSource);
+    await fireEvent.dragStart(dragSource);
 
     const coords = getPointerCoords(dropTarget);
     await dragEnterAndDragOver(dropTarget, coords);
 
-    expect(
-      await canvas.findByTestId("custom-drag-preview")
+    await expect(
+      await canvas.findByTestId("custom-drag-preview"),
     ).toBeInTheDocument();
 
-    assertElementCoords(canvas.getByTestId("custom-drag-preview"), 32, 32);
+    await assertElementCoords(
+      canvas.getByTestId("custom-drag-preview"),
+      32,
+      32,
+    );
 
     // hide preview when drag is canceled
-    dragLeaveAndDragEnd(dragSource, dropTarget);
+    await dragLeaveAndDragEnd(dragSource, dropTarget);
 
     await wait();
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
   };
 }

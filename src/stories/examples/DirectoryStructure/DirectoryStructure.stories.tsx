@@ -1,11 +1,10 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps } from "~/types";
-import { FileProperties } from "~/stories/types";
-
 import Template from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,

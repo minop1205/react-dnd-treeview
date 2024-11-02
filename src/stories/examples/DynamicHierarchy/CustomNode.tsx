@@ -1,8 +1,8 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { NodeModel } from "~/types";
+import Typography from "@mui/material/Typography";
 import styles from "./CustomNode.module.css";
+import type { NodeModel } from "~/types";
 
 type Props = {
   node: NodeModel;
@@ -17,7 +17,7 @@ export const CustomNode: React.FC<Props> = ({
   testIdPrefix = "",
   ...props
 }) => {
-  const { id, droppable, data } = props.node;
+  const { id } = props.node;
   const indent = props.depth * 16;
 
   const handleToggle = (e: React.MouseEvent) => {

@@ -1,9 +1,9 @@
 import React from "react";
 import { Tree } from "~/Tree";
-import { TreeProps } from "~/types";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import styles from "./TreeView.module.css";
+import type { TreeProps } from "~/types";
 
 type Props<T> = Pick<TreeProps<T>, "tree" | "onDrop" | "rootId"> & {
   testIdPrefix: string;

@@ -1,9 +1,9 @@
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
 export const isAncestor = (
   tree: NodeModel[],
   sourceId: NodeModel["id"],
-  targetId: NodeModel["id"]
+  targetId: NodeModel["id"],
 ): boolean => {
   if (targetId === 0) {
     return false;

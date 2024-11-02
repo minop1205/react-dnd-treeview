@@ -1,8 +1,7 @@
 import React from "react";
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
 const Placeholder: React.FC<{ node: NodeModel; depth: number }> = ({
-  node,
   depth,
 }) => {
   return (

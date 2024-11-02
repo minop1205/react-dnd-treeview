@@ -1,14 +1,14 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps } from "~/types";
-import { FileProperties } from "~/stories/types";
 import { dragAndDrop, toggleNode } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -40,7 +40,7 @@ if (!interactionsDisabled) {
   MultipleTreeStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
     // drag and drop: File 3 (Tree:1) into root (Tree:2)
     {
@@ -49,8 +49,10 @@ if (!interactionsDisabled) {
 
       await dragAndDrop(dragSource, dropTarget);
 
-      expect(canvas.getByTestId("tree2-custom-node-107")).toBeInTheDocument();
-      expect(canvas.queryByTestId("tree1-custom-node-107")).toBeNull();
+      await expect(
+        canvas.getByTestId("tree2-custom-node-107"),
+      ).toBeInTheDocument();
+      await expect(canvas.queryByTestId("tree1-custom-node-107")).toBeNull();
     }
 
     // drag and drop: Folder 1 (Tree:1) into Folder 2 (Tree:3)
@@ -60,11 +62,13 @@ if (!interactionsDisabled) {
 
       await dragAndDrop(dragSource, dropTarget);
 
-      expect(canvas.queryByTestId("tree3-custom-node-101")).toBeNull();
+      await expect(canvas.queryByTestId("tree3-custom-node-101")).toBeNull();
 
       await toggleNode(canvas.getByTestId("arrow-right-icon-304"));
 
-      expect(canvas.getByTestId("tree3-custom-node-101")).toBeInTheDocument();
+      await expect(
+        canvas.getByTestId("tree3-custom-node-101"),
+      ).toBeInTheDocument();
     }
 
     // drag and drop: File 3 (Tree:2) into Folder 1 (Tree:2)
@@ -74,11 +78,13 @@ if (!interactionsDisabled) {
 
       await dragAndDrop(dragSource, dropTarget);
 
-      expect(canvas.queryByTestId("tree2-custom-node-207")).toBeNull();
+      await expect(canvas.queryByTestId("tree2-custom-node-207")).toBeNull();
 
       await toggleNode(canvas.getByTestId("arrow-right-icon-201"));
 
-      expect(canvas.getByTestId("tree2-custom-node-207")).toBeInTheDocument();
+      await expect(
+        canvas.getByTestId("tree2-custom-node-207"),
+      ).toBeInTheDocument();
     }
   };
 }

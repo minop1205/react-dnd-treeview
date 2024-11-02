@@ -1,9 +1,9 @@
-import { NodeModel } from "~/types";
 import { useTreeContext } from "./useTreeContext";
+import type { NodeModel } from "~/types";
 
 export const useContainerClassName = (
   parentId: NodeModel["id"],
-  isOver: boolean
+  isOver: boolean,
 ): string => {
   const { rootId, rootProps, classes } = useTreeContext();
   let className = classes?.container || "";

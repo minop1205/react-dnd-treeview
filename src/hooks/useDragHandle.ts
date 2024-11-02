@@ -1,10 +1,11 @@
-import { useEffect, RefObject } from "react";
-import { DragElementWrapper, DragSourceOptions } from "react-dnd";
+import { useEffect } from "react";
+import type { RefObject } from "react";
+import type { DragElementWrapper, DragSourceOptions } from "react-dnd";
 
 export const useDragHandle = (
   containerRef: RefObject<HTMLElement>,
   handleRef: RefObject<any>,
-  drag: DragElementWrapper<DragSourceOptions>
+  drag: DragElementWrapper<DragSourceOptions>,
 ) => {
   if (handleRef.current) {
     drag(handleRef);

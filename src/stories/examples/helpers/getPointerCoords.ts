@@ -1,4 +1,4 @@
-import { OffsetCoords } from "~/stories/types";
+import type { OffsetCoords } from "~/stories/types";
 
 export const getPointerCoords = (element: Element, offset?: OffsetCoords) => {
   const { x, y } = element.getBoundingClientRect();

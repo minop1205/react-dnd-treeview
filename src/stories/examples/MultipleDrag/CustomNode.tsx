@@ -1,10 +1,10 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import Typography from "@mui/material/Typography";
 import { TypeIcon } from "~/stories/examples/components/TypeIcon";
-import { NodeModel, RenderParams } from "~/types";
-import { FileProperties } from "~/stories/types";
 import styles from "./CustomNode.module.css";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel, RenderParams } from "~/types";
 
 type Props = RenderParams & {
   node: NodeModel<FileProperties>;

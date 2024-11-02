@@ -1,8 +1,9 @@
-import React, { useContext, ReactElement } from "react";
+import React, { useContext } from "react";
 import { useDragDropManager } from "react-dnd";
 import { useTreeContext } from "./hooks";
-import { NodeModel } from "./types";
 import { PlaceholderContext } from "./providers";
+import type { NodeModel } from "./types";
+import type { ReactElement } from "react";
 
 type Props = {
   depth: number;

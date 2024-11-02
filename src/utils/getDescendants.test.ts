@@ -1,5 +1,5 @@
-import { getDescendants } from "./getDescendants";
 import treeData from "../stories/assets/sample-default.json";
+import { getDescendants } from "./getDescendants";
 
 describe("getDescendants", () => {
   test("get descendant nodes by id", () => {

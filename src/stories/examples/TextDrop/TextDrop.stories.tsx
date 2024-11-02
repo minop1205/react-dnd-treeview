@@ -1,23 +1,23 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect, within, fireEvent } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import * as argTypes from "~/stories/argTypes";
+import sampleData from "~/stories/assets/sample-default.json";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import {
   dragLeaveAndDragEnd,
   getPointerCoords,
   wait,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import sampleData from "~/stories/assets/sample-default.json";
 import { Template } from "./Template";
 import styles from "./TextDrop.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -79,14 +79,14 @@ if (!interactionsDisabled) {
         ...coords,
       };
 
-      fireEvent.dragStart(dragSource, options);
-      fireEvent.dragEnter(dropTarget, coords);
-      fireEvent.dragOver(dropTarget, coords);
+      await fireEvent.dragStart(dragSource, options);
+      await fireEvent.dragEnter(dropTarget, coords);
+      await fireEvent.dragOver(dropTarget, coords);
       await wait();
 
-      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+      await expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
 
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
     }
 
     await wait();
@@ -103,14 +103,14 @@ if (!interactionsDisabled) {
         ...coords,
       };
 
-      fireEvent.dragStart(dragSource, options);
-      fireEvent.dragEnter(dropTarget, coords);
-      fireEvent.dragOver(dropTarget, coords);
+      await fireEvent.dragStart(dragSource, options);
+      await fireEvent.dragEnter(dropTarget, coords);
+      await fireEvent.dragOver(dropTarget, coords);
       await wait();
 
-      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+      await expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
 
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
     }
   };
 }

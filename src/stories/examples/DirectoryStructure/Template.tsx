@@ -1,21 +1,19 @@
 import React from "react";
-import { getDescendants } from "~/utils";
-import { DropOptions, NodeModel, TreeProps } from "~/types";
 import { Tree } from "~/Tree";
-import Node from "./Node";
-import Placeholder from "./CustomPlaceholder";
-import useTreeOpenHandler from "./useTreeOpenHandler";
-import styles from "./DirectoryStructure.module.css";
-
-import { StoryFn } from "@storybook/react";
 import sampleData from "~/stories/assets/sample-default.json";
-
-import { FileProperties } from "~/stories/types";
+import { getDescendants } from "~/utils";
+import Placeholder from "./CustomPlaceholder";
+import styles from "./DirectoryStructure.module.css";
+import Node from "./Node";
+import useTreeOpenHandler from "./useTreeOpenHandler";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { DropOptions, NodeModel, TreeProps } from "~/types";
 
 const reorderArray = (
   array: NodeModel[],
   sourceIndex: number,
-  targetIndex: number
+  targetIndex: number,
 ) => {
   const newArray = [...array];
   const element = newArray.splice(sourceIndex, 1)[0];
@@ -46,7 +44,7 @@ const Template: StoryFn<TreeProps<FileProperties>> = () => {
         const output = reorderArray(
           treeData,
           treeData.indexOf(start),
-          destinationIndex
+          destinationIndex,
         );
         return output;
       });
@@ -59,7 +57,7 @@ const Template: StoryFn<TreeProps<FileProperties>> = () => {
     ) {
       if (
         getDescendants(treeData, dragSourceId).find(
-          (el) => el.id === dropTargetId
+          (el) => el.id === dropTargetId,
         ) ||
         dropTargetId === dragSourceId ||
         (end && !end?.droppable)
@@ -69,7 +67,7 @@ const Template: StoryFn<TreeProps<FileProperties>> = () => {
         const output = reorderArray(
           treeData,
           treeData.indexOf(start),
-          destinationIndex
+          destinationIndex,
         );
         const movedElement = output.find((el) => el.id === dragSourceId);
         if (movedElement) movedElement.parent = dropTargetId;

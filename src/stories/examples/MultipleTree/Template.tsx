@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { StoryFn } from "@storybook/react";
-import { NodeModel, DropOptions } from "~/types";
 import sampleData from "~/stories/assets/multiple-tree.json";
 import { getDescendants } from "~/utils";
-import { TreeView } from "./TreeView";
 import styles from "./MultipleTree.module.css";
+import { TreeView } from "./TreeView";
+import type { StoryFn } from "@storybook/react";
+import type { NodeModel, DropOptions } from "~/types";
 
 export const Template: StoryFn = () => {
   const [treeData, setTreeData] = useState<NodeModel[]>(sampleData);
   const handleDrop = (
     newTree: NodeModel[],
-    { dragSourceId, dropTargetId }: DropOptions
+    { dragSourceId, dropTargetId }: DropOptions,
   ) => {
     setTreeData(
       treeData.map((node) => {
@@ -22,7 +22,7 @@ export const Template: StoryFn = () => {
         }
 
         return node;
-      })
+      }),
     );
   };
 

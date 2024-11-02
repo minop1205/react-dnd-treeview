@@ -1,23 +1,23 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
-import { within, fireEvent, waitFor } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
   wait,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "./CustomNode";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./AutoExpandWithDragOverNode.module.css";
+import { CustomNode } from "./CustomNode";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -65,19 +65,19 @@ if (!interactionsDisabled) {
 
     // hover File3 into Folder1 during 0.5sec
     {
-      expect(canvas.queryByText("File 1-2")).toBeNull();
+      await expect(canvas.queryByText("File 1-2")).toBeNull();
 
       const dragSource = canvas.getByText("File 3");
       const dropTarget = canvas.getByTestId("custom-node-1");
       const coords = getPointerCoords(dropTarget);
 
       await wait();
-      fireEvent.dragStart(dragSource);
+      await fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
       await wait(500);
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
       await wait();
-      expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
+      await expect(await canvas.findByText("File 1-2")).toBeInTheDocument();
     }
   };
 }

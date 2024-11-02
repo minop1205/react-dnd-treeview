@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
-import { StoryFn } from "@storybook/react";
 import { Button, TextField } from "@mui/material";
 import { Tree } from "~/Tree";
-import { TreeProps, NodeModel, TreeMethods } from "~/types";
-import { useDropHandler } from "~/stories/useDropHandler";
-import { FileProperties } from "~/stories/types";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { useDropHandler } from "~/stories/useDropHandler";
 import styles from "./OpenAndCloseMethod.module.css";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, NodeModel, TreeMethods } from "~/types";
 
 export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, handleDrop] = useDropHandler<FileProperties>(args);
@@ -87,7 +87,7 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
         onDrop={handleDrop}
         render={(
           node: NodeModel<FileProperties>,
-          { depth, isOpen, onToggle }
+          { depth, isOpen, onToggle },
         ) => (
           <CustomNode
             node={node}

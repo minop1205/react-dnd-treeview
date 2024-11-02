@@ -1,9 +1,9 @@
 import React from "react";
 import { Badge } from "@mui/material";
-import { NodeModel } from "~/types";
-import { FileProperties } from "~/stories/types";
 import { TypeIcon } from "~/stories/examples/components/TypeIcon";
 import styles from "./MultipleDragPreview.module.css";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel } from "~/types";
 
 type Props = {
   dragSources: NodeModel<FileProperties>[];

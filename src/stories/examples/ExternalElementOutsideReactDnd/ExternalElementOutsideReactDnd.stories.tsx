@@ -1,21 +1,21 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect, fireEvent, within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
-import { getPointerCoords, wait } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
-import { StoryProvider } from "./StoryProvider";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { getPointerCoords, wait } from "~/stories/examples/helpers";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import { ExternalContainer } from "./ExternalContainer";
-import { Template } from "./Template";
 import styles from "./ExternalElementOutsideReactDnd.module.css";
+import { StoryProvider } from "./StoryProvider";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,

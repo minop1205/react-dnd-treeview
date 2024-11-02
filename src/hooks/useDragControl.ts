@@ -71,7 +71,7 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   useEffect(() => {
     ref.current?.setAttribute(
       "draggable",
-      dragControlContext.isLock ? "false" : "true"
+      dragControlContext.isLock ? "false" : "true",
     );
   }, [ref, dragControlContext.isLock]);
 };

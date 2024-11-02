@@ -1,14 +1,15 @@
 import { useContext } from "react";
-import { useDrop, DragElementWrapper } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { ItemTypes } from "~/ItemTypes";
-import { PlaceholderContext } from "~/providers";
-import { NodeModel } from "~/types";
-import { isDroppable, getDropTarget, isNodeModel } from "~/utils";
 import { useTreeContext } from "~/hooks";
+import { PlaceholderContext } from "~/providers";
+import { isDroppable, getDropTarget, isNodeModel } from "~/utils";
+import type { DragElementWrapper } from "react-dnd";
+import type { NodeModel } from "~/types";
 
 export const useDropNode = <T>(
   item: NodeModel<T>,
-  ref: React.RefObject<HTMLElement>
+  ref: React.RefObject<HTMLElement>,
 ): [boolean, NodeModel<T>, DragElementWrapper<HTMLElement>] => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
@@ -27,7 +28,7 @@ export const useDropNode = <T>(
         treeContext.onDrop(
           isNodeModel<T>(dragItem) ? dragItem : null,
           dropTargetId,
-          index
+          index,
         );
       }
 
@@ -39,7 +40,7 @@ export const useDropNode = <T>(
           item,
           ref.current,
           monitor,
-          treeContext
+          treeContext,
         );
 
         if (dropTarget === null) {
@@ -60,7 +61,7 @@ export const useDropNode = <T>(
           item,
           ref.current,
           monitor,
-          treeContext
+          treeContext,
         );
 
         if (

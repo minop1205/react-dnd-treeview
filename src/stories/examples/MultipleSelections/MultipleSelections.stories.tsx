@@ -1,17 +1,17 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { wait } from "~/stories/examples/helpers";
-import { FileProperties } from "~/stories/types";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { Template } from "./Template";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import sampleData from "~/stories/assets/sample-default.json";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { wait } from "~/stories/examples/helpers";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import styles from "./MultipleSelections.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -54,17 +54,19 @@ if (!interactionsDisabled) {
   MultipleSelectionsStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.getByTestId("selected-node").textContent).toBe("none");
-    userEvent.click(canvas.getByText("Folder 1"));
+    await expect(canvas.getByTestId("selected-node").textContent).toBe("none");
+    await userEvent.click(canvas.getByText("Folder 1"));
     await wait();
-    expect(canvas.getByTestId("selected-node").textContent).toBe("Folder 1");
-    userEvent.click(canvas.getByText("File 3"));
-    await wait();
-    expect(canvas.getByTestId("selected-node").textContent).toBe(
-      "Folder 1, File 3"
+    await expect(canvas.getByTestId("selected-node").textContent).toBe(
+      "Folder 1",
     );
-    userEvent.click(canvas.getByRole("list"));
+    await userEvent.click(canvas.getByText("File 3"));
     await wait();
-    expect(canvas.getByTestId("selected-node").textContent).toBe("none");
+    await expect(canvas.getByTestId("selected-node").textContent).toBe(
+      "Folder 1, File 3",
+    );
+    await userEvent.click(canvas.getByRole("list"));
+    await wait();
+    await expect(canvas.getByTestId("selected-node").textContent).toBe("none");
   };
 }

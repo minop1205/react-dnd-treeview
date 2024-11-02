@@ -1,6 +1,6 @@
 import React from "react";
 import { getDescendants } from "~/utils";
-import { TreeMethods, NodeModel } from "~/types";
+import type { TreeMethods, NodeModel } from "~/types";
 
 const useTreeOpenHandler = () => {
   const ref = React.useRef<TreeMethods | null>(null);
@@ -38,7 +38,7 @@ const useTreeOpenHandler = () => {
       const heightOfChildren = directChildren.map((node) =>
         droppableHeightExceedsRow(node)
           ? getHeightOfId(node.id) + ROW_HEIGHT + LIST_PADDING
-          : ROW_HEIGHT
+          : ROW_HEIGHT,
       );
       const height = heightOfChildren.reduce((a, b) => a + b, 0);
       return height;

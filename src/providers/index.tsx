@@ -1,8 +1,9 @@
-import React, { PropsWithChildren, ReactElement } from "react";
-import { TreeProvider, TreeContext } from "./TreeProvider";
+import React from "react";
 import { DragControlProvider, DragControlContext } from "./DragControlProvider";
 import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
-import { TreeProps, TreeMethods } from "~/types";
+import { TreeProvider, TreeContext } from "./TreeProvider";
+import type { PropsWithChildren, ReactElement } from "react";
+import type { TreeProps, TreeMethods } from "~/types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
