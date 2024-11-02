@@ -1,5 +1,5 @@
-import { NodeModel } from "~/types";
 import { getTreeItem } from "./getTreeItem";
+import type { NodeModel } from "~/types";
 
 describe("getTreeItem", () => {
   test("get tree item by id", () => {

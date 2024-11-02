@@ -1,10 +1,10 @@
 import { useRef } from "react";
-import { NodeModel, DragOverProps } from "~/types";
+import type { NodeModel, DragOverProps } from "~/types";
 
 export const useDragOver = (
   id: NodeModel["id"],
   isOpen: boolean,
-  dragOverHandler: (id: NodeModel["id"]) => void
+  dragOverHandler: (id: NodeModel["id"]) => void,
 ): DragOverProps => {
   const stack = useRef<number>(0);
   const timer = useRef<number>(0);

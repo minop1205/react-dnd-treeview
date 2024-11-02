@@ -105,7 +105,7 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "lint": "npx tsc --noEmit && npx eslint --ext .tsx --ext .ts --fix src/",
+    "lint": "npx tsc --noEmit && npx eslint --fix src/",
     "prepublish": "rm -rf ./dist && npm run build",
     "test": "jest",
     "storybook": "storybook dev -p 6006",

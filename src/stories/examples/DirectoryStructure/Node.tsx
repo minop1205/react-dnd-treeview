@@ -1,8 +1,8 @@
 import React from "react";
-import { NodeModel } from "~/types";
 import { getDescendants } from "~/utils";
-import NodeIcon from "./NodeIcon";
 import styles from "./DirectoryStructure.module.css";
+import NodeIcon from "./NodeIcon";
+import type { NodeModel } from "~/types";
 
 const TREE_X_OFFSET = 22;
 

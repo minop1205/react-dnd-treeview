@@ -1,6 +1,7 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { useTreeContext, useTreeDragLayer } from "./hooks";
-import { DragLayerMonitorProps } from "./types";
+import type { DragLayerMonitorProps } from "./types";
+import type { ReactElement } from "react";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",
@@ -13,7 +14,7 @@ const rootStyle: React.CSSProperties = {
 };
 
 const getItemStyles = <T,>(
-  monitorProps: DragLayerMonitorProps<T>
+  monitorProps: DragLayerMonitorProps<T>,
 ): React.CSSProperties => {
   const offset = monitorProps.clientOffset;
 

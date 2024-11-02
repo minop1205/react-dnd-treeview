@@ -1,8 +1,8 @@
 import React, { useState, createContext } from "react";
-import { NodeModel, PlaceholderState } from "~/types";
+import type { NodeModel, PlaceholderState } from "~/types";
 
 export const PlaceholderContext = createContext<PlaceholderState>(
-  {} as PlaceholderState
+  {} as PlaceholderState,
 );
 
 const initialState = {
@@ -11,18 +11,18 @@ const initialState = {
 };
 
 export const PlaceholderProvider: React.FC<{ children: React.ReactNode }> = (
-  props
+  props,
 ) => {
   const [dropTargetId, setDropTargetId] = useState<
     PlaceholderState["dropTargetId"]
   >(initialState.dropTargetId);
   const [index, setIndex] = useState<PlaceholderState["index"]>(
-    initialState.index
+    initialState.index,
   );
 
   const showPlaceholder = (
     dropTargetId: NodeModel["id"],
-    index: number
+    index: number,
   ): void => {
     setDropTargetId(dropTargetId);
     setIndex(index);

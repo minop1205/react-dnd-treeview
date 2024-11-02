@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { StoryFn } from "@storybook/react";
 import { Tree } from "~/index";
-import { StoryContext, StoryState } from "./StoryProvider";
-import type { TreeProps } from "~/types";
+import { StoryContext } from "./StoryProvider";
+import type { StoryState } from "./StoryProvider";
+import type { StoryFn } from "@storybook/react";
 import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const storyContext = useContext(StoryContext) as StoryState;

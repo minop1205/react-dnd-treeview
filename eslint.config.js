@@ -74,5 +74,15 @@ export default tseslint.config(
     },
   },
 
-  prettierPlugin
+  {
+    rules: {
+      "@typescript-eslint/consistent-type-imports": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-empty-object-type": "warn",
+      "prefer-const": "warn",
+    },
+  },
+
+  prettierPlugin,
 );

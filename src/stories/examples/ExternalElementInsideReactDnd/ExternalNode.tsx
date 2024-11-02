@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
+import Typography from "@mui/material/Typography";
 import { useDrag } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
-import Typography from "@mui/material/Typography";
-import { NodeModel } from "~/types";
-import { FileProperties } from "~/stories/types";
 import { TypeIcon } from "~/stories/examples/components/TypeIcon";
 import styles from "./ExternalNode.module.css";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel } from "~/types";
 
 type Props = {
   node: NodeModel<FileProperties>;

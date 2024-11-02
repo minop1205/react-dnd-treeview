@@ -1,22 +1,22 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { expect } from "@storybook/test";
 import { within, fireEvent, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
+import sampleData from "~/stories/assets/sample-default.json";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import {
   dragEnterAndDragOver,
   getPointerCoords,
   dragAndDrop,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import sampleData from "~/stories/assets/sample-default.json";
-import { Template } from "./Template";
 import styles from "./DisableDnd.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -62,16 +62,16 @@ if (!interactionsDisabled) {
   DisableDndStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.getByText("File 3")).toBeInTheDocument();
+    await expect(canvas.getByText("File 3")).toBeInTheDocument();
 
     // drag and drop: File 3 into Folder 1
     {
       await dragAndDrop(
         canvas.getByText("File 3"),
-        canvas.getByTestId("custom-node-1")
+        canvas.getByTestId("custom-node-1"),
       );
 
-      expect(canvas.queryByText("File 3")).toBeNull();
+      await expect(canvas.queryByText("File 3")).toBeNull();
     }
 
     // disable dnd
@@ -83,9 +83,9 @@ if (!interactionsDisabled) {
       const dropTarget = canvas.getByText("Folder 1");
       const coords = getPointerCoords(dropTarget, { x: 5, y: 5 });
 
-      fireEvent.dragStart(dragSource);
+      await fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
-      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+      await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
     }
   };
 }

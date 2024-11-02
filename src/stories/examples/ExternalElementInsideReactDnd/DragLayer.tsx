@@ -1,7 +1,7 @@
 import React from "react";
 import { useDragLayer } from "react-dnd";
-import { DragLayerMonitorProps } from "~/types";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import type { DragLayerMonitorProps } from "~/types";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",
@@ -14,7 +14,7 @@ const rootStyle: React.CSSProperties = {
 };
 
 const getItemStyles = <T,>(
-  monitorProps: DragLayerMonitorProps<T>
+  monitorProps: DragLayerMonitorProps<T>,
 ): React.CSSProperties => {
   const offset = monitorProps.clientOffset;
 

@@ -12,11 +12,11 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  SelectChangeEvent,
 } from "@mui/material";
-import { NodeModel } from "~/types";
-import { FileProperties } from "~/stories/types";
 import styles from "./AddDialog.module.css";
+import type { SelectChangeEvent } from "@mui/material";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel } from "~/types";
 
 type Props = {
   tree: NodeModel<FileProperties>[];

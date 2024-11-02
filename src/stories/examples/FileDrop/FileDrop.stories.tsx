@@ -1,18 +1,18 @@
 import React from "react";
-import { Meta } from "@storybook/react";
 import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
 import * as argTypes from "~/stories/argTypes";
+import sampleData from "~/stories/assets/sample-default.json";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import sampleData from "~/stories/assets/sample-default.json";
-import { Template } from "./Template";
 import styles from "./FileDrop.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -55,12 +55,11 @@ FileDrop.parameters = {
   },
 };
 
-if (!interactionsDisabled) {
-  FileDrop.play = async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // TODO:
-    // Testing is on hold for now
-    // because we cannot simulate drag and drop of external files.
-  };
-}
+// TODO:
+// Testing is on hold for now
+// because we cannot simulate drag and drop of external files.
+// if (!interactionsDisabled) {
+//   FileDrop.play = async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
+//   };
+// }

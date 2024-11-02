@@ -1,8 +1,8 @@
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
 export const getDescendants = <T = unknown>(
   treeData: NodeModel<T>[],
-  id: NodeModel["id"]
+  id: NodeModel["id"],
 ): NodeModel<T>[] => {
   let descendants: NodeModel<T>[] = [];
 
@@ -14,7 +14,7 @@ export const getDescendants = <T = unknown>(
 
       search(
         tree,
-        children.map((node) => node.id)
+        children.map((node) => node.id),
       );
     }
   };

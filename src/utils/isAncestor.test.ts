@@ -1,5 +1,5 @@
-import { isAncestor } from "./isAncestor";
 import treeData from "../stories/assets/sample-default.json";
+import { isAncestor } from "./isAncestor";
 
 describe("isAncestor", () => {
   test("check the parent-child structure", () => {

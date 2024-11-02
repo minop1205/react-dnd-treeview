@@ -1,5 +1,5 @@
-import { hasChildNodes } from "./hasChildNodes";
 import treeData from "../stories/assets/sample-default.json";
+import { hasChildNodes } from "./hasChildNodes";
 
 describe("hasChildNodes", () => {
   test("returns true if the child nodes exists, false otherwise", () => {

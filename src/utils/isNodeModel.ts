@@ -1,4 +1,4 @@
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
 export const isNodeModel = <T>(arg: any): arg is NodeModel<T> => {
   return (

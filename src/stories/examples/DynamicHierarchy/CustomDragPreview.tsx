@@ -1,6 +1,6 @@
 import React from "react";
-import { DragLayerMonitorProps } from "~/types";
 import styles from "./CustomDragPreview.module.css";
+import type { DragLayerMonitorProps } from "~/types";
 
 type Props = {
   monitorProps: DragLayerMonitorProps<any>;

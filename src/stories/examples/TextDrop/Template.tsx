@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StoryFn } from "@storybook/react";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree } from "~/index";
-import styles from "./TextDrop.module.css";
 import { MockText } from "./MockText";
+import styles from "./TextDrop.module.css";
+import type { StoryFn } from "@storybook/react";
 import type { FileProperties } from "~/stories/types";
 import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
@@ -13,7 +13,7 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
 
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => {
     const { dropTargetId, monitor } = options;
     const dragSource = monitor.getItem();

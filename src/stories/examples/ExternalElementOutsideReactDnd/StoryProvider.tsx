@@ -1,14 +1,10 @@
-import React, {
-  useState,
-  ReactElement,
-  createContext,
-  PropsWithChildren,
-} from "react";
+import React, { useState, createContext } from "react";
 import { NativeTypes } from "react-dnd-html5-backend";
-import type { NodeModel, TreeProps, DropOptions } from "~/types";
-import { FileProperties } from "~/stories/types";
-import { useDropHandler } from "~/stories/useDropHandler";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
+import { useDropHandler } from "~/stories/useDropHandler";
+import type { ReactElement, PropsWithChildren } from "react";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel, TreeProps, DropOptions } from "~/types";
 
 type Props = PropsWithChildren<TreeProps<FileProperties>>;
 
@@ -18,7 +14,7 @@ export type StoryState = {
   lastId: number;
   handleDrop: (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => void;
   handleAddExternalNode: () => void;
 };

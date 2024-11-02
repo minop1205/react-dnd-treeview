@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { StoryFn } from "@storybook/react";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree } from "~/index";
-import type { TreeProps, NodeModel, DropOptions } from "~/types";
-import { FileProperties } from "~/stories/types";
 import styles from "./FileDrop.module.css";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
 const Input = styled("input")({
   display: "none",
@@ -18,7 +18,7 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
 
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => {
     const { dropTargetId, monitor } = options;
     const itemType = monitor.getItemType();

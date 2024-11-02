@@ -1,6 +1,6 @@
-import { DropTargetMonitor } from "react-dnd";
 import { isDroppable } from "./isDroppable";
-import { NodeModel, TreeState, DragItem } from "~/types";
+import type { DropTargetMonitor } from "react-dnd";
+import type { NodeModel, TreeState, DragItem } from "~/types";
 
 type CompareResult = "up" | "down";
 
@@ -15,13 +15,13 @@ type CompareYCoord = (el: Element, pointerY: number) => CompareResult;
 
 type GetInnerIndex = (
   listItems: NodeListOf<Element>,
-  monitor: DropTargetMonitor
+  monitor: DropTargetMonitor,
 ) => number;
 
 type GetOuterIndex = (
   node: NodeModel,
   nodeEl: HTMLElement,
-  monitor: DropTargetMonitor
+  monitor: DropTargetMonitor,
 ) => number | null;
 
 const compareYCoord: CompareYCoord = (el, pointerY) => {
@@ -55,7 +55,7 @@ const getInnerIndex: GetInnerIndex = (listItems, monitor) => {
 const getOuterIndex: GetOuterIndex = (node, nodeEl, monitor) => {
   const parentList = nodeEl.closest('[role="list"]');
   const parentListItems = parentList?.querySelectorAll(
-    ':scope > [role="listitem"]'
+    ':scope > [role="listitem"]',
   );
 
   if (!parentListItems) {
@@ -68,7 +68,7 @@ const getOuterIndex: GetOuterIndex = (node, nodeEl, monitor) => {
 const getHoverPosition = <T>(
   el: Element,
   pointerY: number,
-  context: TreeState<T>
+  context: TreeState<T>,
 ): VerticalPosition => {
   const bbox = el.getBoundingClientRect();
   const offsetY = context.dropTargetOffset;
@@ -88,7 +88,7 @@ export const getDropTarget = <T>(
   node: NodeModel<T> | null,
   nodeEl: HTMLElement | null,
   monitor: DropTargetMonitor,
-  context: TreeState<T>
+  context: TreeState<T>,
 ): DropTarget => {
   if (!nodeEl) {
     return null;
@@ -108,7 +108,7 @@ export const getDropTarget = <T>(
   const hoverPosition = getHoverPosition(
     nodeEl,
     monitor.getClientOffset()?.y || 0,
-    context
+    context,
   );
 
   if (!list) {
