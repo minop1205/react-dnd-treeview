@@ -1,7 +1,8 @@
 import React from "react";
 import { useDragLayer } from "react-dnd";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import type { DragLayerMonitorProps } from "~/types";
+import type { FileProperties } from "~/stories/types";
+import type { DragLayerMonitorProps, DragItem } from "~/types";
 
 const rootStyle: React.CSSProperties = {
   height: "100%",
@@ -32,15 +33,19 @@ const getItemStyles = <T,>(
 };
 
 export const DragLayer: React.FC = () => {
-  const monitorProps = useDragLayer((monitor) => ({
-    item: monitor.getItem(),
-    clientOffset: monitor.getClientOffset(),
-    isDragging: monitor.isDragging(),
-  }));
+  const monitorProps = useDragLayer((monitor) => {
+    const item: DragItem<FileProperties> = monitor.getItem();
 
-  const { isDragging, clientOffset } = monitorProps;
+    return {
+      item,
+      clientOffset: monitor.getClientOffset(),
+      isDragging: monitor.isDragging(),
+    };
+  });
 
-  if (!isDragging || !clientOffset) {
+  const { item, isDragging, clientOffset } = monitorProps;
+
+  if (!item || !isDragging || !clientOffset) {
     return null;
   }
 

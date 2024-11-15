@@ -17,6 +17,9 @@ export type DragItem<T> = NodeModel<T> & {
 
 export type NativeDragItem = {
   dataTransfer: DataTransfer;
+  text?: string;
+  html?: string;
+  files?: File[];
 };
 
 export type RenderParams = {
@@ -27,8 +30,8 @@ export type RenderParams = {
   draggable: boolean;
   hasChild: boolean;
   containerRef: RefObject<HTMLElement>;
-  handleRef: RefObject<any>;
-  onToggle(): void;
+  handleRef: RefObject<HTMLDivElement>;
+  onToggle: () => void;
 };
 
 export type NodeRender<T> = (

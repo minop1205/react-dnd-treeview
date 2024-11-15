@@ -23,7 +23,7 @@ export const Node = <T,>(props: Props): ReactElement | null => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const containerRef = useRef<HTMLElement>(null);
-  const handleRef = useRef<any>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
   const item = treeContext.tree.find(
     (node) => node.id === props.id,
   ) as NodeModel<T>;

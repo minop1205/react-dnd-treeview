@@ -4,10 +4,12 @@ import { getDescendants } from "~/utils";
 import styles from "./MultipleTree.module.css";
 import { TreeView } from "./TreeView";
 import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
 import type { NodeModel, DropOptions } from "~/types";
 
 export const Template: StoryFn = () => {
-  const [treeData, setTreeData] = useState<NodeModel[]>(sampleData);
+  const [treeData, setTreeData] =
+    useState<NodeModel<FileProperties>[]>(sampleData);
   const handleDrop = (
     newTree: NodeModel[],
     { dragSourceId, dropTargetId }: DropOptions,

@@ -11,7 +11,7 @@ type Props = {
   depth: number;
   isOpen: boolean;
   testIdPrefix?: string;
-  handleRef: RefObject<any>;
+  handleRef: RefObject<HTMLDivElement>;
   onToggle: (id: NodeModel["id"]) => void;
 };
 

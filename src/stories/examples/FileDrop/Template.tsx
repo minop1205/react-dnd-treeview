@@ -6,7 +6,12 @@ import { Tree } from "~/index";
 import styles from "./FileDrop.module.css";
 import type { StoryFn } from "@storybook/react";
 import type { FileProperties } from "~/stories/types";
-import type { TreeProps, NodeModel, DropOptions } from "~/types";
+import type {
+  TreeProps,
+  NodeModel,
+  DropOptions,
+  NativeDragItem,
+} from "~/types";
 
 const Input = styled("input")({
   display: "none",
@@ -24,7 +29,7 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
     const itemType = monitor.getItemType();
 
     if (itemType === NativeTypes.FILE) {
-      const files: File[] = monitor.getItem().files;
+      const files: File[] = (monitor.getItem() as NativeDragItem).files ?? [];
       const nodes: NodeModel<FileProperties>[] = files.map((file, index) => ({
         id: lastId + index,
         parent: dropTargetId,

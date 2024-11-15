@@ -1,5 +1,5 @@
 import React from "react";
-import { within } from "@storybook/test";
+// import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
@@ -7,7 +7,7 @@ import * as argTypes from "~/stories/argTypes";
 import sampleData from "~/stories/assets/sample-default.json";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
+// import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import styles from "./FileDrop.module.css";
 import { Template } from "./Template";
 import type { Meta } from "@storybook/react";

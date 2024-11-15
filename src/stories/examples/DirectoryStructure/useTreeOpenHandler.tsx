@@ -20,7 +20,11 @@ const useTreeOpenHandler = () => {
     });
   };
   const toggle = (id: number | string) => {
-    openIds.includes(id) ? close(id) : open(id);
+    if (openIds.includes(id)) {
+      close(id);
+    } else {
+      open(id);
+    }
   };
 
   const getPipeHeight = (id: number | string, treeData: NodeModel[]) => {

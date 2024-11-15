@@ -5,7 +5,12 @@ import { MockText } from "./MockText";
 import styles from "./TextDrop.module.css";
 import type { StoryFn } from "@storybook/react";
 import type { FileProperties } from "~/stories/types";
-import type { TreeProps, NodeModel, DropOptions } from "~/types";
+import type {
+  TreeProps,
+  NodeModel,
+  DropOptions,
+  NativeDragItem,
+} from "~/types";
 
 export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
@@ -16,47 +21,54 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
     options: DropOptions<FileProperties>,
   ) => {
     const { dropTargetId, monitor } = options;
-    const dragSource = monitor.getItem();
+    const dragSource = monitor.getItem() as
+      | NodeModel<FileProperties>
+      | NativeDragItem;
     const itemType = monitor.getItemType();
     let mergedTree = [...newTree];
 
-    if (itemType === NativeTypes.TEXT) {
-      const text = dragSource.text as string;
+    if ("dataTransfer" in dragSource) {
+      if (itemType === NativeTypes.TEXT && dragSource.text !== undefined) {
+        const text = dragSource.text;
 
-      mergedTree = [
-        ...newTree,
-        {
-          id: lastId,
-          parent: dropTargetId,
-          text,
-          data: {
-            fileSize: "1KB",
-            fileType: "text",
+        mergedTree = [
+          ...newTree,
+          {
+            id: lastId,
+            parent: dropTargetId,
+            text,
+            data: {
+              fileSize: "1KB",
+              fileType: "text",
+            },
           },
-        },
-      ];
+        ];
 
-      setLastId(lastId + 1);
-    } else if (itemType === NativeTypes.HTML) {
-      const html = dragSource.html as string;
-      const tempEl = document.createElement("div");
-      tempEl.innerHTML = html;
-      const text = tempEl.textContent as string;
+        setLastId(lastId + 1);
+      } else if (
+        itemType === NativeTypes.HTML &&
+        dragSource.html !== undefined
+      ) {
+        const html = dragSource.html;
+        const tempEl = document.createElement("div");
+        tempEl.innerHTML = html;
+        const text = tempEl.textContent as string;
 
-      mergedTree = [
-        ...newTree,
-        {
-          id: lastId,
-          parent: dropTargetId,
-          text,
-          data: {
-            fileSize: "1KB",
-            fileType: "text",
+        mergedTree = [
+          ...newTree,
+          {
+            id: lastId,
+            parent: dropTargetId,
+            text,
+            data: {
+              fileSize: "1KB",
+              fileType: "text",
+            },
           },
-        },
-      ];
+        ];
 
-      setLastId(lastId + 1);
+        setLastId(lastId + 1);
+      }
     }
 
     setTree(mergedTree);

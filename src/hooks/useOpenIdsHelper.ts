@@ -34,11 +34,12 @@ export const useOpenIdsHelper = (
       return initialOpen;
     }
     return [];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialOpen]);
 
   const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
 
-  useEffect(() => setOpenIds(initialOpenIds), [initialOpen]);
+  useEffect(() => setOpenIds(initialOpenIds), [initialOpenIds]);
 
   const handleToggle: ToggleHandler = (targetId: NodeModel["id"], callback) => {
     const newOpenIds = openIds.includes(targetId)

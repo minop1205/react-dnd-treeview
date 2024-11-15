@@ -4,7 +4,12 @@ import externalNodesJson from "~/stories/assets/external-nodes.json";
 import { useDropHandler } from "~/stories/useDropHandler";
 import type { ReactElement, PropsWithChildren } from "react";
 import type { FileProperties } from "~/stories/types";
-import type { NodeModel, TreeProps, DropOptions } from "~/types";
+import type {
+  NodeModel,
+  TreeProps,
+  DropOptions,
+  NativeDragItem,
+} from "~/types";
 
 type Props = PropsWithChildren<TreeProps<FileProperties>>;
 
@@ -32,7 +37,7 @@ export const StoryProvider = (props: Props): ReactElement => {
     const itemType = monitor.getItemType();
 
     if (itemType === NativeTypes.TEXT) {
-      const nodeJson = monitor.getItem().text;
+      const nodeJson = (monitor.getItem() as NativeDragItem).text ?? "";
       const node = JSON.parse(nodeJson) as NodeModel<FileProperties>;
 
       node.parent = dropTargetId;

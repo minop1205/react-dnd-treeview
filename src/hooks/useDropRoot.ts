@@ -5,7 +5,7 @@ import { useTreeContext } from "~/hooks";
 import { PlaceholderContext } from "~/providers";
 import { getDropTarget, isDroppable, isNodeModel } from "~/utils";
 import type { DragElementWrapper } from "react-dnd";
-import type { NodeModel } from "~/types";
+import type { NodeModel, DragItem, NativeDragItem } from "~/types";
 
 export const useDropRoot = <T>(
   ref: React.RefObject<HTMLElement>,
@@ -14,7 +14,7 @@ export const useDropRoot = <T>(
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: [ItemTypes.TREE_ITEM, ...treeContext.extraAcceptTypes],
-    drop: (dragItem: any, monitor) => {
+    drop: (dragItem: DragItem<T> | NativeDragItem, monitor) => {
       const { rootId, onDrop } = treeContext;
       const { dropTargetId, index } = placeholderContext;
 
@@ -24,7 +24,7 @@ export const useDropRoot = <T>(
         index !== undefined
       ) {
         // If the drag source is outside the react-dnd,
-        // a different object is passed than the NodeModel.
+        // NativeDragItem is passed instead of DragItem.
         onDrop(isNodeModel<T>(dragItem) ? dragItem : null, rootId, index);
       }
 

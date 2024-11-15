@@ -4,7 +4,7 @@ import type { DragElementWrapper, DragSourceOptions } from "react-dnd";
 
 export const useDragHandle = (
   containerRef: RefObject<HTMLElement>,
-  handleRef: RefObject<any>,
+  handleRef: RefObject<HTMLDivElement>,
   drag: DragElementWrapper<DragSourceOptions>,
 ) => {
   if (handleRef.current) {
@@ -19,5 +19,6 @@ export const useDragHandle = (
     } else {
       drag(containerRef);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleRef.current]);
 };

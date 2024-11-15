@@ -51,11 +51,14 @@ export function AnimateHeight(props: AnimateHeightProps) {
     }
   }, [isVisible]);
 
+  const isHeightZero = height === 0;
+
   useEffect(() => {
     if (isVisibleChildren) {
       setIsVisibleContainer(true);
     }
-  }, [height]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHeightZero]);
 
   return (
     <motion.div

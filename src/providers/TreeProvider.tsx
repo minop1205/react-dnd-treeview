@@ -116,6 +116,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
           canDropCallback(props.tree, {
             dragSourceId: dragSourceId ?? undefined,
             dropTargetId,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             dragSource: monitor.getItem(),
             dropTarget: getTreeItem(props.tree, dropTargetId),
             monitor,

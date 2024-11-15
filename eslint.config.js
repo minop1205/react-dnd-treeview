@@ -27,7 +27,15 @@ export default tseslint.config(
 
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
-  reactPlugin.configs.flat.recommended,
+
+  {
+    ...reactPlugin.configs.flat.recommended,
+    settings: {
+      react: {
+        version: "detect",
+      }
+    }
+  },
 
   // eslint-plugin-react-hooks does not yet support FlatConfig,
   // so configure it separately.
