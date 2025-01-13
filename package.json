@@ -97,9 +97,9 @@
     "typescript-transform-paths": "^3.5.3"
   },
   "peerDependencies": {
-    "react": "17.x || 18.x",
+    "react": "18.x || 19.x",
     "react-dnd": "15.x || 16.x",
-    "react-dom": "17.x || 18.x"
+    "react-dom": "18.x || 19.x"
   },
   "scripts": {
     "build": "rollup -c",
