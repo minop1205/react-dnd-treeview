@@ -1,9 +1,9 @@
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
 export const getDestIndex = (
   tree: NodeModel[],
   dropTargetId: NodeModel["id"],
-  index: number
+  index: number,
 ) => {
   if (index === 0) {
     return 0;

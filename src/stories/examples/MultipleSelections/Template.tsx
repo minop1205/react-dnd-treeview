@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
 import { Tree } from "~/Tree";
-import { TreeProps, NodeModel } from "~/types";
 import { useDropHandler } from "~/stories/useDropHandler";
-import { FileProperties } from "~/stories/types";
 import { CustomNode } from "./CustomNode";
 import styles from "./MultipleSelections.module.css";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, NodeModel } from "~/types";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, handleDrop] = useDropHandler<FileProperties>(args);
   const [selectedNodes, setSelectedNodes] = useState<NodeModel[]>([]);
 
@@ -45,7 +45,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
         onDrop={handleDrop}
         render={(
           node: NodeModel<FileProperties>,
-          { depth, isOpen, onToggle }
+          { depth, isOpen, onToggle },
         ) => (
           <CustomNode
             node={node}

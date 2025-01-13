@@ -5,7 +5,7 @@
   height: 100%;
 }
 
-.fileChooser {
+.textareaWrapper {
   padding: 32px 32px 0;
 }
 
@@ -22,4 +22,12 @@
 
 .dropTarget {
   background-color: #e8f0fe;
+}
+
+.textarea {
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  padding: 1em;
+  height: 8em;
+  width: 16em;
 }

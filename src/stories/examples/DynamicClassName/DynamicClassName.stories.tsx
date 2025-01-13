@@ -1,18 +1,17 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "./CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample-default.json";
+import { CustomDragPreview } from "./CustomDragPreview";
 import styles from "./DynamicClassName.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -36,7 +35,7 @@ DynamicClassNameStory.args = {
     root: styles.treeRoot,
     draggingSource: styles.draggingSource,
     dropTarget: styles.dropTarget,
-    listItem: (node, params) => {
+    listItem: (node) => {
       return node.data?.fileType ? styles[node.data.fileType] : "";
     },
   },
@@ -52,20 +51,24 @@ DynamicClassNameStory.args = {
 DynamicClassNameStory.storyName = "Dynamic class name";
 
 DynamicClassNameStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "dynamic-class-name-js-vskw43",
-      tsId: "dynamic-class-name-ts-thrng9",
-    }),
+  csb: {
+    jsId: "dynamic-class-name-js-vskw43",
+    tsId: "dynamic-class-name-ts-thrng9",
   },
 };
 
 if (!interactionsDisabled) {
   DynamicClassNameStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText("File 1-1")).toHaveStyle({ color: "#1b5e20" });
-    expect(canvas.getByText("File 1-2")).toHaveStyle({ color: "#01579b" });
-    expect(canvas.getByText("File 2-1-1")).toHaveStyle({ color: "#b71c1c" });
-    expect(canvas.getByText("File 3")).toHaveStyle({ color: "#b71c1c" });
+    await expect(canvas.getByText("File 1-1")).toHaveStyle({
+      color: "#1b5e20",
+    });
+    await expect(canvas.getByText("File 1-2")).toHaveStyle({
+      color: "#01579b",
+    });
+    await expect(canvas.getByText("File 2-1-1")).toHaveStyle({
+      color: "#b71c1c",
+    });
+    await expect(canvas.getByText("File 3")).toHaveStyle({ color: "#b71c1c" });
   };
 }

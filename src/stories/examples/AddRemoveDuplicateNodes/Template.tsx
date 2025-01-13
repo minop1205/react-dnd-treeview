@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Story } from "@storybook/react";
-import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
 import { Tree } from "~/Tree";
 import { getDescendants } from "~/utils";
-import { TreeProps, NodeModel, DropOptions } from "~/types";
-import { FileProperties } from "~/stories/types";
-import { CustomNode } from "./CustomNode";
 import { AddDialog } from "./AddDialog";
 import styles from "./AddRemoveDuplicateNodes.module.css";
+import { CustomNode } from "./CustomNode";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
 const getLastId = (treeData: NodeModel[]) => {
   const reversedArray = [...treeData].sort((a, b) => {
@@ -28,12 +28,12 @@ const getLastId = (treeData: NodeModel[]) => {
   return 0;
 };
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, setTree] = useState<NodeModel<FileProperties>[]>(args.tree);
   const [open, setOpen] = useState<boolean>(false);
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => {
     args.onDrop(newTree, options);
     setTree(newTree);

@@ -1,9 +1,10 @@
-import React, { useRef, PropsWithChildren, ReactElement } from "react";
+import React, { useRef } from "react";
 import { Node } from "./Node";
 import { Placeholder } from "./Placeholder";
-import { NodeModel } from "./types";
 import { useTreeContext, useDropRoot, useContainerClassName } from "./hooks";
 import { compareItems, isDroppable } from "./utils";
+import type { NodeModel } from "./types";
+import type { PropsWithChildren, ReactElement } from "react";
 
 type Props = PropsWithChildren<{
   parentId: NodeModel["id"];

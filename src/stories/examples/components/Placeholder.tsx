@@ -1,6 +1,6 @@
 import React from "react";
-import { NodeModel } from "~/types";
 import styles from "./Placeholder.module.css";
+import type { NodeModel } from "~/types";
 
 type Props = {
   node: NodeModel;

@@ -5,7 +5,9 @@ import { DragControlContext } from "~/providers";
  * This is a hook to allow text selection by mouse in the text input area in a node.
  * Temporarily disables node dragging while the pointer is over the text input area.
  */
-export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
+export const useDragControl = (
+  ref: React.RefObject<HTMLElement | null>,
+): void => {
   const dragControlContext = useContext(DragControlContext);
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export const useDragControl = (ref: React.RefObject<HTMLElement>): void => {
   useEffect(() => {
     ref.current?.setAttribute(
       "draggable",
-      dragControlContext.isLock ? "false" : "true"
+      dragControlContext.isLock ? "false" : "true",
     );
   }, [ref, dragControlContext.isLock]);
 };

@@ -1,18 +1,17 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import styles from "./OpenAllParentNodesInitially.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -49,21 +48,19 @@ OpenAllParentNodesInitially.args = {
 OpenAllParentNodesInitially.storyName = "Open all parent nodes initially";
 
 OpenAllParentNodesInitially.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "open-all-parent-nodes-initially-js-xowqs7",
-      tsId: "open-all-parent-nodes-initially-ts-vdm3no",
-    }),
+  csb: {
+    jsId: "open-all-parent-nodes-initially-js-xowqs7",
+    tsId: "open-all-parent-nodes-initially-ts-vdm3no",
   },
 };
 
 if (!interactionsDisabled) {
-  OpenAllParentNodesInitially.play = ({ canvasElement }) => {
+  OpenAllParentNodesInitially.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.getByText("File 1-1")).toBeInTheDocument();
-    expect(canvas.getByText("File 1-2")).toBeInTheDocument();
-    expect(canvas.getByText("Folder 2-1")).toBeInTheDocument();
-    expect(canvas.getByText("File 2-1-1")).toBeInTheDocument();
+    await expect(canvas.getByText("File 1-1")).toBeInTheDocument();
+    await expect(canvas.getByText("File 1-2")).toBeInTheDocument();
+    await expect(canvas.getByText("Folder 2-1")).toBeInTheDocument();
+    await expect(canvas.getByText("File 2-1-1")).toBeInTheDocument();
   };
 }

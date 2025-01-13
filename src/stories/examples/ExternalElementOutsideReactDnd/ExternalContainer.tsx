@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { StoryContext, StoryState } from "./StoryProvider";
-import { ExternalNode } from "./ExternalNode";
+import { Button } from "@mui/material";
 import styles from "./ExternalElementOutsideReactDnd.module.css";
+import { ExternalNode } from "./ExternalNode";
+import { StoryContext } from "./StoryProvider";
+import type { StoryState } from "./StoryProvider";
 
-export const ExternalContainer: React.FC = (props) => {
+export const ExternalContainer: React.FC = () => {
   const storyContext = useContext(StoryContext) as StoryState;
   const { externalNodes, handleAddExternalNode } = storyContext;
 

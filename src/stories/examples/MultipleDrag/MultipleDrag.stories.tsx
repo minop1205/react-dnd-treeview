@@ -1,27 +1,20 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent, userEvent } from "@storybook/testing-library";
-import { Info } from "@mui/icons-material";
+import { expect } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/sample-default.json";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
   getPointerCoords,
-  assertElementCoords,
-  wait,
-  dragAndDrop,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { Template } from "./Template";
-import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./MultipleDrag.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -66,11 +59,9 @@ MultipleDragStory.args = {
 MultipleDragStory.storyName = "Multiple drag";
 
 MultipleDragStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "multiple-drag-js-m3ut0u",
-      tsId: "multiple-drag-ts-nf0m3k",
-    }),
+  csb: {
+    jsId: "multiple-drag-js-m3ut0u",
+    tsId: "multiple-drag-ts-nf0m3k",
   },
 };
 
@@ -90,17 +81,16 @@ if (!interactionsDisabled) {
       await fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
 
-      expect(canvas.getByTestId("multiple-drag-preview")).toBeInTheDocument();
+      await expect(
+        canvas.getByTestId("multiple-drag-preview"),
+      ).toBeInTheDocument();
       await fireEvent.drop(dropTarget, coords);
       await dragLeaveAndDragEnd(dragSource, dropTarget);
-
-      expect(canvas.queryByText("Folder 2")).toBeNull();
-      expect(canvas.queryByText("File 3")).toBeNull();
-
+      await expect(canvas.queryByText("Folder 2")).toBeNull();
+      await expect(canvas.queryByText("File 3")).toBeNull();
       await fireEvent.click(canvas.getByTestId("arrow-right-icon-1"));
-
-      expect(await canvas.findByText("Folder 2")).toBeInTheDocument();
-      expect(await canvas.findByText("File 3")).toBeInTheDocument();
+      await expect(await canvas.findByText("Folder 2")).toBeInTheDocument();
+      await expect(await canvas.findByText("File 3")).toBeInTheDocument();
     }
   };
 }

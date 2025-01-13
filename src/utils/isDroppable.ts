@@ -1,11 +1,11 @@
 import { isAncestor } from "./isAncestor";
-import { NodeModel, NativeDragItem, TreeState } from "~/types";
 import { isNodeModel } from "./isNodeModel";
+import type { NodeModel, NativeDragItem, TreeState } from "~/types";
 
 export const isDroppable = <T>(
   dragSource: NodeModel<T> | NativeDragItem | null,
   dropTargetId: NodeModel["id"],
-  treeContext: TreeState<T>
+  treeContext: TreeState<T>,
 ): boolean => {
   const { tree, rootId, canDrop } = treeContext;
 

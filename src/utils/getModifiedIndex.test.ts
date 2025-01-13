@@ -1,5 +1,5 @@
-import { getModifiedIndex } from "./getModifiedIndex";
 import treeData from "../stories/assets/sample-default.json";
+import { getModifiedIndex } from "./getModifiedIndex";
 
 describe("getModifiedIndex", () => {
   test("check modified indexes", () => {

@@ -1,18 +1,17 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { FileProperties } from "~/stories/types";
-import { wait, toggleNode } from "~/stories/examples/helpers";
 import sampleData from "~/stories/assets/sample-default.json";
-import { Template } from "./Template";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { wait, toggleNode } from "~/stories/examples/helpers";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import styles from "./EditableNodes.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -45,11 +44,9 @@ EditableNodesStory.args = {
 EditableNodesStory.storyName = "Editable nodes";
 
 EditableNodesStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "editable-js-gdszw4",
-      tsId: "editable-ts-4v1034",
-    }),
+  csb: {
+    jsId: "editable-js-gdszw4",
+    tsId: "editable-ts-4v1034",
   },
 };
 
@@ -62,15 +59,16 @@ if (!interactionsDisabled) {
     await toggleNode(await canvas.findByTestId("arrow-right-icon-5"));
 
     // open text field of File2-1-1
-    userEvent.click(await canvas.findByTestId("btn-edit-6"));
+    await userEvent.click(await canvas.findByTestId("btn-edit-6"));
 
     // hover on text field
-    userEvent.hover(await canvas.findByTestId("input-6"));
+    await userEvent.hover(await canvas.findByTestId("input-6"));
     await wait();
 
     // all nodes will be undraggable when hover on text field in the node
-    (await canvas.findAllByRole("listitem")).forEach((node) => {
-      expect(node.draggable).toBe(false);
-    });
+    const nodes = await canvas.findAllByRole("listitem");
+    for (const node of nodes) {
+      await expect(node.draggable).toBe(false);
+    }
   };
 }

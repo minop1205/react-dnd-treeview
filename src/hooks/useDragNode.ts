@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import {
-  useDrag,
+import { useDrag } from "react-dnd";
+import { ItemTypes } from "~/ItemTypes";
+import { useTreeContext } from "~/hooks";
+import type {
   DragElementWrapper,
   DragSourceOptions,
   DragPreviewOptions,
   ConnectDragSource,
   ConnectDragPreview,
 } from "react-dnd";
-import { ItemTypes } from "~/ItemTypes";
-import { NodeModel, DragItem, DragSourceElement } from "~/types";
-import { useTreeContext } from "~/hooks";
+import type { NodeModel, DragItem, DragSourceElement } from "~/types";
 
 let dragSourceElement: DragSourceElement = null;
 
@@ -30,11 +30,11 @@ const handleTouchStart = (e: TouchEvent) => register(e);
 
 export const useDragNode = <T>(
   item: NodeModel<T>,
-  ref: React.RefObject<HTMLElement>
+  ref: React.RefObject<HTMLElement | null>,
 ): [
   boolean,
   DragElementWrapper<DragSourceOptions>,
-  DragElementWrapper<DragPreviewOptions>
+  DragElementWrapper<DragPreviewOptions>,
 ] => {
   const treeContext = useTreeContext<T>();
 
@@ -54,7 +54,7 @@ export const useDragNode = <T>(
   const [{ isDragging }, drag, preview]: [
     { isDragging: boolean },
     ConnectDragSource,
-    ConnectDragPreview
+    ConnectDragPreview,
   ] = useDrag({
     type: ItemTypes.TREE_ITEM,
     item: (monitor) => {

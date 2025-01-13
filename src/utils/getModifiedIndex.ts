@@ -9,7 +9,7 @@ export const getModifiedIndex = (
   tree: NodeModel[],
   dragSourceId: NodeModel["id"],
   dropTargetId: NodeModel["id"],
-  index: number
+  index: number,
 ): [number, number] => {
   const srcIndex = getSrcIndex(tree, dragSourceId);
   let destIndex = getDestIndex(tree, dropTargetId, index);

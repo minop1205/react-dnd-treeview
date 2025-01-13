@@ -1,10 +1,10 @@
-import { fireEvent } from "@storybook/testing-library";
+import { fireEvent } from "@storybook/test";
 
-export const dragLeaveAndDragEnd = (
+export const dragLeaveAndDragEnd = async (
   dragSource: Element,
-  dropTarget: Element
-): void => {
-  fireEvent.dragLeave(dropTarget);
-  fireEvent.dragEnd(dragSource);
-  fireEvent.dragEnd(window);
+  dropTarget: Element,
+) => {
+  await fireEvent.dragLeave(dropTarget);
+  await fireEvent.dragEnd(dragSource);
+  await fireEvent.dragEnd(window);
 };

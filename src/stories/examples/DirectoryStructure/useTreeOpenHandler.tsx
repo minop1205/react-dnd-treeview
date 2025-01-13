@@ -1,6 +1,6 @@
 import React from "react";
 import { getDescendants } from "~/utils";
-import { TreeMethods, NodeModel } from "~/types";
+import type { TreeMethods, NodeModel } from "~/types";
 
 const useTreeOpenHandler = () => {
   const ref = React.useRef<TreeMethods | null>(null);
@@ -20,7 +20,11 @@ const useTreeOpenHandler = () => {
     });
   };
   const toggle = (id: number | string) => {
-    openIds.includes(id) ? close(id) : open(id);
+    if (openIds.includes(id)) {
+      close(id);
+    } else {
+      open(id);
+    }
   };
 
   const getPipeHeight = (id: number | string, treeData: NodeModel[]) => {
@@ -29,18 +33,24 @@ const useTreeOpenHandler = () => {
     const LIST_PADDING = 5;
 
     const droppableHeightExceedsRow = (node: NodeModel) =>
-      node?.droppable && openIds.includes(node.id) && treeData.filter((n) => n.parent === node.id).length > 0;
+      node?.droppable &&
+      openIds.includes(node.id) &&
+      treeData.filter((n) => n.parent === node.id).length > 0;
 
     const getHeightOfId = (id: number | string): number => {
       const directChildren = treeData.filter((node) => node.parent === id);
       const heightOfChildren = directChildren.map((node) =>
-        droppableHeightExceedsRow(node) ? getHeightOfId(node.id) + ROW_HEIGHT + LIST_PADDING : ROW_HEIGHT
+        droppableHeightExceedsRow(node)
+          ? getHeightOfId(node.id) + ROW_HEIGHT + LIST_PADDING
+          : ROW_HEIGHT,
       );
       const height = heightOfChildren.reduce((a, b) => a + b, 0);
       return height;
     };
 
-    const lastChild = treeData.filter((node) => node.parent === id).reverse()[0];
+    const lastChild = treeData
+      .filter((node) => node.parent === id)
+      .reverse()[0];
     if (droppableHeightExceedsRow(lastChild)) {
       return getHeightOfId(id) - getHeightOfId(lastChild.id) - LIST_PADDING;
     }

@@ -1,20 +1,21 @@
 import { useContext } from "react";
-import { useDrop, DragElementWrapper } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { ItemTypes } from "~/ItemTypes";
-import { PlaceholderContext } from "~/providers";
-import { NodeModel } from "~/types";
-import { isDroppable, getDropTarget, isNodeModel } from "~/utils";
 import { useTreeContext } from "~/hooks";
+import { PlaceholderContext } from "~/providers";
+import { isDroppable, getDropTarget, isNodeModel } from "~/utils";
+import type { DragElementWrapper } from "react-dnd";
+import type { NodeModel, DragItem, NativeDragItem } from "~/types";
 
 export const useDropNode = <T>(
   item: NodeModel<T>,
-  ref: React.RefObject<HTMLElement>
+  ref: React.RefObject<HTMLElement | null>,
 ): [boolean, NodeModel<T>, DragElementWrapper<HTMLElement>] => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);
   const [{ isOver, dragSource }, drop] = useDrop({
     accept: [ItemTypes.TREE_ITEM, ...treeContext.extraAcceptTypes],
-    drop: (dragItem: any, monitor) => {
+    drop: (dragItem: DragItem<T> | NativeDragItem, monitor) => {
       const { dropTargetId, index } = placeholderContext;
 
       if (
@@ -23,11 +24,11 @@ export const useDropNode = <T>(
         index !== undefined
       ) {
         // If the drag source is outside the react-dnd,
-        // a different object is passed than the NodeModel.
+        // NativeDragItem is passed instead of DragItem.
         treeContext.onDrop(
           isNodeModel<T>(dragItem) ? dragItem : null,
           dropTargetId,
-          index
+          index,
         );
       }
 
@@ -39,7 +40,7 @@ export const useDropNode = <T>(
           item,
           ref.current,
           monitor,
-          treeContext
+          treeContext,
         );
 
         if (dropTarget === null) {
@@ -60,7 +61,7 @@ export const useDropNode = <T>(
           item,
           ref.current,
           monitor,
-          treeContext
+          treeContext,
         );
 
         if (

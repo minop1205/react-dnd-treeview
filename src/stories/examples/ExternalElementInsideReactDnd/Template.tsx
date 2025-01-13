@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { Story } from "@storybook/react";
+import { Button } from "@mui/material";
 import { Tree } from "~/index";
-import { TreeProps, NodeModel, DropOptions } from "~/types";
-import { useDropHandler } from "~/stories/useDropHandler";
-import { FileProperties } from "~/stories/types";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
-import { ExternalNode } from "./ExternalNode";
+import { useDropHandler } from "~/stories/useDropHandler";
 import { DragLayer } from "./DragLayer";
 import styles from "./ExternalElementInsideReactDnd.module.css";
+import { ExternalNode } from "./ExternalNode";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, NodeModel, DropOptions } from "~/types";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [tree, updateTree] = useDropHandler<FileProperties>(args);
   const [externalNodes, setExternalNodes] =
     useState<NodeModel<FileProperties>[]>(externalNodesJson);
@@ -19,13 +19,13 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
 
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => {
     const { dragSourceId } = options;
 
     updateTree(newTree, options);
     setExternalNodes(
-      externalNodes.filter((exnode) => exnode.id !== dragSourceId)
+      externalNodes.filter((exnode) => exnode.id !== dragSourceId),
     );
   };
 

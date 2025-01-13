@@ -1,10 +1,6 @@
-import React, {
-  useImperativeHandle,
-  PropsWithChildren,
-  ReactElement,
-  createContext,
-} from "react";
+import React, { useImperativeHandle, createContext } from "react";
 import { useDragDropManager } from "react-dnd";
+import { useOpenIdsHelper } from "~/hooks";
 import {
   mutateTree,
   mutateTreeWithIndex,
@@ -12,8 +8,8 @@ import {
   getDestIndex,
   getModifiedIndex,
 } from "~/utils";
-import { useOpenIdsHelper } from "~/hooks";
-import { TreeState, TreeProps, TreeMethods, DropOptions } from "~/types";
+import type { PropsWithChildren, ReactElement } from "react";
+import type { TreeState, TreeProps, TreeMethods, DropOptions } from "~/types";
 
 type Props<T> = PropsWithChildren<
   TreeProps<T> & {
@@ -66,7 +62,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
           options.destinationIndex = getDestIndex(
             props.tree,
             dropTargetId,
-            placeholderIndex
+            placeholderIndex,
           );
 
           options.relativeIndex = placeholderIndex;
@@ -95,7 +91,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
             tree,
             dragSource.id,
             dropTargetId,
-            placeholderIndex
+            placeholderIndex,
           );
           options.destinationIndex = destIndex;
           options.relativeIndex = placeholderIndex;
@@ -104,9 +100,9 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
               tree,
               dragSource.id,
               dropTargetId,
-              placeholderIndex
+              placeholderIndex,
             ),
-            options
+            options,
           );
 
           return;
@@ -120,6 +116,7 @@ export const TreeProvider = <T,>(props: Props<T>): ReactElement => {
           canDropCallback(props.tree, {
             dragSourceId: dragSourceId ?? undefined,
             dropTargetId,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             dragSource: monitor.getItem(),
             dropTarget: getTreeItem(props.tree, dropTargetId),
             monitor,

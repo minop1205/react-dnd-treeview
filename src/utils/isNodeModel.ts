@@ -1,7 +1,11 @@
-import { NodeModel } from "~/types";
+import type { NodeModel } from "~/types";
 
-export const isNodeModel = <T>(arg: any): arg is NodeModel<T> => {
+export const isNodeModel = <T>(arg: unknown): arg is NodeModel<T> => {
   return (
-    arg.id !== undefined && arg.parent !== undefined && arg.text !== undefined
+    typeof arg === "object" &&
+    arg !== null &&
+    "id" in arg &&
+    "parent" in arg &&
+    "text" in arg
   );
 };

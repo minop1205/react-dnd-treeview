@@ -1,20 +1,19 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
-import { toggleNode, wait, dragAndDrop } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
-import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import sampleData from "~/stories/assets/sample-default.json";
-import { Template } from "./Template";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { toggleNode, wait, dragAndDrop } from "~/stories/examples/helpers";
+import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
 import styles from "./ExternalElementInsideReactDnd.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -51,11 +50,9 @@ ExternalElementInsideReactDnd.args = {
 ExternalElementInsideReactDnd.storyName = "External element (inside react-dnd)";
 
 ExternalElementInsideReactDnd.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "external-element-inside-react-dnd-js-lf66dj",
-      tsId: "external-element-inside-react-dnd-ts-sktogh",
-    }),
+  csb: {
+    jsId: "external-element-inside-react-dnd-js-lf66dj",
+    tsId: "external-element-inside-react-dnd-ts-sktogh",
   },
 };
 
@@ -63,7 +60,7 @@ if (!interactionsDisabled) {
   ExternalElementInsideReactDnd.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
     // drag and drop: External node 1 into root
     {
@@ -72,9 +69,8 @@ if (!interactionsDisabled) {
 
       await dragAndDrop(dragSource, dropTarget);
       await wait();
-
-      expect(canvas.getByTestId("custom-node-101")).toBeInTheDocument();
-      expect(canvas.queryByTestId("external-node-101")).toBeNull();
+      await expect(canvas.getByTestId("custom-node-101")).toBeInTheDocument();
+      await expect(canvas.queryByTestId("external-node-101")).toBeNull();
     }
 
     // drag and drop: External node 2 into Folder 1
@@ -85,9 +81,8 @@ if (!interactionsDisabled) {
       await dragAndDrop(dragSource, dropTarget);
       await wait();
       await toggleNode(canvas.getByTestId("arrow-right-icon-1"));
-
-      expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
-      expect(canvas.queryByTestId("external-node-102")).toBeNull();
+      await expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
+      await expect(canvas.queryByTestId("external-node-102")).toBeNull();
     }
 
     // drag and drop: External node 2 into Folder 2
@@ -97,12 +92,9 @@ if (!interactionsDisabled) {
 
       await dragAndDrop(dragSource, dropTarget);
       await wait();
-
-      expect(canvas.queryByTestId("external-node-102")).toBeNull();
-
+      await expect(canvas.queryByTestId("external-node-102")).toBeNull();
       await toggleNode(canvas.getByTestId("arrow-right-icon-4"));
-
-      expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
+      await expect(canvas.getByTestId("custom-node-102")).toBeInTheDocument();
     }
   };
 }

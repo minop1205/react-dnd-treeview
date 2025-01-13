@@ -10,7 +10,7 @@ describe("isNodeModel", () => {
         text: "foo",
         droppable: true,
         data: {},
-      })
+      }),
     ).toBe(true);
   });
 

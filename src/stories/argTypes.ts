@@ -1,18 +1,21 @@
-import { CustomArgType } from "./types";
+import type { ArgTypes } from "storybook/internal/types";
 
-export const tree: CustomArgType = {
+type ArgType = ArgTypes[string];
+
+export const tree: ArgType = {
   name: "tree",
-  type: { required: true },
   description:
     "The data representing the tree structure. An array of node data.",
   table: {
     type: { summary: "array" },
   },
+  control: {
+    type: "object",
+  },
 };
 
-export const rootId: CustomArgType = {
+export const rootId: ArgType = {
   name: "rootId",
-  type: { required: true },
   description:
     "The id of the root node. It is the parent id of the shallowest node displayed in the tree view.",
   table: {
@@ -23,16 +26,20 @@ export const rootId: CustomArgType = {
   },
 };
 
-export const extraAcceptTypes: CustomArgType = {
+export const extraAcceptTypes: ArgType = {
   name: "extraAcceptTypes",
   description:
     "If allowing drop from outside the tree, the [drag type](https://react-dnd.github.io/react-dnd/docs/api/use-drag#specification-object-members) of the drag source.",
   table: {
     type: { summary: "array" },
+    defaultValue: { summary: "undefined" },
+  },
+  control: {
+    type: "object",
   },
 };
 
-export const classes: CustomArgType = {
+export const classes: ArgType = {
   name: "classes",
   description:
     "A set of CSS class names to be applied to a specific area in the tree view.",
@@ -42,7 +49,7 @@ export const classes: CustomArgType = {
   },
 };
 
-export const listComponent: CustomArgType = {
+export const listComponent: ArgType = {
   name: "listComponent",
   description: "HTML tag for list.",
   table: {
@@ -51,7 +58,7 @@ export const listComponent: CustomArgType = {
   },
 };
 
-export const listItemComponent: CustomArgType = {
+export const listItemComponent: ArgType = {
   name: "listItemComponent",
   description: "HTML tag for list items.",
   table: {
@@ -60,16 +67,15 @@ export const listItemComponent: CustomArgType = {
   },
 };
 
-export const render: CustomArgType = {
+export const render: ArgType = {
   name: "render",
   description: "The render function of each node.",
-  type: { required: true },
   table: {
     type: { summary: "func" },
   },
 };
 
-export const dragPreviewRender: CustomArgType = {
+export const dragPreviewRender: ArgType = {
   name: "dragPreviewRender",
   description: "Render function for customizing the drag preview.",
   table: {
@@ -78,9 +84,8 @@ export const dragPreviewRender: CustomArgType = {
   },
 };
 
-export const onDrop: CustomArgType = {
+export const onDrop: ArgType = {
   name: "onDrop",
-  type: { required: true },
   description:
     "Callback function for when the state of the tree is changed. The new data is passed as the argument.",
   table: {
@@ -89,27 +94,29 @@ export const onDrop: CustomArgType = {
   action: "onDrop",
 };
 
-export const onDragStart: CustomArgType = {
+export const onDragStart: ArgType = {
   name: "onDragStart",
   description:
     "This event is fired when a node in the tree is started to be dragged. The event handler is passed the target node and a [DragSourceMonitor](https://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor) object.",
   table: {
     type: { summary: "func" },
+    defaultValue: { summary: "undefined" },
   },
   action: "onDragStart",
 };
 
-export const onDragEnd: CustomArgType = {
+export const onDragEnd: ArgType = {
   name: "onDragEnd",
   description:
     "This event is fired when a node in the tree is finished being dragged. The event handler is passed the target node and a [DragSourceMonitor](https://react-dnd.github.io/react-dnd/docs/api/drag-source-monitor) object.",
   table: {
     type: { summary: "func" },
+    defaultValue: { summary: "undefined" },
   },
   action: "onDragEnd",
 };
 
-export const onChangeOpen: CustomArgType = {
+export const onChangeOpen: ArgType = {
   name: "onChangeOpen",
   description:
     "Callback function to be called after the open/close state of a node is changed.<br>The function is passed an array of node IDs in the open state.",
@@ -120,7 +127,7 @@ export const onChangeOpen: CustomArgType = {
   action: "onChangeOpen",
 };
 
-export const canDrop: CustomArgType = {
+export const canDrop: ArgType = {
   name: "canDrop",
   description:
     "callback function to determine if a given node can be dropped to another node.<br>If nothing is returned (or if `undefined` is returned), the default rules are followed.<br>If it returns `true` or `false`, the default rules will be overridden and the `droppable` properties of each node will not be referenced.<br>This callback takes the current tree and the same option object that is passed to the onDrop callback.",
@@ -130,7 +137,7 @@ export const canDrop: CustomArgType = {
   },
 };
 
-export const canDrag: CustomArgType = {
+export const canDrag: ArgType = {
   name: "canDrag",
   description:
     "Callback function which should return true or false depending on if a give node should be draggable.<br>By default, all nodes are draggable.",
@@ -140,7 +147,7 @@ export const canDrag: CustomArgType = {
   },
 };
 
-export const sort: CustomArgType = {
+export const sort: ArgType = {
   name: "sort",
   description:
     "This property controls the order of the child nodes.<br>By default (`true`), they are sorted by the `text` property of each node.<br>If `false`, sorting is disabled. In this case, the nodes will follow the order of the array passed to the `tree` property.<br>It is also possible to customize the sorting by passing a callback function.",
@@ -150,7 +157,7 @@ export const sort: CustomArgType = {
   },
 };
 
-export const insertDroppableFirst: CustomArgType = {
+export const insertDroppableFirst: ArgType = {
   name: "insertDroppableFirst",
   description:
     "Specifies whether droppable nodes should be placed first in the list of child nodes.",
@@ -160,7 +167,7 @@ export const insertDroppableFirst: CustomArgType = {
   },
 };
 
-export const enableAnimateExpand: CustomArgType = {
+export const enableAnimateExpand: ArgType = {
   name: "enableAnimateExpand",
   description:
     "Specifies whether use animation when toggle expanding the node.",
@@ -170,7 +177,7 @@ export const enableAnimateExpand: CustomArgType = {
   },
 };
 
-export const placeholderRender: CustomArgType = {
+export const placeholderRender: ArgType = {
   name: "placeholderRender",
   description:
     "Render function for the drop destination placeholder. By default, placeholder is not displayed.",
@@ -180,7 +187,7 @@ export const placeholderRender: CustomArgType = {
   },
 };
 
-export const placeholderComponent: CustomArgType = {
+export const placeholderComponent: ArgType = {
   name: "placeholderComponent",
   description: "HTML tag for placeholder.",
   table: {
@@ -189,7 +196,7 @@ export const placeholderComponent: CustomArgType = {
   },
 };
 
-export const dropTargetOffset: CustomArgType = {
+export const dropTargetOffset: ArgType = {
   name: "dropTargetOffset",
   description:
     "Effective drop range of a droppable node. It is specified in pixels from the top or bottom of the node.<br>Used to insert a node anywhere using placeholders.",
@@ -199,7 +206,7 @@ export const dropTargetOffset: CustomArgType = {
   },
 };
 
-export const initialOpen: CustomArgType = {
+export const initialOpen: ArgType = {
   name: "initialOpen",
   description:
     "If true, all parent nodes will be initialized to the open state.<br>If an array of node IDs is passed instead of the boolean value, only the specified node will be initialized in the open state.",
@@ -209,7 +216,7 @@ export const initialOpen: CustomArgType = {
   },
 };
 
-export const rootProps: CustomArgType = {
+export const rootProps: ArgType = {
   name: "rootProps",
   description:
     "Properties to be passed to the root element (by default, `ul` tag), excluding the `ref` and `role` property.",

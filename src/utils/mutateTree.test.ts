@@ -1,5 +1,5 @@
-import { NodeModel } from "~/types";
 import { mutateTree } from "./mutateTree";
+import type { NodeModel } from "~/types";
 
 describe("mutateTree", () => {
   test("mutate tree items", () => {

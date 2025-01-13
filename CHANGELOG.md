@@ -2,7 +2,7 @@
 
 ## 3.5.0
 
-_Apr 26, 2024_
+_Jan 13, 2025_
 
 ### Added
 
@@ -11,6 +11,10 @@ _Apr 26, 2024_
 ### Fixed
 
 - Drop is canceled even though placeholder is visible.
+
+### Changed
+
+- React v17 is no longer supported.
 
 ## 3.4.4
 

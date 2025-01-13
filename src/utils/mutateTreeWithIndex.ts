@@ -1,10 +1,10 @@
-import { NodeModel } from "~/types";
 import { getModifiedIndex } from "./getModifiedIndex";
+import type { NodeModel } from "~/types";
 
 const arrayMoveMutable = <T>(
   array: T[],
   fromIndex: number,
-  toIndex: number
+  toIndex: number,
 ) => {
   const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
 
@@ -19,13 +19,13 @@ export const mutateTreeWithIndex = <T>(
   tree: NodeModel<T>[],
   dragSourceId: NodeModel["id"],
   dropTargetId: NodeModel["id"],
-  index: number
+  index: number,
 ): NodeModel<T>[] => {
   const [srcIndex, destIndex] = getModifiedIndex(
     tree,
     dragSourceId,
     dropTargetId,
-    index
+    index,
   );
 
   const newTree = [...tree];

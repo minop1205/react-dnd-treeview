@@ -1,5 +1,5 @@
-import { getParents } from "./getParents";
 import treeData from "../stories/assets/sample-default.json";
+import { getParents } from "./getParents";
 
 describe("getParents", () => {
   test("get parental nodes by id", () => {

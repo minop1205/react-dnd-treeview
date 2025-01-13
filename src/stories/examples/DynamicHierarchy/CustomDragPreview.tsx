@@ -1,9 +1,10 @@
 import React from "react";
-import { DragLayerMonitorProps } from "~/types";
 import styles from "./CustomDragPreview.module.css";
+import type { FileProperties } from "~/stories/types";
+import type { DragLayerMonitorProps } from "~/types";
 
 type Props = {
-  monitorProps: DragLayerMonitorProps<any>;
+  monitorProps: DragLayerMonitorProps<FileProperties>;
 };
 
 export const CustomDragPreview: React.FC<Props> = (props) => {

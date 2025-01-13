@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Story } from "@storybook/react";
 import { Tree } from "~/Tree";
+import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import { useDropHandler } from "~/stories/useDropHandler";
 import { isAncestor } from "~/utils";
-import {
+import { CustomNode } from "./CustomNode";
+import { MultipleDragPreview } from "./MultipleDragPreview";
+import type { StoryFn } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type {
   TreeProps,
   NodeModel,
   DropOptions,
   DragLayerMonitorProps,
 } from "~/types";
-import { useDropHandler } from "~/stories/useDropHandler";
-import { FileProperties } from "~/stories/types";
-import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { CustomNode } from "./CustomNode";
-import { MultipleDragPreview } from "./MultipleDragPreview";
 
-export const Template: Story<TreeProps<FileProperties>> = (args) => {
+export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
   const [selectedNodes, setSelectedNodes] = useState<
     NodeModel<FileProperties>[]
   >([]);
@@ -61,7 +61,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
     // ignore if ancestor node already selected
     if (
       selectedIds.some((selectedId) =>
-        isAncestor(tree, selectedId, clickedNode.id)
+        isAncestor(tree, selectedId, clickedNode.id),
       )
     ) {
       return;
@@ -80,7 +80,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
 
   const handleClick = (
     e: React.MouseEvent,
-    node: NodeModel<FileProperties>
+    node: NodeModel<FileProperties>,
   ) => {
     if (e.ctrlKey || e.metaKey) {
       handleMultiSelect(node);
@@ -115,7 +115,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
 
   const handleDrop = (
     newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>
+    options: DropOptions<FileProperties>,
   ) => {
     console.log(options);
 
@@ -132,7 +132,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
 
         return node;
       }),
-      options
+      options,
     );
 
     setSelectedNodes([]);
@@ -148,7 +148,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
       canDrop={(tree, options) => {
         if (
           selectedNodes.some(
-            (selectedNode) => selectedNode.id === options.dropTargetId
+            (selectedNode) => selectedNode.id === options.dropTargetId,
           )
         ) {
           return false;
@@ -156,7 +156,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
       }}
       render={(node, options) => {
         const selected = selectedNodes.some(
-          (selectedNode) => selectedNode.id === node.id
+          (selectedNode) => selectedNode.id === node.id,
         );
 
         return (
@@ -170,7 +170,7 @@ export const Template: Story<TreeProps<FileProperties>> = (args) => {
         );
       }}
       dragPreviewRender={(
-        monitorProps: DragLayerMonitorProps<FileProperties>
+        monitorProps: DragLayerMonitorProps<FileProperties>,
       ) => {
         if (selectedNodes.length > 1) {
           return <MultipleDragPreview dragSources={selectedNodes} />;

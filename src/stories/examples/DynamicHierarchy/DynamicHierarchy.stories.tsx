@@ -1,19 +1,18 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps, DragLayerMonitorProps, NodeModel } from "~/types";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/dynamic-hierarchy.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { dragAndDrop, wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import { CustomNode } from "./CustomNode";
 import { CustomDragPreview } from "./CustomDragPreview";
-import sampleData from "~/stories/assets/dynamic-hierarchy.json";
+import { CustomNode } from "./CustomNode";
 import styles from "./DynamicHierarchy.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -49,11 +48,9 @@ DynamicHierarchyStory.args = {
 DynamicHierarchyStory.storyName = "Dynamic hierarchy";
 
 DynamicHierarchyStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "dynamic-hierarchy-js-n8m7zn",
-      tsId: "dynamic-hierarchy-ts-dz4bis",
-    }),
+  csb: {
+    jsId: "dynamic-hierarchy-js-n8m7zn",
+    tsId: "dynamic-hierarchy-ts-dz4bis",
   },
 };
 
@@ -61,21 +58,19 @@ if (!interactionsDisabled) {
   DynamicHierarchyStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(canvas.queryByTestId("arrow-right-icon-1")).toBeNull();
+    await expect(canvas.queryByTestId("arrow-right-icon-1")).toBeNull();
 
     // drag and drop: Item 2 into Item 1
     {
       await wait(500);
       await dragAndDrop(
         canvas.getByText("Item 2"),
-        canvas.getByTestId("custom-node-1")
+        canvas.getByTestId("custom-node-1"),
       );
 
-      expect(canvas.queryByText("Item 2")).toBeNull();
-
+      await expect(canvas.queryByText("Item 2")).toBeNull();
       await userEvent.click(canvas.getByTestId("arrow-right-icon-1"));
-
-      expect(await canvas.findByText("Item 2")).toBeInTheDocument();
+      await expect(await canvas.findByText("Item 2")).toBeInTheDocument();
     }
   };
 }

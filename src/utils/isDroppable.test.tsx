@@ -1,7 +1,7 @@
 import React from "react";
-import { NodeRender, TreeState, NativeDragItem } from "~/types";
-import { isDroppable } from "./isDroppable";
 import treeData from "../stories/assets/sample-default.json";
+import { isDroppable } from "./isDroppable";
+import type { NodeRender, TreeState, NativeDragItem } from "~/types";
 
 describe("isDroppable", () => {
   test("check for drop availability", () => {

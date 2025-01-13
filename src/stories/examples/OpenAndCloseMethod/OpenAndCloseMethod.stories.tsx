@@ -1,17 +1,16 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, userEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/sample-id-text.json";
 import { wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { Template } from "./Template";
-import sampleData from "~/stories/assets/sample-id-text.json";
 import styles from "./OpenAndCloseMethod.module.css";
+import { Template } from "./Template";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -41,11 +40,9 @@ OpenAndCloseMethodStory.args = {
 OpenAndCloseMethodStory.storyName = "Open and close method";
 
 OpenAndCloseMethodStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "opening-and-closing-all-nodes-js-eqxzti",
-      tsId: "opening-and-closing-all-nodes-ts-xeb5v4",
-    }),
+  csb: {
+    jsId: "opening-and-closing-all-nodes-js-eqxzti",
+    tsId: "opening-and-closing-all-nodes-ts-xeb5v4",
   },
 };
 
@@ -55,39 +52,42 @@ if (!interactionsDisabled) {
 
     await wait();
 
-    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    await expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
 
     const btnOpenAll = canvas.getByTestId("btn-open-all");
     const btnCloseAll = canvas.getByTestId("btn-close-all");
 
-    userEvent.click(btnOpenAll);
+    await userEvent.click(btnOpenAll);
     await wait();
 
-    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
-    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
+    await expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    await expect(
+      await canvas.findByText("File 2-1-1 (ID: 6)"),
+    ).toBeInTheDocument();
 
-    userEvent.click(btnCloseAll);
+    await userEvent.click(btnCloseAll);
     await wait();
 
-    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
-    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
+    await expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    await expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
 
     const btnOpenSpecified = canvas.getByTestId("btn-open-specified");
     const btnCloseSpecified = canvas.getByTestId("btn-close-specified");
     const textField = canvas.getByTestId("input-ids");
-
-    userEvent.click(textField);
-    userEvent.type(textField, "1, 4, 5");
-    userEvent.click(btnOpenSpecified);
+    await userEvent.click(textField);
+    await userEvent.type(textField, "1, 4, 5");
+    await userEvent.click(btnOpenSpecified);
     await wait();
 
-    expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
-    expect(await canvas.findByText("File 2-1-1 (ID: 6)")).toBeInTheDocument();
+    await expect(canvas.getByText("File 1-2 (ID: 3)")).toBeInTheDocument();
+    await expect(
+      await canvas.findByText("File 2-1-1 (ID: 6)"),
+    ).toBeInTheDocument();
 
-    userEvent.click(btnCloseSpecified);
+    await userEvent.click(btnCloseSpecified);
     await wait();
 
-    expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
-    expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
+    await expect(canvas.queryByText("File 1-2 (ID: 3)")).toBeNull();
+    await expect(canvas.queryByText("File 2-1-1 (ID: 6)")).toBeNull();
   };
 }

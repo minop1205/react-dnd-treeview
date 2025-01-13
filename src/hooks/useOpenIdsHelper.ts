@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { hasChildNodes } from "~/utils";
-import {
+import type {
   NodeModel,
   ToggleHandler,
   OpenHandler,
@@ -11,7 +11,7 @@ import {
 
 export const useOpenIdsHelper = (
   tree: NodeModel[],
-  initialOpen?: InitialOpen
+  initialOpen?: InitialOpen,
 ): [
   NodeModel["id"][],
   {
@@ -20,7 +20,7 @@ export const useOpenIdsHelper = (
     handleOpenAll: (callback?: ChangeOpenHandler) => void;
     handleOpen: OpenHandler;
     handleClose: CloseHandler;
-  }
+  },
 ] => {
   // Only a parent node with a child node can be opened.
   // The droppable property has no effect.
@@ -34,11 +34,12 @@ export const useOpenIdsHelper = (
       return initialOpen;
     }
     return [];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialOpen]);
 
   const [openIds, setOpenIds] = useState<NodeModel["id"][]>(initialOpenIds);
 
-  useEffect(() => setOpenIds(initialOpenIds), [initialOpen]);
+  useEffect(() => setOpenIds(initialOpenIds), [initialOpenIds]);
 
   const handleToggle: ToggleHandler = (targetId: NodeModel["id"], callback) => {
     const newOpenIds = openIds.includes(targetId)
@@ -76,10 +77,10 @@ export const useOpenIdsHelper = (
 
     if (Array.isArray(targetIds)) {
       const targetNodes = tree.filter(
-        (node) => targetIds.includes(node.id) && hasChildNodes(tree, node.id)
+        (node) => targetIds.includes(node.id) && hasChildNodes(tree, node.id),
       );
       newOpenIds = [...openIds, ...targetNodes.map((node) => node.id)].filter(
-        (value, index, self) => self.indexOf(value) === index
+        (value, index, self) => self.indexOf(value) === index,
       );
     } else {
       newOpenIds = openIds.includes(targetIds)
@@ -96,7 +97,7 @@ export const useOpenIdsHelper = (
 
   const handleClose: CloseHandler = (targetIds, callback) => {
     const newOpenIds = openIds.filter((id) =>
-      Array.isArray(targetIds) ? !targetIds.includes(id) : id !== targetIds
+      Array.isArray(targetIds) ? !targetIds.includes(id) : id !== targetIds,
     );
 
     setOpenIds(newOpenIds);

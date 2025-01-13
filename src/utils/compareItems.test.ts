@@ -1,5 +1,5 @@
-import { NodeModel } from "~/types";
 import { compareItems } from "./compareItems";
+import type { NodeModel } from "~/types";
 
 describe("compareItems", () => {
   test("compare tree item order", () => {

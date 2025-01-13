@@ -1,9 +1,9 @@
 import { useEffect } from "react";
+import React, { useState } from "react";
 import { ResizeObserver } from "@juggle/resize-observer";
-import type { Target, Tween } from "framer-motion";
 import { motion } from "framer-motion";
 import useMeasure from "react-use-measure";
-import React, { useState } from "react";
+import type { Target, Tween } from "framer-motion";
 
 interface AnimateHeightProps {
   isVisible: boolean;
@@ -51,11 +51,14 @@ export function AnimateHeight(props: AnimateHeightProps) {
     }
   }, [isVisible]);
 
+  const isHeightZero = height === 0;
+
   useEffect(() => {
     if (isVisibleChildren) {
       setIsVisibleContainer(true);
     }
-  }, [height]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHeightZero]);
 
   return (
     <motion.div

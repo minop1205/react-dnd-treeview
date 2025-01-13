@@ -1,12 +1,10 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent, userEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { TreeProps } from "~/types";
 import * as argTypes from "~/stories/argTypes";
-import { pageFactory } from "~/stories/pageFactory";
-import { FileProperties } from "~/stories/types";
+import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
@@ -16,9 +14,10 @@ import {
   wait,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample-default.json";
 import styles from "./MinimumConfiguration.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -62,11 +61,9 @@ MinimumConfigurationStory.args = {
 MinimumConfigurationStory.storyName = "Minimum configuration";
 
 MinimumConfigurationStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "minimum-configuration-js-mrhwrd",
-      tsId: "minimum-configuration-ts-tn9xj7",
-    }),
+  csb: {
+    jsId: "minimum-configuration-js-mrhwrd",
+    tsId: "minimum-configuration-ts-tn9xj7",
   },
 };
 
@@ -75,28 +72,28 @@ if (!interactionsDisabled) {
     const canvas = within(canvasElement);
 
     // count nodes
-    expect(canvas.getAllByRole("listitem").length).toBe(3);
+    await expect(canvas.getAllByRole("listitem").length).toBe(3);
 
     // open and close first node
-    expect(canvas.queryByText("File 1-1")).toBeNull();
+    await expect(canvas.queryByText("File 1-1")).toBeNull();
 
     await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(await canvas.findByText("File 1-1")).toBeInTheDocument();
+    await expect(await canvas.findByText("File 1-1")).toBeInTheDocument();
 
     await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(canvas.queryByText("File 1-1")).toBeNull();
+    await expect(canvas.queryByText("File 1-1")).toBeNull();
 
     // drag and drop: File 3 into Folder 1
     await dragAndDrop(canvas.getByText("File 3"), canvas.getByTestId("node-1"));
-    expect(canvas.queryByText("File 3")).toBeNull();
+    await expect(canvas.queryByText("File 3")).toBeNull();
 
     // open Folder1
     await toggleNode(canvas.getByTestId("open-icon-1"));
-    expect(await canvas.findByText("File 3")).toBeInTheDocument();
+    await expect(await canvas.findByText("File 3")).toBeInTheDocument();
 
     // drag and drop: File 3 into Folder 2
     await dragAndDrop(canvas.getByText("File 3"), canvas.getByTestId("node-4"));
-    expect(canvas.queryByText("File 3")).toBeNull();
+    await expect(canvas.queryByText("File 3")).toBeNull();
 
     // open Folder2
     await toggleNode(canvas.getByTestId("open-icon-4"));
@@ -104,21 +101,21 @@ if (!interactionsDisabled) {
     // drag and drop: Folder 2 into Folder 1
     await dragAndDrop(
       canvas.getByText("Folder 2"),
-      canvas.getByTestId("node-1")
+      canvas.getByTestId("node-1"),
     );
 
-    expect(await canvas.findByTestId("node-4")).toHaveStyle(
-      "margin-inline-start: 10px"
+    await expect(await canvas.findByTestId("node-4")).toHaveStyle(
+      "margin-inline-start: 10px",
     );
 
     // drag and drop: File 1-2 into root node
     await dragAndDrop(
       canvas.getByText("File 1-2"),
-      canvas.getAllByRole("list")[0]
+      canvas.getAllByRole("list")[0],
     );
 
-    expect(await canvas.findByText("File 1-2")).toHaveStyle(
-      "margin-inline-start: 0px"
+    await expect(await canvas.findByText("File 1-2")).toHaveStyle(
+      "margin-inline-start: 0px",
     );
 
     // drag File3 and cancel drag
@@ -128,13 +125,12 @@ if (!interactionsDisabled) {
       const coords = getPointerCoords(dropTarget);
 
       await wait();
-      fireEvent.dragStart(dragSource);
+      await fireEvent.dragStart(dragSource);
       await dragEnterAndDragOver(dropTarget, coords);
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
       await wait();
-
-      expect(await canvas.findByText("File 3")).toHaveStyle(
-        "margin-inline-start: 20px"
+      await expect(await canvas.findByText("File 3")).toHaveStyle(
+        "margin-inline-start: 20px",
       );
     }
   };

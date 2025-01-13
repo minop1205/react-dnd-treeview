@@ -1,11 +1,11 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { expect } from "@storybook/test";
+import { within, fireEvent } from "@storybook/test";
 import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
-import { TreeProps } from "~/types";
+import sampleData from "~/stories/assets/sample-default.json";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
+import { Placeholder } from "~/stories/examples/components/Placeholder";
 import {
   dragEnterAndDragOver,
   dragLeaveAndDragEnd,
@@ -13,12 +13,11 @@ import {
   wait,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
-import sampleData from "~/stories/assets/sample-default.json";
-import { Placeholder } from "~/stories/examples/components/Placeholder";
-import { CustomNode } from "./CustomNode";
 import { CustomDragPreview } from "./CustomDragPreview";
+import { CustomNode } from "./CustomNode";
 import styles from "./DragHandle.module.css";
+import type { Meta } from "@storybook/react";
+import type { TreeProps } from "~/types";
 
 export default {
   component: Tree,
@@ -65,11 +64,9 @@ DragHandleStory.args = {
 DragHandleStory.storyName = "Drag handle";
 
 DragHandleStory.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "drag-handle-js-fb4ys9",
-      tsId: "drag-handle-ts-050v5h",
-    }),
+  csb: {
+    jsId: "drag-handle-js-fb4ys9",
+    tsId: "drag-handle-ts-050v5h",
   },
 };
 
@@ -77,15 +74,16 @@ if (!interactionsDisabled) {
   DragHandleStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const assertPlaceholderCoords = (x: number, y: number) => {
+    const assertDragPreviewCoords = async (x: number, y: number) => {
+      const topMargin = 40; // height of CodeSandbox link bar
       const bbox = canvas
         .getByTestId("custom-drag-preview")
         .getBoundingClientRect();
-      expect(bbox.x).toBe(x);
-      expect(bbox.y).toBe(y);
+      await expect(bbox.x).toBe(x);
+      await expect(bbox.y).toBe(y + topMargin);
     };
 
-    expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
     // starting a drag on an element other than a handle
     // does not allow preview display or drop
@@ -95,9 +93,9 @@ if (!interactionsDisabled) {
       const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
       await wait();
-      fireEvent.dragStart(file3Text);
+      await fireEvent.dragStart(file3Text);
       await dragEnterAndDragOver(folder1Node, coords);
-      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+      await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
     }
 
     // preview display and drop possible by starting drag with handle
@@ -107,15 +105,15 @@ if (!interactionsDisabled) {
       const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
       await wait();
-      fireEvent.dragStart(file3Handle);
+      await fireEvent.dragStart(file3Handle);
       await dragEnterAndDragOver(folder1Node, coords);
-      assertPlaceholderCoords(32, 48);
-      fireEvent.drop(folder1Node, coords);
+      await assertDragPreviewCoords(32, 48);
+      await fireEvent.drop(folder1Node, coords);
       await wait();
-      dragLeaveAndDragEnd(file3Handle, folder1Node);
+      await dragLeaveAndDragEnd(file3Handle, folder1Node);
       await wait();
-      expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-      expect(canvas.queryByText("File 3")).toBeNull();
+      await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+      await expect(canvas.queryByText("File 3")).toBeNull();
     }
   };
 }

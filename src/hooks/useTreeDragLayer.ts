@@ -1,6 +1,6 @@
 import { useDragLayer } from "react-dnd";
 import { ItemTypes } from "~/ItemTypes";
-import { DragLayerMonitorProps } from "~/types";
+import type { DragLayerMonitorProps } from "~/types";
 
 export const useTreeDragLayer = <T>(): DragLayerMonitorProps<T> => {
   return useDragLayer((monitor) => {

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
 import { ArrowRight, Delete, FileCopy } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import { useDragOver } from "~/hooks";
-import { NodeModel } from "~/types";
 import { TypeIcon } from "~/stories/examples/components/TypeIcon";
 import styles from "./CustomNode.module.css";
-import { FileProperties } from "~/stories/types";
+import type { FileProperties } from "~/stories/types";
+import type { NodeModel } from "~/types";
 
 type Props = {
   node: NodeModel<FileProperties>;

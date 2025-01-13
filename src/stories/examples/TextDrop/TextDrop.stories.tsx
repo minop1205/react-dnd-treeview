@@ -1,25 +1,23 @@
 import React from "react";
-import { Meta } from "@storybook/react";
-import { expect } from "@storybook/jest";
-import { within, fireEvent } from "@storybook/testing-library";
+import { expect, within, fireEvent } from "@storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { Tree, MultiBackend, getBackendOptions } from "~/index";
-import { pageFactory } from "~/stories/pageFactory";
 import * as argTypes from "~/stories/argTypes";
+import sampleData from "~/stories/assets/sample-default.json";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
-import { TreeProps, DragLayerMonitorProps } from "~/types";
-import { FileProperties } from "~/stories/types";
+import { CustomNode } from "~/stories/examples/components/CustomNode";
 import {
   dragLeaveAndDragEnd,
   getPointerCoords,
   wait,
 } from "~/stories/examples/helpers";
-import { CustomNode } from "~/stories/examples/components/CustomNode";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import sampleData from "~/stories/assets/sample-default.json";
 import { Template } from "./Template";
 import styles from "./TextDrop.module.css";
+import type { Meta } from "@storybook/react";
+import type { FileProperties } from "~/stories/types";
+import type { TreeProps, DragLayerMonitorProps } from "~/types";
 
 export default {
   component: Tree,
@@ -34,9 +32,9 @@ export default {
   ],
 } as Meta<TreeProps<FileProperties>>;
 
-export const TextDrop = Template.bind({});
+export const TextDropStory = Template.bind({});
 
-TextDrop.args = {
+TextDropStory.args = {
   rootId: 0,
   tree: sampleData,
   classes: {
@@ -53,19 +51,17 @@ TextDrop.args = {
   ),
 };
 
-TextDrop.storyName = "Text drop";
+TextDropStory.storyName = "Text drop";
 
-TextDrop.parameters = {
-  docs: {
-    page: pageFactory({
-      jsId: "text-drop-js-t4xpkq",
-      tsId: "text-drop-ts-odf9lz",
-    }),
+TextDropStory.parameters = {
+  csb: {
+    jsId: "text-drop-js-t4xpkq",
+    tsId: "text-drop-ts-odf9lz",
   },
 };
 
 if (!interactionsDisabled) {
-  TextDrop.play = async ({ canvasElement }) => {
+  TextDropStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     // Cannot pass dataTransfer to the drop event,
@@ -83,14 +79,14 @@ if (!interactionsDisabled) {
         ...coords,
       };
 
-      fireEvent.dragStart(dragSource, options);
-      fireEvent.dragEnter(dropTarget, coords);
-      fireEvent.dragOver(dropTarget, coords);
+      await fireEvent.dragStart(dragSource, options);
+      await fireEvent.dragEnter(dropTarget, coords);
+      await fireEvent.dragOver(dropTarget, coords);
       await wait();
 
-      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+      await expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
 
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
     }
 
     await wait();
@@ -107,14 +103,14 @@ if (!interactionsDisabled) {
         ...coords,
       };
 
-      fireEvent.dragStart(dragSource, options);
-      fireEvent.dragEnter(dropTarget, coords);
-      fireEvent.dragOver(dropTarget, coords);
+      await fireEvent.dragStart(dragSource, options);
+      await fireEvent.dragEnter(dropTarget, coords);
+      await fireEvent.dragOver(dropTarget, coords);
       await wait();
 
-      expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
+      await expect(dropTarget).toHaveStyle("background-color: #e8f0fe");
 
-      dragLeaveAndDragEnd(dragSource, dropTarget);
+      await dragLeaveAndDragEnd(dragSource, dropTarget);
     }
   };
 }
