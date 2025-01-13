@@ -8,7 +8,7 @@ import type { DragElementWrapper } from "react-dnd";
 import type { NodeModel, DragItem, NativeDragItem } from "~/types";
 
 export const useDropRoot = <T>(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
 ): [boolean, NodeModel<T>, DragElementWrapper<HTMLElement>] => {
   const treeContext = useTreeContext<T>();
   const placeholderContext = useContext(PlaceholderContext);

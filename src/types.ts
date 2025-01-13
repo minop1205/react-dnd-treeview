@@ -12,7 +12,7 @@ export type NodeModel<T = unknown> = {
 };
 
 export type DragItem<T> = NodeModel<T> & {
-  ref: RefObject<HTMLElement>;
+  ref: RefObject<HTMLElement | null>;
 };
 
 export type NativeDragItem = {
@@ -29,8 +29,8 @@ export type RenderParams = {
   isDropTarget: boolean;
   draggable: boolean;
   hasChild: boolean;
-  containerRef: RefObject<HTMLElement>;
-  handleRef: RefObject<HTMLDivElement>;
+  containerRef: RefObject<HTMLElement | null>;
+  handleRef: RefObject<HTMLDivElement | null>;
   onToggle: () => void;
 };
 
