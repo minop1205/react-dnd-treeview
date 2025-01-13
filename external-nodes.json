@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "parent": 0,
+    "text": "External node 1",
+    "data": {
+      "fileType": "text",
+      "fileSize": "1KB"
+    }
+  },
+  {
+    "id": 102,
+    "parent": 0,
+    "text": "External node 2",
+    "data": {
+      "fileType": "text",
+      "fileSize": "1KB"
+    }
+  },
+  {
+    "id": 103,
+    "parent": 0,
+    "text": "External node 3",
+    "data": {
+      "fileType": "text",
+      "fileSize": "1KB"
+    }
+  },
+  {
+    "id": 104,
+    "parent": 0,
+    "text": "External node 4",
+    "data": {
+      "fileType": "text",
+      "fileSize": "1KB"
+    }
+  }
+]

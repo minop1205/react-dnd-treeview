@@ -1,0 +1,218 @@
+[
+  {
+    "id": 1,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 1"
+  },
+  {
+    "id": 2,
+    "parent": 1,
+    "text": "File 1-01",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 3,
+    "parent": 1,
+    "text": "File 1-02",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 4,
+    "parent": 1,
+    "text": "File 1-03",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 5,
+    "parent": 1,
+    "text": "File 1-04",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 6,
+    "parent": 1,
+    "text": "File 1-05",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 7,
+    "parent": 1,
+    "text": "File 1-06",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 8,
+    "parent": 1,
+    "text": "File 1-07",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 9,
+    "parent": 1,
+    "text": "File 1-08",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 10,
+    "parent": 1,
+    "text": "File 1-09",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 11,
+    "parent": 1,
+    "text": "File 1-10",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 12,
+    "parent": 1,
+    "text": "File 1-11",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 13,
+    "parent": 1,
+    "text": "File 1-12",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 14,
+    "parent": 1,
+    "text": "File 1-13",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 15,
+    "parent": 1,
+    "text": "File 1-14",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 16,
+    "parent": 1,
+    "text": "File 1-15",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 17,
+    "parent": 1,
+    "text": "File 1-16",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 18,
+    "parent": 1,
+    "text": "File 1-17",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 19,
+    "parent": 1,
+    "text": "File 1-18",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 20,
+    "parent": 1,
+    "text": "File 1-19",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 21,
+    "parent": 1,
+    "text": "File 1-20",
+    "data": {
+      "fileType": "text",
+      "fileSize": "4.8MB"
+    }
+  },
+  {
+    "id": 22,
+    "parent": 0,
+    "droppable": true,
+    "text": "Folder 2"
+  },
+  {
+    "id": 23,
+    "parent": 22,
+    "droppable": true,
+    "text": "Folder 2-1"
+  },
+  {
+    "id": 24,
+    "parent": 23,
+    "text": "File 2-1-1",
+    "data": {
+      "fileType": "image",
+      "fileSize": "2.1MB"
+    }
+  },
+  {
+    "id": 25,
+    "parent": 0,
+    "text": "File 3",
+    "data": {
+      "fileType": "image",
+      "fileSize": "0.8MB"
+    }
+  }
+]
