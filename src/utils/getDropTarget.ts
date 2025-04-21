@@ -72,6 +72,11 @@ const getHoverPosition = <T>(
 ): VerticalPosition => {
   const bbox = el.getBoundingClientRect();
   const offsetY = context.dropTargetOffset;
+
+  if (offsetY === 0) {
+    return "middle";
+  }
+
   const upSideY = bbox.top + offsetY;
   const lowerSideY = bbox.bottom - offsetY;
 
