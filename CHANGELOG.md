@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.5.2
+
+_Apr 21, 2025_
+
+### Fixed
+
+- Incorrect element detection for `dropTarget` class.
+
 ## 3.5.0
 
 _Jan 13, 2025_
