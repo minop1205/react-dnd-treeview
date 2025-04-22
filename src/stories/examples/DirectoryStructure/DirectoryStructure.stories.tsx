@@ -25,7 +25,7 @@ DirectoryStructureStory.storyName = "Directory structure";
 
 DirectoryStructureStory.parameters = {
   csb: {
-    tsId: "directory-structure-ts-35p68l",
-    jsId: "directory-structure-js-ctx1cq",
+    tsId: "directory-structure-ts-dv8kz4",
+    jsId: "directory-structure-js-6ws6mf",
   },
 };
