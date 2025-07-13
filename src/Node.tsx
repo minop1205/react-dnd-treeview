@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { getEmptyImage } from "react-dnd-html5-backend";
 import { AnimateHeight } from "./AnimateHeight";
 import { Container } from "./Container";
@@ -49,7 +49,9 @@ export const Node = <T,>(props: Props): ReactElement | null => {
 
   useDragControl(containerRef);
 
-  const handleToggle = () => treeContext.onToggle(item.id);
+  const handleToggle = useCallback(() => {
+    treeContext.onToggle(item.id);
+  }, [item.id, treeContext]);
 
   const Component = treeContext.listItemComponent;
   const draggable = treeContext.canDrag ? treeContext.canDrag(props.id) : true;

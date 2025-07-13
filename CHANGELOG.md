@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.5.3
+
+_Jul 12, 2025_
+
+### Fixed
+
+- Memorize `onToggle` function of render parameter.
+
 ## 3.5.2
 
 _Apr 21, 2025_
