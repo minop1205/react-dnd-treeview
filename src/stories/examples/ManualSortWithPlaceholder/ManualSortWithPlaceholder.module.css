@@ -1,13 +1,13 @@
 .treeRoot {
-  box-sizing: border-box;
-  flex-grow: 1;
-  padding: 32px;
+	box-sizing: border-box;
+	flex-grow: 1;
+	padding: 32px;
 }
 
 .draggingSource {
-  opacity: 0.3;
+	opacity: 0.3;
 }
 
 .placeholderContainer {
-  position: relative;
+	position: relative;
 }

@@ -1,14 +1,14 @@
 export type FileProperties = {
-  fileType: string;
-  fileSize: string;
+	fileType: string;
+	fileSize: string;
 };
 
 export type OffsetCoords = {
-  x: number;
-  y: number;
+	x: number;
+	y: number;
 };
 
 export type PointerCoords = {
-  clientX: number;
-  clientY: number;
+	clientX: number;
+	clientY: number;
 };

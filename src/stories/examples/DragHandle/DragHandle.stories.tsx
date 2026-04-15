@@ -1,119 +1,118 @@
+import type { Meta } from "@storybook/react";
+import { expect, fireEvent, within } from "@storybook/test";
 import React from "react";
-import { expect } from "@storybook/test";
-import { within, fireEvent } from "@storybook/test";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { DndProvider, getBackendOptions, MultiBackend, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
 import sampleData from "~/stories/assets/sample-default.json";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { Placeholder } from "~/stories/examples/components/Placeholder";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import {
-  dragEnterAndDragOver,
-  dragLeaveAndDragEnd,
-  getPointerCoords,
-  wait,
+	dragEnterAndDragOver,
+	dragLeaveAndDragEnd,
+	getPointerCoords,
+	wait,
 } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
+import type { TreeProps } from "~/types";
 import { CustomDragPreview } from "./CustomDragPreview";
 import { CustomNode } from "./CustomNode";
 import styles from "./DragHandle.module.css";
-import type { Meta } from "@storybook/react";
-import type { TreeProps } from "~/types";
 
 export default {
-  component: Tree,
-  title: "Basic Examples/Drag handle",
-  argTypes,
-  decorators: [
-    (Story) => (
-      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-        <Story />
-      </DndProvider>
-    ),
-  ],
+	component: Tree,
+	title: "Basic Examples/Drag handle",
+	argTypes,
+	decorators: [
+		(Story) => (
+			<DndProvider backend={MultiBackend} options={getBackendOptions()}>
+				<Story />
+			</DndProvider>
+		),
+	],
 } as Meta<TreeProps>;
 
 export const DragHandleStory = DefaultTemplate.bind({});
 
 DragHandleStory.args = {
-  rootId: 0,
-  tree: sampleData,
-  classes: {
-    root: styles.treeRoot,
-    draggingSource: styles.draggingSource,
-    placeholder: styles.placeholderContainer,
-  },
-  render: function render(node, options) {
-    return <CustomNode node={node} {...options} />;
-  },
-  dragPreviewRender: (monitorProps) => (
-    <CustomDragPreview monitorProps={monitorProps} />
-  ),
-  sort: false,
-  insertDroppableFirst: false,
-  canDrop: (tree, { dragSource, dropTargetId }) => {
-    if (dragSource?.parent === dropTargetId) {
-      return true;
-    }
-  },
-  dropTargetOffset: 10,
-  placeholderRender: (node, { depth }) => (
-    <Placeholder node={node} depth={depth} />
-  ),
+	rootId: 0,
+	tree: sampleData,
+	classes: {
+		root: styles.treeRoot,
+		draggingSource: styles.draggingSource,
+		placeholder: styles.placeholderContainer,
+	},
+	render: function render(node, options) {
+		return <CustomNode node={node} {...options} />;
+	},
+	dragPreviewRender: (monitorProps) => (
+		<CustomDragPreview monitorProps={monitorProps} />
+	),
+	sort: false,
+	insertDroppableFirst: false,
+	canDrop: (tree, { dragSource, dropTargetId }) => {
+		if (dragSource?.parent === dropTargetId) {
+			return true;
+		}
+	},
+	dropTargetOffset: 10,
+	placeholderRender: (node, { depth }) => (
+		<Placeholder node={node} depth={depth} />
+	),
 };
 
 DragHandleStory.storyName = "Drag handle";
 
 DragHandleStory.parameters = {
-  csb: {
-    jsId: "drag-handle-js-fb4ys9",
-    tsId: "drag-handle-ts-050v5h",
-  },
+	csb: {
+		jsId: "drag-handle-js-fb4ys9",
+		tsId: "drag-handle-ts-050v5h",
+	},
 };
 
 if (!interactionsDisabled) {
-  DragHandleStory.play = async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+	DragHandleStory.play = async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
 
-    const assertDragPreviewCoords = async (x: number, y: number) => {
-      const topMargin = 40; // height of CodeSandbox link bar
-      const bbox = canvas
-        .getByTestId("custom-drag-preview")
-        .getBoundingClientRect();
-      await expect(bbox.x).toBe(x);
-      await expect(bbox.y).toBe(y + topMargin);
-    };
+		const assertDragPreviewCoords = async (x: number, y: number) => {
+			const topMargin = 40; // height of CodeSandbox link bar
+			const bbox = canvas
+				.getByTestId("custom-drag-preview")
+				.getBoundingClientRect();
+			await expect(bbox.x).toBe(x);
+			await expect(bbox.y).toBe(y + topMargin);
+		};
 
-    await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+		await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
 
-    // starting a drag on an element other than a handle
-    // does not allow preview display or drop
-    {
-      const file3Text = canvas.getByText("File 3");
-      const folder1Node = canvas.getByTestId("custom-node-1");
-      const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
+		// starting a drag on an element other than a handle
+		// does not allow preview display or drop
+		{
+			const file3Text = canvas.getByText("File 3");
+			const folder1Node = canvas.getByTestId("custom-node-1");
+			const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
-      await wait();
-      await fireEvent.dragStart(file3Text);
-      await dragEnterAndDragOver(folder1Node, coords);
-      await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-    }
+			await wait();
+			await fireEvent.dragStart(file3Text);
+			await dragEnterAndDragOver(folder1Node, coords);
+			await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+		}
 
-    // preview display and drop possible by starting drag with handle
-    {
-      const file3Handle = canvas.getByTestId("drag-handle-7");
-      const folder1Node = canvas.getByTestId("custom-node-1");
-      const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
+		// preview display and drop possible by starting drag with handle
+		{
+			const file3Handle = canvas.getByTestId("drag-handle-7");
+			const folder1Node = canvas.getByTestId("custom-node-1");
+			const coords = getPointerCoords(folder1Node, { x: 0, y: 16 });
 
-      await wait();
-      await fireEvent.dragStart(file3Handle);
-      await dragEnterAndDragOver(folder1Node, coords);
-      await assertDragPreviewCoords(32, 48);
-      await fireEvent.drop(folder1Node, coords);
-      await wait();
-      await dragLeaveAndDragEnd(file3Handle, folder1Node);
-      await wait();
-      await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
-      await expect(canvas.queryByText("File 3")).toBeNull();
-    }
-  };
+			await wait();
+			await fireEvent.dragStart(file3Handle);
+			await dragEnterAndDragOver(folder1Node, coords);
+			await assertDragPreviewCoords(32, 48);
+			await fireEvent.drop(folder1Node, coords);
+			await wait();
+			await dragLeaveAndDragEnd(file3Handle, folder1Node);
+			await wait();
+			await expect(canvas.queryByTestId("custom-drag-preview")).toBeNull();
+			await expect(canvas.queryByText("File 3")).toBeNull();
+		}
+	};
 }

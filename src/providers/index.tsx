@@ -1,22 +1,22 @@
-import React from "react";
-import { DragControlProvider, DragControlContext } from "./DragControlProvider";
-import { PlaceholderProvider, PlaceholderContext } from "./PlaceholderProvider";
-import { TreeProvider, TreeContext } from "./TreeProvider";
 import type { PropsWithChildren, ReactElement } from "react";
-import type { TreeProps, TreeMethods } from "~/types";
+import React from "react";
+import type { TreeMethods, TreeProps } from "~/types";
+import { DragControlContext, DragControlProvider } from "./DragControlProvider";
+import { PlaceholderContext, PlaceholderProvider } from "./PlaceholderProvider";
+import { TreeContext, TreeProvider } from "./TreeProvider";
 
 type Props<T> = PropsWithChildren<
-  TreeProps<T> & {
-    treeRef: React.ForwardedRef<TreeMethods>;
-  }
+	TreeProps<T> & {
+		treeRef: React.ForwardedRef<TreeMethods>;
+	}
 >;
 
 export const Providers = <T,>(props: Props<T>): ReactElement => (
-  <TreeProvider {...props}>
-    <DragControlProvider>
-      <PlaceholderProvider>{props.children}</PlaceholderProvider>
-    </DragControlProvider>
-  </TreeProvider>
+	<TreeProvider {...props}>
+		<DragControlProvider>
+			<PlaceholderProvider>{props.children}</PlaceholderProvider>
+		</DragControlProvider>
+	</TreeProvider>
 );
 
-export { TreeContext, DragControlContext, PlaceholderContext };
+export { DragControlContext, PlaceholderContext, TreeContext };

@@ -1,18 +1,18 @@
 import React from "react";
-import styles from "./CustomDragPreview.module.css";
 import type { FileProperties } from "~/stories/types";
 import type { DragLayerMonitorProps } from "~/types";
+import styles from "./CustomDragPreview.module.css";
 
 type Props = {
-  monitorProps: DragLayerMonitorProps<FileProperties>;
+	monitorProps: DragLayerMonitorProps<FileProperties>;
 };
 
 export const CustomDragPreview: React.FC<Props> = (props) => {
-  const item = props.monitorProps.item;
+	const item = props.monitorProps.item;
 
-  return (
-    <div className={styles.root} data-testid="custom-drag-preview">
-      {item.text}
-    </div>
-  );
+	return (
+		<div className={styles.root} data-testid="custom-drag-preview">
+			{item.text}
+		</div>
+	);
 };

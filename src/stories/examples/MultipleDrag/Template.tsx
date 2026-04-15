@@ -1,183 +1,183 @@
-import React, { useState, useEffect } from "react";
-import { Tree } from "~/Tree";
+import type { StoryFn } from "@storybook/react";
+import React, { useEffect, useState } from "react";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
+import type { FileProperties } from "~/stories/types";
 import { useDropHandler } from "~/stories/useDropHandler";
+import { Tree } from "~/Tree";
+import type {
+	DragLayerMonitorProps,
+	DropOptions,
+	NodeModel,
+	TreeProps,
+} from "~/types";
 import { isAncestor } from "~/utils";
 import { CustomNode } from "./CustomNode";
 import { MultipleDragPreview } from "./MultipleDragPreview";
-import type { StoryFn } from "@storybook/react";
-import type { FileProperties } from "~/stories/types";
-import type {
-  TreeProps,
-  NodeModel,
-  DropOptions,
-  DragLayerMonitorProps,
-} from "~/types";
 
 export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
-  const [selectedNodes, setSelectedNodes] = useState<
-    NodeModel<FileProperties>[]
-  >([]);
-  const [tree, setTree] = useDropHandler<FileProperties>(args);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isCtrlPressing, setIsCtrlPressing] = useState(false);
+	const [selectedNodes, setSelectedNodes] = useState<
+		NodeModel<FileProperties>[]
+	>([]);
+	const [tree, setTree] = useDropHandler<FileProperties>(args);
+	const [isDragging, setIsDragging] = useState(false);
+	const [isCtrlPressing, setIsCtrlPressing] = useState(false);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "escape") {
-        setSelectedNodes([]);
-      } else if (e.ctrlKey || e.metaKey) {
-        setIsCtrlPressing(true);
-      }
-    };
+	useEffect(() => {
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key.toLowerCase() === "escape") {
+				setSelectedNodes([]);
+			} else if (e.ctrlKey || e.metaKey) {
+				setIsCtrlPressing(true);
+			}
+		};
 
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "control" || e.key.toLowerCase() === "meta") {
-        setIsCtrlPressing(false);
-      }
-    };
+		const handleKeyUp = (e: KeyboardEvent) => {
+			if (e.key.toLowerCase() === "control" || e.key.toLowerCase() === "meta") {
+				setIsCtrlPressing(false);
+			}
+		};
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+		window.addEventListener("keydown", handleKeyDown);
+		window.addEventListener("keyup", handleKeyUp);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  });
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keyup", handleKeyUp);
+		};
+	});
 
-  const handleSingleSelect = (node: NodeModel<FileProperties>) => {
-    setSelectedNodes([node]);
-  };
+	const handleSingleSelect = (node: NodeModel<FileProperties>) => {
+		setSelectedNodes([node]);
+	};
 
-  const handleMultiSelect = (clickedNode: NodeModel<FileProperties>) => {
-    const selectedIds = selectedNodes.map((n) => n.id);
+	const handleMultiSelect = (clickedNode: NodeModel<FileProperties>) => {
+		const selectedIds = selectedNodes.map((n) => n.id);
 
-    // ignore if the clicked node is already selected
-    if (selectedIds.includes(clickedNode.id)) {
-      return;
-    }
+		// ignore if the clicked node is already selected
+		if (selectedIds.includes(clickedNode.id)) {
+			return;
+		}
 
-    // ignore if ancestor node already selected
-    if (
-      selectedIds.some((selectedId) =>
-        isAncestor(tree, selectedId, clickedNode.id),
-      )
-    ) {
-      return;
-    }
+		// ignore if ancestor node already selected
+		if (
+			selectedIds.some((selectedId) =>
+				isAncestor(tree, selectedId, clickedNode.id),
+			)
+		) {
+			return;
+		}
 
-    let updateNodes = [...selectedNodes];
+		let updateNodes = [...selectedNodes];
 
-    // if descendant nodes already selected, remove them
-    updateNodes = updateNodes.filter((selectedNode) => {
-      return !isAncestor(tree, clickedNode.id, selectedNode.id);
-    });
+		// if descendant nodes already selected, remove them
+		updateNodes = updateNodes.filter((selectedNode) => {
+			return !isAncestor(tree, clickedNode.id, selectedNode.id);
+		});
 
-    updateNodes = [...updateNodes, clickedNode];
-    setSelectedNodes(updateNodes);
-  };
+		updateNodes = [...updateNodes, clickedNode];
+		setSelectedNodes(updateNodes);
+	};
 
-  const handleClick = (
-    e: React.MouseEvent,
-    node: NodeModel<FileProperties>,
-  ) => {
-    if (e.ctrlKey || e.metaKey) {
-      handleMultiSelect(node);
-    } else {
-      handleSingleSelect(node);
-    }
-  };
+	const handleClick = (
+		e: React.MouseEvent,
+		node: NodeModel<FileProperties>,
+	) => {
+		if (e.ctrlKey || e.metaKey) {
+			handleMultiSelect(node);
+		} else {
+			handleSingleSelect(node);
+		}
+	};
 
-  const handleDragStart = (node: NodeModel<FileProperties>) => {
-    const isSelectedNode = selectedNodes.some((n) => n.id === node.id);
-    setIsDragging(true);
+	const handleDragStart = (node: NodeModel<FileProperties>) => {
+		const isSelectedNode = selectedNodes.some((n) => n.id === node.id);
+		setIsDragging(true);
 
-    if (!isCtrlPressing && isSelectedNode) {
-      return;
-    }
+		if (!isCtrlPressing && isSelectedNode) {
+			return;
+		}
 
-    if (!isCtrlPressing) {
-      setSelectedNodes([node]);
-      return;
-    }
+		if (!isCtrlPressing) {
+			setSelectedNodes([node]);
+			return;
+		}
 
-    if (!selectedNodes.some((n) => n.id === node.id)) {
-      setSelectedNodes([...selectedNodes, node]);
-    }
-  };
+		if (!selectedNodes.some((n) => n.id === node.id)) {
+			setSelectedNodes([...selectedNodes, node]);
+		}
+	};
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    setIsCtrlPressing(false);
-    setSelectedNodes([]);
-  };
+	const handleDragEnd = () => {
+		setIsDragging(false);
+		setIsCtrlPressing(false);
+		setSelectedNodes([]);
+	};
 
-  const handleDrop = (
-    newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>,
-  ) => {
-    console.log(options);
+	const handleDrop = (
+		newTree: NodeModel<FileProperties>[],
+		options: DropOptions<FileProperties>,
+	) => {
+		console.log(options);
 
-    const { dropTargetId } = options;
+		const { dropTargetId } = options;
 
-    setTree(
-      newTree.map((node) => {
-        if (selectedNodes.some((selectedNode) => selectedNode.id === node.id)) {
-          return {
-            ...node,
-            parent: dropTargetId,
-          };
-        }
+		setTree(
+			newTree.map((node) => {
+				if (selectedNodes.some((selectedNode) => selectedNode.id === node.id)) {
+					return {
+						...node,
+						parent: dropTargetId,
+					};
+				}
 
-        return node;
-      }),
-      options,
-    );
+				return node;
+			}),
+			options,
+		);
 
-    setSelectedNodes([]);
-  };
+		setSelectedNodes([]);
+	};
 
-  return (
-    <Tree
-      {...args}
-      tree={tree}
-      onDrop={handleDrop}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      canDrop={(tree, options) => {
-        if (
-          selectedNodes.some(
-            (selectedNode) => selectedNode.id === options.dropTargetId,
-          )
-        ) {
-          return false;
-        }
-      }}
-      render={(node, options) => {
-        const selected = selectedNodes.some(
-          (selectedNode) => selectedNode.id === node.id,
-        );
+	return (
+		<Tree
+			{...args}
+			tree={tree}
+			onDrop={handleDrop}
+			onDragStart={handleDragStart}
+			onDragEnd={handleDragEnd}
+			canDrop={(tree, options) => {
+				if (
+					selectedNodes.some(
+						(selectedNode) => selectedNode.id === options.dropTargetId,
+					)
+				) {
+					return false;
+				}
+			}}
+			render={(node, options) => {
+				const selected = selectedNodes.some(
+					(selectedNode) => selectedNode.id === node.id,
+				);
 
-        return (
-          <CustomNode
-            node={node}
-            {...options}
-            isSelected={selected}
-            isDragging={selected && isDragging}
-            onClick={handleClick}
-          />
-        );
-      }}
-      dragPreviewRender={(
-        monitorProps: DragLayerMonitorProps<FileProperties>,
-      ) => {
-        if (selectedNodes.length > 1) {
-          return <MultipleDragPreview dragSources={selectedNodes} />;
-        }
+				return (
+					<CustomNode
+						node={node}
+						{...options}
+						isSelected={selected}
+						isDragging={selected && isDragging}
+						onClick={handleClick}
+					/>
+				);
+			}}
+			dragPreviewRender={(
+				monitorProps: DragLayerMonitorProps<FileProperties>,
+			) => {
+				if (selectedNodes.length > 1) {
+					return <MultipleDragPreview dragSources={selectedNodes} />;
+				}
 
-        return <CustomDragPreview monitorProps={monitorProps} />;
-      }}
-    />
-  );
+				return <CustomDragPreview monitorProps={monitorProps} />;
+			}}
+		/>
+	);
 };

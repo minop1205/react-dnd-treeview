@@ -1,9 +1,9 @@
 .rootGrid {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  height: 100%;
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	height: 100%;
 }
 
 .column + .column {
-  border-left: solid 1px #eee;
+	border-left: solid 1px #eee;
 }

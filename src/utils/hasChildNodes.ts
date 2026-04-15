@@ -1,8 +1,8 @@
 import type { NodeModel } from "~/types";
 
 export const hasChildNodes = (
-  tree: NodeModel[],
-  nodeId: NodeModel["id"],
+	tree: NodeModel[],
+	nodeId: NodeModel["id"],
 ): boolean => {
-  return tree.some((node) => node.parent === nodeId);
+	return tree.some((node) => node.parent === nodeId);
 };

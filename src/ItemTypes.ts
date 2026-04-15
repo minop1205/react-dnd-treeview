@@ -1,3 +1,3 @@
 export const ItemTypes = {
-  TREE_ITEM: Symbol(),
+	TREE_ITEM: Symbol(),
 };

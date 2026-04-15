@@ -1,50 +1,50 @@
+import type { ReactElement } from "react";
 import React from "react";
 import { useTreeContext, useTreeDragLayer } from "./hooks";
 import type { DragLayerMonitorProps } from "./types";
-import type { ReactElement } from "react";
 
 const rootStyle: React.CSSProperties = {
-  height: "100%",
-  left: 0,
-  pointerEvents: "none",
-  position: "fixed",
-  top: 0,
-  width: "100%",
-  zIndex: 100,
+	height: "100%",
+	left: 0,
+	pointerEvents: "none",
+	position: "fixed",
+	top: 0,
+	width: "100%",
+	zIndex: 100,
 };
 
 const getItemStyles = <T,>(
-  monitorProps: DragLayerMonitorProps<T>,
+	monitorProps: DragLayerMonitorProps<T>,
 ): React.CSSProperties => {
-  const offset = monitorProps.clientOffset;
+	const offset = monitorProps.clientOffset;
 
-  if (!offset) {
-    return {};
-  }
+	if (!offset) {
+		return {};
+	}
 
-  const { x, y } = offset;
-  const transform = `translate(${x}px, ${y}px)`;
+	const { x, y } = offset;
+	const transform = `translate(${x}px, ${y}px)`;
 
-  return {
-    pointerEvents: "none",
-    transform,
-  };
+	return {
+		pointerEvents: "none",
+		transform,
+	};
 };
 
 export const DragLayer = <T,>(): ReactElement | null => {
-  const context = useTreeContext<T>();
-  const monitorProps = useTreeDragLayer<T>();
-  const { isDragging, clientOffset } = monitorProps;
+	const context = useTreeContext<T>();
+	const monitorProps = useTreeDragLayer<T>();
+	const { isDragging, clientOffset } = monitorProps;
 
-  if (!isDragging || !clientOffset) {
-    return null;
-  }
+	if (!isDragging || !clientOffset) {
+		return null;
+	}
 
-  return (
-    <div style={rootStyle}>
-      <div style={getItemStyles<T>(monitorProps)}>
-        {context.dragPreviewRender && context.dragPreviewRender(monitorProps)}
-      </div>
-    </div>
-  );
+	return (
+		<div style={rootStyle}>
+			<div style={getItemStyles<T>(monitorProps)}>
+				{context.dragPreviewRender && context.dragPreviewRender(monitorProps)}
+			</div>
+		</div>
+	);
 };

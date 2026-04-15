@@ -1,80 +1,80 @@
-import React, { useState, createContext } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
+import React, { createContext, useState } from "react";
 import { NativeTypes } from "react-dnd-html5-backend";
 import externalNodesJson from "~/stories/assets/external-nodes.json";
-import { useDropHandler } from "~/stories/useDropHandler";
-import type { ReactElement, PropsWithChildren } from "react";
 import type { FileProperties } from "~/stories/types";
+import { useDropHandler } from "~/stories/useDropHandler";
 import type {
-  NodeModel,
-  TreeProps,
-  DropOptions,
-  NativeDragItem,
+	DropOptions,
+	NativeDragItem,
+	NodeModel,
+	TreeProps,
 } from "~/types";
 
 type Props = PropsWithChildren<TreeProps<FileProperties>>;
 
 export type StoryState = {
-  tree: NodeModel<FileProperties>[];
-  externalNodes: NodeModel<FileProperties>[];
-  lastId: number;
-  handleDrop: (
-    newTree: NodeModel<FileProperties>[],
-    options: DropOptions<FileProperties>,
-  ) => void;
-  handleAddExternalNode: () => void;
+	tree: NodeModel<FileProperties>[];
+	externalNodes: NodeModel<FileProperties>[];
+	lastId: number;
+	handleDrop: (
+		newTree: NodeModel<FileProperties>[],
+		options: DropOptions<FileProperties>,
+	) => void;
+	handleAddExternalNode: () => void;
 };
 
 export const StoryContext = createContext({});
 
 export const StoryProvider = (props: Props): ReactElement => {
-  const [tree, updateTree] = useDropHandler<FileProperties>(props);
-  const [externalNodes, setExternalNodes] =
-    useState<NodeModel<FileProperties>[]>(externalNodesJson);
-  const [lastId, setLastId] = useState(105);
+	const [tree, updateTree] = useDropHandler<FileProperties>(props);
+	const [externalNodes, setExternalNodes] =
+		useState<NodeModel<FileProperties>[]>(externalNodesJson);
+	const [lastId, setLastId] = useState(105);
 
-  const handleDrop: StoryState["handleDrop"] = (newTree, options) => {
-    const { dropTargetId, monitor } = options;
-    const itemType = monitor.getItemType();
+	const handleDrop: StoryState["handleDrop"] = (newTree, options) => {
+		const { dropTargetId, monitor } = options;
+		const itemType = monitor.getItemType();
 
-    if (itemType === NativeTypes.TEXT) {
-      const nodeJson = (monitor.getItem() as NativeDragItem).text ?? "";
-      const node = JSON.parse(nodeJson) as NodeModel<FileProperties>;
+		if (itemType === NativeTypes.TEXT) {
+			const nodeJson = (monitor.getItem() as NativeDragItem).text ?? "";
+			const node = JSON.parse(nodeJson) as NodeModel<FileProperties>;
 
-      node.parent = dropTargetId;
-      updateTree([...newTree, node], options);
-      setExternalNodes(externalNodes.filter((exnode) => exnode.id !== node.id));
-      return;
-    }
+			node.parent = dropTargetId;
+			updateTree([...newTree, node], options);
+			setExternalNodes(externalNodes.filter((exnode) => exnode.id !== node.id));
+			return;
+		}
 
-    updateTree(newTree, options);
-  };
+		updateTree(newTree, options);
+	};
 
-  const handleAddExternalNode: StoryState["handleAddExternalNode"] = () => {
-    const node: NodeModel<FileProperties> = {
-      id: lastId,
-      parent: 0,
-      text: `External node ${lastId - 100}`,
-      data: {
-        fileType: "text",
-        fileSize: "1KB",
-      },
-    };
+	const handleAddExternalNode: StoryState["handleAddExternalNode"] = () => {
+		const node: NodeModel<FileProperties> = {
+			id: lastId,
+			parent: 0,
+			text: `External node ${lastId - 100}`,
+			data: {
+				fileType: "text",
+				fileSize: "1KB",
+			},
+		};
 
-    setExternalNodes([...externalNodes, node]);
-    setLastId((state) => state + 1);
-  };
+		setExternalNodes([...externalNodes, node]);
+		setLastId((state) => state + 1);
+	};
 
-  const value: StoryState = {
-    tree,
-    externalNodes,
-    lastId,
-    handleDrop,
-    handleAddExternalNode,
-  };
+	const value: StoryState = {
+		tree,
+		externalNodes,
+		lastId,
+		handleDrop,
+		handleAddExternalNode,
+	};
 
-  return (
-    <StoryContext.Provider value={value}>
-      {props.children}
-    </StoryContext.Provider>
-  );
+	return (
+		<StoryContext.Provider value={value}>
+			{props.children}
+		</StoryContext.Provider>
+	);
 };

@@ -1,26 +1,25 @@
 .treeRoot {
-  box-sizing: border-box;
-  height: 100%;
-  padding: 32px;
+	box-sizing: border-box;
+	height: 100%;
+	padding: 32px;
 }
 
 .draggingSource {
-  opacity: 0.3;
+	opacity: 0.3;
 }
 
 .dropTarget {
-  background-color: #e8f0fe;
+	background-color: #e8f0fe;
 }
 
 .csv {
-  color: #1b5e20;
+	color: #1b5e20;
 }
 
 .text {
-  color: #01579b;
-
+	color: #01579b;
 }
 
 .image {
-  color: #b71c1c;
+	color: #b71c1c;
 }

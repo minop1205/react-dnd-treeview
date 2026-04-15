@@ -1,21 +1,21 @@
 .actions {
-  align-items: center;
-  display: flex;
-  gap: 16px;
-  margin: 8px;
-  padding: 8px;
+	align-items: center;
+	display: flex;
+	gap: 16px;
+	margin: 8px;
+	padding: 8px;
 }
 
 .treeRoot {
-  box-sizing: border-box;
-  flex-grow: 1;
-  padding: 32px;
+	box-sizing: border-box;
+	flex-grow: 1;
+	padding: 32px;
 }
 
 .draggingSource {
-  opacity: 0.3;
+	opacity: 0.3;
 }
 
 .dropTarget {
-  background-color: #e8f0fe;
+	background-color: #e8f0fe;
 }

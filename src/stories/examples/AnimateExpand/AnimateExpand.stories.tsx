@@ -1,75 +1,74 @@
+import type { Meta } from "@storybook/react";
+import { expect, within } from "@storybook/test";
 import React from "react";
-import { expect } from "@storybook/test";
-import { within } from "@storybook/test";
-import { DndProvider, MultiBackend, getBackendOptions, Tree } from "~/index";
+import { DndProvider, getBackendOptions, MultiBackend, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
 import sampleData from "~/stories/assets/sample-animate-expand.json";
-import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { CustomDragPreview } from "~/stories/examples/components/CustomDragPreview";
 import { CustomNode } from "~/stories/examples/components/CustomNode";
+import { DefaultTemplate } from "~/stories/examples/DefaultTemplate";
 import { toggleNode, wait } from "~/stories/examples/helpers";
 import { interactionsDisabled } from "~/stories/examples/interactionsDisabled";
-import styles from "./AnimateExpand.module.css";
-import type { Meta } from "@storybook/react";
 import type { FileProperties } from "~/stories/types";
-import type { TreeProps, DragLayerMonitorProps } from "~/types";
+import type { DragLayerMonitorProps, TreeProps } from "~/types";
+import styles from "./AnimateExpand.module.css";
 
 export default {
-  component: Tree,
-  title: "Basic Examples/AnimateExpand",
-  argTypes,
-  decorators: [
-    (Story) => (
-      <DndProvider backend={MultiBackend} options={getBackendOptions()}>
-        <Story />
-      </DndProvider>
-    ),
-  ],
+	component: Tree,
+	title: "Basic Examples/AnimateExpand",
+	argTypes,
+	decorators: [
+		(Story) => (
+			<DndProvider backend={MultiBackend} options={getBackendOptions()}>
+				<Story />
+			</DndProvider>
+		),
+	],
 } as Meta<TreeProps<FileProperties>>;
 
 export const AnimateExpandStory = DefaultTemplate.bind({});
 
 AnimateExpandStory.args = {
-  rootId: 0,
-  tree: sampleData,
-  enableAnimateExpand: true,
-  classes: {
-    root: styles.treeRoot,
-    draggingSource: styles.draggingSource,
-    dropTarget: styles.dropTarget,
-  },
-  render: function render(node, options) {
-    return <CustomNode node={node} {...options} />;
-  },
-  dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
-    <CustomDragPreview monitorProps={monitorProps} />
-  ),
+	rootId: 0,
+	tree: sampleData,
+	enableAnimateExpand: true,
+	classes: {
+		root: styles.treeRoot,
+		draggingSource: styles.draggingSource,
+		dropTarget: styles.dropTarget,
+	},
+	render: function render(node, options) {
+		return <CustomNode node={node} {...options} />;
+	},
+	dragPreviewRender: (monitorProps: DragLayerMonitorProps<FileProperties>) => (
+		<CustomDragPreview monitorProps={monitorProps} />
+	),
 };
 
 AnimateExpandStory.storyName = "AnimateExpand";
 
 AnimateExpandStory.parameters = {
-  csb: {
-    jsId: "animateexpand-js-vtvh18",
-    tsId: "animateexpand-ts-l5rd4r",
-  },
+	csb: {
+		jsId: "animateexpand-js-vtvh18",
+		tsId: "animateexpand-ts-l5rd4r",
+	},
 };
 
 if (!interactionsDisabled) {
-  AnimateExpandStory.play = async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+	AnimateExpandStory.play = async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
 
-    // Do not render hidden nodes.
-    await expect(canvas.queryByText("File 1-01")).toBe(null);
-    await expect(canvas.queryByText("File 2-1-1")).toBe(null);
+		// Do not render hidden nodes.
+		await expect(canvas.queryByText("File 1-01")).toBe(null);
+		await expect(canvas.queryByText("File 2-1-1")).toBe(null);
 
-    // Check style attributes before and after opening a node.
-    const animateContainer =
-      canvas.getByTestId("custom-node-1").nextElementSibling;
+		// Check style attributes before and after opening a node.
+		const animateContainer =
+			canvas.getByTestId("custom-node-1").nextElementSibling;
 
-    await expect(animateContainer).toHaveStyle({ height: 0, opacity: 0 });
-    await toggleNode(canvas.getByTestId("arrow-right-icon-1"));
-    await wait(300);
-    await expect(animateContainer).toHaveStyle({ height: "640px", opacity: 1 });
-  };
+		await expect(animateContainer).toHaveStyle({ height: 0, opacity: 0 });
+		await toggleNode(canvas.getByTestId("arrow-right-icon-1"));
+		await wait(300);
+		await expect(animateContainer).toHaveStyle({ height: "640px", opacity: 1 });
+	};
 }

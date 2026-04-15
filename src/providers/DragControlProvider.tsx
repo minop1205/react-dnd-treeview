@@ -1,28 +1,28 @@
-import React, { useState, createContext } from "react";
+import React, { createContext, useState } from "react";
 import type { DragControlState } from "~/types";
 
 export const DragControlContext = createContext<DragControlState>(
-  {} as DragControlState,
+	{} as DragControlState,
 );
 
 const initialState = {
-  isLock: false,
+	isLock: false,
 };
 
 export const DragControlProvider: React.FC<{ children: React.ReactNode }> = (
-  props,
+	props,
 ) => {
-  const [isLock, setIsLock] = useState(initialState.isLock);
+	const [isLock, setIsLock] = useState(initialState.isLock);
 
-  return (
-    <DragControlContext.Provider
-      value={{
-        isLock,
-        lock: () => setIsLock(true),
-        unlock: () => setIsLock(false),
-      }}
-    >
-      {props.children}
-    </DragControlContext.Provider>
-  );
+	return (
+		<DragControlContext.Provider
+			value={{
+				isLock,
+				lock: () => setIsLock(true),
+				unlock: () => setIsLock(false),
+			}}
+		>
+			{props.children}
+		</DragControlContext.Provider>
+	);
 };
