@@ -1,4 +1,4 @@
-import { expect } from "@storybook/test";
+import { expect } from "storybook/test";
 
 export const assertElementCoords = async (
 	element: Element,

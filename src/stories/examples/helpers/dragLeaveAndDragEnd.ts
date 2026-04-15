@@ -1,4 +1,4 @@
-import { fireEvent } from "@storybook/test";
+import { fireEvent } from "storybook/test";
 
 export const dragLeaveAndDragEnd = async (
 	dragSource: Element,

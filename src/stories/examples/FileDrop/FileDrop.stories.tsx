@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import React from "react";
-// import { within } from "@storybook/test";
+// import { within } from "storybook/test";
 import { DndProvider } from "react-dnd";
 import { NativeTypes } from "react-dnd-html5-backend";
 import { getBackendOptions, MultiBackend, Tree } from "~/index";

@@ -1,2 +1,3 @@
 export const interactionsDisabled =
-	process?.env?.STORYBOOK_DISABLE_INTERACTIONS === "true";
+	typeof process !== "undefined" &&
+	process.env.STORYBOOK_DISABLE_INTERACTIONS === "true";

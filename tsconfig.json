@@ -1,7 +1,7 @@
 {
+  "include": ["src"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ES5",
+    "types": ["vitest/globals", "node"],
     "outDir": "dist",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "declaration": true,
@@ -10,13 +10,13 @@
     "resolveJsonModule": true,
     "strict": true,
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "jsx": "react",
     "newLine": "lf",
     "skipLibCheck": true,
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["./src/*"]
     }
   }
 }

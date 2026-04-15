@@ -67,8 +67,10 @@ export const CustomNode: React.FC<Props> = (props) => {
 							className={styles.textField}
 							value={labelText}
 							onChange={handleChangeText}
-							inputProps={{
-								"data-testid": `input-${id}`,
+							slotProps={{
+								htmlInput: {
+									"data-testid": `input-${id}`,
+								},
 							}}
 						/>
 						<IconButton

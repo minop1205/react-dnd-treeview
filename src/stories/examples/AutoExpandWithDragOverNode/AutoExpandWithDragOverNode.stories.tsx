@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-import { expect, fireEvent, within } from "@storybook/test";
+import type { Meta } from "@storybook/react-vite";
 import React from "react";
+import { expect, fireEvent, within } from "storybook/test";
 import { DndProvider, getBackendOptions, MultiBackend, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
 import sampleData from "~/stories/assets/sample-default.json";

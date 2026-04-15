@@ -53,10 +53,12 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
 			</div>
 			<div className={styles.actions}>
 				<TextField
-					inputProps={{
-						"data-testid": "input-ids",
-						style: {
-							padding: "6.75px 16px",
+					slotProps={{
+						htmlInput: {
+							"data-testid": "input-ids",
+							style: {
+								padding: "6.75px 16px",
+							},
 						},
 					}}
 					variant="outlined"

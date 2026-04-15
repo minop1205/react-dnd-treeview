@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import React from "react";
 import { DndProvider, getBackendOptions, MultiBackend, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";

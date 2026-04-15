@@ -1,6 +1,6 @@
-import type { Meta } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import type { Meta } from "@storybook/react-vite";
 import React from "react";
+import { expect, within } from "storybook/test";
 import { DndProvider, getBackendOptions, MultiBackend, Tree } from "~/index";
 import * as argTypes from "~/stories/argTypes";
 import { dragAndDrop, toggleNode } from "~/stories/examples/helpers";

@@ -1,69 +1,47 @@
-import type { StorybookConfig } from "@storybook/react-webpack5";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { StorybookConfig } from "@storybook/react-vite";
 
-const path = require("path");
-
-const interactionsDisabled =
-  process?.env?.STORYBOOK_DISABLE_INTERACTIONS === "true";
-
-const addons = [
-  "storybook-css-modules-preset",
-  "@storybook/addon-essentials",
-  "@storybook/addon-webpack5-compiler-swc",
-  "@storybook/addon-themes",
-];
-
-if (!interactionsDisabled) {
-  addons.push("@storybook/addon-interactions");
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.stories.tsx"],
-  addons,
+	stories: ["../src/**/*.stories.tsx"],
+	addons: ["@storybook/addon-themes", "@storybook/addon-vitest"],
 
-  webpackFinal: async (config) => {
-    if (config.resolve) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        "~": path.resolve(__dirname, "../src"),
-      };
-    }
+	framework: {
+		name: "@storybook/react-vite",
+		options: {},
+	},
 
-    if (config.module?.rules) {
-      // https://github.com/storybookjs/storybook/issues/16690#issuecomment-971579785
-      config.module.rules.push({
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: "javascript/auto",
-      });
-    }
+	typescript: {
+		reactDocgen: "react-docgen-typescript",
+		reactDocgenTypescriptOptions: {
+			tsconfigPath: resolve(__dirname, "../tsconfig.json"),
+			exclude: ["**/.storybook/**"],
+			shouldExtractLiteralValuesFromEnum: true,
+			shouldRemoveUndefinedFromOptional: true,
+			propFilter: (prop: { parent?: { fileName: string } }) =>
+				!prop.parent?.fileName.includes("node_modules"),
+		},
+	},
 
-    if (config.resolve?.alias) {
-      delete config.resolve.alias["emotion-theming"];
-      delete config.resolve.alias["@emotion/styled"];
-      delete config.resolve.alias["@emotion/core"];
-    }
+	viteFinal: (config) => {
+		config.resolve = config.resolve ?? {};
+		config.resolve.alias = {
+			...config.resolve.alias,
+			"~": resolve(__dirname, "../src"),
+		};
+		config.define = {
+			...config.define,
+			"process.env.STORYBOOK_DISABLE_INTERACTIONS": JSON.stringify(
+				process.env.STORYBOOK_DISABLE_INTERACTIONS,
+			),
+		};
+		return config;
+	},
 
-    return config;
-  },
-
-  framework: {
-    name: "@storybook/react-webpack5",
-    options: {},
-  },
-
-  staticDirs: ["../src/stories/assets"],
-
-  // configuration for using swc compiler
-  // https://storybook.js.org/docs/configure/compilers#the-swc-compiler-doesnt-work-with-react
-  swc: () => ({
-    jsc: {
-      transform: {
-        react: {
-          runtime: "automatic",
-        },
-      },
-    },
-  }),
+	staticDirs: ["../src/stories/assets"],
 };
 
 export default config;

@@ -117,8 +117,6 @@ export const Template: StoryFn<TreeProps<FileProperties>> = (args) => {
 		newTree: NodeModel<FileProperties>[],
 		options: DropOptions<FileProperties>,
 	) => {
-		console.log(options);
-
 		const { dropTargetId } = options;
 
 		setTree(

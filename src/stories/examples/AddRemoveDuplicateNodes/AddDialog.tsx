@@ -61,8 +61,10 @@ export const AddDialog: React.FC<Props> = (props) => {
 						fullWidth
 						onChange={handleChangeText}
 						value={text}
-						inputProps={{
-							"data-testid": "dialog-input-text",
+						slotProps={{
+							htmlInput: {
+								"data-testid": "dialog-input-text",
+							},
 						}}
 					/>
 				</div>
