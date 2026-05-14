@@ -10,4 +10,12 @@ describe("hasChildNodes", () => {
 		expect(hasChildNodes(treeData, 6)).toBe(false);
 		expect(hasChildNodes(treeData, 7)).toBe(false);
 	});
+
+	test("returns false for empty tree", () => {
+		expect(hasChildNodes([], 1)).toBe(false);
+	});
+
+	test("returns true for root id 0 when it has children", () => {
+		expect(hasChildNodes(treeData, 0)).toBe(true);
+	});
 });

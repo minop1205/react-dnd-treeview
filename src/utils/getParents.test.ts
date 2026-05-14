@@ -18,4 +18,18 @@ describe("getParents", () => {
 
 		expect(parentalIds.length).toBe(2);
 	});
+
+	test("returns empty array for empty tree", () => {
+		expect(getParents([], 1)).toEqual([]);
+	});
+
+	test("returns empty array for non-existent node id", () => {
+		expect(getParents(treeData, 999)).toEqual([]);
+	});
+
+	test("returns ancestors in order from immediate parent to root", () => {
+		const parentalIds = getParents(treeData, 6).map((n) => n.id);
+		expect(parentalIds[0]).toBe(5);
+		expect(parentalIds[1]).toBe(4);
+	});
 });
