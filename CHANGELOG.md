@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.5.4
+
+_May 19, 2026_
+
+### Security
+
+- update all dependencies.
+
+
 ## 3.5.3
 
 _Jul 12, 2025_

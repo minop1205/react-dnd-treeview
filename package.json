@@ -1,100 +1,100 @@
 {
-  "name": "@minoru/react-dnd-treeview",
-  "description": "A draggable / droppable React-based treeview component.",
-  "version": "3.5.3",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/minop1205/react-dnd-treeview.git"
-  },
-  "author": "Minoru Okuyama <okuyama@analogic.jp> (https://github.com/minop1205/)",
-  "homepage": "https://github.com/minop1205/react-dnd-treeview",
-  "keywords": [
-    "drag and drop",
-    "dnd",
-    "react",
-    "tree",
-    "treeview",
-    "component",
-    "headless component",
-    "touch support",
-    "sortable",
-    "hierarchical data"
-  ],
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@juggle/resize-observer": "^3.4.0",
-    "dnd-multi-backend": "^9.0.0",
-    "framer-motion": "^12.38.0",
-    "react-dnd-html5-backend": "^16.0.1",
-    "react-dnd-touch-backend": "^16.0.1",
-    "react-use-measure": "^2.1.7"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.4.14",
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^9.0.1",
-    "@mui/material": "^9.0.1",
-    "@rollup/plugin-alias": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^16.0.3",
-    "@storybook/addon-themes": "^10.3.6",
-    "@storybook/addon-vitest": "^10.3.6",
-    "@storybook/builder-vite": "^10.3.6",
-    "@storybook/react": "^10.3.6",
-    "@storybook/react-vite": "^10.3.6",
-    "@types/hoist-non-react-statics": "^3.3.7",
-    "@types/node": "^25.6.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "@vitest/browser-playwright": "^4.1.5",
-    "@vitest/coverage-v8": "^4.1.5",
-    "gh-pages": "^6.3.0",
-    "jsdom": "^29.1.1",
-    "playwright": "^1.59.1",
-    "react": "^19.2.6",
-    "react-dnd": "^16.0.1",
-    "react-dom": "^19.2.6",
-    "rollup": "^4.60.3",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-typescript2": "^0.37.0",
-    "storybook": "^10.3.6",
-    "storybook-css-modules-preset": "^1.1.1",
-    "ts-patch": "^4.0.1",
-    "tslib": "^2.8.1",
-    "typescript": "^6.0.3",
-    "typescript-transform-paths": "^3.5.6",
-    "vite": "^8.0.11",
-    "vitest": "^4.1.5"
-  },
-  "peerDependencies": {
-    "react": "18.x || 19.x",
-    "react-dnd": "15.x || 16.x",
-    "react-dom": "18.x || 19.x"
-  },
-  "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "check": "npx biome check --write src/",
-    "prepublish": "rm -rf ./dist && npm run build",
-    "test": "vitest run --project=unit",
-    "test:watch": "vitest --project=unit",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "STORYBOOK_DISABLE_INTERACTIONS=true storybook build",
-    "storybook:test": "vitest --project=storybook",
-    "storybook:deploy": "npm run storybook:build && gh-pages -d storybook-static"
-  },
-  "bugs": {
-    "url": "https://github.com/minop1205/react-dnd-treeview/issues",
-    "email": "okuyama@analogic.jp"
-  }
+	"name": "@minoru/react-dnd-treeview",
+	"description": "A draggable / droppable React-based treeview component.",
+	"version": "3.5.4",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/minop1205/react-dnd-treeview.git"
+	},
+	"author": "Minoru Okuyama <okuyama@analogic.jp> (https://github.com/minop1205/)",
+	"homepage": "https://github.com/minop1205/react-dnd-treeview",
+	"keywords": [
+		"drag and drop",
+		"dnd",
+		"react",
+		"tree",
+		"treeview",
+		"component",
+		"headless component",
+		"touch support",
+		"sortable",
+		"hierarchical data"
+	],
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"dependencies": {
+		"@juggle/resize-observer": "^3.4.0",
+		"dnd-multi-backend": "^9.0.0",
+		"framer-motion": "^12.38.0",
+		"react-dnd-html5-backend": "^16.0.1",
+		"react-dnd-touch-backend": "^16.0.1",
+		"react-use-measure": "^2.1.7"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.14",
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@mui/icons-material": "^9.0.1",
+		"@mui/material": "^9.0.1",
+		"@rollup/plugin-alias": "^6.0.0",
+		"@rollup/plugin-node-resolve": "^16.0.3",
+		"@storybook/addon-themes": "^10.3.6",
+		"@storybook/addon-vitest": "^10.3.6",
+		"@storybook/builder-vite": "^10.3.6",
+		"@storybook/react": "^10.3.6",
+		"@storybook/react-vite": "^10.3.6",
+		"@types/hoist-non-react-statics": "^3.3.7",
+		"@types/node": "^25.6.0",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^6.0.1",
+		"@vitest/browser-playwright": "^4.1.5",
+		"@vitest/coverage-v8": "^4.1.5",
+		"gh-pages": "^6.3.0",
+		"jsdom": "^29.1.1",
+		"playwright": "^1.59.1",
+		"react": "^19.2.6",
+		"react-dnd": "^16.0.1",
+		"react-dom": "^19.2.6",
+		"rollup": "^4.60.3",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-typescript2": "^0.37.0",
+		"storybook": "^10.3.6",
+		"storybook-css-modules-preset": "^1.1.1",
+		"ts-patch": "^4.0.1",
+		"tslib": "^2.8.1",
+		"typescript": "^6.0.3",
+		"typescript-transform-paths": "^3.5.6",
+		"vite": "^8.0.11",
+		"vitest": "^4.1.5"
+	},
+	"peerDependencies": {
+		"react": "18.x || 19.x",
+		"react-dnd": "15.x || 16.x",
+		"react-dom": "18.x || 19.x"
+	},
+	"scripts": {
+		"build": "rollup -c",
+		"watch": "rollup -c -w",
+		"check": "npx biome check --write src/",
+		"prepublish": "rm -rf ./dist && npm run build",
+		"test": "vitest run --project=unit",
+		"test:watch": "vitest --project=unit",
+		"storybook": "storybook dev -p 6006",
+		"storybook:build": "STORYBOOK_DISABLE_INTERACTIONS=true storybook build",
+		"storybook:test": "vitest --project=storybook",
+		"storybook:deploy": "npm run storybook:build && gh-pages -d storybook-static"
+	},
+	"bugs": {
+		"url": "https://github.com/minop1205/react-dnd-treeview/issues",
+		"email": "okuyama@analogic.jp"
+	}
 }
