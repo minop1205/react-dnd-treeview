@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-jRWAZmH_.js";var t,n,r,i,a,o,s=e((()=>{t=`_root_crubq_1`,n=`_arrow_crubq_7`,r=`_isOpen_crubq_23`,i=`_filetype_crubq_27`,a=`_label_crubq_31`,o={root:t,arrow:n,isOpen:r,filetype:i,label:a}}));export{s as n,o as t};

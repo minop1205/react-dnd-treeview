@@ -1,0 +1,1 @@
+import{n as e,o as t}from"./chunk-jRWAZmH_.js";import{t as n}from"./react-CMXXrKHu.js";import{a as r,i}from"./argTypes-C3Gp7pfF.js";import{n as a,t as o}from"./useDropHandler-D2T0_9uz.js";var s,c,l=e((()=>{s=t(n(),1),o(),r(),c=e=>{let[t,n]=a(e);return s.createElement(i,{...e,tree:t,onDrop:n})}}));export{l as n,c as t};

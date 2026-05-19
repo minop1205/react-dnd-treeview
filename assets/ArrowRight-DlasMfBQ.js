@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-jRWAZmH_.js";import{a as t,s as n}from"./Typography-CtcqIuMm.js";import{t as r}from"./jsx-runtime-B9GCkTeX.js";var i,a,o=e((()=>{t(),i=r(),a=n((0,i.jsx)(`path`,{d:`m10 17 5-5-5-5z`}),`ArrowRight`)}));export{o as n,a as t};

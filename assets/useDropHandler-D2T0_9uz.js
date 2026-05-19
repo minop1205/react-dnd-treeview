@@ -1,0 +1,1 @@
+import{n as e,o as t}from"./chunk-jRWAZmH_.js";import{t as n}from"./react-CMXXrKHu.js";var r,i,a=e((()=>{r=t(n(),1),i=e=>{let[t,n]=(0,r.useState)(e.tree);return[t,(t,r)=>{e.onDrop(t,r),n(t)}]}}));export{i as n,a as t};

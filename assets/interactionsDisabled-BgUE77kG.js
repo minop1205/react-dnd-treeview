@@ -1,0 +1,1 @@
+import{n as e}from"./chunk-jRWAZmH_.js";var t,n=e((()=>{t=typeof process<`u`&&!0}));export{t as n,n as t};
